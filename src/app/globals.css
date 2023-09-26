@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --shadow1: 0px 4px 4px rgba(20, 45, 82, 0.01),
+    0px 3px 2px rgba(20, 45, 82, 0.01), 0px 4px 4px rgba(20, 45, 82, 0.01),
+    0px 10px 8px rgba(20, 45, 82, 0.02), 0px 40px 32px rgba(20, 45, 82, 0.04),
+    0px -1px 8px rgba(20, 45, 82, 0.03);
+  --shadow2: 0px 2px 4px rgba(20, 45, 82, 0.01),
+    0px 4px 8px rgba(20, 45, 82, 0.02), 0px 8px 16px rgba(20, 45, 82, 0.03),
+    0px 16px 32px rgba(20, 45, 82, 0.04), 0px 32px 64px rgba(20, 45, 82, 0.05),
+    0px -1px 10px rgba(20, 45, 82, 0.03);
+  --purple-1: 0px 2px 12px 0px rgba(161, 87, 246, 0.12);
+  --purple-2: 0px 8px 24px 0px rgba(161, 87, 246, 0.1);
+  --purple-3: 0px 8px 32px 0px rgba(172, 82, 255, 0.1);
+  --purple-4: -32px 32px 64px -12px rgba(172, 82, 255, 0.16);
+  --purple-5: 0px 4px 40px 0px rgba(161, 87, 246, 0.32);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
