@@ -63,6 +63,7 @@ const config: Config = {
         bgGray: "#edf5ff",
         bgPurple: "#ac52ff",
         bgPurplePower: "#933ff4",
+        bgBlueLight: "#dbebff",
         bgDark: "rgba(24,33,50,0.4)",
       },
 
@@ -84,6 +85,10 @@ const config: Config = {
         marquee: "marquee 10s linear infinite",
       },
 
+      transitionTimingFunction: {
+        ease: "ease",
+      },
+
       keyframes: {
         marquee: {
           "0%": { transform: "translateX(0%)" },
@@ -92,6 +97,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };
 export default config;

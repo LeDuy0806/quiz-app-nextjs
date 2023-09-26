@@ -19,6 +19,9 @@ import phuoctri from "./images/PhuocTri.png";
 import vanduy from "./images/VanDuy.png";
 import minhnhat from "./images/MinhNhat.png";
 import phuoclong from "./images/phuoclong.png";
+import Lisa from "./images/Lisa.webp";
+import Carla from "./images/Carla.webp";
+import Phillip from "./images/Phillip.webp";
 
 export {
   logo,
@@ -42,4 +45,7 @@ export {
   vanduy,
   minhnhat,
   phuoclong,
+  Lisa,
+  Carla,
+  Phillip,
 };
