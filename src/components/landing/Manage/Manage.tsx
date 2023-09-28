@@ -1,9 +1,15 @@
 import Image from "next/image";
 import { Carla, Lisa, Phillip } from "../../../../public/assets";
 
+//animation
+import { motion } from "framer-motion";
+
 const Manage = () => {
   return (
-    <section
+    <motion.section
+      initial={{ y: -10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.1, delay: 1.2 }}
       id="manager"
       className="w-full max-w-[1440px] block bg-transparent rounded mx-auto px-[3.13rem] pt-20 pb-[4em]"
     >
@@ -53,7 +59,7 @@ const Manage = () => {
         </div>
         {/* <div></div> */}
       </div>
-    </section>
+    </motion.section>
   );
 };
 

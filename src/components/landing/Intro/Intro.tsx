@@ -1,3 +1,6 @@
+"use client";
+import Link from "next/link";
+
 //images
 import Image from "next/image";
 import { direct, logo, threepeople } from "../../../../public/assets";
@@ -70,13 +73,17 @@ const Intro = () => {
                 </div>
               </div>
             </motion.div>
+
             <motion.div
               initial={{ y: 10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.5, delay: 1.1 }}
               className="flex flex-col mt-[3.25em] items-center self-center gap-y-3"
             >
-              <a className="max-w-full relative flex z-[1] min-h[3.13em] gap-x-[0.5rem] text-white text-center bg-bgPurple rounded-xl justify-center items-center pl-4 pr-3 py-2 font-black overflow-hidden shadow-purple cursor-pointer hover:bg-bgPurplePower  hover:duration-300 hover:delay-[0s]">
+              <a
+                href="/signIn"
+                className="max-w-full relative flex z-[1] min-h[3.13em] gap-x-[0.5rem] text-white text-center bg-bgPurple rounded-xl justify-center items-center pl-4 pr-3 py-2 font-black overflow-hidden shadow-purple cursor-pointer hover:bg-bgPurplePower  hover:duration-300 hover:delay-[0s]"
+              >
                 <div className="z-[-1] relative block -ml-3 w-9 h-9">
                   <div className="absolute z-[-1] w-9 h-9 bg-bgPurplePower rounded-full top-[0%] bottom-[0%] right-[0%] left-[0%]" />
                   <div className="w-full h-full flex items-center justify-center align-middle">

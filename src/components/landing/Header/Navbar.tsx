@@ -30,7 +30,12 @@ const Navbar = () => {
   };
 
   return (
-    <div className="z-[999] fixed py-6 top-[0] left-[0] right-[0]">
+    <motion.div
+      initial={{ y: -10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="z-[999] fixed py-6 top-[0] left-[0] right-[0]"
+    >
       <div className="w-full max-w-container block bg-transparent rounded-md mx-auto px-12">
         <div className="max-w-contentContainer flex justify-between items-center mx-auto gap-[2em]">
           <div className="w-[10em] h-14 bg-white rounded-xl shadow-white cursor-pointer">
@@ -179,22 +184,24 @@ const Navbar = () => {
                   </div>
                 </div>
               </motion.li>
-              <motion.li
-                initial={{ y: -10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.1, delay: 0.7 }}
-                className="font-bold"
-              >
-                <div className="align-text z-[900] mx-auto inline-block relative cursor-pointer hover:bg-textPurpleHover rounded-xl">
-                  <div className="w-auto min-w-auto flex flex-row gap-1 tracking-wide items-center mt-1 px-2 py-2">
-                    <div className="mt-0 mb-0 text-[1em] leading-snug">
-                      Login
+              <Link href={"/signIn"}>
+                <motion.li
+                  initial={{ y: -10, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.1, delay: 0.7 }}
+                  className="font-bold"
+                >
+                  <div className="align-text z-[900] mx-auto inline-block relative cursor-pointer hover:bg-textPurpleHover rounded-xl">
+                    <div className="w-auto min-w-auto flex flex-row gap-1 tracking-wide items-center mt-1 px-2 py-2">
+                      <div className="mt-0 mb-0 text-[1em] leading-snug">
+                        Login
+                      </div>
                     </div>
                   </div>
-                </div>
-              </motion.li>
+                </motion.li>
+              </Link>
             </ul>
-            <Link href="">
+            <Link href="/signIn">
               <button className="z-[1] relative max-w-full flex flex-row gap-2 text-textWhite alight-center px-6 py-2 bg-bgPurple font-black items-center justify-center rounded-xl overflow-hidden shadow-purple hover:ease-ease hover:bg-bgPurplePower hover:duration-[0.3s] hover:delay-[0s]">
                 <motion.div
                   initial={{ y: -10, opacity: 0 }}
@@ -225,7 +232,7 @@ const Navbar = () => {
         </div>
         <div className="hidden"></div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
