@@ -1,5 +1,7 @@
-const SignIN = () => {
-  return <div>SignIn</div>;
+import FormSignIn from "src/components/auth/FormSignIn";
+
+const SignIn = () => {
+  return <FormSignIn />;
 };
 
-export default SignIN;
+export default SignIn;

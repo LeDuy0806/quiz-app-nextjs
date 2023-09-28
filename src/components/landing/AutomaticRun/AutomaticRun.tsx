@@ -12,10 +12,14 @@ import {
 
 //animation
 import Marquee from "react-fast-marquee";
+import { motion } from "framer-motion";
 
 const AutomaticRun = () => {
   return (
-    <section
+    <motion.section
+      initial={{ y: -10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.1, delay: 1.2 }}
       id="overview"
       className="w-screen relative pt-6 pb-0 overflow-hidden bg-white"
     >
@@ -299,7 +303,7 @@ const AutomaticRun = () => {
           />
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

@@ -22,6 +22,10 @@ import phuoclong from "./images/phuoclong.png";
 import Lisa from "./images/Lisa.webp";
 import Carla from "./images/Carla.webp";
 import Phillip from "./images/Phillip.webp";
+import google from "./images/google.svg";
+import facebook from "./images/facebook.svg";
+import students from "./images/students.png";
+import teacher from "./images/teacher.png";
 
 export {
   logo,
@@ -48,4 +52,8 @@ export {
   Lisa,
   Carla,
   Phillip,
+  google,
+  facebook,
+  students,
+  teacher,
 };
