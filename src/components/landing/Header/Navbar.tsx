@@ -9,7 +9,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 
 //images
 import Image from "next/image";
-import { logo } from "../../../../public/assets";
+import { logoImg } from "../../../../public/assets/images/landing";
 
 //animation
 import { motion } from "framer-motion";
@@ -45,7 +45,7 @@ const Navbar = () => {
               transition={{ duration: 0.5 }}
               className="w-full h-full flex flex-row justify-center items-center gap-4  px-6 py-1 rounded-xl"
             >
-              <Image src={logo} alt="" className="h-[40px] w-[40px]" />
+              <Image src={logoImg} alt="" className="h-[40px] w-[40px]" />
               <span className="text-textBlack font-extrabold text-xl">
                 Quizzes
               </span>

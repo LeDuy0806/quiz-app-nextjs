@@ -1,5 +1,9 @@
 import Image from "next/image";
-import { Carla, Lisa, Phillip } from "../../../../public/assets";
+import {
+  CarlaImg,
+  LisaImg,
+  PhillipImg,
+} from "../../../../public/assets/images/landing";
 
 //animation
 import { motion } from "framer-motion";
@@ -17,21 +21,21 @@ const Manage = () => {
         <div className="h-[60em] absolute flex justify-center my-[-3.13em] top-0 left-0 right-0 overflow-hidden">
           <div className="absolute w-[22.69em] bottom-20 opacity-1">
             <Image
-              src={Phillip}
+              src={PhillipImg}
               alt=""
               className="relative w-full h-full max-w-full inline-block object-fill"
             />
           </div>
           <div className="absolute w-[26.88em] left-0 top-[5em]">
             <Image
-              src={Lisa}
+              src={LisaImg}
               alt=""
               className="relative w-full h-full max-w-full inline-block object-fill"
             />
           </div>
           <div className="absolute w-[26.13em]  top-0 right-0 overflow-hidden">
             <Image
-              src={Carla}
+              src={CarlaImg}
               alt=""
               className="relative w-full h-full max-w-full inline-block object-fill"
             />

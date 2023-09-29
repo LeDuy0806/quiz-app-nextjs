@@ -3,7 +3,11 @@ import Link from "next/link";
 
 //images
 import Image from "next/image";
-import { direct, logo, threepeople } from "../../../../public/assets";
+import {
+  directImg,
+  logoImg,
+  threePeopleImg,
+} from "../../../../public/assets/images/landing";
 
 //animation
 import { motion } from "framer-motion";
@@ -24,7 +28,7 @@ const Intro = () => {
                 transition={{ duration: 0.5, delay: 0.6 }}
                 className="w-[10.25em] absolute bottom-[0.9em] left-[-9em]"
               >
-                <Image src={direct} alt="" className="overflow-hidden" />
+                <Image src={directImg} alt="" className="overflow-hidden" />
               </motion.div>
               <motion.div
                 initial={{ y: 10, opacity: 0 }}
@@ -40,7 +44,7 @@ const Intro = () => {
                 transition={{ duration: 0.5, delay: 0.8 }}
               >
                 <Image
-                  src={threepeople}
+                  src={threePeopleImg}
                   alt=""
                   className="w-[13.75em] h-auto flex-none ml-6"
                 />
@@ -88,7 +92,7 @@ const Intro = () => {
                   <div className="absolute z-[-1] w-9 h-9 bg-bgPurplePower rounded-full top-[0%] bottom-[0%] right-[0%] left-[0%]" />
                   <div className="w-full h-full flex items-center justify-center align-middle">
                     <Image
-                      src={logo}
+                      src={logoImg}
                       className="w-3/5 h-3/5 max-w-full hover:h-4/5 hover:w-4/5"
                       alt=""
                     />

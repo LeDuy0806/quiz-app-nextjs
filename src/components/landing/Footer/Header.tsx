@@ -1,24 +1,24 @@
 import Image from "next/image";
 import {
-  fourpeople,
-  texticonsub,
-  profile,
-  bgpurple,
-  UITLogo,
-  joyofwork,
-  thuhien,
-  phuoctri,
-  minhnhat,
-  vanduy,
-  phuoclong,
-} from "../../../../public/assets";
+  fourPeopleImg,
+  textIconSubImg,
+  profileImg,
+  bgPurpleImg,
+  uitLogoImg,
+  joyWorkImg,
+  thuhienImg,
+  phuoctriImg,
+  minhnhatImg,
+  vanduyImg,
+  phuoclongImg,
+} from "../../../../public/assets/images/landing";
 
 const Header = () => {
   return (
     <div className="flex flex-col relative text-center items-center">
       <div className="w-full">
         <Image
-          src={joyofwork}
+          src={joyWorkImg}
           alt=""
           className="w-full h-full relative object-contain"
         />
@@ -33,7 +33,7 @@ const Header = () => {
           </span>
           <span className="">
             <Image
-              src={fourpeople}
+              src={fourPeopleImg}
               alt=""
               className="inline-block mb-[-0.25em] rounded-[200px] bg-contain bg-no-repeat object-contain overflow-hidden"
             />
@@ -46,7 +46,7 @@ const Header = () => {
             <div className="relative flex flex-col gap-y-[1.5em] text-left p-[1.5em] shadow-boxheaderfooter bg-bgDark rounded-[2.5em]">
               <div className="flex gap-x-[1em]">
                 <Image
-                  src={thuhien}
+                  src={thuhienImg}
                   alt=""
                   className="w-[3.75em] h-[3.75em] max-w-full inline-block rounded-full object-cover"
                 />
@@ -59,7 +59,7 @@ const Header = () => {
                   </div>
                 </div>
                 <Image
-                  src={UITLogo}
+                  src={uitLogoImg}
                   alt=""
                   className="w-auto h-[2.5em] object-contain absolute top-[1em] right-[1.25em] text-white"
                 />
@@ -75,7 +75,7 @@ const Header = () => {
             <div className="relative flex flex-col gap-y-[1.5em] text-left p-[1.5em] shadow-boxheaderfooter bg-bgDark rounded-[2.5em]">
               <div className="flex gap-x-[1em]">
                 <Image
-                  src={profile}
+                  src={profileImg}
                   alt=""
                   className="w-[3.75em] h-[3.75em] max-w-full inline-block rounded-full object-cover    "
                 />
@@ -88,7 +88,7 @@ const Header = () => {
                   </div>
                 </div>
                 <Image
-                  src={UITLogo}
+                  src={uitLogoImg}
                   alt=""
                   className="w-auto h-[2.5em] object-contain absolute top-[1em] right-[1.25em] text-white"
                 />
@@ -105,7 +105,7 @@ const Header = () => {
             <div className="relative flex flex-col gap-y-[1.5em] text-left p-[1.5em] shadow-boxheaderfooter bg-bgDark rounded-[2.5em]">
               <div className="flex gap-x-[1em]">
                 <Image
-                  src={phuoctri}
+                  src={phuoctriImg}
                   alt=""
                   className="w-[3.75em] h-[3.75em] max-w-full inline-block rounded-full"
                 />
@@ -118,7 +118,7 @@ const Header = () => {
                   </div>
                 </div>
                 <Image
-                  src={UITLogo}
+                  src={uitLogoImg}
                   alt=""
                   className="w-auto h-[2.5em] object-contain absolute top-[1em] right-[1.25em] text-white"
                 />
@@ -134,7 +134,7 @@ const Header = () => {
             <div className="relative flex flex-col gap-y-[1.5em] text-left p-[1.5em] shadow-boxheaderfooter bg-bgDark rounded-[2.5em]">
               <div className="flex gap-x-[1em]">
                 <Image
-                  src={vanduy}
+                  src={vanduyImg}
                   alt=""
                   className="w-[3.75em] h-[3.75em] max-w-full inline-block rounded-full"
                 />
@@ -147,7 +147,7 @@ const Header = () => {
                   </div>
                 </div>
                 <Image
-                  src={UITLogo}
+                  src={uitLogoImg}
                   alt=""
                   className="w-auto h-[2.5em] object-contain absolute top-[1em] right-[1.25em] text-white"
                 />
@@ -163,7 +163,7 @@ const Header = () => {
             <div className="relative flex flex-col gap-y-[1.5em] text-left p-[1.5em] shadow-boxheaderfooter bg-bgDark rounded-[2.5em]">
               <div className="flex gap-x-[1em]">
                 <Image
-                  src={phuoclong}
+                  src={phuoclongImg}
                   alt=""
                   className="w-[3.75em] h-[3.75em] max-w-full inline-block rounded-full"
                 />
@@ -176,7 +176,7 @@ const Header = () => {
                   </div>
                 </div>
                 <Image
-                  src={UITLogo}
+                  src={uitLogoImg}
                   alt=""
                   className="w-auto h-[2.5em] object-contain absolute top-[1em] right-[1.25em] text-white"
                 />
@@ -192,7 +192,7 @@ const Header = () => {
             <div className="relative flex flex-col gap-y-[1.5em] text-left p-[1.5em] shadow-boxheaderfooter bg-bgDark rounded-[2.5em]">
               <div className="flex gap-x-[1em]">
                 <Image
-                  src={minhnhat}
+                  src={minhnhatImg}
                   alt=""
                   className="w-[3.75em] h-[3.75em] max-w-full inline-block rounded-full"
                 />
@@ -205,7 +205,7 @@ const Header = () => {
                   </div>
                 </div>
                 <Image
-                  src={UITLogo}
+                  src={uitLogoImg}
                   alt=""
                   className="w-auto h-[2.5em] object-contain absolute top-[1em] right-[1.25em] text-white"
                 />
@@ -218,7 +218,7 @@ const Header = () => {
           </div>
         </div>
         <Image
-          src={bgpurple}
+          src={bgPurpleImg}
           alt=""
           className="max-w-full inline-block w-[47em] h-auto opacity-[0.65] absolute bottom-[-20%]"
         />

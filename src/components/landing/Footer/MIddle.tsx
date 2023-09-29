@@ -1,5 +1,8 @@
 import Image from "next/image";
-import { threepeople, likehand } from "../../../../public/assets";
+import {
+  threePeopleImg,
+  likeHandImg,
+} from "../../../../public/assets/images/landing";
 
 const Middle = () => {
   return (
@@ -8,7 +11,7 @@ const Middle = () => {
         <div className="relative z-[1] text-textWhite rounded-[2.5em] flex flex-col justify-center items-end py-[5rem] px-[2em]">
           <div className="absolute w-[50em] mt-[2.5rem] left-[-23em]">
             <Image
-              src={likehand}
+              src={likeHandImg}
               alt=""
               className="relative w-full h-full max-w-full object-cover inline-block"
             />
@@ -22,7 +25,7 @@ const Middle = () => {
             </div>
             <div className="flex relative items-end">
               <Image
-                src={threepeople}
+                src={threePeopleImg}
                 alt=""
                 className="w-[140px] h-[30] items-center justify-center"
               />
