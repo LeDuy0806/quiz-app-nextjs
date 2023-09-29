@@ -15,24 +15,6 @@ const SignUp = () => {
   const [showFormUserName, setShowFormUserName] = useState<boolean>(false);
   const [showFormUserType, setShowFormUserType] = useState<boolean>(false);
 
-  // const handleShowFormSignUp = () => {
-  //   setShowFormUserName(false);
-  //   setShowFormUserType(false);
-  //   setShowFormSignUp(true);
-  // };
-
-  // const handleShowFormUserName = () => {
-  //   setShowFormUserType(false);
-  //   setShowFormSignUp(false);
-  //   setShowFormUserName(true);
-  // };
-
-  // const handleShowFormUserType = () => {
-  //   setShowFormUserName(false);
-  //   setShowFormSignUp(false);
-  //   setShowFormUserType(true);
-  // };
-
   return (
     <motion.div
       initial={!showFormSignUp ? { y: -10, opacity: 0 } : { x: 10, opacity: 0 }}
@@ -61,8 +43,6 @@ const SignUp = () => {
       )}
     </motion.div>
   );
-  // return <FormUserName />;
-  // return <FormUserType />;
 };
 
 export default SignUp;

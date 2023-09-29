@@ -16,7 +16,7 @@ const FormUserName = (props: FormSignUpProps) => {
         <motion.div
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
           className="text-[6rem]"
         >
           👋
@@ -24,7 +24,7 @@ const FormUserName = (props: FormSignUpProps) => {
         <motion.h1
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
           className="text-[2rem] text-textWhite mb-[15px]"
         >
           What's your name?
@@ -32,7 +32,7 @@ const FormUserName = (props: FormSignUpProps) => {
         <motion.div
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          transition={{ duration: 0.4, delay: 0.4 }}
           className="flex flex-row items-center justify-around"
         >
           <div className="w-2/5 relative mb-[7px]">
@@ -52,7 +52,7 @@ const FormUserName = (props: FormSignUpProps) => {
         <motion.div
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={{ duration: 0.4, delay: 0.5 }}
           className="w-full relative mb-[7px]"
         >
           <input
@@ -64,7 +64,7 @@ const FormUserName = (props: FormSignUpProps) => {
         <motion.div
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
+          transition={{ duration: 0.4, delay: 0.6 }}
           className="w-full h-[60px] flex flex-col items-center justify-center"
         >
           <button
@@ -81,7 +81,7 @@ const FormUserName = (props: FormSignUpProps) => {
         <motion.button
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.7 }}
+          transition={{ duration: 0.4, delay: 0.7 }}
           className="block w-full text-sm py-4 hover:bg-bgGrayLight hover:rounded-[18px] hover:text-[15px] font-bold text-textWhite"
           onClick={() => {
             props.setShowFormSignUp(true);

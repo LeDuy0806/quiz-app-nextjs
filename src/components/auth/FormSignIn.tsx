@@ -3,7 +3,11 @@
 import { useState } from "react";
 //images
 import Image from "next/image";
-import { facebook, google, logo, raisehand } from "../../../public/assets";
+import {
+  logoImg,
+  googleImg,
+  facebookImg,
+} from "../../../public/assets/images/auth";
 
 //routes
 import { useRouter } from "next/navigation";
@@ -14,6 +18,7 @@ import { AiFillEye } from "react-icons/ai";
 
 //animation
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const FormSignIn = () => {
   const router = useRouter();
@@ -31,10 +36,10 @@ const FormSignIn = () => {
         <motion.div
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
           className="flex flex-row items-center justify-center gap-x-4 mb-[30px]"
         >
-          <Image src={logo} alt="" className="h-[50px] w-[50px]" />
+          <Image src={logoImg} alt="" className="h-[50px] w-[50px]" />
           <p className="text-[36px] text-textBlack font-black">Quizzes</p>
         </motion.div>
         <div className="block h-full">
@@ -43,7 +48,7 @@ const FormSignIn = () => {
               <motion.div
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
                 className="relative mb-6"
                 data-te-input-wrapper-init
               >
@@ -59,7 +64,7 @@ const FormSignIn = () => {
               <motion.div
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
+                transition={{ duration: 0.4, delay: 0.4 }}
                 className="relative mb-6"
                 data-te-input-wrapper-init
               >
@@ -86,7 +91,7 @@ const FormSignIn = () => {
               <motion.button
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
+                transition={{ duration: 0.4, delay: 0.5 }}
                 className="w-full bg-bgBlue rounded-2xl py-[0.8rem] text-textWhite font-bold"
               >
                 Sign In
@@ -105,7 +110,7 @@ const FormSignIn = () => {
               <motion.button
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.7 }}
+                transition={{ duration: 0.4, delay: 0.7 }}
                 className="block w-full  text-sm py-4 font-semibold hover:bg-bgGrayLight lue hover:rounded-[18px] hover:text-[15px]"
               >
                 I forgot my password
@@ -114,11 +119,11 @@ const FormSignIn = () => {
               <motion.button
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
+                transition={{ duration: 0.4, delay: 0.8 }}
                 className="w-full flex flex-row items-center justify-around bg-white rounded-2xl py-[0.8rem] text-textGray font-bold border-[2px] border-textPurple hover:bg-textPurpleBorder hover:text-textWhite"
               >
                 <Image
-                  src={google}
+                  src={googleImg}
                   alt=""
                   className="block w-[20px] h-[20px]"
                 />
@@ -129,11 +134,11 @@ const FormSignIn = () => {
               <motion.button
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
+                transition={{ duration: 0.4, delay: 0.8 }}
                 className="w-full flex flex-row items-center justify-around bg-white rounded-2xl py-[0.8rem] text-textGray font-bold border-[2px] border-textBlue hover:bg-bgBlue hover:text-textWhite"
               >
                 <Image
-                  src={facebook}
+                  src={facebookImg}
                   alt=""
                   className="z-[100] block w-[20px] h-[20px]"
                 />
@@ -141,24 +146,20 @@ const FormSignIn = () => {
                 <span />
               </motion.button>
 
-              <motion.button
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.9 }}
-                className="block w-full text-sm py-4 hover:bg-bgGrayLight hover:rounded-[18px] hover:text-[15px] font-bold"
-                onClick={() => router.back()}
-              >
-                Back
-              </motion.button>
+              <Link href="/">
+                <motion.button
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.4, delay: 0.9 }}
+                  className="block w-full text-sm py-4 hover:bg-bgGrayLight hover:rounded-[18px] hover:text-[15px] font-bold"
+                >
+                  Back
+                </motion.button>
+              </Link>
             </div>
           </div>
         </div>
-        <div
-          // initial={{ x: -20, opacity: 0 }}
-          // animate={{ x: 0, opacity: 1 }}
-          // transition={{ duration: 0.5, delay: 1 }}
-          className="absolute w-full text-center min-h-[70px] bottom-0 left-[50%] translate-x-[-50%]"
-        >
+        <div className="absolute w-full text-center min-h-[70px] bottom-0 left-[50%] translate-x-[-50%]">
           <p className="text-textGray font-semibold">
             ©2023 quizzes GmbH -
             <span className="text-textBlack font-bold">

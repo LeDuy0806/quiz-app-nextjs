@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { logo } from "../../../../public/assets";
+import { logoImg } from "../../../../public/assets/images/landing";
 
 const Bottom = () => {
   return (
@@ -11,7 +11,11 @@ const Bottom = () => {
             href=""
             className="flex flex-row items-center justify-center gap-2 h-[2.25rem] mb-6"
           >
-            <Image src={logo} alt="" className="h-[40px] w-[40px] object-fit" />
+            <Image
+              src={logoImg}
+              alt=""
+              className="h-[40px] w-[40px] object-fit"
+            />
             <span className="text-textWhite font-extrabold text-xl">
               Quizzes
             </span>

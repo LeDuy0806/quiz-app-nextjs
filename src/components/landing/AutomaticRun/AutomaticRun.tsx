@@ -1,14 +1,14 @@
 //images
 import Image from "next/image";
 import {
-  bigheart,
-  gradientpurple,
-  likehand,
-  quiteheart,
-  smallheart,
-  imagerun,
-  raisehand,
-} from "../../../../public/assets";
+  bigHeartImg,
+  gradientPurpleImg,
+  likeHandImg,
+  quiteHeartImg,
+  smallHeartImg,
+  imageRunImg,
+  raiseHandImg,
+} from "../../../../public/assets/images/landing";
 
 //animation
 import Marquee from "react-fast-marquee";
@@ -26,7 +26,7 @@ const AutomaticRun = () => {
       <div className="w-full max-w-[1440px] bg-transparent rounded-[4px] mx-auto px-[3.13rem]">
         <div className="relative flex flex-col items-center text-center">
           <Image
-            src={gradientpurple}
+            src={gradientPurpleImg}
             alt=""
             className="w-[70em] h-auto absolute inline-block max-w-full z-[1]"
           />
@@ -36,74 +36,35 @@ const AutomaticRun = () => {
                 <div className="flex pr-[2.75em] flex-none gap-x-[2.75em]">
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="w-full h-full max-w-full relative inline-block object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="w-full h-full max-w-full relative inline-block object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="w-full h-full max-w-full relative inline-block object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="w-full h-full max-w-full relative inline-block object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
-                      alt=""
-                      className="w-full h-full max-w-full relative inline-block object-cover"
-                    />
-                  </div>
-                </div>
-              </Marquee>
-              <Marquee>
-                <div className="flex pr-[2.75em] flex-none gap-x-[2.75em]">
-                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
-                    <Image
-                      src={imagerun}
-                      alt=""
-                      className="w-full h-full max-w-full relative inline-block object-cover"
-                    />
-                  </div>
-                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
-                    <Image
-                      src={imagerun}
-                      alt=""
-                      className="w-full h-full max-w-full relative inline-block object-cover"
-                    />
-                  </div>
-                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
-                    <Image
-                      src={imagerun}
-                      alt=""
-                      className="w-full h-full max-w-full relative inline-block object-cover"
-                    />
-                  </div>
-                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
-                    <Image
-                      src={imagerun}
-                      alt=""
-                      className="w-full h-full max-w-full relative inline-block object-cover"
-                    />
-                  </div>
-                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
-                    <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="w-full h-full max-w-full relative inline-block object-cover"
                     />
@@ -114,35 +75,74 @@ const AutomaticRun = () => {
                 <div className="flex pr-[2.75em] flex-none gap-x-[2.75em]">
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="w-full h-full max-w-full relative inline-block object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="w-full h-full max-w-full relative inline-block object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="w-full h-full max-w-full relative inline-block object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="w-full h-full max-w-full relative inline-block object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
+                      alt=""
+                      className="w-full h-full max-w-full relative inline-block object-cover"
+                    />
+                  </div>
+                </div>
+              </Marquee>
+              <Marquee>
+                <div className="flex pr-[2.75em] flex-none gap-x-[2.75em]">
+                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
+                    <Image
+                      src={imageRunImg}
+                      alt=""
+                      className="w-full h-full max-w-full relative inline-block object-cover"
+                    />
+                  </div>
+                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
+                    <Image
+                      src={imageRunImg}
+                      alt=""
+                      className="w-full h-full max-w-full relative inline-block object-cover"
+                    />
+                  </div>
+                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
+                    <Image
+                      src={imageRunImg}
+                      alt=""
+                      className="w-full h-full max-w-full relative inline-block object-cover"
+                    />
+                  </div>
+                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
+                    <Image
+                      src={imageRunImg}
+                      alt=""
+                      className="w-full h-full max-w-full relative inline-block object-cover"
+                    />
+                  </div>
+                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
+                    <Image
+                      src={imageRunImg}
                       alt=""
                       className="w-full h-full max-w-full relative inline-block object-cover"
                     />
@@ -155,74 +155,35 @@ const AutomaticRun = () => {
                 <div className="flex pr-[2.75em] flex-none gap-x-[2.75em]">
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="relative w-full h-full max-w-full inline-block  object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="relative w-full h-full max-w-full inline-block  object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="relative w-full h-full max-w-full inline-block  object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="relative w-full h-full max-w-full inline-block  object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
-                      alt=""
-                      className="relative w-full h-full max-w-full inline-block  object-cover"
-                    />
-                  </div>
-                </div>
-              </Marquee>
-              <Marquee direction="right">
-                <div className="flex pr-[2.75em] flex-none gap-x-[2.75em]">
-                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
-                    <Image
-                      src={imagerun}
-                      alt=""
-                      className="relative w-full h-full max-w-full inline-block  object-cover"
-                    />
-                  </div>
-                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
-                    <Image
-                      src={imagerun}
-                      alt=""
-                      className="relative w-full h-full max-w-full inline-block  object-cover"
-                    />
-                  </div>
-                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
-                    <Image
-                      src={imagerun}
-                      alt=""
-                      className="relative w-full h-full max-w-full inline-block  object-cover"
-                    />
-                  </div>
-                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
-                    <Image
-                      src={imagerun}
-                      alt=""
-                      className="relative w-full h-full max-w-full inline-block  object-cover"
-                    />
-                  </div>
-                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
-                    <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="relative w-full h-full max-w-full inline-block  object-cover"
                     />
@@ -233,35 +194,74 @@ const AutomaticRun = () => {
                 <div className="flex pr-[2.75em] flex-none gap-x-[2.75em]">
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="relative w-full h-full max-w-full inline-block  object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="relative w-full h-full max-w-full inline-block  object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="relative w-full h-full max-w-full inline-block  object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
                       alt=""
                       className="relative w-full h-full max-w-full inline-block  object-cover"
                     />
                   </div>
                   <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
                     <Image
-                      src={imagerun}
+                      src={imageRunImg}
+                      alt=""
+                      className="relative w-full h-full max-w-full inline-block  object-cover"
+                    />
+                  </div>
+                </div>
+              </Marquee>
+              <Marquee direction="right">
+                <div className="flex pr-[2.75em] flex-none gap-x-[2.75em]">
+                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
+                    <Image
+                      src={imageRunImg}
+                      alt=""
+                      className="relative w-full h-full max-w-full inline-block  object-cover"
+                    />
+                  </div>
+                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
+                    <Image
+                      src={imageRunImg}
+                      alt=""
+                      className="relative w-full h-full max-w-full inline-block  object-cover"
+                    />
+                  </div>
+                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
+                    <Image
+                      src={imageRunImg}
+                      alt=""
+                      className="relative w-full h-full max-w-full inline-block  object-cover"
+                    />
+                  </div>
+                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
+                    <Image
+                      src={imageRunImg}
+                      alt=""
+                      className="relative w-full h-full max-w-full inline-block  object-cover"
+                    />
+                  </div>
+                  <div className="w-[35.38em] rounded-xl flex flex-none overflow-hidden">
+                    <Image
+                      src={imageRunImg}
                       alt=""
                       className="relative w-full h-full max-w-full inline-block  object-cover"
                     />
@@ -282,22 +282,22 @@ const AutomaticRun = () => {
             </div>
           </div>
           <Image
-            src={raisehand}
+            src={raiseHandImg}
             alt=""
             className="w-[30.75em] h-[30.75em] max-w-full inline-block absolute bottom-[-4em] object-contain z-[4]"
           />
           <Image
-            src={bigheart}
+            src={bigHeartImg}
             alt=""
             className="w-[10.25em] h-auto inline-block max-w-full absolute z-[3] bottom-[0] translate-x-[19%] translate-y-[-28em]"
           />
           <Image
-            src={quiteheart}
+            src={quiteHeartImg}
             alt=""
             className="z-[1] bottom-[0] h-auto inline-bock max-w-full align-middle absolute w-[4.81em] translate-x-[-4em] translate-y-[-21em]"
           />
           <Image
-            src={smallheart}
+            src={smallHeartImg}
             alt=""
             className="z-[1] bottom-[0] h-auto max-w-full inline-bock align-middle absolute w-[2.75em] translate-x-[-3.4em] translate-y-[-34em]"
           />

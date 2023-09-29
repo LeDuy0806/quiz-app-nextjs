@@ -5,7 +5,7 @@ import Image from "next/image";
 
 //animation
 import { motion } from "framer-motion";
-import { students, teacher } from "../../../public/assets";
+import { studentsImg, teacherImg } from "../../../public/assets/images/auth";
 
 interface FormTypeProps {
   setShowFormUserName: (state: boolean) => void;
@@ -19,7 +19,7 @@ const FormUserType = (props: FormTypeProps) => {
         <motion.div
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
           className="text-[6rem]"
         >
           👨‍💻
@@ -27,8 +27,8 @@ const FormUserType = (props: FormTypeProps) => {
         <motion.h1
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="w-[560px] text-[2rem] text-textWhite mb-[15px] text-center font-black leading-[1.3em] break-words px-2"
+          transition={{ duration: 0.4, delay: 0.3 }}
+          className="mdl:w-[560px] text-[2rem] text-textWhite mb-[15px] text-center font-black leading-[1.3em] break-words px-2"
         >
           What kind of customer are you using quizzes for?
         </motion.h1>
@@ -36,11 +36,11 @@ const FormUserType = (props: FormTypeProps) => {
         <motion.div
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          transition={{ duration: 0.4, delay: 0.4 }}
           className="w-[400px] mdl:w-[600px] min-h-[50px] flex flex-row flex-1 items-center justify-between outline-none bg-bgBlackType rounded-[20px] px-4 hover:bg-bgBlackHover cursor-pointer"
         >
           <div className="flex flex-row gap-x-2 items-center justify-center">
-            <Image alt="" src={students} className="w-[30px] h-[30px]" />
+            <Image alt="" src={studentsImg} className="w-[30px] h-[30px]" />
             <span className="text-textWhite font-semibold">Student</span>
           </div>
           <div>
@@ -51,11 +51,11 @@ const FormUserType = (props: FormTypeProps) => {
         <motion.div
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={{ duration: 0.4, delay: 0.5 }}
           className="w-[400px] mdl:w-[600px] min-h-[50px] flex flex-row flex-1 items-center justify-between  outline-none bg-bgBlackType rounded-[20px] px-4 hover:bg-bgBlackHover cursor-pointer"
         >
           <div className="flex flex-row gap-x-2 items-center justify-center">
-            <Image alt="" src={teacher} className="w-[30px] h-[30px]" />
+            <Image alt="" src={teacherImg} className="w-[30px] h-[30px]" />
             <span className="text-textWhite font-semibold">Teacher</span>
           </div>
           <div className="max-w-[220px] mdl:max-w-full">
@@ -68,7 +68,7 @@ const FormUserType = (props: FormTypeProps) => {
         <motion.div
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
+          transition={{ duration: 0.4, delay: 0.6 }}
           className="w-full h-[60px] flex flex-col items-center justify-center"
         >
           <button className="max-w-[200px] text-[16px] rounded-[20px] bg-bgBlue text-textWhite font-semibold hover:font-bold px-10 py-[12px] hover:py-[14px] mt-2 text-center">
@@ -79,7 +79,7 @@ const FormUserType = (props: FormTypeProps) => {
         <motion.button
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.7 }}
+          transition={{ duration: 0.4, delay: 0.7 }}
           className="block w-full text-sm py-4 hover:bg-bgGrayLight hover:rounded-[18px] hover:text-[15px] font-bold"
           onClick={() => {
             props.setShowFormUserType(false);

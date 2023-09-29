@@ -3,7 +3,7 @@ import { useState } from "react";
 
 //images
 import Image from "next/image";
-import { logo } from "../../../public/assets";
+import { logoImg } from "../../../public/assets/images/auth";
 
 //routes
 import { useRouter } from "next/navigation";
@@ -30,10 +30,10 @@ const FormSignUp = (props: FormSignUpProps) => {
       <motion.div
         initial={{ x: -20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
         className="flex flex-row items-center justify-center gap-x-4 mb-[30px]"
       >
-        <Image src={logo} alt="" className="h-[50px] w-[50px]" />
+        <Image src={logoImg} alt="" className="h-[50px] w-[50px]" />
         <p className="text-[36px] text-textBlack font-black">Quizzes</p>
       </motion.div>
       <div className="block h-full">
@@ -42,7 +42,7 @@ const FormSignUp = (props: FormSignUpProps) => {
             <motion.div
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
               className="relative mb-6"
               data-te-input-wrapper-init
             >
@@ -58,7 +58,7 @@ const FormSignUp = (props: FormSignUpProps) => {
             <motion.div
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
+              transition={{ duration: 0.4, delay: 0.4 }}
               className="relative mb-6"
               data-te-input-wrapper-init
             >
@@ -85,7 +85,7 @@ const FormSignUp = (props: FormSignUpProps) => {
             <motion.div
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
+              transition={{ duration: 0.4, delay: 0.5 }}
               className="w-full flex justify-center items-center text-right mb-4"
             >
               <div className="relative flex ml-0 float-none items-center justify-center">
@@ -106,7 +106,7 @@ const FormSignUp = (props: FormSignUpProps) => {
             <motion.button
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
+              transition={{ duration: 0.4, delay: 0.6 }}
               className="w-full bg-bgBlue rounded-2xl py-[0.8rem] text-textWhite font-bold"
               onClick={() => {
                 props.setShowFormSignUp(false);
@@ -120,7 +120,7 @@ const FormSignUp = (props: FormSignUpProps) => {
           <motion.div
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
+            transition={{ duration: 0.4, delay: 0.7 }}
             className="flex flex-col w-full gap-y-2 mt-3"
           >
             <button
