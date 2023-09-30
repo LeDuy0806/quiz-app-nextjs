@@ -12,11 +12,11 @@ export default function RootLayout({
     return (
         <html lang='en'>
             <head>
-                <title>Discover - Quizzes</title>
+                <title>Library - Quizzes</title>
                 <link rel='shortcut icon' href='/assets/images/logoApp.png' />
             </head>
             <body className={inter.className} suppressHydrationWarning={true}>
-                {children}
+                <SideBar>{children}</SideBar>
             </body>
         </html>
     );

@@ -1,22 +1,35 @@
 import type { Config } from "tailwindcss";
 
-const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
-  theme: {
-    extend: {
-      screens: {
+const screenWidth={
         xs: "320px",
-        sm: "375px",
+        sm: "391px",
         sml: "500px",
         md: "667px",
         mdl: "768px",
         lg: "960px",
         lgl: "1024px",
         xl: "1280px",
+}
+
+const config: Config = {
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  darkMode:'class',
+  theme: {
+    extend: {
+      screens: {
+        xs: "320px",
+        sm: "391px",
+        sml: "500px",
+        md: "667px",
+        mdl: "768px",
+        lg: "960px",
+        lgl: "1024px",
+        xl: "1280px",
+        // smTolglRange: {min: '391px', max: '1024px'},
       },
 
       backgroundImage: {
