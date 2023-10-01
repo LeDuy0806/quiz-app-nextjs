@@ -1,17 +1,17 @@
 import QuestionType from "../types/questionType";
 import UserType from "../types/userType";
 
-type RegisterType = {
+type SignUpType = {
+  avatar: string;
   firstName: string;
   lastName: string;
   userType: string;
   userName: string;
   mail: string;
   password: string;
-  confirmPassword: string;
 };
 
-type ErrorExistRegisterType = {
+type ErrorExistSingUp = {
   userName: boolean;
   mail: boolean;
 };
@@ -20,17 +20,16 @@ type ErrorUserType = {
   userNameError: boolean;
   emailError: boolean;
   passwordError: boolean;
-  confirmPasswordError: boolean;
   requestQuantity: boolean;
   textQuantity: boolean;
 };
 
 type LoginType = {
-  userName: string;
+  mail: string;
   password: string;
 };
 
-type ErrorExistLoginType = {
+type ErrorLoginType = {
   userName: boolean;
   password: boolean;
 };
@@ -76,11 +75,12 @@ type QuizDataType = {
 };
 
 export {
-  type RegisterType,
-  type ErrorExistRegisterType,
+  type SignUpType,
+  type ErrorExistSingUp,
   type ErrorUserType,
   type LoginType,
-  type ErrorExistLoginType,
+  type EditProfileType,
+  type ErrorLoginType,
   type QuizDataType,
   type QuestionDataType,
 };

@@ -1,9 +1,11 @@
 "use client";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Switch from "react-switch";
 
 //images
 import Image from "next/image";
 import { logoImg } from "../../../public/assets/images/auth";
+import { loadingImg } from "../../../public/assets/images/auth";
 
 //routes
 import { useRouter } from "next/navigation";
@@ -14,16 +16,60 @@ import { AiFillEye } from "react-icons/ai";
 
 //animation
 import { motion } from "framer-motion";
+import clsx from "clsx";
+
+import { EmailFormat, RequirePassword } from "src/app/validates";
+import ErrorNotify from "./Error";
+
+//RTKQuery
+import { useCheckMailExistsMutation } from "src/app/redux/services/authApi";
 
 interface FormSignUpProps {
   setShowFormSignUp: (state: boolean) => void;
   setShowFormUserName: (state: boolean) => void;
+  handleChangeForm: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  mail: string;
+  password: string;
 }
 
 const FormSignUp = (props: FormSignUpProps) => {
   const router = useRouter();
 
+  const [click, setClick] = useState<boolean>(false);
+  const [check, setCheck] = useState<boolean>(false);
   const [showPassWord, setShowPassWord] = useState<boolean>(false);
+
+  const [checkMail, { data, isError, isLoading, isSuccess }] =
+    useCheckMailExistsMutation();
+
+  useEffect(() => {
+    if (
+      !props.mail ||
+      !props.password ||
+      !check ||
+      RequirePassword(props.password) !== "strong" ||
+      !EmailFormat(props.mail)
+    ) {
+      setClick(false);
+    } else {
+      setClick(true);
+    }
+  }, [props.mail, props.password, check]);
+
+  const handleContinue = () => {
+    if (click) {
+      // props.setShowFormSignUp(false);
+      // props.setShowFormUserName(true);
+      checkMail({ mail: props.mail });
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      props.setShowFormSignUp(false);
+      props.setShowFormUserName(true);
+    }
+  }, [isSuccess]);
 
   return (
     <div className="absolute w-[760px] min-h-full mdl:min-h-[600px] rounded-[50px] bg-textWhite top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] overflow-hidden py-[75px] px-[210px]">
@@ -47,11 +93,18 @@ const FormSignUp = (props: FormSignUpProps) => {
               data-te-input-wrapper-init
             >
               <input
+                value={props.mail}
                 type="email"
-                className="block min-h-[auto] w-full rounded-2xl border px-3 py-[0.8rem] outline-none font-semibold focus:border-bgBlue focus:border-[2px] placeholder-gray-400 placeholder:italic"
-                id="exampleInputEmail2"
-                aria-describedby="emailHelp"
+                name="mail"
+                className={clsx(
+                  `block min-h-[auto] w-full rounded-2xl border-[2px] px-3 py-[0.8rem] font-semibold outline-none focus:border-bgBlue focus:border-[2px] placeholder-gray-400 placeholder:italic`,
+                  EmailFormat(props.mail) === false &&
+                    "focus:border-textError border-textError",
+                  EmailFormat(props.mail) === true &&
+                    "focus:border-textGreen border-textGreen"
+                )}
                 placeholder="Enter email"
+                onChange={props.handleChangeForm}
               />
             </motion.div>
 
@@ -63,10 +116,20 @@ const FormSignUp = (props: FormSignUpProps) => {
               data-te-input-wrapper-init
             >
               <input
-                type={showPassWord ? "password" : "text"}
-                className="min-h-[auto] w-full rounded-2xl border bg-transparent px-3 py-[0.8rem] outline-none font-semibold focus:border-bgBlue focus:border-[2px] placeholder-gray-400 placeholder:italic"
-                id="exampleInputPassword2"
+                value={props.password}
+                type={showPassWord ? "text" : "password"}
+                name="password"
+                className={clsx(
+                  `min-h-[auto] w-full rounded-2xl border bg-transparent px-3 py-[0.8rem] outline-none font-semibold focus:border-bgBlue focus:border-[2px] placeholder-gray-400 placeholder:italic`,
+                  RequirePassword(props.password) === "strong" &&
+                    "border-textGreen focus:border-textGreen",
+                  RequirePassword(props.password) === "weak" &&
+                    "border-textError focus:border-textError",
+                  RequirePassword(props.password) === "medium" &&
+                    "border-textYellow focus:border-textYellow"
+                )}
                 placeholder="Set password"
+                onChange={props.handleChangeForm}
               />
               <button
                 className="absolute right-4 translate-y-[-50%] top-[50%] cursor-pointer"
@@ -75,9 +138,9 @@ const FormSignUp = (props: FormSignUpProps) => {
                 }}
               >
                 {showPassWord ? (
-                  <AiFillEyeInvisible className=" w-[20px] h-[20px]" />
-                ) : (
                   <AiFillEye className=" w-[20px] h-[20px]" />
+                ) : (
+                  <AiFillEyeInvisible className=" w-[20px] h-[20px]" />
                 )}
               </button>
             </motion.div>
@@ -88,11 +151,17 @@ const FormSignUp = (props: FormSignUpProps) => {
               transition={{ duration: 0.4, delay: 0.5 }}
               className="w-full flex justify-center items-center text-right mb-4"
             >
-              <div className="relative flex ml-0 float-none items-center justify-center">
+              {/* <div className="relative flex ml-0 float-none items-center justify-center">
                 <label className="relative inline-block text-[13px] h-[30px] w-[52px] bg-bgSwitch leading-[24px] cursor-pointer rounded-[15px] self-center">
                   <span className="absolute inline-block w-1/2 h-[calc(100%-4px)] bg-textWhite rounded-full left-1 shadow-white"></span>
                 </label>
-              </div>
+              </div> */}
+              <Switch
+                onChange={() => {
+                  setCheck(!check);
+                }}
+                checked={check}
+              />
               <span className="inline-block h-[30px] leading-[30px] ml-[10px] mt-0 font-semibold text-sm">
                 {"Accept "}
                 <a className="outline-none text-textBlueLight">Terms of use</a>
@@ -103,17 +172,29 @@ const FormSignUp = (props: FormSignUpProps) => {
               </span>
             </motion.div>
 
+            {isError && <ErrorNotify message="Email already exists" />}
+
             <motion.button
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.6 }}
-              className="w-full bg-bgBlue rounded-2xl py-[0.8rem] text-textWhite font-bold"
-              onClick={() => {
-                props.setShowFormSignUp(false);
-                props.setShowFormUserName(true);
-              }}
+              className={clsx(
+                `w-full flex items-center justify-center bg-bgBlue rounded-2xl py-[0.6rem] text-textWhite font-bold leading-7`,
+                click
+                  ? "bg-bgBlue cursor-pointer"
+                  : "bg-textGray cursor-default"
+              )}
+              onClick={handleContinue}
             >
-              Sign Up
+              {isLoading ? (
+                <Image
+                  src={loadingImg}
+                  alt=""
+                  className="w-7 h-7 self-center"
+                />
+              ) : (
+                "Sign Up"
+              )}
             </motion.button>
           </div>
 

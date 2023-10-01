@@ -1,16 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import clsx from "clsx";
+
 //images
 import Image from "next/image";
 import {
   logoImg,
   googleImg,
   facebookImg,
+  loadingImg,
 } from "../../../public/assets/images/auth";
 
 //routes
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 //icons
 import { AiFillEyeInvisible } from "react-icons/ai";
@@ -18,12 +22,80 @@ import { AiFillEye } from "react-icons/ai";
 
 //animation
 import { motion } from "framer-motion";
-import Link from "next/link";
+
+//components
+import ErrorNotify from "./Error";
+import { EmailFormat } from "src/app/validates";
+
+//RTKQuery
+import { useAppDispatch } from "src/app/redux/hooks";
+import { loGin } from "src/app/redux/slices/authSlice";
+import { useLoginUserMutation } from "src/app/redux/services/authApi";
+
+import { LoginType, ErrorLoginType } from "src/app/variable";
+const InitLogin = { mail: "", password: "" } as LoginType;
+const InitErrorLogin = {
+  userName: false,
+  password: false,
+} as ErrorLoginType;
 
 const FormSignIn = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
+  const [formData, setFormData] = useState<LoginType>(InitLogin);
+  const [formError, setFormError] = useState<ErrorLoginType>(InitErrorLogin);
+
+  const [click, setClick] = useState<boolean>(false);
   const [showPassWord, setShowPassWord] = useState<boolean>(false);
+
+  const [Login, { data, isLoading, isError, error }] = useLoginUserMutation();
+
+  useEffect(() => {
+    if (!formData.mail || !formData.password || !EmailFormat(formData.mail)) {
+      setClick(false);
+    } else {
+      setClick(true);
+    }
+  }, [formData.mail, formData.password]);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(loGin(data));
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (isError) {
+      const { data }: any = error;
+      switch (data?.message) {
+        case "Account not exist":
+          setFormError((pre) => {
+            var newError = { ...InitErrorLogin, userName: true };
+            return newError;
+          });
+          break;
+        case "Wrong password":
+          console.log(2);
+          setFormError((pre) => {
+            var newError = { ...InitErrorLogin, password: true };
+            return newError;
+          });
+        default:
+          break;
+          break;
+      }
+    }
+  }, [isError]);
+
+  const handleChangeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleLogin = () => {
+    setFormError(InitErrorLogin);
+    Login(formData);
+  };
 
   return (
     <motion.main
@@ -50,14 +122,17 @@ const FormSignIn = () => {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.3 }}
                 className="relative mb-6"
-                data-te-input-wrapper-init
               >
                 <input
                   type="email"
-                  className="block min-h-[auto] w-full rounded-2xl border-[2px] px-3 py-[0.8rem] font-semibold outline-none focus:border-bgBlue focus:border-[2px] placeholder-gray-400 placeholder:italic"
-                  id="exampleInputEmail2"
-                  aria-describedby="emailHelp"
+                  name="mail"
+                  className={clsx(
+                    `block min-h-[auto] w-full rounded-2xl border-[2px] px-3 py-[0.8rem] font-semibold outline-none focus:border-bgBlue focus:border-[2px] placeholder-gray-400 placeholder:italic`,
+                    EmailFormat(formData.mail) === false &&
+                      "focus:border-textError border-textError"
+                  )}
                   placeholder="Enter email"
+                  onChange={handleChangeForm}
                 />
               </motion.div>
 
@@ -66,13 +141,13 @@ const FormSignIn = () => {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.4 }}
                 className="relative mb-6"
-                data-te-input-wrapper-init
               >
                 <input
-                  type={showPassWord ? "password" : "text"}
+                  type={showPassWord ? "text" : "password"}
+                  name="password"
                   className="min-h-[auto] w-full rounded-2xl border-[2px] bg-transparent px-3 py-[0.8rem] font-semibold outline-none focus:border-bgBlue focus:border-[2px] placeholder-gray-400 placeholder:italic"
-                  id="exampleInputPassword2"
                   placeholder="Password"
+                  onChange={handleChangeForm}
                 />
                 <button
                   className="absolute right-4 translate-y-[-50%] top-[50%] cursor-pointer"
@@ -81,20 +156,42 @@ const FormSignIn = () => {
                   }}
                 >
                   {showPassWord ? (
-                    <AiFillEyeInvisible className=" w-[20px] h-[20px]" />
-                  ) : (
                     <AiFillEye className=" w-[20px] h-[20px]" />
+                  ) : (
+                    <AiFillEyeInvisible className=" w-[20px] h-[20px]" />
                   )}
                 </button>
               </motion.div>
+
+              {formError.userName && (
+                <ErrorNotify message="Email does not exists" />
+              )}
+
+              {formError.password && (
+                <ErrorNotify message="Your password is wrong" />
+              )}
 
               <motion.button
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.5 }}
-                className="w-full bg-bgBlue rounded-2xl py-[0.8rem] text-textWhite font-bold"
+                className={clsx(
+                  `w-full flex items-center justify-center rounded-2xl py-[0.6rem] text-textWhite font-bold leading-7`,
+                  click
+                    ? "bg-bgBlue cursor-pointer"
+                    : "bg-textGray cursor-default"
+                )}
+                onClick={handleLogin}
               >
-                Sign In
+                {isLoading ? (
+                  <Image
+                    src={loadingImg}
+                    alt=""
+                    className="w-7 h-7 self-center"
+                  />
+                ) : (
+                  "Sign In"
+                )}
               </motion.button>
             </div>
             <div className="flex flex-col w-full gap-y-2 mt-3">

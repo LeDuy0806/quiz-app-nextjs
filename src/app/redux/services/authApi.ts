@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { API } from "../api";
 import { AuthType } from "src/app/types/authType";
-import { RegisterType, LoginType } from "src/app/variable";
+import { SignUpType, LoginType } from "src/app/variable";
 
 export const apiAuth = createApi({
   reducerPath: "apiAuth",
@@ -10,7 +10,23 @@ export const apiAuth = createApi({
   }),
   keepUnusedDataFor: 20,
   endpoints: (builder) => ({
-    registerUser: builder.mutation<object, RegisterType>({
+    checkMailExists: builder.mutation<any, any>({
+      query: (formData) => ({
+        url: "api/auth/checkEmail",
+        method: "POST",
+        body: formData,
+      }),
+    }),
+
+    checkUserNameExits: builder.mutation<any, any>({
+      query: (formData) => ({
+        url: "api/auth/checkUserName",
+        method: "POST",
+        body: formData,
+      }),
+    }),
+
+    registerUser: builder.mutation<object, SignUpType>({
       query: (formData) => ({
         url: "api/auth/register",
         method: "POST",
@@ -28,4 +44,9 @@ export const apiAuth = createApi({
   }),
 });
 
-export const { useRegisterUserMutation, useLoginUserMutation } = apiAuth;
+export const {
+  useCheckMailExistsMutation,
+  useCheckUserNameExitsMutation,
+  useRegisterUserMutation,
+  useLoginUserMutation,
+} = apiAuth;

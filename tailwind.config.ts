@@ -60,6 +60,7 @@ const config: Config = {
         textYellow: "#f5b218",
         textBlack: "#081934",
         textWhite: "#fff",
+        textError: "#f21b7d",
         textFog: "#2c2c39",
         bgBlack: "#0c131f",
         bgBlackLight: "#56566f",
@@ -74,6 +75,8 @@ const config: Config = {
         bgPink: "#c17fff33",
         bgBlue: "#5bc0ff",
         bgInput: "#171822",
+        bgError: "#ff43981a",
+        bgGrayLight: "#F5F5F5",
       },
 
       boxShadow: {
