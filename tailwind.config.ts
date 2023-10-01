@@ -22,14 +22,13 @@ const config: Config = {
     extend: {
       screens: {
         xs: "320px",
-        sm: "391px",
+        sm: "415px",
         sml: "500px",
         md: "667px",
         mdl: "768px",
         lg: "960px",
         lgl: "1024px",
         xl: "1280px",
-        // smTolglRange: {min: '391px', max: '1024px'},
       },
 
       backgroundImage: {
