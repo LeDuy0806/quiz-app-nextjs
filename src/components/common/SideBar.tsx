@@ -2,11 +2,13 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import { BiChevronDown, BiCompass } from 'react-icons/bi';
+import { useState, useEffect, useRef } from 'react';
+import { AiOutlineGift } from 'react-icons/ai';
+import { BiHelpCircle } from 'react-icons/bi';
 import { BsFilterLeft, BsPlusLg } from 'react-icons/bs';
-import { FaListUl } from 'react-icons/fa';
-import { HiOutlineHome } from 'react-icons/hi';
+import { FaCompass, FaRegCompass } from 'react-icons/fa';
+import { HiHome, HiOutlineHome } from 'react-icons/hi';
+import { IoIosList, IoIosListBox } from 'react-icons/io';
 import { IconType } from 'react-icons/lib/esm/iconBase';
 import useWindowDimensions from 'src/hooks/useWindowDimensions';
 const DynamicThemeSwitcher = dynamic(
@@ -28,38 +30,68 @@ function SideBar({ children }: { children: React.ReactNode }) {
             if (!hideSideBar) setHideSideBar(true);
         }
     }, [width]);
+    const contextMenuRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleOutsideClick = (e: any) => {
+            if (e.target.id !== 'context-opener') {
+                if (
+                    contextMenuRef.current &&
+                    !contextMenuRef.current.contains(e.target)
+                ) {
+                    setHideSideBar(true);
+                }
+            }
+        };
+        document.addEventListener('click', handleOutsideClick);
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, []);
 
     const inActiveClassName =
-        'group sm:max-lgl:flex-col  rounded-t-lg border-b-2 border-gray-600 flex items-center p-2 text-gray-600 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700';
+        'group sm:max-xl:flex-col border-b-2 border-gray-600 flex items-center p-2 text-gray-600 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700';
 
     const activeClassName =
-        ' group sm:max-lgl:flex-col  rounded-t-lg border-b-2 border-blue-600 flex items-center p-2 text-blue-600 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700';
+        'active group sm:max-xl:flex-col border-b-2 border-bgPurple flex items-center p-2 text-gray-600 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700';
 
     const listLinks: {
         name: string;
         to: string;
-        icon: IconType;
+        icon: {
+            fill: IconType;
+            outline: IconType;
+        };
     }[] = [
         {
             name: 'Home',
             to: '/home',
-            icon: HiOutlineHome
+            icon: {
+                fill: HiHome,
+                outline: HiOutlineHome
+            }
         },
         {
             name: 'Discover',
             to: '/discover',
-            icon: BiCompass
+            icon: {
+                fill: FaCompass,
+                outline: FaRegCompass
+            }
         },
         {
             name: 'Library',
             to: '/library',
-            icon: FaListUl
+            icon: {
+                fill: IoIosListBox,
+                outline: IoIosList
+            }
         }
     ];
 
     return (
-        <>
-            <nav className='shadow-sm fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
+        <div ref={contextMenuRef}>
+            <nav className='roud shadow-sm fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
                 <div className='px-3 py-3 lg:px-5 lg:pl-3'>
                     <div className='flex items-center justify-between'>
                         <div className='flex items-center justify-start'>
@@ -91,9 +123,6 @@ function SideBar({ children }: { children: React.ReactNode }) {
                         {/* button open user menu */}
                         <div className='flex items-center'>
                             <div className='flex items-center ml-3'>
-                                <DynamicThemeSwitcher />
-                            </div>
-                            <div className='flex items-center ml-3'>
                                 <Link
                                     href='/creator'
                                     className='mr-6 max-md:h-8 max-md:w-8 md:px-5 md:py-2.5 flex items-center justify-center rounded-lg bg-purple-700 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 '
@@ -104,6 +133,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                     </span>
                                 </Link>
                             </div>
+
                             <div className='flex items-center ml-3'>
                                 <button
                                     type='button'
@@ -131,7 +161,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                 <div
                                     className={
                                         `${userMenuOpen ? 'block' : 'hidden'}` +
-                                        ' w-[60%] sm:w-[30%] absolute top-[2.75rem] right-0 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600'
+                                        ' w-[60%] sm:w-[30%] xl:w-[15%] absolute top-12 right-0 xl:right-4 z-50 my-4 text-base list-none bg-white divide-y divide-gray-200 rounded shadow-lg dark:bg-gray-700 dark:divide-gray-600'
                                     }
                                     id='dropdown-user'
                                 >
@@ -195,6 +225,9 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                     </ul>
                                 </div>
                             </div>
+                            <div className='flex items-center ml-6'>
+                                <DynamicThemeSwitcher />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -203,17 +236,20 @@ function SideBar({ children }: { children: React.ReactNode }) {
                 id='logo-sidebar'
                 className={
                     `${hideSideBar ? '-translate-x-full' : '-translate-x-0'}` +
-                    ' shadow-xl fixed top-0 left-0 w-64 sm:max-lgl:w-[6rem] z-40 h-screen pt-16 transition-transform  bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700'
+                    ' shadow-xl fixed top-0 left-0 w-48 sm:max-xl:w-[6rem] z-40 h-screen pt-16 transition-transform  bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700'
                 }
             >
-                <div className='h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800'>
-                    <ul className='space-y-2 font-medium sm:max-lgl:w-fit '>
+                <div className='h-full pt-2 px-2 pb-4 flex flex-col justify-between overflow-y-auto bg-white divide-y divide-gray-200 dark:bg-gray-800'>
+                    <ul className='space-y-2 font-medium sm:max-xl:w-fit '>
                         {listLinks.map(
                             (
                                 link: {
                                     name: string;
                                     to: string;
-                                    icon: IconType;
+                                    icon: {
+                                        fill: IconType;
+                                        outline: IconType;
+                                    };
                                 },
                                 index
                             ) => (
@@ -226,8 +262,12 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                                 : inActiveClassName
                                         }
                                     >
-                                        <link.icon className='w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white' />
-                                        <span className='ml-3 sm:max-lgl:ml-0 sm:max-lgl:text-xs'>
+                                        {pathName === link.to ? (
+                                            <link.icon.fill className='w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white' />
+                                        ) : (
+                                            <link.icon.outline className='w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white' />
+                                        )}
+                                        <span className='ml-3 sm:max-xl:ml-0 sm:max-xl:text-xs'>
                                             {link.name}
                                         </span>
                                     </Link>
@@ -235,12 +275,30 @@ function SideBar({ children }: { children: React.ReactNode }) {
                             )
                         )}
                     </ul>
+                    <ul className='space-y-2 font-medium sm:max-xl:w-fit sm:max-xl:flex sm:max-xl:items-center sm:max-xl:flex-col'>
+                        <li>
+                            <button className='group sm:max-xl:flex-col flex items-center p-2 text-gray-600 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'>
+                                <AiOutlineGift className='w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white' />
+                                <span className='ml-3 sm:max-xl:ml-0 sm:max-xl:text-xs'>
+                                    What's news?
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button className='group sm:max-xl:flex-col flex items-center p-2 text-gray-600 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'>
+                                <BiHelpCircle className='w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white' />
+                                <span className='ml-3 sm:max-xl:ml-0 sm:max-xl:text-xs'>
+                                    Help
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
                 </div>
             </aside>
-            <div className='sm:ml-[6rem] lgl:ml-64 mt-16'>
+            <div className='sm:ml-[6rem] xl:ml-48 mt-16'>
                 <div>{children}</div>
             </div>
-        </>
+        </div>
     );
 }
 

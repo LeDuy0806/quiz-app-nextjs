@@ -40,10 +40,10 @@ function ThemeSwitcher() {
         console.log(`${storedTheme} selected`);
     }, [storedTheme]);
     return (
-        <div className='theme-switcher items-center ml-12'>
+        <div className='theme-switcher items-center '>
             <button
                 type='button'
-                className={`dark-mode-switch cursor-pointer mr-6 w-[40px] h-[40px] p-[10px] rounded-[100%]
+                className={`dark-mode-switch cursor-pointer  w-[40px] h-[40px] p-[10px] rounded-[100%]
         border ${!isLight && 'hidden'}`}
                 onClick={setDarkTheme}
             >
@@ -61,7 +61,7 @@ function ThemeSwitcher() {
             </button>
             <button
                 type='button'
-                className={`light-mode-switch cursor-pointer mr-6 w-[40px] h-[40px] p-[10px] rounded-[100%]
+                className={`light-mode-switch dark:bg-white cursor-pointer  w-[40px] h-[40px] p-[10px] rounded-[100%]
         border ${isLight && 'hidden'}`}
                 onClick={setLightTheme}
             >
