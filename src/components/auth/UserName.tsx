@@ -1,10 +1,12 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 
 //animation
 import { motion } from 'framer-motion';
-import { use, useEffect, useState } from 'react';
+
+//validates
 import { RequireLong, RequireShort } from 'src/app/validates';
 
 //images
@@ -14,7 +16,7 @@ import { loadingImg } from '../../../public/assets/images/auth';
 //components
 import ErrorNotify from './Error';
 
-//RTKQuery
+//Redux
 import { useCheckUserNameExitsMutation } from 'src/app/redux/services/authApi';
 
 interface FormSignUpProps {
