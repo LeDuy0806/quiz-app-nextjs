@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import clsx from 'clsx';
+import { signIn } from 'next-auth/react';
 
 //images
 import Image from 'next/image';
@@ -70,6 +71,7 @@ const FormSignIn = () => {
     useEffect(() => {
         if (isSuccess && data) {
             dispatch(loGin(data));
+            router.push('/home');
         }
     }, [isSuccess, data]);
 
@@ -102,6 +104,19 @@ const FormSignIn = () => {
         setFormError(InitErrorLogin);
         Login(formData);
     };
+
+    // const loGinGoogle = async () => {
+    //     try {
+    //         const data = await signIn('credentials', {
+    //             redirect: false,
+    //             mail: formData.mail,
+    //             password: formData.mail
+    //         });
+    //         console.log(data);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
 
     return (
         <motion.main
@@ -222,10 +237,12 @@ const FormSignIn = () => {
                             </motion.button>
 
                             <motion.button
+                                type='submit'
                                 initial={{ x: -20, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
                                 transition={{ duration: 0.4, delay: 0.8 }}
                                 className='w-full flex flex-row items-center justify-around bg-white rounded-2xl py-[0.8rem] text-textGray font-bold border-[2px] border-textPurple hover:bg-textPurpleBorder hover:text-textWhite'
+                                onClick={() => signIn('google')}
                             >
                                 <Image
                                     src={googleImg}
@@ -233,7 +250,6 @@ const FormSignIn = () => {
                                     className='block w-[20px] h-[20px]'
                                 />
                                 <span className='inline-block'>
-                                    {' '}
                                     Sign in with google
                                 </span>
                                 <span />
@@ -251,7 +267,6 @@ const FormSignIn = () => {
                                     className='z-[100] block w-[20px] h-[20px]'
                                 />
                                 <span className='inline-block'>
-                                    {' '}
                                     Sign in with Facebook
                                 </span>
                                 <span />
