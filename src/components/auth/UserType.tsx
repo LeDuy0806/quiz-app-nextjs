@@ -2,12 +2,12 @@
 
 //images
 import Image from 'next/image';
-import { loadingImg } from '../../../public/assets/images/auth';
+
+import clsx from 'clsx';
 
 //animation
 import { motion } from 'framer-motion';
 import { studentsImg, teacherImg } from '../../../public/assets/images/auth';
-import clsx from 'clsx';
 
 interface FormTypeProps {
     setShowFormUserName: (state: boolean) => void;

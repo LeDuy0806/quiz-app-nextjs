@@ -26,7 +26,7 @@ export const apiAuth = createApi({
             })
         }),
 
-        registerUser: builder.mutation<object, SignUpType>({
+        registerUser: builder.mutation<AuthType, SignUpType>({
             query: (formData) => ({
                 url: 'api/auth/register',
                 method: 'POST',

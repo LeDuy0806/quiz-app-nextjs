@@ -25,13 +25,16 @@ import { motion } from 'framer-motion';
 
 //components
 import ErrorNotify from './Error';
+
+//validates
 import { EmailFormat } from 'src/app/validates';
 
-//RTKQuery
+//Redux
 import { useAppDispatch } from 'src/app/redux/hooks';
 import { loGin } from 'src/app/redux/slices/authSlice';
 import { useLoginUserMutation } from 'src/app/redux/services/authApi';
 
+//type
 import { LoginType, ErrorLoginType } from 'src/app/variable';
 const InitLogin = { mail: '', password: '' } as LoginType;
 const InitErrorLogin = {
@@ -49,7 +52,8 @@ const FormSignIn = () => {
     const [click, setClick] = useState<boolean>(false);
     const [showPassWord, setShowPassWord] = useState<boolean>(false);
 
-    const [Login, { data, isLoading, isError, error }] = useLoginUserMutation();
+    const [Login, { data, isLoading, isError, error, isSuccess }] =
+        useLoginUserMutation();
 
     useEffect(() => {
         if (
@@ -64,29 +68,27 @@ const FormSignIn = () => {
     }, [formData.mail, formData.password]);
 
     useEffect(() => {
-        if (data) {
+        if (isSuccess && data) {
             dispatch(loGin(data));
         }
-    }, [data]);
+    }, [isSuccess, data]);
 
     useEffect(() => {
         if (isError) {
             const { data }: any = error;
             switch (data?.message) {
                 case 'Account not exist':
-                    setFormError((pre) => {
+                    setFormError(() => {
                         var newError = { ...InitErrorLogin, userName: true };
                         return newError;
                     });
                     break;
                 case 'Wrong password':
-                    console.log(2);
-                    setFormError((pre) => {
+                    setFormError(() => {
                         var newError = { ...InitErrorLogin, password: true };
                         return newError;
                     });
                 default:
-                    break;
                     break;
             }
         }

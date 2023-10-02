@@ -1,6 +1,8 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import Switch from 'react-switch';
+import clsx from 'clsx';
 
 //images
 import Image from 'next/image';
@@ -16,9 +18,11 @@ import { AiFillEye } from 'react-icons/ai';
 
 //animation
 import { motion } from 'framer-motion';
-import clsx from 'clsx';
 
+//validates
 import { EmailFormat, RequirePassword } from 'src/app/validates';
+
+//components
 import ErrorNotify from './Error';
 
 //RTKQuery
@@ -58,8 +62,6 @@ const FormSignUp = (props: FormSignUpProps) => {
 
     const handleContinue = () => {
         if (click) {
-            // props.setShowFormSignUp(false);
-            // props.setShowFormUserName(true);
             checkMail({ mail: props.mail });
         }
     };
