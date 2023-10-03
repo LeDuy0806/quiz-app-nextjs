@@ -35,6 +35,8 @@ import { useAppDispatch } from 'src/app/redux/hooks';
 import { loGin } from 'src/app/redux/slices/authSlice';
 import { useLoginUserMutation } from 'src/app/redux/services/authApi';
 
+import { useSession } from 'next-auth/react';
+
 //type
 import { LoginType, ErrorLoginType } from 'src/app/variable';
 const InitLogin = { mail: '', password: '' } as LoginType;
@@ -260,11 +262,12 @@ const FormSignIn = () => {
                                 animate={{ x: 0, opacity: 1 }}
                                 transition={{ duration: 0.4, delay: 0.8 }}
                                 className='w-full flex flex-row items-center justify-around bg-white rounded-2xl py-[0.8rem] text-textGray font-bold border-[2px] border-textBlue hover:bg-bgBlue hover:text-textWhite'
+                                onClick={() => signIn('facebook')}
                             >
                                 <Image
                                     src={facebookImg}
                                     alt=''
-                                    className='z-[100] block w-[20px] h-[20px]'
+                                    className='block w-[20px] h-[20px]'
                                 />
                                 <span className='inline-block'>
                                     Sign in with Facebook
@@ -277,7 +280,7 @@ const FormSignIn = () => {
                                     initial={{ x: -20, opacity: 0 }}
                                     animate={{ x: 0, opacity: 1 }}
                                     transition={{ duration: 0.4, delay: 0.9 }}
-                                    className='block w-full text-sm py-4 hover:bg-bgGrayLight hover:rounded-[18px] hover:text-[15px] font-bold'
+                                    className='block w-full text-sm py-4 hover:bg-bgGrayLight hover:rounded-[18px] hover:text-[15px] font-bold mb-3'
                                 >
                                     Back
                                 </motion.button>
