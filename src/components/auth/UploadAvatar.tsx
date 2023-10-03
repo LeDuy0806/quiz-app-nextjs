@@ -130,7 +130,7 @@ const UploadAvatar = (props: FormTypeProps) => {
                             {file && (
                                 <button
                                     className={clsx(
-                                        `flex items-center justify-center text-sm  px-6 py-4 rounded-xl text-textWhite font-bold leading-7`,
+                                        `flex items-center justify-center text-sm  px-6 py-2 rounded-xl text-textWhite font-bold leading-7`,
                                         props.avatar
                                             ? 'bg-textGreen'
                                             : 'bg-bgBlue hover:font-extrabold'
