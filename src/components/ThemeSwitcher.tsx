@@ -19,7 +19,7 @@ function ThemeSwitcher() {
     }
     useEffect(() => {
         const setTheme = () => {
-            const root = window.document.documentElement;
+            const root = window.document.body;
             const operatingSystemThemeDark = window.matchMedia(
                 '(prefers-color-scheme: dark)'
             );

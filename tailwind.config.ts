@@ -1,16 +1,5 @@
 import type { Config } from 'tailwindcss';
 
-const screenWidth = {
-    xs: '320px',
-    sm: '391px',
-    sml: '500px',
-    md: '667px',
-    mdl: '768px',
-    lg: '960px',
-    lgl: '1024px',
-    xl: '1280px'
-};
-
 const config: Config = {
     content: [
         './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -72,7 +61,6 @@ const config: Config = {
                 textYellow: '#f5b218',
                 textBlack: '#081934',
                 textWhite: '#fff',
-                textError: '#f21b7d',
                 textFog: '#2c2c39',
                 bgBlack: '#0c131f',
                 bgBlackLight: '#56566f',
@@ -86,9 +74,7 @@ const config: Config = {
                 bgDark: 'rgba(24,33,50,0.4)',
                 bgPink: '#c17fff33',
                 bgBlue: '#5bc0ff',
-                bgInput: '#171822',
-                bgError: '#ff43981a',
-                bgGrayLight: '#F5F5F5'
+                bgInput: '#171822'
             },
 
             boxShadow: {
