@@ -1,9 +1,5 @@
 'use client';
-import { Inter } from 'next/font/google';
-import { useAppSelector } from 'src/app/redux/hooks';
 import SideBar from 'src/components/common/SideBar';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
     children
@@ -16,7 +12,7 @@ export default function RootLayout({
                 <title>Discover - Quizzes</title>
                 <link rel='shortcut icon' href='/assets/images/logoApp.png' />
             </head>
-            <body className={inter.className} suppressHydrationWarning={true}>
+            <body>
                 <SideBar>{children}</SideBar>
             </body>
         </html>
