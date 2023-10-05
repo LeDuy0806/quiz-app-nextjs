@@ -26,6 +26,7 @@ import { motion } from 'framer-motion';
 
 //components
 import ErrorNotify from './Error';
+import LoadingRoute from '../LoadingRoute';
 
 //validates
 import { EmailFormat } from 'src/app/validates';
@@ -34,8 +35,6 @@ import { EmailFormat } from 'src/app/validates';
 import { useAppDispatch } from 'src/app/redux/hooks';
 import { loGin } from 'src/app/redux/slices/authSlice';
 import { useLoginUserMutation } from 'src/app/redux/services/authApi';
-
-import { useSession } from 'next-auth/react';
 
 //type
 import { LoginType, ErrorLoginType } from 'src/app/variable';
@@ -48,6 +47,8 @@ const InitErrorLogin = {
 const FormSignIn = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     const [formData, setFormData] = useState<LoginType>(InitLogin);
     const [formError, setFormError] = useState<ErrorLoginType>(InitErrorLogin);
@@ -72,6 +73,7 @@ const FormSignIn = () => {
 
     useEffect(() => {
         if (isSuccess && data) {
+            setLoading(true);
             dispatch(loGin(data));
             router.push('/home');
         }
@@ -107,18 +109,13 @@ const FormSignIn = () => {
         Login(formData);
     };
 
-    // const loGinGoogle = async () => {
-    //     try {
-    //         const data = await signIn('credentials', {
-    //             redirect: false,
-    //             mail: formData.mail,
-    //             password: formData.mail
-    //         });
-    //         console.log(data);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
+    // if (loading) {
+    //     return (
+    //         <div className='h-screen w-screen fixed flex justify-center items-center top-0 left-0 bg-bgModel z-10'>
+    //             <Image src={rolling} alt='' className='w-[200px] h-[200px]' />
+    //         </div>
+    //     );
+    // }
 
     return (
         <motion.main
@@ -297,6 +294,7 @@ const FormSignIn = () => {
                     </p>
                 </div>
             </div>
+            {loading && <LoadingRoute />}
         </motion.main>
     );
 };

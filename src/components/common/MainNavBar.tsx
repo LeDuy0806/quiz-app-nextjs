@@ -8,10 +8,16 @@ import { BiCompass } from 'react-icons/bi';
 import ActiveLink from '../ActiveLink';
 import { useState } from 'react';
 
+//redux
+import { useAppSelector } from 'src/app/redux/hooks';
+
 function MainNavBar() {
     const pathName = usePathname();
     // console.log(pathName);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+    const user = useAppSelector((state) => state.auth.authData?.user);
+    console.log(user?.avatar);
 
     const inActiveClassName =
         'group inline-flex rounded-t-lg border-b-2 border-transparent p-4 hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300';
@@ -43,7 +49,7 @@ function MainNavBar() {
                         className='mr-6 max-md:h-8 max-md:w-8 md:px-5 md:py-2.5 flex items-center justify-center rounded-lg bg-purple-700 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 '
                     >
                         <BsPlusLg className='h-5 w-5' />
-                        <span className='ml-1 max-md:hidden'>Create Quiz</span>
+                        <span className='ml-1 max-md:hidden'>Createe Quiz</span>
                     </Link>
                 </div>
                 <div className='flex items-center md:order-4 relative'>
@@ -83,9 +89,7 @@ function MainNavBar() {
                                 <div className='h-4 w-4 mr-2 relative'>
                                     <Image
                                         fill
-                                        src={
-                                            '/assets/images/default_avatar.png'
-                                        }
+                                        src={user?.avatar || ''}
                                         alt='user photo'
                                         className='rounded-full'
                                     />

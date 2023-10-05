@@ -11,6 +11,9 @@ const nextConfig = {
         FACEBOOK_CLIENT_ID: '6649836831759728',
         FACEBOOK_CLIENT_SECRET: '248087d8d44acfb3de539e3823641868',
         NEXTAUTH_SECRET: '78zFZvyspgAIBXPKdA0AhFqcNWXX16/CEmBFOHU3iOg='
+    },
+    images: {
+        domains: ['res.cloudinary.com']
     }
 };
 

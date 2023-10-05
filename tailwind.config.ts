@@ -35,7 +35,9 @@ const config: Config = {
                 'gradient-titleheaderfooter':
                     'linear-gradient(135deg,#9a7bff,#de7cff 47%,#ffc37e)',
                 'gradient-footerIntro':
-                    'linear-gradient(135deg,rgba(180,157,255,0) 11%,#b49dff 26%,#e4a7f9 45%,#ffd9ae 72%,rgba(255,217,174,0) 89%);'
+                    'linear-gradient(135deg,rgba(180,157,255,0) 11%,#b49dff 26%,#e4a7f9 45%,#ffd9ae 72%,rgba(255,217,174,0) 89%);',
+                'gradient-model':
+                    'linear-gradient(112.1deg, rgba(32, 38, 57,0.06) 11.4%, rgba(63, 76, 119,02) 70.2%);'
             },
 
             maxWidth: {
@@ -61,6 +63,7 @@ const config: Config = {
                 textYellow: '#f5b218',
                 textBlack: '#081934',
                 textWhite: '#fff',
+                textError: '#f21b7d',
                 textFog: '#2c2c39',
                 bgBlack: '#0c131f',
                 bgBlackLight: '#56566f',
@@ -74,7 +77,10 @@ const config: Config = {
                 bgDark: 'rgba(24,33,50,0.4)',
                 bgPink: '#c17fff33',
                 bgBlue: '#5bc0ff',
-                bgInput: '#171822'
+                bgInput: '#171822',
+                bgError: '#ff43981a',
+                bgGrayLight: '#F5F5F5',
+                bgModel: 'rgba(105,105,105, 0.6)'
             },
 
             boxShadow: {
