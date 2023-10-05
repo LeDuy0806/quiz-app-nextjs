@@ -40,6 +40,13 @@ export const apiAuth = createApi({
                 method: 'POST',
                 body: formData
             })
+        }),
+
+        userLogOut: builder.mutation<void, { userId: string }>({
+            query: (data) => ({
+                url: `api/auth/logout/${data.userId}`,
+                method: 'POST'
+            })
         })
     })
 });
@@ -48,5 +55,6 @@ export const {
     useCheckMailExistsMutation,
     useCheckUserNameExitsMutation,
     useRegisterUserMutation,
-    useLoginUserMutation
+    useLoginUserMutation,
+    useUserLogOutMutation
 } = apiAuth;

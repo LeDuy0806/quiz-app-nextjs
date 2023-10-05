@@ -17,10 +17,6 @@ import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 
 const Navbar = () => {
-    const { data }: any = useSession();
-
-    console.log(data);
-
     const ref = useRef<string | any>('');
     const [showMenu, setShowMenu] = useState<boolean>(false);
 

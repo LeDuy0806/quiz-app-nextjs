@@ -1,16 +1,26 @@
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
-import { AiOutlineGift } from 'react-icons/ai';
+import {
+    AiOutlineGift,
+    AiFillSetting,
+    AiOutlineAppstoreAdd
+} from 'react-icons/ai';
 import { BiHelpCircle } from 'react-icons/bi';
 import { BsFilterLeft, BsPlusLg } from 'react-icons/bs';
-import { FaCompass, FaRegCompass } from 'react-icons/fa';
+import { FaCompass, FaRegCompass, FaExclamation } from 'react-icons/fa';
 import { HiHome, HiOutlineHome } from 'react-icons/hi';
 import { IoIosList, IoIosListBox } from 'react-icons/io';
 import { IconType } from 'react-icons/lib/esm/iconBase';
+import { VscSignOut } from 'react-icons/vsc';
+import { BsQuestionLg } from 'react-icons/bs';
+import { MdLeaderboard, MdOutlineLeaderboard } from 'react-icons/md';
+
 import useWindowDimensions from 'src/hooks/useWindowDimensions';
+
 const DynamicThemeSwitcher = dynamic(
     () => import('src/components/ThemeSwitcher'),
     {
@@ -18,9 +28,58 @@ const DynamicThemeSwitcher = dynamic(
     }
 );
 
+//redux
+import { useAppSelector } from 'src/app/redux/hooks';
+import { useUserLogOutMutation } from 'src/app/redux/services/authApi';
+
+import { useAnimate, stagger, motion } from 'framer-motion';
+const staggerMenuItems = stagger(0.1, { startDelay: 0.15 });
+
+function useMenuAnimation(isOpen: boolean) {
+    const [scope, animate] = useAnimate();
+
+    useEffect(() => {
+        if (scope.current) {
+            // animate('.arrow', { rotate: isOpen ? 180 : 0 }, { duration: 0.2 });
+            animate(
+                'ul',
+                {
+                    clipPath: isOpen
+                        ? 'inset(0% 0% 0% 0% round 10px)'
+                        : 'inset(10% 50% 90% 50% round 10px)'
+                },
+                {
+                    type: 'spring',
+                    bounce: 0,
+                    duration: 0.5
+                }
+            );
+            animate(
+                'li',
+                isOpen
+                    ? { opacity: 1, scale: 1, filter: 'blur(0px)' }
+                    : { opacity: 0, scale: 0.5, filter: 'blur(20px)' },
+                {
+                    duration: 0.3,
+                    delay: isOpen ? staggerMenuItems : 0
+                }
+            );
+        }
+    }, [isOpen]);
+    return scope;
+}
+
 function SideBar({ children }: { children: React.ReactNode }) {
-    const [hideSideBar, setHideSideBar] = useState(true);
+    const router = useRouter();
+
+    // const [isOpen, setIsOpen] = useState<boolean>(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
+    const scope = useMenuAnimation(userMenuOpen);
+
+    const user = useAppSelector((state) => state.auth.authData?.user);
+
+    const [Logout, { isSuccess }] = useUserLogOutMutation();
+    const [hideSideBar, setHideSideBar] = useState(true);
 
     const { height, width } = useWindowDimensions();
 
@@ -33,38 +92,38 @@ function SideBar({ children }: { children: React.ReactNode }) {
     const sidebarRef = useRef<HTMLDivElement>(null);
     const useMenuRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const handleOutsideClick = (e: any) => {
-            if (e.target.id !== 'context-opener') {
-                if (
-                    sidebarRef.current &&
-                    !sidebarRef.current.contains(e.target)
-                ) {
-                    setHideSideBar(true);
-                }
-            }
-        };
-        document.addEventListener('click', handleOutsideClick);
-        return () => {
-            document.removeEventListener('click', handleOutsideClick);
-        };
-    }, []);
-    useEffect(() => {
-        const handleOutsideClick = (e: any) => {
-            if (e.target.id !== 'context-opener') {
-                if (
-                    useMenuRef.current &&
-                    !useMenuRef.current.contains(e.target)
-                ) {
-                    setUserMenuOpen(false);
-                }
-            }
-        };
-        document.addEventListener('click', handleOutsideClick);
-        return () => {
-            document.removeEventListener('click', handleOutsideClick);
-        };
-    }, []);
+    // useEffect(() => {
+    //     const handleOutsideClick = (e: any) => {
+    //         if (e.target.id !== 'context-opener') {
+    //             if (
+    //                 sidebarRef.current &&
+    //                 !sidebarRef.current.contains(e.target)
+    //             ) {
+    //                 setHideSideBar(true);
+    //             }
+    //         }
+    //     };
+    //     document.addEventListener('click', handleOutsideClick);
+    //     return () => {
+    //         document.removeEventListener('click', handleOutsideClick);
+    //     };
+    // }, []);
+    // useEffect(() => {
+    //     const handleOutsideClick = (e: any) => {
+    //         if (e.target.id !== 'context-opener') {
+    //             if (
+    //                 useMenuRef.current &&
+    //                 !useMenuRef.current.contains(e.target)
+    //             ) {
+    //                 setUserMenuOpen(false);
+    //             }
+    //         }
+    //     };
+    //     document.addEventListener('click', handleOutsideClick);
+    //     return () => {
+    //         document.removeEventListener('click', handleOutsideClick);
+    //     };
+    // }, []);
 
     const inActiveClassName =
         'group sm:max-xl:flex-col sm:max-xl:justify-center sm:max-xl:items-center border-b-2 border-gray-600 flex p-2 text-gray-600 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700';
@@ -103,8 +162,27 @@ function SideBar({ children }: { children: React.ReactNode }) {
                 fill: IoIosListBox,
                 outline: IoIosList
             }
+        },
+        {
+            name: 'LeaderBoard',
+            to: '/LeaderBoard',
+            icon: {
+                fill: MdLeaderboard,
+                outline: MdOutlineLeaderboard
+            }
         }
     ];
+
+    const handleButton = () => {
+        Logout({ userId: user?._id || '' });
+    };
+
+    useEffect(() => {
+        if (isSuccess) {
+            localStorage.clear();
+            router.push('/');
+        }
+    }, [isSuccess]);
 
     return (
         <>
@@ -147,6 +225,18 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                         href='/creator'
                                         className='mr-6 max-md:h-8 max-md:w-8 md:px-5 md:py-2.5 flex items-center justify-center rounded-lg bg-purple-700 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 '
                                     >
+                                        <AiOutlineAppstoreAdd className='h-5 w-5' />
+                                        <span className='ml-1 max-md:hidden'>
+                                            Join
+                                        </span>
+                                    </Link>
+                                </div>
+
+                                <div className='flex items-center ml-3'>
+                                    <Link
+                                        href='/creator'
+                                        className='mr-6 max-md:h-8 max-md:w-8 md:px-5 md:py-2.5 flex items-center justify-center rounded-lg bg-purple-700 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 '
+                                    >
                                         <BsPlusLg className='h-5 w-5' />
                                         <span className='ml-1 max-md:hidden'>
                                             Create Quiz
@@ -155,10 +245,11 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                 </div>
 
                                 <div
-                                    ref={useMenuRef}
+                                    ref={scope}
                                     className='flex items-center ml-3'
                                 >
-                                    <button
+                                    <motion.button
+                                        whileTap={{ scale: 0.97 }}
                                         type='button'
                                         className='mr-3 flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 md:mr-0'
                                         onClick={() =>
@@ -172,85 +263,111 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                             <Image
                                                 fill
                                                 src={
-                                                    '/assets/images/default_avatar.png'
+                                                    user?.avatar
+                                                        ? user.avatar
+                                                        : '/assets/images/default_avatar.png'
                                                 }
                                                 alt='user photo'
-                                                className='rounded-full'
+                                                className='rounded-full object-cover'
                                             />
                                         </div>
-                                    </button>
+                                    </motion.button>
 
                                     {/* user menu dropdown */}
-                                    <div
+                                    <ul
+                                        style={{
+                                            listStyle: 'none',
+                                            pointerEvents: userMenuOpen
+                                                ? 'auto'
+                                                : 'none',
+                                            clipPath:
+                                                'inset(10% 50% 90% 50% round 10px)'
+                                        }}
                                         className={
                                             `${
                                                 userMenuOpen
                                                     ? 'block'
                                                     : 'hidden'
                                             }` +
-                                            ' w-[60%] sm:w-[50%] md:w-[30%] xl:w-[15%] absolute top-12 right-0 xl:right-4 z-50 my-4 text-base list-none bg-white divide-y divide-gray-200 rounded shadow-lg dark:bg-gray-700 dark:divide-gray-600'
+                                            'w-[60%] sm:w-[50%] md:w-[30%] xl:w-[15%] absolute top-12 right-0 xl:right-4 z-50 my-4 text-base list-none bg-white divide-y divide-gray-200 rounded shadow-lg dark:bg-gray-700 dark:divide-gray-600'
                                         }
                                         id='dropdown-user'
                                     >
-                                        <div className='px-4 py-3 flex items-center justify-between group cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600'>
-                                            <div className='flex items-center'>
-                                                <div className='h-4 w-4 mr-2 relative '>
-                                                    <Image
-                                                        fill
-                                                        src={
-                                                            '/assets/images/default_avatar.png'
-                                                        }
-                                                        alt='user photo'
-                                                        className='rounded-full'
-                                                    />
+                                        <li>
+                                            <div className='px-4 py-3 flex items-center justify-between group cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600'>
+                                                <div className='flex items-center'>
+                                                    <div className='h-8 w-8 mr-2 relative '>
+                                                        <Image
+                                                            fill
+                                                            src={
+                                                                user?.avatar
+                                                                    ? user.avatar
+                                                                    : '/assets/images/default_avatar.png'
+                                                            }
+                                                            alt='user photo'
+                                                            className='rounded-full object-cover'
+                                                        />
+                                                    </div>
+                                                    <span className='block text-sm text-gray-900 dark:text-white'>
+                                                        {user?.userName}
+                                                    </span>
                                                 </div>
-                                                <span className='block text-sm text-gray-900 dark:text-white'>
-                                                    Van Duy
+                                                <span className='block text-xs text-gray-900 dark:text-white hover:underline'>
+                                                    View ProFile
                                                 </span>
                                             </div>
-                                            <span className='block text-xs text-gray-900 dark:text-white hover:underline'>
-                                                View ProFile
+                                        </li>
+
+                                        <li className='flex gap-1 items-center hover:bg-gray-100 rounded-lg px-4'>
+                                            <span className='flex items-center justify-center h-[36px] w-[36px] bg-bgGray rounded-full'>
+                                                <FaExclamation className='w-3/4 h-3/4' />
                                             </span>
-                                        </div>
-                                        <ul className='py-1' role='none'>
-                                            <li>
-                                                <a
-                                                    href='#'
-                                                    className='block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white'
-                                                    role='menuitem'
-                                                >
-                                                    Dashboard
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href='#'
-                                                    className='block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white'
-                                                    role='menuitem'
-                                                >
-                                                    Settings
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href='#'
-                                                    className='block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white'
-                                                    role='menuitem'
-                                                >
-                                                    Earnings
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href='#'
-                                                    className='block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white'
-                                                    role='menuitem'
-                                                >
-                                                    Sign out
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+
+                                            <button
+                                                className='flex-1 px-4 py-3 text-sm text-textBlack font-semibold  dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white text-left'
+                                                role='menuitem'
+                                            >
+                                                Opinion
+                                            </button>
+                                        </li>
+                                        <li className='flex gap-1 items-center hover:bg-gray-100 rounded-lg px-4'>
+                                            <span className='flex items-center justify-center h-[36px] w-[36px] bg-bgGray rounded-full'>
+                                                <AiFillSetting className='w-3/4 h-3/4' />
+                                            </span>
+
+                                            <button
+                                                className='flex-1 px-4 py-3 text-sm text-textBlack font-semibold dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white text-left'
+                                                role='menuitem'
+                                            >
+                                                Settings
+                                            </button>
+                                        </li>
+                                        <li className='flex gap-1 items-center hover:bg-gray-100 rounded-lg px-4'>
+                                            <span className='flex items-center justify-center h-[36px] w-[36px] bg-bgGray rounded-full'>
+                                                <BsQuestionLg className='w-3/4 h-3/4' />
+                                            </span>
+
+                                            <button
+                                                className='flex-1 px-4 py-3 text-sm text-textBlack font-semibold dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white text-left'
+                                                role='menuitem'
+                                            >
+                                                Help Q&A
+                                            </button>
+                                        </li>
+                                        <li className='flex gap-1 items-center hover:bg-gray-100 rounded-lg px-4'>
+                                            <span className='flex items-center justify-center h-[36px] w-[36px] bg-bgGray rounded-full'>
+                                                <VscSignOut className='w-3/4 h-3/4' />
+                                            </span>
+
+                                            <button
+                                                onClick={handleButton}
+                                                className='flex-1 px-4 py-3 text-sm text-textBlack font-semibold dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white text-left'
+                                                role='menuitem'
+                                            >
+                                                Sign out
+                                            </button>
+                                        </li>
+                                    </ul>
                                 </div>
                                 <div className='flex items-center ml-6'>
                                     <DynamicThemeSwitcher />
