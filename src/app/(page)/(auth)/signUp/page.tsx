@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import FormSignUp from 'src/components/auth/FormSignUp';
 import FormUserName from 'src/components/auth/UserName';
 import FormUserType from 'src/components/auth/UserType';
-
+import LoadingRoute from 'src/components/LoadingRoute';
 //animation
 import { motion } from 'framer-motion';
 
@@ -25,6 +25,7 @@ const InitSignUp = {
 } as SignUpType;
 
 const SignUp = () => {
+    const [loading, setLoading] = useState<boolean>(false);
     const [showFormSignUp, setShowFormSignUp] = useState<boolean>(true);
     const [showFormUserName, setShowFormUserName] = useState<boolean>(false);
     const [showFormUserType, setShowFormUserType] = useState<boolean>(false);
@@ -88,8 +89,12 @@ const SignUp = () => {
                     handleChangeForm={handleChangeForm}
                     formData={formData}
                     avatar={formData.avatar}
+                    setLoading={() => {
+                        setLoading(true);
+                    }}
                 />
             )}
+            {loading && <LoadingRoute />}
         </motion.div>
     );
 };
