@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { loadingImg } from '../../../public/assets/images/auth';
 
-//icon
+//routes
 import { useRouter } from 'next/navigation';
 
 //animation
@@ -31,16 +31,18 @@ interface FormTypeProps {
     handleChangeForm: (e: React.ChangeEvent<HTMLInputElement> | any) => void;
     formData: SignUpType;
     avatar: string;
+    setLoading: () => void;
 }
 
 const UploadAvatar = (props: FormTypeProps) => {
     const route = useRouter();
     const dispatch = useAppDispatch();
 
-    const [file, setFile] = useState();
+    const [file, setFile] = useState<string>();
+    const [skip, setSkip] = useState<boolean>(false);
     const [loadingUpload, setLoadingUpload] = useState<boolean>(false);
 
-    const [Register, { data, isError, isSuccess, isLoading }] =
+    const [Register, { data, isSuccess, isLoading }] =
         useRegisterUserMutation();
 
     const handleSignUp = () => {
@@ -49,6 +51,7 @@ const UploadAvatar = (props: FormTypeProps) => {
 
     useEffect(() => {
         if (isSuccess && data) {
+            props.setLoading();
             dispatch(loGin(data));
             route.push('/home');
         }
@@ -158,6 +161,19 @@ const UploadAvatar = (props: FormTypeProps) => {
                         </div>
                     </div>
                 </motion.div>
+
+                <motion.button
+                    initial={{ y: -100, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.4, delay: 0.4 }}
+                    className='block w-full text-textWhite text-sm py-4 hover:rounded-[18px] hover:text-[15px] font-bold'
+                    onClick={() => {
+                        setSkip(!skip);
+                    }}
+                >
+                    Skip
+                </motion.button>
+
                 <motion.button
                     initial={{ y: -100, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -177,13 +193,13 @@ const UploadAvatar = (props: FormTypeProps) => {
                 transition={{ duration: 0.4, delay: 0.5 }}
                 className='absolute flex flex-row justify-end py-6 px-6 bg-bgGrayLight bottom-0 right-0 left-0'
             >
-                <motion.button
+                {/* <motion.button
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.6 }}
                     className={clsx(
                         `text-sm bg-textGray px-6 py-2 rounded-xl text-textWhite font-bold cursor-default leading-7`,
-                        props.avatar &&
+                        (props.avatar || skip) &&
                             'hover:font-black bg-textGreen cursor-pointer'
                     )}
                     onClick={handleSignUp}
@@ -197,7 +213,26 @@ const UploadAvatar = (props: FormTypeProps) => {
                     ) : (
                         'Finish'
                     )}
-                </motion.button>
+                </motion.button> */}
+                {(props.avatar || skip) && (
+                    <motion.button
+                        initial={{ x: 100, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.4, delay: 0.6 }}
+                        className='text-sm  px-6 py-2 rounded-xl text-textWhite font-bold leading-7 hover:font-black bg-textGreen cursor-pointer'
+                        onClick={handleSignUp}
+                    >
+                        {isLoading ? (
+                            <Image
+                                src={loadingImg}
+                                alt=''
+                                className='w-7 h-7 self-center'
+                            />
+                        ) : (
+                            'Finish'
+                        )}
+                    </motion.button>
+                )}
             </motion.div>
         </div>
     );
