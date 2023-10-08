@@ -44,7 +44,7 @@ export const RequireLong = (value: string) => {
     if (!value) {
         return null;
     } else {
-        if (value.length > 15 || value.length < 5) {
+        if (value.length > 30 || value.length < 5) {
             return 'weak';
         } else {
             return 'strong';

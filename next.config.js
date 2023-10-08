@@ -8,12 +8,19 @@ const nextConfig = {
         GOOGLE_CLIENT_ID:
             '343022034542-9vj6tpcpns5t47bqkm420hrcqc1buvce.apps.googleusercontent.com',
         GOOGLE_CLIENT_SECRET: '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',
-        FACEBOOK_CLIENT_ID: '6649836831759728',
-        FACEBOOK_CLIENT_SECRET: '248087d8d44acfb3de539e3823641868',
-        NEXTAUTH_SECRET: '78zFZvyspgAIBXPKdA0AhFqcNWXX16/CEmBFOHU3iOg='
+        FACEBOOK_CLIENT_ID: '715561680446168',
+        FACEBOOK_CLIENT_SECRET: 'b14fabedd77bdedbc8102dad0c350c99',
+        NEXTAUTH_SECRET: 'af017d04a8083251abdebb81b1fbb498',
+        NEXTAUTH_URL: 'http://localhost:3000/'
     },
     images: {
-        domains: ['res.cloudinary.com']
+        domains: [
+            'res.cloudinary.com',
+            'lh3.googleusercontent.com',
+            'scontent.fsgn2-8.fna.fbcdn.net',
+            'platform-lookaside.fbsbx.com',
+            'scontent.fsgn21-1.fna.fbcdn.net'
+        ]
     }
 };
 

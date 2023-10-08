@@ -42,6 +42,14 @@ export const apiAuth = createApi({
             })
         }),
 
+        loginSocial: builder.mutation<AuthType, { email: string; image: string; name: string }>({
+            query: (formData) => ({
+                url: 'api/auth/loginSocial',
+                method: 'POST',
+                body: formData
+            })
+        }),
+
         userLogOut: builder.mutation<void, { userId: string }>({
             query: (data) => ({
                 url: `api/auth/logout/${data.userId}`,
@@ -56,5 +64,6 @@ export const {
     useCheckUserNameExitsMutation,
     useRegisterUserMutation,
     useLoginUserMutation,
+    useLoginSocialMutation,
     useUserLogOutMutation
 } = apiAuth;

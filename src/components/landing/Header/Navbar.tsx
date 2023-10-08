@@ -14,9 +14,12 @@ import { logoImg } from '../../../../public/assets/images/landing';
 //animation
 import { motion } from 'framer-motion';
 
+//auth
 import { useSession } from 'next-auth/react';
 
 const Navbar = () => {
+    const { data: session } = useSession();
+
     const ref = useRef<string | any>('');
     const [showMenu, setShowMenu] = useState<boolean>(false);
 

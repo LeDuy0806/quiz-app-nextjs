@@ -13,11 +13,9 @@ import { useAppSelector } from 'src/app/redux/hooks';
 
 function MainNavBar() {
     const pathName = usePathname();
-    // console.log(pathName);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
 
     const user = useAppSelector((state) => state.auth.authData?.user);
-    console.log(user?.avatar);
 
     const inActiveClassName =
         'group inline-flex rounded-t-lg border-b-2 border-transparent p-4 hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300';
@@ -31,11 +29,7 @@ function MainNavBar() {
                 {/* Logo */}
                 <Link href={'#'} className='flex items-center'>
                     <div className='mr-3 h-6 w-6 sm:h-9 sm:w-9 relative'>
-                        <Image
-                            src={'/assets/images/logoApp.png'}
-                            alt='EzQuiz Logo'
-                            fill
-                        />
+                        <Image src={'/assets/images/logoApp.png'} alt='EzQuiz Logo' fill />
                     </div>
 
                     <span className=' text-white self-center whitespace-nowrap text-xl font-semibold dark:text-white'>
@@ -174,9 +168,7 @@ function MainNavBar() {
                                 <Link
                                     href={'/home'}
                                     className={
-                                        pathName === '/home'
-                                            ? activeClassName
-                                            : inActiveClassName
+                                        pathName === '/home' ? activeClassName : inActiveClassName
                                     }
                                 >
                                     <HiOutlineHome className='mr-2 h-5 w-6' />
