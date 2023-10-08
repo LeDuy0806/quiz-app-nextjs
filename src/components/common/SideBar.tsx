@@ -1,14 +1,11 @@
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
+import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
-import {
-    AiOutlineGift,
-    AiFillSetting,
-    AiOutlineAppstoreAdd
-} from 'react-icons/ai';
+import { AiOutlineGift, AiFillSetting, AiOutlineAppstoreAdd } from 'react-icons/ai';
 import { BiHelpCircle } from 'react-icons/bi';
 import { BsFilterLeft, BsPlusLg } from 'react-icons/bs';
 import { FaCompass, FaRegCompass, FaExclamation } from 'react-icons/fa';
@@ -21,12 +18,9 @@ import { MdLeaderboard, MdOutlineLeaderboard } from 'react-icons/md';
 
 import useWindowDimensions from 'src/hooks/useWindowDimensions';
 
-const DynamicThemeSwitcher = dynamic(
-    () => import('src/components/ThemeSwitcher'),
-    {
-        ssr: false
-    }
-);
+const DynamicThemeSwitcher = dynamic(() => import('src/components/ThemeSwitcher'), {
+    ssr: false
+});
 
 //redux
 import { useAppSelector } from 'src/app/redux/hooks';
@@ -71,6 +65,7 @@ function useMenuAnimation(isOpen: boolean) {
 
 function SideBar({ children }: { children: React.ReactNode }) {
     const router = useRouter();
+    const { data: session } = useSession();
 
     // const [isOpen, setIsOpen] = useState<boolean>(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -173,16 +168,20 @@ function SideBar({ children }: { children: React.ReactNode }) {
         }
     ];
 
-    const handleButton = () => {
+    const handleSignOut = () => {
         Logout({ userId: user?._id || '' });
     };
 
     useEffect(() => {
         if (isSuccess) {
             localStorage.clear();
-            router.push('/');
+            if (session) {
+                signOut({ callbackUrl: '/' });
+            } else {
+                router.push('/');
+            }
         }
-    }, [isSuccess]);
+    }, [isSuccess, session]);
 
     return (
         <>
@@ -196,15 +195,10 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                     className='inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
                                     onClick={() => setHideSideBar(!hideSideBar)}
                                 >
-                                    <span className='sr-only'>
-                                        Open sidebar
-                                    </span>
+                                    <span className='sr-only'>Open sidebar</span>
                                     <BsFilterLeft className='w-6 h-6' />
                                 </button>
-                                <Link
-                                    href={'#'}
-                                    className='flex items-center ml-2 md:mr-24'
-                                >
+                                <Link href={'#'} className='flex items-center ml-2 md:mr-24'>
                                     <div className='mr-3 h-6 w-6 sm:h-9 sm:w-9 relative'>
                                         <Image
                                             src={'/assets/images/logoApp.png'}
@@ -226,9 +220,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                         className='mr-6 max-md:h-8 max-md:w-8 md:px-5 md:py-2.5 flex items-center justify-center rounded-lg bg-purple-700 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 '
                                     >
                                         <AiOutlineAppstoreAdd className='h-5 w-5' />
-                                        <span className='ml-1 max-md:hidden'>
-                                            Join
-                                        </span>
+                                        <span className='ml-1 max-md:hidden'>Join</span>
                                     </Link>
                                 </div>
 
@@ -238,27 +230,18 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                         className='mr-6 max-md:h-8 max-md:w-8 md:px-5 md:py-2.5 flex items-center justify-center rounded-lg bg-purple-700 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 '
                                     >
                                         <BsPlusLg className='h-5 w-5' />
-                                        <span className='ml-1 max-md:hidden'>
-                                            Create Quiz
-                                        </span>
+                                        <span className='ml-1 max-md:hidden'>Create Quiz</span>
                                     </Link>
                                 </div>
 
-                                <div
-                                    ref={scope}
-                                    className='flex items-center ml-3'
-                                >
+                                <div ref={scope} className='flex items-center ml-3'>
                                     <motion.button
                                         whileTap={{ scale: 0.97 }}
                                         type='button'
                                         className='mr-3 flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 md:mr-0'
-                                        onClick={() =>
-                                            setUserMenuOpen(!userMenuOpen)
-                                        }
+                                        onClick={() => setUserMenuOpen(!userMenuOpen)}
                                     >
-                                        <span className='sr-only'>
-                                            Open user menu
-                                        </span>
+                                        <span className='sr-only'>Open user menu</span>
                                         <div className='h-8 w-8  relative'>
                                             <Image
                                                 fill
@@ -277,18 +260,11 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                     <ul
                                         style={{
                                             listStyle: 'none',
-                                            pointerEvents: userMenuOpen
-                                                ? 'auto'
-                                                : 'none',
-                                            clipPath:
-                                                'inset(10% 50% 90% 50% round 10px)'
+                                            pointerEvents: userMenuOpen ? 'auto' : 'none',
+                                            clipPath: 'inset(10% 50% 90% 50% round 10px)'
                                         }}
                                         className={
-                                            `${
-                                                userMenuOpen
-                                                    ? 'block'
-                                                    : 'hidden'
-                                            }` +
+                                            `${userMenuOpen ? 'block' : 'hidden'}` +
                                             'w-[60%] sm:w-[50%] md:w-[30%] xl:w-[15%] absolute top-12 right-0 xl:right-4 z-50 my-4 text-base list-none bg-white divide-y divide-gray-200 rounded shadow-lg dark:bg-gray-700 dark:divide-gray-600'
                                         }
                                         id='dropdown-user'
@@ -360,7 +336,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                             </span>
 
                                             <button
-                                                onClick={handleButton}
+                                                onClick={handleSignOut}
                                                 className='flex-1 px-4 py-3 text-sm text-textBlack font-semibold dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white text-left'
                                                 role='menuitem'
                                             >
@@ -379,9 +355,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
                 <aside
                     id='logo-sidebar'
                     className={
-                        `${
-                            hideSideBar ? '-translate-x-full' : '-translate-x-0'
-                        }` +
+                        `${hideSideBar ? '-translate-x-full' : '-translate-x-0'}` +
                         ' shadow-xl fixed top-0 left-0 max-sm:w-[60%] w-48 sm:max-xl:w-[6rem] z-40 h-screen pt-16 transition-transform  bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700'
                     }
                 >
@@ -399,10 +373,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                     },
                                     index
                                 ) => (
-                                    <li
-                                        key={`${index + link.name}`}
-                                        className='w-full '
-                                    >
+                                    <li key={`${index + link.name}`} className='w-full '>
                                         <Link
                                             href={link.to}
                                             className={

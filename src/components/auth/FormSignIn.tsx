@@ -1,17 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import clsx from 'clsx';
 import { signIn } from 'next-auth/react';
 
 //images
 import Image from 'next/image';
-import {
-    logoImg,
-    googleImg,
-    facebookImg,
-    loadingImg
-} from '../../../public/assets/images/auth';
+import { logoImg, googleImg, facebookImg, loadingImg } from '../../../public/assets/images/auth';
 
 //routes
 import { useRouter } from 'next/navigation';
@@ -34,7 +29,7 @@ import { EmailFormat } from 'src/app/validates';
 //Redux
 import { useAppDispatch } from 'src/app/redux/hooks';
 import { loGin } from 'src/app/redux/slices/authSlice';
-import { useLoginUserMutation } from 'src/app/redux/services/authApi';
+import { useLoginUserMutation, useLoginSocialMutation } from 'src/app/redux/services/authApi';
 
 //type
 import { LoginType, ErrorLoginType } from 'src/app/variable';
@@ -44,9 +39,32 @@ const InitErrorLogin = {
     password: false
 } as ErrorLoginType;
 
+//auth
+import { useSession } from 'next-auth/react';
+
 const FormSignIn = () => {
+    const { data: session } = useSession();
     const router = useRouter();
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (session) {
+            const { user } = session;
+            setLoading(true);
+            const handleLoginSocial = async () => {
+                const { data }: any = await LoginSocial({
+                    email: user?.email ?? '',
+                    image: user?.image ?? '',
+                    name: user?.name ?? ''
+                });
+                if (data) {
+                    dispatch(loGin(data));
+                    router.push('/home');
+                }
+            };
+            handleLoginSocial();
+        }
+    }, [session]);
 
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -56,15 +74,11 @@ const FormSignIn = () => {
     const [click, setClick] = useState<boolean>(false);
     const [showPassWord, setShowPassWord] = useState<boolean>(false);
 
-    const [Login, { data, isLoading, isError, error, isSuccess }] =
-        useLoginUserMutation();
+    const [LoginSocial] = useLoginSocialMutation();
+    const [Login, { data, isLoading, isError, error, isSuccess }] = useLoginUserMutation();
 
     useEffect(() => {
-        if (
-            !formData.mail ||
-            !formData.password ||
-            !EmailFormat(formData.mail)
-        ) {
+        if (!formData.mail || !formData.password || !EmailFormat(formData.mail)) {
             setClick(false);
         } else {
             setClick(true);
@@ -132,9 +146,7 @@ const FormSignIn = () => {
                     className='flex flex-row items-center justify-center gap-x-4 mb-[30px]'
                 >
                     <Image src={logoImg} alt='' className='h-[50px] w-[50px]' />
-                    <p className='text-[36px] text-textBlack font-black'>
-                        Quizzes
-                    </p>
+                    <p className='text-[36px] text-textBlack font-black'>Quizzes</p>
                 </motion.div>
                 <div className='block h-full'>
                     <div className='flex flex-col mt-4'>
@@ -185,13 +197,9 @@ const FormSignIn = () => {
                                 </button>
                             </motion.div>
 
-                            {formError.userName && (
-                                <ErrorNotify message='Email does not exists' />
-                            )}
+                            {formError.userName && <ErrorNotify message='Email does not exists' />}
 
-                            {formError.password && (
-                                <ErrorNotify message='Your password is wrong' />
-                            )}
+                            {formError.password && <ErrorNotify message='Your password is wrong' />}
 
                             <motion.button
                                 initial={{ x: -20, opacity: 0 }}
@@ -243,14 +251,8 @@ const FormSignIn = () => {
                                 className='w-full flex flex-row items-center justify-around bg-white rounded-2xl py-[0.8rem] text-textGray font-bold border-[2px] border-textPurple hover:bg-textPurpleBorder hover:text-textWhite'
                                 onClick={() => signIn('google')}
                             >
-                                <Image
-                                    src={googleImg}
-                                    alt=''
-                                    className='block w-[20px] h-[20px]'
-                                />
-                                <span className='inline-block'>
-                                    Sign in with google
-                                </span>
+                                <Image src={googleImg} alt='' className='block w-[20px] h-[20px]' />
+                                <span className='inline-block'>Sign in with google</span>
                                 <span />
                             </motion.button>
 
@@ -266,9 +268,7 @@ const FormSignIn = () => {
                                     alt=''
                                     className='block w-[20px] h-[20px]'
                                 />
-                                <span className='inline-block'>
-                                    Sign in with Facebook
-                                </span>
+                                <span className='inline-block'>Sign in with Facebook</span>
                                 <span />
                             </motion.button>
 
@@ -288,9 +288,7 @@ const FormSignIn = () => {
                 <div className='absolute w-full text-center min-h-[70px] bottom-0 left-[50%] translate-x-[-50%]'>
                     <p className='text-textGray font-semibold'>
                         ©2023 quizzes GmbH -
-                        <span className='text-textBlack font-bold'>
-                            Imprint & Privacy Policy
-                        </span>
+                        <span className='text-textBlack font-bold'>Imprint & Privacy Policy</span>
                     </p>
                 </div>
             </div>

@@ -12,7 +12,13 @@ import {
 //animation
 import { motion } from 'framer-motion';
 
+//auth
+import { useSession } from 'next-auth/react';
+
 const Intro = () => {
+    const { data: session } = useSession();
+    // console.log(session);
+
     return (
         <motion.section
             id='intro'
@@ -107,11 +113,9 @@ const Intro = () => {
                                     Try now
                                 </div>
                             </a>
-                            <div className='cursor-pointer'>
-                                <a className='font-bold text-textPurple '>
-                                    skip intro
-                                </a>
-                            </div>
+                            <button className='font-bold text-textPurple cursor-pointer'>
+                                Skip intro
+                            </button>
                         </motion.div>
                     </div>
                 </div>
