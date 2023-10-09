@@ -6,10 +6,15 @@ import LibraryBox from 'src/components/home/LibraryBox';
 import CarouselBanner from 'src/components/home/CarouselBanner';
 import TopPickBox from 'src/components/home/TopPickBox';
 import UserInfoCard from 'src/components/home/UserInfoCard';
+import Head from 'next/head';
+import { useEffect } from 'react';
 
 function HomePage() {
     const state = useAppSelector((state) => state.user);
     // console.log(state);
+    useEffect(() => {
+        document.title = 'Home - Quizzes';
+    }, []);
 
     return (
         <div className='p-4 dark:bg-slate-600 min-h-[calc(100vh-4rem)] max-md:flex-col'>

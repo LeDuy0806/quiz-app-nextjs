@@ -15,11 +15,7 @@ export const metadata: Metadata = {
     icons: '/assets/images/logoApp.png'
 };
 
-export default function RootLayout({
-    children
-}: {
-    children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     // const [theme, setTheme] = useState('light');
     return (
         <html lang='en'>
@@ -27,7 +23,7 @@ export default function RootLayout({
                 <title>Quizzes</title>
                 <link rel='shortcut icon' href='/assets/images/logoApp.png' />
             </head>
-            <body className={inter.className + ' '}>
+            <body className={inter.className + ' bg-gray-100 dark:bg-slate-600'}>
                 <Provider store={store}>
                     <SessionProvider>{children}</SessionProvider>
                 </Provider>
