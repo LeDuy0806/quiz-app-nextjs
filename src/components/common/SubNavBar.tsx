@@ -126,7 +126,7 @@ function SubNavBar({ toogleSidebar }: IProps) {
                     <div className='flex items-center'>
                         <div className='flex items-center ml-3'>
                             <Link
-                                href='/creator'
+                                href='/game/join'
                                 className='mr-1 max-md:h-8 max-md:w-8 md:px-5 md:py-2.5 flex items-center justify-center rounded-lg bg-purple-700 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 '
                             >
                                 <AiOutlineAppstoreAdd className='h-5 w-5' />
