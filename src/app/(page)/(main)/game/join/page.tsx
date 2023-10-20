@@ -2,8 +2,8 @@
 import { useState } from 'react';
 
 //images
-import { logoImg } from '../../../../../../public/assets/images/auth';
 import Image from 'next/image';
+import { logoImg } from '../../../../../../public/assets/images/auth';
 import { bgJoin } from '../../../../../../public/assets/images/game';
 
 //route

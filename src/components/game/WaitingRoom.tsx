@@ -2,9 +2,11 @@
 import Image from 'next/image';
 import { bgWaiting } from '../../../public/assets/images/game';
 import { logoImg, studentsImg, teacherImg } from '../../../public/assets/images/auth';
+import QuizType from 'src/app/types/quizType';
 
 interface WaitingRoomProps {
     startGame: () => void;
+    quiz: any;
 }
 
 const WaitingRoom = (props: WaitingRoomProps) => {
@@ -22,11 +24,13 @@ const WaitingRoom = (props: WaitingRoomProps) => {
                     <div className='w-full h-4/5 flex justify-around items-center'>
                         <div className='relative w-2/5 h-full flex flex-col items-center justify-center bg-bgTitle rounded-xl shadow-boxListUser'>
                             <h1 className='text-[1.6rem] py-3 font-semibold text-textWhite'>
-                                Software Engineer
+                                {/* Software Engineer */}
+                                {props.quiz?.name}
                             </h1>
                             <Image src={logoImg} alt='' className='w-2/5' />
                             <p className='text-textWhite font-medium max-w-[80%]'>
-                                What will you do when your girl friend go to hotel with another man
+                                {/* What will you do when your girl friend go to hotel with another man */}
+                                {props.quiz?.description}
                             </p>
                         </div>
                         <div className='relative w-2/5 h-full gap-4 flex flex-col items-center bg-bgTitle rounded-xl shadow-boxListUser'>

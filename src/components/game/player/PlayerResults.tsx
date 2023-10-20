@@ -2,7 +2,7 @@
 
 //images
 import Image from 'next/image';
-import { resultOne, resultTwo, champion } from '../../../public/assets/images/game';
+import { resultOne, resultTwo, champion } from '../../../../public/assets/images/game';
 
 //chart
 import { LineChart } from '@mui/x-charts/LineChart';
@@ -10,15 +10,13 @@ import { LineChart } from '@mui/x-charts/LineChart';
 //route
 import { useRouter } from 'next/navigation';
 
-interface ResultsProps {
-    openCheckResult: () => void;
-}
+interface ResultsProps {}
 
-const Results = (props: ResultsProps) => {
-    const router = useRouter();
+const PlayerResult = (props: ResultsProps) => {
+    // const router = useRouter();
 
     const exitGame = () => {
-        router.back();
+        // router.back();
     };
     return (
         <div className='h-full w-full relative flex items-center justify-center bg-bgPurpleLight text-textWhite'>
@@ -47,10 +45,7 @@ const Results = (props: ResultsProps) => {
                             className='z-[1] w-[20em] h-[10em] object-cover'
                         />
                         <h1 className='text-2xl font-bold'>You finish quiz with 3 Point</h1>
-                        <button
-                            onClick={props.openCheckResult}
-                            className='text-center h-[48px] inline-flex appearance-none bg-bgButtonCheckResult border-0 rounded-md shadow-boxButtonStartGame text-textWhite cursor-pointer justify-center items-center leading-1 text-md overflow-hidden px-4 font-semibold hover:translate-y-[2px]'
-                        >
+                        <button className='text-center h-[48px] inline-flex appearance-none bg-bgButtonCheckResult border-0 rounded-md shadow-boxButtonStartGame text-textWhite cursor-pointer justify-center items-center leading-1 text-md overflow-hidden px-4 font-semibold hover:translate-y-[2px]'>
                             Check Result
                         </button>
                     </div>
@@ -109,57 +104,4 @@ const Results = (props: ResultsProps) => {
     );
 };
 
-export default Results;
-
-// <!-- HTML !-->
-// <button class="button-64" role="button"><span class="text">Button 64</span></button>
-
-// /* CSS */
-// .button-64 {
-//   align-items: center;
-//   background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
-//   border: 0;
-//   border-radius: 8px;
-//   box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
-//   box-sizing: border-box;
-//   color: #FFFFFF;
-//   display: flex;
-//   font-family: Phantomsans, sans-serif;
-//   font-size: 20px;
-//   justify-content: center;
-//   line-height: 1em;
-//   max-width: 100%;
-//   min-width: 140px;
-//   padding: 3px;
-//   text-decoration: none;
-//   user-select: none;
-//   -webkit-user-select: none;
-//   touch-action: manipulation;
-//   white-space: nowrap;
-//   cursor: pointer;
-// }
-
-// .button-64:active,
-// .button-64:hover {
-//   outline: 0;
-// }
-
-// .button-64 span {
-//   background-color: rgb(5, 6, 45);
-//   padding: 16px 24px;
-//   border-radius: 6px;
-//   width: 100%;
-//   height: 100%;
-//   transition: 300ms;
-// }
-
-// .button-64:hover span {
-//   background: none;
-// }
-
-// @media (min-width: 768px) {
-//   .button-64 {
-//     font-size: 24px;
-//     min-width: 196px;
-//   }
-// }
+export default PlayerResult;

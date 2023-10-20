@@ -1,0 +1,266 @@
+{
+    "_id": {
+        "$oid": "647ce337af09f3b01a81494f"
+    },
+    "name": "Lập trình hướng đối tượng",
+    "description": "Hướng đối tượng tuy yếu nhưng hướng về em thì mạnh",
+    "creator": {
+        "$oid": "645663106e2607839bc293a0"
+    },
+    "backgroundImage": "https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313081/gcozpo8f4vcacojseih6.png",
+    "isPublic": true,
+    "field": "Tech",
+    "pointsPerQuestion": 2,
+    "likesCount": [],
+    "comments": [],
+    "dateCreated": {
+        "$date": "2023-06-09T12:18:03.682Z"
+    },
+    "questionList": [
+        {
+            "quizId": {
+                "$oid": "647ce337af09f3b01a81494f"
+            },
+            "tags": [""],
+            "questionType": "Quiz",
+            "optionQuestion": "Single",
+            "isPublic": true,
+            "pointType": "Standard",
+            "answerTime": 5,
+            "backgroundImage": "https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313167/o0utbhprtgtgo9xyxspy.jpg",
+            "question": "Con gì có mấy chân",
+            "answerList": [
+                {
+                    "name": "A",
+                    "body": "4 chân",
+                    "isCorrect": true,
+                    "_id": {
+                        "$oid": "648318fc200511a9a772123c"
+                    }
+                },
+                {
+                    "name": "B",
+                    "body": "6 chân",
+                    "isCorrect": false,
+                    "_id": {
+                        "$oid": "648318fc200511a9a772123d"
+                    }
+                },
+                {
+                    "name": "C",
+                    "body": "2 chân",
+                    "isCorrect": false,
+                    "_id": {
+                        "$oid": "648318fc200511a9a772123e"
+                    }
+                },
+                {
+                    "name": "D",
+                    "body": "8 chân",
+                    "isCorrect": false,
+                    "_id": {
+                        "$oid": "648318fc200511a9a772123f"
+                    }
+                }
+            ],
+            "questionIndex": 1,
+            "maxCorrectAnswer": 1,
+            "correctAnswerCount": 1,
+            "answerCorrect": ["A"],
+            "_id": {
+                "$oid": "647d42b6ec2aeb4204caa6b9"
+            }
+        },
+        {
+            "quizId": {
+                "$oid": "647ce337af09f3b01a81494f"
+            },
+            "tags": [""],
+            "questionType": "True/False",
+            "optionQuestion": "Single",
+            "isPublic": true,
+            "pointType": "Standard",
+            "answerTime": 5,
+            "backgroundImage": "https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313256/lmf0jolzjuglzv28tiux.jpg",
+            "question": "Đối tượng là thể hiện của một lớp",
+            "answerList": [
+                {
+                    "name": "a",
+                    "body": "True",
+                    "isCorrect": true,
+                    "_id": {
+                        "$oid": "647d42e5ec2aeb4204caa6e7"
+                    }
+                },
+                {
+                    "name": "b",
+                    "body": "False",
+                    "isCorrect": false,
+                    "_id": {
+                        "$oid": "647d42e5ec2aeb4204caa6e8"
+                    }
+                }
+            ],
+            "questionIndex": 2,
+            "maxCorrectAnswer": 1,
+            "correctAnswerCount": 1,
+            "answerCorrect": ["A"],
+            "_id": {
+                "$oid": "647d42b6ec2aeb4204caa6bf"
+            }
+        },
+        {
+            "quizId": {
+                "$oid": "647ce337af09f3b01a81494f"
+            },
+            "tags": [""],
+            "questionType": "Quiz",
+            "optionQuestion": "Mutiple",
+            "isPublic": true,
+            "pointType": "Standard",
+            "answerTime": 5,
+            "backgroundImage": "https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686312916/vjxrhedqyhiqzho8gumi.jpg",
+            "question": "Đâu là kiểu kế thừa trong OoP",
+            "answerList": [
+                {
+                    "name": "A",
+                    "body": "public",
+                    "isCorrect": true,
+                    "_id": {
+                        "$oid": "647d435dec2aeb4204caa72c"
+                    }
+                },
+                {
+                    "name": "B",
+                    "body": "Private",
+                    "isCorrect": true,
+                    "_id": {
+                        "$oid": "647d435dec2aeb4204caa72d"
+                    }
+                },
+                {
+                    "name": "C",
+                    "body": "Protected",
+                    "isCorrect": true,
+                    "_id": {
+                        "$oid": "647d435dec2aeb4204caa72e"
+                    }
+                },
+                {
+                    "name": "D",
+                    "body": "Secret",
+                    "isCorrect": false,
+                    "_id": {
+                        "$oid": "647d435dec2aeb4204caa72f"
+                    }
+                }
+            ],
+            "questionIndex": 3,
+            "maxCorrectAnswer": 4,
+            "correctAnswerCount": 3,
+            "answerCorrect": ["A", "C", "B"],
+            "_id": {
+                "$oid": "647d4301ec2aeb4204caa6fa"
+            }
+        },
+        {
+            "quizId": {
+                "$oid": "647ce337af09f3b01a81494f"
+            },
+            "tags": [""],
+            "questionType": "True/False",
+            "optionQuestion": "Single",
+            "isPublic": true,
+            "pointType": "Standard",
+            "answerTime": 5,
+            "backgroundImage": "https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313348/zc8zaqapoc4v2ydglksk.jpg",
+            "question": "Có nên học môn oop không",
+            "answerList": [
+                {
+                    "name": "a",
+                    "body": "True",
+                    "isCorrect": true,
+                    "_id": {
+                        "$oid": "647d43e0ec2aeb4204caa781"
+                    }
+                },
+                {
+                    "name": "b",
+                    "body": "False",
+                    "isCorrect": false,
+                    "_id": {
+                        "$oid": "647d43e0ec2aeb4204caa782"
+                    }
+                }
+            ],
+            "questionIndex": 4,
+            "maxCorrectAnswer": 1,
+            "correctAnswerCount": 1,
+            "answerCorrect": ["A"],
+            "_id": {
+                "$oid": "647d4367ec2aeb4204caa74b"
+            }
+        },
+        {
+            "quizId": {
+                "$oid": "647ce337af09f3b01a81494f"
+            },
+            "tags": [""],
+            "questionType": "Quiz",
+            "optionQuestion": "Mutiple",
+            "isPublic": true,
+            "pointType": "Standard",
+            "answerTime": 5,
+            "backgroundImage": "https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313377/i9nz9ylznoku65bqsxfw.jpg",
+            "question": "Ngôn ngữ nào phù hợp cho OoP",
+            "answerList": [
+                {
+                    "name": "A",
+                    "body": "Java",
+                    "isCorrect": true,
+                    "_id": {
+                        "$oid": "647d44bbec2aeb4204caa7e6"
+                    }
+                },
+                {
+                    "name": "B",
+                    "body": "C++",
+                    "isCorrect": true,
+                    "_id": {
+                        "$oid": "647d44bbec2aeb4204caa7e7"
+                    }
+                },
+                {
+                    "name": "C",
+                    "body": "Python",
+                    "isCorrect": false,
+                    "_id": {
+                        "$oid": "647d44bbec2aeb4204caa7e8"
+                    }
+                },
+                {
+                    "name": "D",
+                    "body": "Ruby",
+                    "isCorrect": false,
+                    "_id": {
+                        "$oid": "647d44bbec2aeb4204caa7e9"
+                    }
+                }
+            ],
+            "questionIndex": 5,
+            "maxCorrectAnswer": 4,
+            "correctAnswerCount": 2,
+            "answerCorrect": ["A", "B"],
+            "_id": {
+                "$oid": "647d43f9ec2aeb4204caa7a4"
+            }
+        }
+    ],
+    "createdAt": {
+        "$date": "2023-06-04T19:17:11.876Z"
+    },
+    "updatedAt": {
+        "$date": "2023-06-09T12:23:19.081Z"
+    },
+    "__v": 5
+}

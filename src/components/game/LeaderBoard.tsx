@@ -9,16 +9,9 @@ import { logoImg } from '../../../public/assets/images/auth';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 
-interface ResultsProps {
-    openResult: () => void;
-}
+interface LeaderBoardProps {}
 
-const LeaderBoard = (props: ResultsProps) => {
-    useEffect(() => {
-        setTimeout(() => {
-            props.openResult();
-        }, 5000);
-    }, []);
+const LeaderBoard = (props: LeaderBoardProps) => {
     return (
         <div className='h-full w-full relative flex items-center justify-center bg-bgPurpleLight text-textWhite'>
             <div className='z-[1] relative w-3/4 h-3/4 flex flex-col items-center justify-end rounded-[40px] bg-bgQuestion pb-6'>
