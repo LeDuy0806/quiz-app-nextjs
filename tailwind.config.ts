@@ -114,7 +114,8 @@ const config: Config = {
                 bgPurpleLight: '#D0BFFF',
                 bgQuestion: 'rgba(223, 215, 230, 0.8)',
                 bgBorderQuestion: 'rgba(105,105,105, 0.4)',
-                bgResultTitle: '#6868AC'
+                bgResultTitle: '#6868AC',
+                bgAnswerCorrect: '#16FF00'
             },
 
             boxShadow: {

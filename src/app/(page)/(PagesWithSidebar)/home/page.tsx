@@ -9,12 +9,26 @@ import UserInfoCard from 'src/components/home/UserInfoCard';
 import Head from 'next/head';
 import { useEffect } from 'react';
 
+import { io } from 'socket.io-client';
+import { useAppDispatch } from 'src/app/redux/hooks';
+import { createSocket } from 'src/app/redux/slices/socketSlice';
+
 function HomePage() {
-    const state = useAppSelector((state) => state.user);
-    // console.log(state);
+    const SOCKET_URL = 'http://172.20.10.3:3001';
+    const dispatch = useAppDispatch();
+
+    const user = useAppSelector((state) => state.auth.authData?.user);
+
     useEffect(() => {
-        document.title = 'Home - Quizzes';
-    }, []);
+        if (user) {
+            const socket = io(SOCKET_URL, {
+                transports: ['websocket']
+            });
+            dispatch(createSocket(socket));
+            socket.connect();
+            return () => socket?.disconnect();
+        }
+    }, [user, dispatch]);
 
     return (
         <div className='p-4 dark:bg-slate-600 min-h-[calc(100vh-4rem)] max-md:flex-col'>

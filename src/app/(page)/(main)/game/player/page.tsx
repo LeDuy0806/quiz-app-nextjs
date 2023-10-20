@@ -5,9 +5,11 @@ import { useEffect, useState } from 'react';
 //component
 import WaitingRoom from 'src/components/game/WaitingRoom';
 import CountDown from 'src/components/game/CountDown';
-import Question from 'src/components/game/Question';
+import PlayerQuestion from 'src/components/game/player/PlayerQuestion';
 import LeaderBoard from 'src/components/game/LeaderBoard';
-import Results from 'src/components/game/Results';
+import PlayerResult from 'src/components/game/player/PlayerResults';
+
+import questionList from 'src/data';
 
 const Player = () => {
     const [timer, setTimer] = useState<number>(10);
@@ -16,6 +18,9 @@ const Player = () => {
     const [showQuestion, setShowQuestion] = useState<boolean>(false);
     const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false);
     const [showResults, setShowResult] = useState<boolean>(false);
+
+    const [timerQuestion, setTimerQuestion] = useState<number>(0);
+    console.log(questionList);
 
     const startGame = () => {
         setShowWaitingRoom(false);
@@ -51,9 +56,9 @@ const Player = () => {
         <>
             {showWaitingRoom && <WaitingRoom startGame={startGame} />}
             {showCountDown && <CountDown time={timer} />}
-            {showQuestion && <Question navigation={navigation} />}
-            {showLeaderBoard && <LeaderBoard openResult={openResult} />}
-            {showResults && <Results openCheckResult={openCheckResult} />}
+            {showQuestion && <PlayerQuestion />}
+            {showLeaderBoard && <LeaderBoard />}
+            {showResults && <PlayerResult />}
         </>
     );
 };
