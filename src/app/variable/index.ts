@@ -32,6 +32,7 @@ type LoginType = {
 type ErrorLoginType = {
     userName: boolean;
     password: boolean;
+    authAccount: boolean;
 };
 
 type EditProfileType = {

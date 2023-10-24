@@ -15,8 +15,8 @@ type QuizType = {
     likesCount: UserType[];
     comments: MessageType[];
     questionList: QuestionType[];
-    createdAt: Date | null;
-    updatedAt: Date | null;
+    createdAt?: Date | null;
+    updatedAt?: Date | null;
 } | null;
 
 export default QuizType;

@@ -47,33 +47,15 @@ const PlayerQuestion = (props: QuestionProps) => {
                     </div>
                 </motion.div>
                 <div className='w-3/4 flex justify-between items-center gap-[2em]'>
-                    <Answer
-                        delay={0.3}
-                        body={props.questionData?.answerList[0]?.body}
-                        isCorrect={props.questionData?.answerList[0]?.isCorrect}
-                        name='A'
-                    />
-                    <Answer
-                        delay={0.4}
-                        body={props.questionData?.answerList[1]?.body}
-                        isCorrect={props.questionData?.answerList[1]?.isCorrect}
-                        name='B'
-                    />
+                    <Answer delay={0.3} body={props.questionData?.answerList[0]?.body} isCorrect={props.questionData?.answerList[0]?.isCorrect} name='A' />
+                    <Answer delay={0.4} body={props.questionData?.answerList[1]?.body} isCorrect={props.questionData?.answerList[1]?.isCorrect} name='B' />
                 </div>
-                <div className='w-3/4 flex justify-between items-center gap-[2em]'>
-                    <Answer
-                        delay={0.5}
-                        body={props.questionData?.answerList[2]?.body}
-                        isCorrect={props.questionData?.answerList[2]?.isCorrect}
-                        name='C'
-                    />
-                    <Answer
-                        delay={0.6}
-                        body={props.questionData?.answerList[3]?.body}
-                        isCorrect={props.questionData?.answerList[3]?.isCorrect}
-                        name='D'
-                    />
-                </div>
+                {props.questionData?.questionType !== 'True/False' && (
+                    <div className='w-3/4 flex justify-between items-center gap-[2em]'>
+                        <Answer delay={0.5} body={props.questionData?.answerList[2]?.body} isCorrect={props.questionData?.answerList[2]?.isCorrect} name='C' />
+                        <Answer delay={0.6} body={props.questionData?.answerList[3]?.body} isCorrect={props.questionData?.answerList[3]?.isCorrect} name='D' />
+                    </div>
+                )}
             </div>
 
             <motion.div
@@ -128,11 +110,7 @@ const Answer = (props: AnswerProps) => {
             >
                 <FaCheck className='ww-[2.6em] h-[2.6em]' />
             </div>
-            <h2
-                className={clsx(`font-semibold`, props.isCorrect ? 'text-White' : 'text-textBlack')}
-            >
-                {props.body}
-            </h2>
+            <h2 className={clsx(`font-semibold`, props.isCorrect ? 'text-White' : 'text-textBlack')}>{props.body}</h2>
         </motion.div>
     );
 };

@@ -1,32 +1,38 @@
 'use client';
 
-import { useAppSelector } from 'src/app/redux/hooks';
+import { useEffect } from 'react';
+
+//components
 import HomeCard from 'src/components/home/HomeCard';
 import LibraryBox from 'src/components/home/LibraryBox';
 import CarouselBanner from 'src/components/home/CarouselBanner';
 import TopPickBox from 'src/components/home/TopPickBox';
 import UserInfoCard from 'src/components/home/UserInfoCard';
-import Head from 'next/head';
-import { useEffect } from 'react';
 
-import { io } from 'socket.io-client';
-import { useAppDispatch } from 'src/app/redux/hooks';
+//redux
+import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
 import { createSocket } from 'src/app/redux/slices/socketSlice';
 
-function HomePage() {
-    const SOCKET_URL = 'http://172.20.10.3:3001';
-    const dispatch = useAppDispatch();
+//socket
+import type { Socket } from 'socket.io-client';
+import io from 'socket.io-client';
 
+function HomePage() {
+    const SOCKET_URL = 'http://localhost:3001';
+    const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.auth.authData?.user);
+    // const user = localStorage.getItem('profile');
 
     useEffect(() => {
         if (user) {
-            const socket = io(SOCKET_URL, {
+            const socket: Socket = io(SOCKET_URL, {
                 transports: ['websocket']
             });
-            dispatch(createSocket(socket));
             socket.connect();
-            return () => socket?.disconnect();
+            dispatch(createSocket(socket));
+            // return () => {
+            //     socket.disconnect();
+            // };
         }
     }, [user, dispatch]);
 
