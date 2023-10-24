@@ -17,11 +17,12 @@ const DynamicThemeSwitcher = dynamic(() => import('src/components/ThemeSwitcher'
 });
 
 //redux
-import { useAppSelector } from 'src/app/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
 import { useUserLogOutMutation } from 'src/app/redux/services/authApi';
 
 import { useAnimate, stagger, motion } from 'framer-motion';
 import { signOut, useSession } from 'next-auth/react';
+import { deleteSocket } from 'src/app/redux/slices/socketSlice';
 
 const staggerMenuItems = stagger(0.1, { startDelay: 0.15 });
 function useMenuAnimation(isOpen: boolean) {
@@ -33,9 +34,7 @@ function useMenuAnimation(isOpen: boolean) {
             animate(
                 'ul',
                 {
-                    clipPath: isOpen
-                        ? 'inset(0% 0% 0% 0% round 10px)'
-                        : 'inset(10% 50% 90% 50% round 10px)'
+                    clipPath: isOpen ? 'inset(0% 0% 0% 0% round 10px)' : 'inset(10% 50% 90% 50% round 10px)'
                 },
                 {
                     type: 'spring',
@@ -43,32 +42,29 @@ function useMenuAnimation(isOpen: boolean) {
                     duration: 0.5
                 }
             );
-            animate(
-                'li',
-                isOpen
-                    ? { opacity: 1, scale: 1, filter: 'blur(0px)' }
-                    : { opacity: 0, scale: 0.5, filter: 'blur(20px)' },
-                {
-                    duration: 0.3,
-                    delay: isOpen ? staggerMenuItems : 0
-                }
-            );
+            animate('li', isOpen ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : { opacity: 0, scale: 0.5, filter: 'blur(20px)' }, {
+                duration: 0.3,
+                delay: isOpen ? staggerMenuItems : 0
+            });
         }
-    }, [isOpen]);
+    }, [isOpen, animate, scope]);
     return scope;
 }
 
 interface IProps {
-    toogleSidebar: () => void;
+    toggleSidebar: () => void;
 }
 
-function SubNavBar({ toogleSidebar }: IProps) {
+function SubNavBar({ toggleSidebar }: IProps) {
+    const dispatch = useAppDispatch();
     const router = useRouter();
     const { data: session } = useSession();
     const user = useAppSelector((state) => state.auth.authData?.user);
+    const socket = useAppSelector((state) => state.socket.socket);
 
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const scope = useMenuAnimation(userMenuOpen);
+
     useEffect(() => {
         const handleOutsideClick = (e: any) => {
             if (e.target.id !== 'context-opener') {
@@ -81,7 +77,7 @@ function SubNavBar({ toogleSidebar }: IProps) {
         return () => {
             document.removeEventListener('click', handleOutsideClick);
         };
-    }, []);
+    }, [scope]);
 
     const [Logout, { isSuccess }] = useUserLogOutMutation();
     const handleButton = () => {
@@ -96,8 +92,10 @@ function SubNavBar({ toogleSidebar }: IProps) {
             } else {
                 router.push('/');
             }
+            socket.disconnect();
+            dispatch(deleteSocket);
         }
-    }, [isSuccess, session]);
+    }, [isSuccess, session, router, dispatch, socket]);
 
     return (
         <nav className=' shadow-sm fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
@@ -107,7 +105,7 @@ function SubNavBar({ toogleSidebar }: IProps) {
                         <button
                             type='button'
                             className='inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
-                            onClick={toogleSidebar}
+                            onClick={toggleSidebar}
                         >
                             <span className='sr-only'>Open sidebar</span>
                             <BsFilterLeft className='w-6 h-6' />
@@ -117,16 +115,14 @@ function SubNavBar({ toogleSidebar }: IProps) {
                                 <Image src={'/assets/images/logoApp.png'} alt='EzQuiz Logo' fill />
                             </div>
 
-                            <span className=' text-gray-600 self-center whitespace-nowrap text-xl font-semibold dark:text-white'>
-                                Quizzes
-                            </span>
+                            <span className=' text-gray-600 self-center whitespace-nowrap text-xl font-semibold dark:text-white'>Quizzes</span>
                         </Link>
                     </div>
                     {/* button open user menu */}
                     <div className='flex items-center'>
                         <div className='flex items-center ml-3'>
                             <Link
-                                href='/creator'
+                                href='/game/join'
                                 className='mr-1 max-md:h-8 max-md:w-8 md:px-5 md:py-2.5 flex items-center justify-center rounded-lg bg-purple-700 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 '
                             >
                                 <AiOutlineAppstoreAdd className='h-5 w-5' />
@@ -155,11 +151,7 @@ function SubNavBar({ toogleSidebar }: IProps) {
                                 <div className='h-8 w-8  relative'>
                                     <Image
                                         fill
-                                        src={
-                                            user?.avatar
-                                                ? user.avatar
-                                                : '/assets/images/default_avatar.png'
-                                        }
+                                        src={user?.avatar ? user.avatar : '/assets/images/default_avatar.png'}
                                         alt='user photo'
                                         className='rounded-full object-cover'
                                     />
@@ -185,22 +177,14 @@ function SubNavBar({ toogleSidebar }: IProps) {
                                             <div className='h-8 w-8 mr-2 relative '>
                                                 <Image
                                                     fill
-                                                    src={
-                                                        user?.avatar
-                                                            ? user.avatar
-                                                            : '/assets/images/default_avatar.png'
-                                                    }
+                                                    src={user?.avatar ? user.avatar : '/assets/images/default_avatar.png'}
                                                     alt='user photo'
                                                     className='rounded-full object-cover'
                                                 />
                                             </div>
-                                            <span className='block text-sm text-gray-900 dark:text-white'>
-                                                {user?.userName || 'UserName'}
-                                            </span>
+                                            <span className='block text-sm text-gray-900 dark:text-white'>{user?.userName || 'UserName'}</span>
                                         </div>
-                                        <span className='block text-xs text-gray-900 dark:text-white hover:underline'>
-                                            View ProFile
-                                        </span>
+                                        <span className='block text-xs text-gray-900 dark:text-white hover:underline'>View ProFile</span>
                                     </div>
                                 </li>
 

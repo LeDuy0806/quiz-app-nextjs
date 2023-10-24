@@ -19,7 +19,7 @@ import paths from 'src/constants/paths';
 function SideBar({ children }: { children: React.ReactNode }) {
     const [hideSideBar, setHideSideBar] = useState(true);
 
-    const toogleSidebar = () => {
+    const toggleSidebar = () => {
         setHideSideBar(!hideSideBar);
     };
 
@@ -30,7 +30,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
         if (width > 391) {
             if (!hideSideBar) setHideSideBar(true);
         }
-    }, [width]);
+    }, [width, hideSideBar]);
     const sidebarRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -92,7 +92,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
     return (
         <>
             <div ref={sidebarRef}>
-                <SubNavBar toogleSidebar={toogleSidebar} />
+                <SubNavBar toggleSidebar={toggleSidebar} />
                 <aside
                     id='logo-sidebar'
                     className={

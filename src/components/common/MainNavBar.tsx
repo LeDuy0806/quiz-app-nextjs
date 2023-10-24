@@ -16,6 +16,7 @@ function MainNavBar() {
     const [userMenuOpen, setUserMenuOpen] = useState(false);
 
     const user = useAppSelector((state) => state.auth.authData?.user);
+    console.log(user);
 
     const inActiveClassName =
         'group inline-flex rounded-t-lg border-b-2 border-transparent p-4 hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300';

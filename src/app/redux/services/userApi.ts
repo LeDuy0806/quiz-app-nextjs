@@ -9,10 +9,7 @@ export const apiUser = createApi({
         baseUrl: API
     }),
     endpoints: (builder) => ({
-        getUser: builder.query<
-            UserType,
-            { accessToken: string; userId: string }
-        >({
+        getUser: builder.query<UserType, { accessToken: string; userId: string }>({
             query: ({ accessToken, userId }) => ({
                 url: `api/user/${userId}`,
                 method: 'GET',
@@ -28,27 +25,20 @@ export const apiUser = createApi({
             })
         }),
 
-        updateUser: builder.mutation<
-            UserType,
-            { accessToken: string; userId: string; formData: UserType }
-        >({
+        updateUser: builder.mutation<UserType, { accessToken: string; userId: string; formData: UserType }>({
             query: ({ accessToken, userId, formData }) => ({
                 url: `api/user/${userId}`,
                 method: 'PATCH',
                 headers: {
                     Accept: '*application/json*',
-                    'Content-Type':
-                        'multipart/form-data; boundary=<calculated when request is sent>',
+                    'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
                     Authorization: `Bearer ${accessToken}`
                 },
                 body: formData
             })
         }),
 
-        addFriend: builder.mutation<
-            UserType,
-            { accessToken: string; myId: string; friendId: string }
-        >({
+        addFriend: builder.mutation<UserType, { accessToken: string; myId: string; friendId: string }>({
             query: ({ accessToken, myId, friendId }) => ({
                 url: `api/user/${myId}/addFriend/${friendId}`,
                 method: 'PUT',
@@ -78,8 +68,7 @@ export const apiUser = createApi({
                 method: 'POST',
                 headers: {
                     Accept: '*application/json*',
-                    'Content-Type':
-                        'multipart/form-data; boundary=<calculated when request is sent>'
+                    'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
                     // Authorization: `Bearer ${accessToken}`,
                 },
                 body: formData
