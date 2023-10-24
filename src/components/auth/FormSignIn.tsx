@@ -42,6 +42,7 @@ const InitErrorLogin = {
 
 //auth
 import { useSession } from 'next-auth/react';
+import LiquidLoading from '../LiquidLoading';
 
 const FormSignIn = () => {
     const { data: session } = useSession();
@@ -276,7 +277,7 @@ const FormSignIn = () => {
                     </p>
                 </div>
             </div>
-            {loading && <LoadingRoute />}
+            {loading && <LiquidLoading />}
         </motion.main>
     );
 };

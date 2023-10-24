@@ -6,6 +6,7 @@ import { BiHelpCircle } from 'react-icons/bi';
 import { FaCompass, FaRegCompass } from 'react-icons/fa';
 import { HiHome, HiOutlineHome } from 'react-icons/hi';
 import { IoIosList, IoIosListBox } from 'react-icons/io';
+import { IoListSharp } from 'react-icons/io5';
 import { IconType } from 'react-icons/lib/esm/iconBase';
 import { MdLeaderboard, MdOutlineLeaderboard } from 'react-icons/md';
 
@@ -75,7 +76,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
             to: paths.library,
             icon: {
                 fill: IoIosListBox,
-                outline: IoIosList
+                outline: IoListSharp
             }
         },
         {
@@ -125,22 +126,23 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                     >
                                         <Link
                                             href={link.to}
+                                            shallow={true}
                                             className={
                                                 pathName === link.to
-                                                    ? 'active group sm:max-xl:flex-col sm:max-xl:justify-center sm:max-xl:items-center border-b-2 border-bgPurple flex p-2 font-bold text-bgPurple rounded dark:text-bgPurple hover:bg-gray-100 dark:hover:bg-gray-700'
-                                                    : 'group sm:max-xl:flex-col sm:max-xl:justify-center sm:max-xl:items-center border-b-2 border-gray-600 flex p-2 text-gray-600 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
+                                                    ? 'active group sm:max-xl:flex-col sm:max-xl:justify-center sm:max-xl:items-center border-b-2 border-bgPurple flex p-2 font-bold text-bgPurple rounded-tr-lg rounded-tl-lg dark:text-bgPurple hover:bg-gray-100 dark:hover:bg-gray-700'
+                                                    : 'group sm:max-xl:flex-col sm:max-xl:justify-center sm:max-xl:items-center border-b-2 border-gray-600 flex p-2 text-gray-600 rounded-tr-lg rounded-tl-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
                                             }
                                         >
                                             {pathName === link.to ? (
                                                 <link.icon.fill
                                                     className={
-                                                        ' ml-2 sm:max-xl:ml-0 w-5 h-5  text-bgPurplePower opacity-80 transition duration-75 dark:text-bgPurplePower group-hover:text-gray-900 dark:group-hover:text-white'
+                                                        ' ml-2 sm:max-xl:ml-0 w-5 h-5 text-xl transform group-hover:scale-105 text-bgPurplePower opacity-70 transition duration-75 dark:text-bgPurplePower group-hover:opacity-90 dark:group-hover:text-white'
                                                     }
                                                 />
                                             ) : (
                                                 <link.icon.outline
                                                     className={
-                                                        'ml-2 sm:max-xl:ml-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white'
+                                                        'ml-2 sm:max-xl:ml-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:scale-110 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white'
                                                     }
                                                 />
                                             )}
@@ -157,7 +159,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                 <button className='group w-full sm:max-xl:flex-col flex items-center p-2 text-gray-600 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'>
                                     <AiOutlineGift className='w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white' />
                                     <span className='ml-3 sm:max-xl:ml-0 sm:max-xl:text-xs'>
-                                        What s news?
+                                        What&apos;s news?
                                     </span>
                                 </button>
                             </li>

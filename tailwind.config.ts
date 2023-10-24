@@ -43,6 +43,7 @@ const config: Config = {
                     'linear-gradient(135deg,rgba(180,157,255,0) 11%,#b49dff 26%,#e4a7f9 45%,#ffd9ae 72%,rgba(255,217,174,0) 89%);',
                 'gradient-model':
                     'linear-gradient(112.1deg, rgba(32, 38, 57,0.06) 11.4%, rgba(63, 76, 119,02) 70.2%);',
+                'gradient-blue-loaing': 'linear-gradient(45deg, #c7eeff, #03a9f4)'
                 bgListUser: 'linear-gradient(to bottom, #9ca2af, #7a99e7)',
                 bgListOfUser: 'linear-gradient(to bottom, #9ca2af, #7a99e7)',
                 bgButtonCloseGame: 'radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)',
@@ -121,6 +122,7 @@ const config: Config = {
             boxShadow: {
                 white: '0 3px 2px rgba(20,45,82,.01)',
                 purple: '0 4px 24px rgba(172,82,255,.7)',
+
                 boxheaderfooter: 'inset -1px -1px #3c195c, inset 1px 1px #7d4dbc',
                 boxWaiting: '0px 2px 20px #cfd8dc',
                 boxListUser: '0 7px 30px rgba(62, 9, 11, 0.3)',
@@ -155,10 +157,6 @@ const config: Config = {
                 auto: 'auto auto 1fr'
             },
 
-            animation: {
-                marquee: 'marquee 10s linear infinite'
-            },
-
             transitionTimingFunction: {
                 ease: 'ease'
             },
@@ -167,7 +165,36 @@ const config: Config = {
                 marquee: {
                     '0%': { transform: 'translateX(0%)' },
                     '100%': { transform: 'translateX(100%)' }
+                },
+                rotate: {
+                    '0%, 50%': { transform: 'rotate(360deg)' },
+                    '100%': { transform: 'rotate(0deg)' }
+                },
+                animateLoanding1: {
+                    '0%': { top: '0' },
+                    '50%, 100%': { top: '100%' }
+                },
+                animateLoanding2: {
+                    '0%': { left: '0' },
+                    '50%, 100%': { left: '100%' }
+                },
+                animateLoanding3: {
+                    '0%': { left: '100%' },
+                    '50%, 100%': { left: '0' }
+                },
+                animateLoanding4: {
+                    '0%': { top: '100%' },
+                    '50%, 100%': { top: '0' }
                 }
+            },
+
+            animation: {
+                marquee: 'marquee 10s linear infinite',
+                rotate: 'rotate 4s ease-out infinite',
+                animateLoanding1: 'animateLoanding1 4s linear infinite',
+                animateLoanding2: 'animateLoanding2 4s linear infinite',
+                animateLoanding3: 'animateLoanding3 4s linear infinite',
+                animateLoanding4: 'animateLoanding4 4s linear infinite'
             }
         }
     },
