@@ -36,7 +36,8 @@ import { LoginType, ErrorLoginType } from 'src/app/variable';
 const InitLogin = { mail: '', password: '' } as LoginType;
 const InitErrorLogin = {
     userName: false,
-    password: false
+    password: false,
+    authAccount: false
 } as ErrorLoginType;
 
 //auth
@@ -46,6 +47,8 @@ const FormSignIn = () => {
     const { data: session } = useSession();
     const router = useRouter();
     const dispatch = useAppDispatch();
+
+    const [LoginSocial] = useLoginSocialMutation();
 
     useEffect(() => {
         if (session) {
@@ -64,7 +67,7 @@ const FormSignIn = () => {
             };
             handleLoginSocial();
         }
-    }, [session]);
+    }, [session, dispatch, router, LoginSocial]);
 
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -74,7 +77,6 @@ const FormSignIn = () => {
     const [click, setClick] = useState<boolean>(false);
     const [showPassWord, setShowPassWord] = useState<boolean>(false);
 
-    const [LoginSocial] = useLoginSocialMutation();
     const [Login, { data, isLoading, isError, error, isSuccess }] = useLoginUserMutation();
 
     useEffect(() => {
@@ -91,7 +93,7 @@ const FormSignIn = () => {
             dispatch(loGin(data));
             router.push('/home');
         }
-    }, [isSuccess, data]);
+    }, [isSuccess, data, dispatch, router]);
 
     useEffect(() => {
         if (isError) {
@@ -108,11 +110,19 @@ const FormSignIn = () => {
                         var newError = { ...InitErrorLogin, password: true };
                         return newError;
                     });
+                    break;
+
+                case 'Email is auth account':
+                    setFormError(() => {
+                        var newError = { ...InitErrorLogin, authAccount: true };
+                        return newError;
+                    });
+                    break;
                 default:
                     break;
             }
         }
-    }, [isError]);
+    }, [isError, error]);
 
     const handleChangeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -122,14 +132,6 @@ const FormSignIn = () => {
         setFormError(InitErrorLogin);
         Login(formData);
     };
-
-    // if (loading) {
-    //     return (
-    //         <div className='h-screen w-screen fixed flex justify-center items-center top-0 left-0 bg-bgModel z-10'>
-    //             <Image src={rolling} alt='' className='w-[200px] h-[200px]' />
-    //         </div>
-    //     );
-    // }
 
     return (
         <motion.main
@@ -162,8 +164,7 @@ const FormSignIn = () => {
                                     name='mail'
                                     className={clsx(
                                         `block min-h-[auto] w-full rounded-2xl border-[2px] px-3 py-[0.8rem] font-semibold outline-none focus:border-bgBlue focus:border-[2px] placeholder-gray-400 placeholder:italic`,
-                                        EmailFormat(formData.mail) === false &&
-                                            'focus:border-textError border-textError'
+                                        EmailFormat(formData.mail) === false && 'focus:border-textError border-textError'
                                     )}
                                     placeholder='Enter email'
                                     onChange={handleChangeForm}
@@ -189,11 +190,7 @@ const FormSignIn = () => {
                                         setShowPassWord(!showPassWord);
                                     }}
                                 >
-                                    {showPassWord ? (
-                                        <AiFillEye className=' w-[20px] h-[20px]' />
-                                    ) : (
-                                        <AiFillEyeInvisible className=' w-[20px] h-[20px]' />
-                                    )}
+                                    {showPassWord ? <AiFillEye className=' w-[20px] h-[20px]' /> : <AiFillEyeInvisible className=' w-[20px] h-[20px]' />}
                                 </button>
                             </motion.div>
 
@@ -201,27 +198,19 @@ const FormSignIn = () => {
 
                             {formError.password && <ErrorNotify message='Your password is wrong' />}
 
+                            {formError.authAccount && <ErrorNotify message='Email is auth account' />}
+
                             <motion.button
                                 initial={{ x: -20, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
                                 transition={{ duration: 0.4, delay: 0.5 }}
                                 className={clsx(
                                     `w-full flex items-center justify-center rounded-2xl py-[0.6rem] text-textWhite font-bold leading-7`,
-                                    click
-                                        ? 'bg-bgBlue cursor-pointer'
-                                        : 'bg-textGray cursor-default'
+                                    click ? 'bg-bgBlue cursor-pointer' : 'bg-textGray cursor-default'
                                 )}
                                 onClick={handleLogin}
                             >
-                                {isLoading ? (
-                                    <Image
-                                        src={loadingImg}
-                                        alt=''
-                                        className='w-7 h-7 self-center'
-                                    />
-                                ) : (
-                                    'Sign In'
-                                )}
+                                {isLoading ? <Image src={loadingImg} alt='' className='w-7 h-7 self-center' /> : 'Sign In'}
                             </motion.button>
                         </div>
                         <div className='flex flex-col w-full gap-y-2 mt-3'>
@@ -263,11 +252,7 @@ const FormSignIn = () => {
                                 className='w-full flex flex-row items-center justify-around bg-white rounded-2xl py-[0.8rem] text-textGray font-bold border-[2px] border-textBlue hover:bg-bgBlue hover:text-textWhite'
                                 onClick={() => signIn('facebook')}
                             >
-                                <Image
-                                    src={facebookImg}
-                                    alt=''
-                                    className='block w-[20px] h-[20px]'
-                                />
+                                <Image src={facebookImg} alt='' className='block w-[20px] h-[20px]' />
                                 <span className='inline-block'>Sign in with Facebook</span>
                                 <span />
                             </motion.button>
@@ -287,8 +272,7 @@ const FormSignIn = () => {
                 </div>
                 <div className='absolute w-full text-center min-h-[70px] bottom-0 left-[50%] translate-x-[-50%]'>
                     <p className='text-textGray font-semibold'>
-                        ©2023 quizzes GmbH -
-                        <span className='text-textBlack font-bold'>Imprint & Privacy Policy</span>
+                        ©2023 quizzes GmbH -<span className='text-textBlack font-bold'>Imprint & Privacy Policy</span>
                     </p>
                 </div>
             </div>

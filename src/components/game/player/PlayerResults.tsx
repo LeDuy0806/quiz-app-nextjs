@@ -13,18 +13,16 @@ import { useRouter } from 'next/navigation';
 interface ResultsProps {}
 
 const PlayerResult = (props: ResultsProps) => {
-    // const router = useRouter();
+    const router = useRouter();
 
     const exitGame = () => {
-        // router.back();
+        router.back();
     };
     return (
         <div className='h-full w-full relative flex items-center justify-center bg-bgPurpleLight text-textWhite'>
             <div className='z-[1] relative w-4/5 h-4/5 flex flex-row items-center justify-center rounded-[40px] bg-bgQuestion'>
                 <div className='w-3/5 h-[6em] absolute flex justify-center top-0 translate-y-[-50%] bg-bgResultTitle  shadow-boxResultTitle'>
-                    <h1 className='z-[1] text-[60px] order-2 font-black font-resultFont italic text-textResult text-shadow-shadowTextResult'>
-                        Result
-                    </h1>
+                    <h1 className='z-[1] text-[60px] order-2 font-black font-resultFont italic text-textResult text-shadow-shadowTextResult'>Result</h1>
                 </div>
                 <div className='w-1/3 flex items-center justify-center'>
                     <LineChart
@@ -39,11 +37,7 @@ const PlayerResult = (props: ResultsProps) => {
                 </div>
                 <div className='w-1/3 h-full flex flex-col items-center justify-center flex-1 '>
                     <div className='w-full h-[18em] flex flex-col items-center justify-center bg-red-100 mt-20 rounded-3xl gap-3'>
-                        <Image
-                            src={resultOne}
-                            alt=''
-                            className='z-[1] w-[20em] h-[10em] object-cover'
-                        />
+                        <Image src={resultOne} alt='' className='z-[1] w-[20em] h-[10em] object-cover' />
                         <h1 className='text-2xl font-bold'>You finish quiz with 3 Point</h1>
                         <button className='text-center h-[48px] inline-flex appearance-none bg-bgButtonCheckResult border-0 rounded-md shadow-boxButtonStartGame text-textWhite cursor-pointer justify-center items-center leading-1 text-md overflow-hidden px-4 font-semibold hover:translate-y-[2px]'>
                             Check Result

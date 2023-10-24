@@ -3,14 +3,20 @@
 import { useEffect, useState } from 'react';
 
 //component
-import WaitingRoom from 'src/components/game/WaitingRoom';
+import HostWaitingRoom from 'src/components/game/host/HostWaitingRoom';
 import CountDown from 'src/components/game/CountDown';
 import HostQuestion from 'src/components/game/host/HostQuestion';
 import LeaderBoard from 'src/components/game/LeaderBoard';
 import HostResult from 'src/components/game/host/HostResult';
 
-import Quiz from 'src/data';
+//type
 import QuestionType from 'src/app/types/questionType';
+
+//redux
+import { useAppSelector } from 'src/app/redux/hooks';
+
+//router
+import { useRouter } from 'next/navigation';
 
 const InitQuestionData = {
     name: '',
@@ -34,7 +40,14 @@ const InitQuestionData = {
 } as QuestionType;
 
 const Host = () => {
-    const [correct, setCorrect] = useState();
+    const router = useRouter();
+    const socket = useAppSelector((state) => state.socket.socket);
+    const game = useAppSelector((state) => state.game.game);
+    const quiz = useAppSelector((state) => state.quiz.quiz);
+    const leaderBoard = useAppSelector((state) => state.leaderBoard.leaderBoard);
+
+    const [playerList, setPlayerList] = useState<any>([]);
+
     const [timer, setTimer] = useState<number>(10);
 
     const [showWaitingRoomScreen, setShowWaitingRoomScreen] = useState<boolean>(true);
@@ -47,21 +60,34 @@ const Host = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
     const [questionData, setQuestionData] = useState<QuestionType>(InitQuestionData);
 
+    const handlePlayerJoin = (playerData: any) => {
+        setPlayerList((prevState: any) => [...prevState, playerData]);
+    };
+
+    useEffect(() => {
+        socket?.on('student-leave', (player: any, pin: string) => {
+            // console.log(player, playerList);
+            const newListPlayers = playerList.filter((item: any) => item.playerId !== player.playerId);
+            console.log(newListPlayers);
+            setPlayerList(newListPlayers);
+        });
+        return () => {
+            socket.off('student-leave');
+        };
+    }, [socket, playerList]);
+
     const startGame = () => {
-        // socket?.emit(
-        //     'start-game',
-        //     game,
-        //     leaderboard,
-        //     length,
-        //     playerList,
-        //     quiz.pointsPerQuestion,
-        // );
-        // socket?.emit('countdown-preview', game?.pin, () => {
-        //     StartCountDownPreview(10, currentQuestionIndex);
-        // });
-        StartCountDownPreview(10, currentQuestionIndex);
+        socket?.emit('start-game', leaderBoard?._id);
+        socket?.emit('countdown-preview', game?.pin, () => {
+            StartCountDownPreview(10, currentQuestionIndex);
+        });
         setShowWaitingRoomScreen(false);
         setShowCountDownScreen(true);
+    };
+
+    const closeGame = () => {
+        socket?.emit('host-leave-room', game?.pin);
+        router.back();
     };
 
     const StartCountDownPreview = (second: number, index: number) => {
@@ -79,25 +105,22 @@ const Host = () => {
     };
 
     const displayQuestion = (index: number) => {
-        if (index === Quiz?.questionList.length) {
-            // displayCurrentLeaderBoard(index);
+        if (index === quiz?.questionList.length) {
             displayLeaderBoardCurrent(index);
         } else {
-            setQuestionData(Quiz.questionList[index]);
+            setQuestionData(quiz?.questionList[index]!);
             setCurrentQuestionIndex((prevState) => prevState + 1);
-            let time = Quiz.questionList[index]?.answerTime;
+            let time = quiz?.questionList[index]?.answerTime;
             let question = {
-                questionData: Quiz.questionList[index],
-                answerList: Quiz.questionList[index].answerList,
-                questionIndex: Quiz.questionList[index].questionIndex,
-                correctAnswersCount: Quiz.questionList[index].answerList.filter(
-                    (answer) => answer.isCorrect === true
-                ).length
+                questionData: quiz?.questionList[index],
+                answerList: quiz?.questionList[index]?.answerList,
+                questionIndex: quiz?.questionList[index]?.questionIndex,
+                correctAnswersCount: quiz?.questionList[index]?.answerList.filter((answer) => answer.isCorrect === true).length
             };
-            // socket.emit('start-question-timer', game.pin, time, question, () => {
-            //     startQuestionCountdownScreen(time, index);
-            // });
-            startQuestionCountdown(time, index);
+            socket.emit('start-question-timer', game?.pin, index, () => {
+                startQuestionCountdown(time!, index);
+            });
+            // startQuestionCountdown(time!, index);
         }
     };
 
@@ -117,7 +140,7 @@ const Host = () => {
     const displayLeaderBoardCurrent = (index: number) => {
         setShowQuestionScreen(false);
         setShowLeaderBoardScreen(true);
-        if (index !== Quiz?.questionList.length) {
+        if (index !== quiz?.questionList.length) {
             const timerLeaderBoard = setTimeout(() => {
                 setShowLeaderBoardScreen(false);
                 displayQuestion(index + 1);
@@ -126,22 +149,28 @@ const Host = () => {
                 clearTimeout(timerLeaderBoard);
             };
         } else {
-            setShowLeaderBoardScreen(false);
-            setShowResultScreen(true);
+            socket.emit('end-game', game?.pin, () => {
+                setShowLeaderBoardScreen(false);
+                setShowResultScreen(true);
+            });
         }
     };
 
     return (
         <>
-            {showWaitingRoomScreen && <WaitingRoom startGame={startGame} quiz={Quiz} />}
-            {showCountDownScreen && <CountDown time={timer} />}
-            {showQuestionScreen && (
-                <HostQuestion
-                    timer={questionData?.answerTime}
-                    questionData={questionData}
-                    lengthQuiz={Quiz?.questionList.length}
+            {showWaitingRoomScreen && (
+                <HostWaitingRoom
+                    pin={game?.pin}
+                    socket={socket}
+                    quiz={quiz}
+                    startGame={startGame}
+                    closeGame={closeGame}
+                    handlePlayerJoin={handlePlayerJoin}
+                    playerList={playerList}
                 />
             )}
+            {showCountDownScreen && <CountDown time={timer} />}
+            {showQuestionScreen && <HostQuestion timer={questionData?.answerTime} questionData={questionData} lengthQuiz={quiz?.questionList?.length!} />}
             {showLeaderBoardScreen && <LeaderBoard />}
             {showResultsScreen && <HostResult />}
         </>

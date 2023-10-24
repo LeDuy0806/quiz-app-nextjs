@@ -18,7 +18,7 @@ import paths from 'src/constants/paths';
 function SideBar({ children }: { children: React.ReactNode }) {
     const [hideSideBar, setHideSideBar] = useState(true);
 
-    const toogleSidebar = () => {
+    const toggleSidebar = () => {
         setHideSideBar(!hideSideBar);
     };
 
@@ -29,7 +29,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
         if (width > 391) {
             if (!hideSideBar) setHideSideBar(true);
         }
-    }, [width]);
+    }, [width, hideSideBar]);
     const sidebarRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -91,7 +91,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
     return (
         <>
             <div ref={sidebarRef}>
-                <SubNavBar toogleSidebar={toogleSidebar} />
+                <SubNavBar toggleSidebar={toggleSidebar} />
                 <aside
                     id='logo-sidebar'
                     className={
@@ -157,7 +157,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                 <button className='group w-full sm:max-xl:flex-col flex items-center p-2 text-gray-600 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'>
                                     <AiOutlineGift className='w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white' />
                                     <span className='ml-3 sm:max-xl:ml-0 sm:max-xl:text-xs'>
-                                        What's news?
+                                        What s news?
                                     </span>
                                 </button>
                             </li>

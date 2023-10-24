@@ -1,33 +1,71 @@
 'use client';
-import QuizCard from 'src/components/library/QuizCard';
-import { HiMagnifyingGlass } from 'react-icons/hi2';
-import { motion } from 'framer-motion';
 import { useEffect } from 'react';
+
+//icons
+import { HiMagnifyingGlass } from 'react-icons/hi2';
+
+//animation
+import { motion } from 'framer-motion';
+
+//component
+import QuizCard from 'src/components/library/QuizCard';
+
+//redux
+import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
+import { useGetPublicQuizzesQuery, useGetTeacherQuizzesQuery } from 'src/app/redux/services/quizApi';
+import QuizType from 'src/app/types/quizType';
+import { fetchTeacherQuizzes } from 'src/app/redux/slices/quizSlice';
 
 function LibraryPage() {
     useEffect(() => {
         document.title = 'Library - Quizzes';
     }, []);
-    const data: { id: number }[] = [
-        {
-            id: 1
-        },
-        {
-            id: 1
-        },
-        {
-            id: 1
-        },
-        {
-            id: 1
-        },
-        {
-            id: 1
-        },
-        {
-            id: 1
+
+    const dispatch = useAppDispatch();
+
+    // const data: { id: number }[] = [
+    //     {
+    //         id: 1
+    //     },
+    //     {
+    //         id: 1
+    //     },
+    //     {
+    //         id: 1
+    //     },
+    //     {
+    //         id: 1
+    //     },
+    //     {
+    //         id: 1
+    //     },
+    //     {
+    //         id: 1
+    //     }
+    // ];
+
+    const authData = useAppSelector((state) => state.auth.authData);
+    const teacherId = authData?.user?._id;
+    const accessToken = authData?.accessToken;
+    console.log({ teacherId, accessToken });
+
+    const { data, isFetching, isSuccess } = useGetTeacherQuizzesQuery({ accessToken, teacherId });
+    console.log(accessToken);
+    // const { data, isFetching, isSuccess } = useGetPublicQuizzesQuery(accessToken);
+
+    // useEffect(() => {
+    //     if (data) {
+    //         console.log(data);
+    //     }
+    // }, [data]);
+
+    useEffect(() => {
+        if (isSuccess && data) {
+            dispatch(fetchTeacherQuizzes(data));
         }
-    ];
+    }, [dispatch, data, isSuccess]);
+
+    const quizzes = useAppSelector((state) => state.quiz.quizzes);
 
     return (
         <div className='w-full pt-6 px-4'>
@@ -52,19 +90,8 @@ function LibraryPage() {
                         type='submit'
                         className='ml-2 rounded-lg border border-blue-700 bg-blue-700 p-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
                     >
-                        <svg
-                            className='h-5 w-5'
-                            fill='none'
-                            stroke='currentColor'
-                            viewBox='0 0 24 24'
-                            xmlns='http://www.w3.org/2000/svg'
-                        >
-                            <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                strokeWidth='2'
-                                d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
-                            ></path>
+                        <svg className='h-5 w-5' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
                         </svg>
                         <span className='sr-only'>Search</span>
                     </button>
@@ -107,10 +134,7 @@ function LibraryPage() {
                 {/* Search Bar */}
                 <li className='w-full'>
                     <form>
-                        <label
-                            htmlFor='default-search'
-                            className='sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white'
-                        >
+                        <label htmlFor='default-search' className='sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white'>
                             Search
                         </label>
                         <div className='relative'>
@@ -123,12 +147,7 @@ function LibraryPage() {
                                     viewBox='0 0 24 24'
                                     xmlns='http://www.w3.org/2000/svg'
                                 >
-                                    <path
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                        strokeWidth='2'
-                                        d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
-                                    ></path>
+                                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
                                 </svg>
                             </div>
                             <input
@@ -150,7 +169,7 @@ function LibraryPage() {
 
             {/* List Quiz Card */}
             <ul className='flex flex-wrap items-center justify-between gap-6 py-6 max-xl:gap-4'>
-                {data.map((_, i) => (
+                {/* {quizzes.map((_, i) => (
                     <motion.div
                         initial={{ x: 20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
@@ -162,6 +181,21 @@ function LibraryPage() {
                         className='w-full'
                     >
                         <QuizCard />
+                    </motion.div>
+                ))} */}
+
+                {quizzes?.map((quiz: QuizType, i) => (
+                    <motion.div
+                        initial={{ x: 20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{
+                            duration: 0.4,
+                            delay: 0.1 + i * 0.075
+                        }}
+                        key={`${i}`}
+                        className='w-full'
+                    >
+                        <QuizCard quiz={quiz} />
                     </motion.div>
                 ))}
             </ul>
