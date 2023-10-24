@@ -43,7 +43,7 @@ const config: Config = {
                     'linear-gradient(135deg,rgba(180,157,255,0) 11%,#b49dff 26%,#e4a7f9 45%,#ffd9ae 72%,rgba(255,217,174,0) 89%);',
                 'gradient-model':
                     'linear-gradient(112.1deg, rgba(32, 38, 57,0.06) 11.4%, rgba(63, 76, 119,02) 70.2%);',
-                'gradient-blue-loaing': 'linear-gradient(45deg, #c7eeff, #03a9f4)'
+                'gradient-blue-loaing': 'linear-gradient(45deg, #c7eeff, #03a9f4)',
                 bgListUser: 'linear-gradient(to bottom, #9ca2af, #7a99e7)',
                 bgListOfUser: 'linear-gradient(to bottom, #9ca2af, #7a99e7)',
                 bgButtonCloseGame: 'radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)',
