@@ -14,7 +14,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        loGin: (state, action: PayloadAction<AuthType>) => {
+        logIn: (state, action: PayloadAction<AuthType>) => {
             localStorage.setItem('profile', JSON.stringify(action?.payload));
             state.authData = action?.payload;
         },
@@ -26,7 +26,7 @@ const authSlice = createSlice({
     }
 });
 
-export const { loGin, logOut } = authSlice.actions;
+export const { logIn, logOut } = authSlice.actions;
 
 const authReducer = authSlice.reducer;
 export default authReducer;

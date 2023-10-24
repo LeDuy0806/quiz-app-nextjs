@@ -28,7 +28,7 @@ import { EmailFormat } from 'src/app/validates';
 
 //Redux
 import { useAppDispatch } from 'src/app/redux/hooks';
-import { loGin } from 'src/app/redux/slices/authSlice';
+import { logIn } from 'src/app/redux/slices/authSlice';
 import { useLoginUserMutation, useLoginSocialMutation } from 'src/app/redux/services/authApi';
 
 //type
@@ -43,6 +43,7 @@ const InitErrorLogin = {
 //auth
 import { useSession } from 'next-auth/react';
 import LiquidLoading from '../LiquidLoading';
+import { VscLoading } from 'react-icons/vsc';
 
 const FormSignIn = () => {
     const { data: session } = useSession();
@@ -62,7 +63,7 @@ const FormSignIn = () => {
                     name: user?.name ?? ''
                 });
                 if (data) {
-                    dispatch(loGin(data));
+                    dispatch(logIn(data));
                     router.push('/home');
                 }
             };
@@ -91,7 +92,7 @@ const FormSignIn = () => {
     useEffect(() => {
         if (isSuccess && data) {
             setLoading(true);
-            dispatch(loGin(data));
+            dispatch(logIn(data));
             router.push('/home');
         }
     }, [isSuccess, data, dispatch, router]);
@@ -139,7 +140,7 @@ const FormSignIn = () => {
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.1 }}
-            className='w-full max-w-full min-h-screen z-[100] flex flex-col bg-bgPink overflow-hidden mx-auto mt-auto'
+            className='w-full max-w-full min-h-screen z-[49] flex flex-col bg-bgPink overflow-hidden mx-auto mt-auto'
         >
             <div className='absolute w-[760px] min-h-full mdl:min-h-[600px] rounded-[50px] bg-textWhite top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] overflow-hidden py-[60px] px-[210px]'>
                 <motion.div
@@ -211,7 +212,14 @@ const FormSignIn = () => {
                                 )}
                                 onClick={handleLogin}
                             >
-                                {isLoading ? <Image src={loadingImg} alt='' className='w-7 h-7 self-center' /> : 'Sign In'}
+                                {isLoading || loading ? (
+                                    <>
+                                        <VscLoading className='animate-spin h-5 w-5 mr-3 text-white' />
+                                        Processing...
+                                    </>
+                                ) : (
+                                    'Sign In'
+                                )}
                             </motion.button>
                         </div>
                         <div className='flex flex-col w-full gap-y-2 mt-3'>

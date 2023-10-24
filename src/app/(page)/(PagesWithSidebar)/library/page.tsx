@@ -46,11 +46,9 @@ function LibraryPage() {
 
     const authData = useAppSelector((state) => state.auth.authData);
     const teacherId = authData?.user?._id;
-    const accessToken = authData?.accessToken;
-    console.log({ teacherId, accessToken });
 
-    const { data, isFetching, isSuccess } = useGetTeacherQuizzesQuery({ accessToken, teacherId });
-    console.log(accessToken);
+    const { data, isFetching, isSuccess } = useGetTeacherQuizzesQuery({ teacherId });
+
     // const { data, isFetching, isSuccess } = useGetPublicQuizzesQuery(accessToken);
 
     // useEffect(() => {

@@ -44,8 +44,8 @@ const Join = () => {
                 score: 0,
                 answers: []
             };
-            await InitPlayerResult({ accessToken: authData?.accessToken, newPlayerResult });
-            const { data }: any = await InitAddPlayer({ accessToken: authData?.accessToken, gameId, playerId });
+            await InitPlayerResult({ newPlayerResult });
+            const { data }: any = await InitAddPlayer({ gameId, playerId });
             dispatch(addPlayer(data));
             setLoading(true);
             if (data && isSuccess) {
