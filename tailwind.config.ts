@@ -24,20 +24,19 @@ const config: Config = {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                 'gradient-conic':
                     'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-                'gradient-purple':
-                    'linear-gradient(135deg,#9a7bff,#de7cff 47%,#ffc37e)',
+                'gradient-purple': 'linear-gradient(135deg,#9a7bff,#de7cff 47%,#ffc37e)',
                 'gradient-primary':
                     'linear-gradient(135deg,rgba(180,157,255,0) 11%,#b49dff 26%,#e4a7f9 45%,#ffd9ae 72%,rgba(255,217,174,0) 89%);',
                 'gradient-middlefooter':
                     'linear-gradient(135deg,#7d4dbc 12%,#5e4282 13%,#8460af 44%,#c594ff 50%,#2a1141 90%,#3c195c 97%)',
                 'gradient-bgmiddlefooter':
                     'linear-gradient(#091a34,rgba(9,26,52,0)),url(https://global-uploads.webflow.com/6418f5b…/6498eac…_Ellipse%20blur.webp)',
-                'gradient-titleheaderfooter':
-                    'linear-gradient(135deg,#9a7bff,#de7cff 47%,#ffc37e)',
+                'gradient-titleheaderfooter': 'linear-gradient(135deg,#9a7bff,#de7cff 47%,#ffc37e)',
                 'gradient-footerIntro':
                     'linear-gradient(135deg,rgba(180,157,255,0) 11%,#b49dff 26%,#e4a7f9 45%,#ffd9ae 72%,rgba(255,217,174,0) 89%);',
                 'gradient-model':
-                    'linear-gradient(112.1deg, rgba(32, 38, 57,0.06) 11.4%, rgba(63, 76, 119,02) 70.2%);'
+                    'linear-gradient(112.1deg, rgba(32, 38, 57,0.06) 11.4%, rgba(63, 76, 119,02) 70.2%);',
+                'gradient-blue-loaing': 'linear-gradient(45deg, #c7eeff, #03a9f4)'
             },
 
             maxWidth: {
@@ -86,8 +85,7 @@ const config: Config = {
             boxShadow: {
                 white: '0 3px 2px rgba(20,45,82,.01)',
                 purple: '0 4px 24px rgba(172,82,255,.7)',
-                boxheaderfooter:
-                    'inset -1px -1px #3c195c, inset 1px 1px #7d4dbc'
+                boxheaderfooter: 'inset -1px -1px #3c195c, inset 1px 1px #7d4dbc'
             },
 
             gridTemplateRows: {
@@ -98,10 +96,6 @@ const config: Config = {
                 auto: 'auto auto 1fr'
             },
 
-            animation: {
-                marquee: 'marquee 10s linear infinite'
-            },
-
             transitionTimingFunction: {
                 ease: 'ease'
             },
@@ -110,7 +104,36 @@ const config: Config = {
                 marquee: {
                     '0%': { transform: 'translateX(0%)' },
                     '100%': { transform: 'translateX(100%)' }
+                },
+                rotate: {
+                    '0%, 50%': { transform: 'rotate(360deg)' },
+                    '100%': { transform: 'rotate(0deg)' }
+                },
+                animateLoanding1: {
+                    '0%': { top: '0' },
+                    '50%, 100%': { top: '100%' }
+                },
+                animateLoanding2: {
+                    '0%': { left: '0' },
+                    '50%, 100%': { left: '100%' }
+                },
+                animateLoanding3: {
+                    '0%': { left: '100%' },
+                    '50%, 100%': { left: '0' }
+                },
+                animateLoanding4: {
+                    '0%': { top: '100%' },
+                    '50%, 100%': { top: '0' }
                 }
+            },
+
+            animation: {
+                marquee: 'marquee 10s linear infinite',
+                rotate: 'rotate 4s ease-out infinite',
+                animateLoanding1: 'animateLoanding1 4s linear infinite',
+                animateLoanding2: 'animateLoanding2 4s linear infinite',
+                animateLoanding3: 'animateLoanding3 4s linear infinite',
+                animateLoanding4: 'animateLoanding4 4s linear infinite'
             }
         }
     },

@@ -20,13 +20,8 @@ function ThemeSwitcher() {
     useEffect(() => {
         const setTheme = () => {
             const root = window.document.body;
-            const operatingSystemThemeDark = window.matchMedia(
-                '(prefers-color-scheme: dark)'
-            );
-            if (
-                storedTheme === 'darkTheme' &&
-                operatingSystemThemeDark.matches
-            ) {
+            const operatingSystemThemeDark = window.matchMedia('(prefers-color-scheme: dark)');
+            if (storedTheme === 'darkTheme' && operatingSystemThemeDark.matches) {
                 root.classList.add('dark');
             }
             if (storedTheme === 'darkTheme') {
@@ -43,7 +38,7 @@ function ThemeSwitcher() {
         <div className='theme-switcher items-center '>
             <button
                 type='button'
-                className={`dark-mode-switch flex items-center justify-center cursor-pointer w-[36px] h-[36px] p-[10px] rounded-[100%]
+                className={`dark-mode-switch flex bg-slate-600 items-center justify-center cursor-pointer w-[36px] h-[36px] p-[10px] rounded-[100%]
         border ${!isLight && 'hidden'}`}
                 onClick={setDarkTheme}
             >
@@ -52,7 +47,7 @@ function ThemeSwitcher() {
                     // width="20"
                     // height="20"
                     fill='currentColor'
-                    className='bi bi-moon-stars-fill w-[18px] h-[18px]'
+                    className='bi bi-moon-stars-fill text-white w-[18px] h-[18px]'
                     viewBox='0 0 16 16'
                 >
                     <path d='M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z' />

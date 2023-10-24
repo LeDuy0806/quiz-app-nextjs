@@ -16,14 +16,13 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-    // const [theme, setTheme] = useState('light');
     return (
         <html lang='en'>
             <head>
                 <title>Quizzes</title>
                 <link rel='shortcut icon' href='/assets/images/logoApp.png' />
             </head>
-            <body className={inter.className + ' bg-gray-100 dark:bg-slate-600'}>
+            <body className={inter.className + ' bg-gray-100 dark:bg-slate-600 '}>
                 <Provider store={store}>
                     <SessionProvider>{children}</SessionProvider>
                 </Provider>
