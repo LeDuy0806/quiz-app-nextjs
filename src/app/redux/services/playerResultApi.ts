@@ -1,38 +1,45 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API } from '../api';
 import PlayerResultType from 'src/app/types/playerResultType';
+import { RootState } from '../store';
 
 export const apiPlayerResult = createApi({
     reducerPath: 'apiPlayerResult',
     baseQuery: fetchBaseQuery({
-        // baseUrl: 'https://server-auth-quocanh.onrender.com/',
-        baseUrl: API
+        baseUrl: API,
+        prepareHeaders: (headers, { getState }) => {
+            const token = (getState() as RootState).auth.authData?.accessToken;
+
+            headers.set('Content-Type', 'application/json');
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+
+            return headers;
+        }
     }),
     keepUnusedDataFor: 20,
     endpoints: (builder) => ({
-        createPlayerResult: builder.mutation<PlayerResultType, { accessToken: string | undefined; newPlayerResult: Omit<PlayerResultType, '_id'> }>({
-            query: ({ accessToken, newPlayerResult }) => ({
+        createPlayerResult: builder.mutation<PlayerResultType, { newPlayerResult: Omit<PlayerResultType, '_id'> }>({
+            query: ({ newPlayerResult }) => ({
                 url: `api/playerResult`,
                 method: 'POST',
-                body: newPlayerResult,
-                headers: { Authorization: `Bearer ${accessToken}` }
+                body: newPlayerResult
             })
         }),
 
-        removePlayerResult: builder.mutation<PlayerResultType, { accessToken: string | undefined; playerId: string | undefined }>({
-            query: ({ accessToken, playerId }) => ({
+        removePlayerResult: builder.mutation<PlayerResultType, { playerId: string | undefined }>({
+            query: ({ playerId }) => ({
                 url: `api/playerResult/${playerId}`,
-                method: 'DELETE',
-                headers: { Authorization: `Bearer ${accessToken}` }
+                method: 'DELETE'
             })
         }),
 
-        addPlayerResult: builder.mutation<PlayerResultType, { accessToken: string | undefined; playerId: string; gameId: string; results: any }>({
-            query: ({ accessToken, playerId, gameId, results }) => ({
+        addPlayerResult: builder.mutation<PlayerResultType, { playerId: string; gameId: string; results: any }>({
+            query: ({ playerId, gameId, results }) => ({
                 url: `api/playerResult/${playerId}/results/${gameId}`,
                 method: 'PATCH',
-                body: results,
-                headers: { Authorization: `Bearer ${accessToken}` }
+                body: results
             })
         })
     })

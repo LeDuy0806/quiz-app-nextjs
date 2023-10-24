@@ -16,16 +16,15 @@ import { createSocket } from 'src/app/redux/slices/socketSlice';
 //socket
 import type { Socket } from 'socket.io-client';
 import io from 'socket.io-client';
+import { API } from 'src/app/redux/api';
 
 function HomePage() {
-    const SOCKET_URL = 'http://localhost:3001';
     const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.auth.authData?.user);
-    // const user = localStorage.getItem('profile');
 
     useEffect(() => {
         if (user) {
-            const socket: Socket = io(SOCKET_URL, {
+            const socket: Socket = io(API, {
                 transports: ['websocket']
             });
             socket.connect();

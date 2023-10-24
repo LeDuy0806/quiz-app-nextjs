@@ -59,7 +59,7 @@ const Player = ({ searchParams }: { searchParams: SearchParams }) => {
     const [playerList, setPlayerList] = useState<any>([]);
     const [leaderBoard, setLeaderBoard] = useState<string>();
 
-    const { data } = useGetGameQuery({ accessToken: authData?.accessToken, gameId: searchParams.id });
+    const { data } = useGetGameQuery({ gameId: searchParams.id });
     const [timer, setTimer] = useState<number>(10);
     const [showWaitingRoom, setShowWaitingRoom] = useState<boolean>(true);
     const [showCountDown, setShowCountDown] = useState<boolean>(false);
@@ -195,8 +195,8 @@ const Player = ({ searchParams }: { searchParams: SearchParams }) => {
     };
 
     const playerOutRoom = async () => {
-        await removeUser({ accessToken: authData?.accessToken, gameId: searchParams.id, playerId: authData?.user?._id });
-        await removePlayerResult({ accessToken: authData?.accessToken, playerId: authData?.user?._id });
+        await removeUser({ gameId: searchParams.id, playerId: authData?.user?._id });
+        await removePlayerResult({ playerId: authData?.user?._id });
     };
 
     const closeGame = () => {

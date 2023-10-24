@@ -31,7 +31,6 @@ const QuizCard = (props: QuizCardProps) => {
     const [InitGame, { isLoading }] = useCreateGameMutation();
     const [InitLeaderBoard] = useCreateLeaderBoardMutation();
 
-    const authData = useAppSelector((state) => state.auth.authData);
     const socket = useAppSelector((state) => state.socket.socket);
 
     const handleOpenGame = async () => {
@@ -47,7 +46,7 @@ const QuizCard = (props: QuizCardProps) => {
                 playerList: [],
                 playerResultList: []
             };
-            const newGameData: any = await InitGame({ accessToken: authData?.accessToken, newGame: gameData });
+            const newGameData: any = await InitGame({ newGame: gameData });
             const newGame = newGameData.data;
             dispatch(createGame(newGame));
 
@@ -57,7 +56,7 @@ const QuizCard = (props: QuizCardProps) => {
                 playerResultList: [],
                 currentLeaderBoard: []
             };
-            const newLeaderBoardData: any = await InitLeaderBoard({ accessToken: authData?.accessToken, newLeaderBoard: leaderBoardData });
+            const newLeaderBoardData: any = await InitLeaderBoard({ newLeaderBoard: leaderBoardData });
             const newLeaderBoard = newLeaderBoardData.data;
             dispatch(createLeaderBoard(newLeaderBoard));
 

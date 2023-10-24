@@ -2,121 +2,119 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API } from '../api';
 import QuizType from 'src/app/types/quizType';
 import QuestionType from 'src/app/types/questionType';
+import { RootState } from '../store';
 
 export const apiQuiz = createApi({
     reducerPath: 'apiQuiz',
     baseQuery: fetchBaseQuery({
-        baseUrl: API
+        baseUrl: API,
+        prepareHeaders: (headers, { getState }) => {
+            const token = (getState() as RootState).auth.authData?.accessToken;
+
+            headers.set('Content-Type', 'application/json');
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+
+            return headers;
+        }
     }),
     keepUnusedDataFor: 20,
     endpoints: (builder) => ({
-        getPublicQuizzes: builder.query<QuizType[], string | undefined>({
-            query: (accessToken) => ({
+        getPublicQuizzes: builder.query<QuizType[], any>({
+            query: () => ({
                 url: 'api/quiz/public',
-                method: 'GET',
-                headers: { Authorization: `Bearer ${accessToken}` }
+                method: 'GET'
             })
         }),
 
-        getTeacherQuizzes: builder.query<QuizType[], { accessToken: string | undefined; teacherId: string | undefined }>({
-            query: ({ accessToken, teacherId }) => ({
+        getTeacherQuizzes: builder.query<QuizType[], { teacherId: string | undefined }>({
+            query: ({ teacherId }) => ({
                 url: `api/quiz/teacher/${teacherId}`,
-                method: 'GET',
-                headers: { Authorization: `Bearer ${accessToken}` }
+                method: 'GET'
             })
         }),
 
-        createQuiz: builder.mutation<QuizType, { accessToken: string; quizData: Omit<QuizType, '_id'> }>({
-            query: ({ accessToken, quizData }) => ({
+        createQuiz: builder.mutation<QuizType, { quizData: Omit<QuizType, '_id'> }>({
+            query: ({ quizData }) => ({
                 url: `api/quiz`,
                 method: 'POST',
-                headers: { Authorization: `Bearer ${accessToken}` },
                 body: quizData
             })
         }),
 
         importQuiz: builder.mutation<QuizType, any>({
-            query: ({ accessToken, quizData, userId }) => ({
+            query: ({ quizData, userId }) => ({
                 url: `api/quiz/import`,
                 method: 'POST',
-                headers: { Authorization: `Bearer ${accessToken}` },
                 body: { quizData, userId }
             })
         }),
 
         updateQuiz: builder.mutation<QuizType, any>({
-            query: ({ accessToken, quizId, updateQuiz }) => ({
+            query: ({ quizId, updateQuiz }) => ({
                 url: `api/quiz/${quizId}`,
                 method: 'PUT',
-                headers: { Authorization: `Bearer ${accessToken}` },
                 body: updateQuiz
             })
         }),
 
         deleteQuiz: builder.mutation<object, any>({
-            query: ({ accessToken, quizId }) => ({
+            query: ({ quizId }) => ({
                 url: `api/quiz/${quizId}`,
-                method: 'DELETE',
-                headers: { Authorization: `Bearer ${accessToken}` }
+                method: 'DELETE'
             })
         }),
 
         likeQuiz: builder.mutation<QuizType, any>({
-            query: ({ accessToken, userId }) => ({
+            query: ({ userId }) => ({
                 url: `api/quiz/${userId}/likeQuiz`,
-                method: 'PATCH',
-                headers: { Authorization: `Bearer ${accessToken}` }
+                method: 'PATCH'
             })
         }),
 
-        commentQuiz: builder.mutation<QuizType, { accessToken: string; userId: string; comment: Comment }>({
-            query: ({ accessToken, userId, comment }) => ({
+        commentQuiz: builder.mutation<QuizType, { userId: string; comment: Comment }>({
+            query: ({ userId, comment }) => ({
                 url: `api/quiz/${userId}/commentQuiz`,
                 method: 'POST',
-                headers: { Authorization: `Bearer ${accessToken}` },
                 body: comment
             })
         }),
 
-        addQuestion: builder.mutation<QuestionType, { accessToken: string; quizId: string; newQuestion: Omit<QuestionType, '_id'> }>({
-            query: ({ accessToken, quizId, newQuestion }) => ({
+        addQuestion: builder.mutation<QuestionType, { quizId: string; newQuestion: Omit<QuestionType, '_id'> }>({
+            query: ({ quizId, newQuestion }) => ({
                 url: `api/quiz/${quizId}/questions`,
                 method: 'POST',
-                headers: { Authorization: `Bearer ${accessToken}` },
                 body: newQuestion
             })
         }),
 
-        getQuestion: builder.query<QuestionType, { accessToken: string; quizId: string; questionId: string }>({
-            query: ({ accessToken, quizId, questionId }) => ({
+        getQuestion: builder.query<QuestionType, { quizId: string; questionId: string }>({
+            query: ({ quizId, questionId }) => ({
                 url: `api/quiz/${quizId}/questions/${questionId}`,
-                method: 'GET',
-                headers: { Authorization: `Bearer ${accessToken}` }
+                method: 'GET'
             })
         }),
 
-        getQuestions: builder.query<QuestionType[], { accessToken: string; quizId: string }>({
-            query: ({ accessToken, quizId }) => ({
+        getQuestions: builder.query<QuestionType[], { quizId: string }>({
+            query: ({ quizId }) => ({
                 url: `api/quiz/${quizId}/questions`,
-                method: 'GET',
-                headers: { Authorization: `Bearer ${accessToken}` }
+                method: 'GET'
             })
         }),
 
-        updateQuestion: builder.mutation<QuestionType, { accessToken: string; quizId: string; questionId: string; newQuestion: QuestionType }>({
-            query: ({ accessToken, quizId, questionId, newQuestion }) => ({
+        updateQuestion: builder.mutation<QuestionType, { quizId: string; questionId: string; newQuestion: QuestionType }>({
+            query: ({ quizId, questionId, newQuestion }) => ({
                 url: `api/quiz/${quizId}/questions/${questionId}`,
                 method: 'PUT',
-                headers: { Authorization: `Bearer ${accessToken}` },
                 body: newQuestion
             })
         }),
 
-        deleteQuestion: builder.mutation<object, { accessToken: string; quizId: string; questionId: string }>({
-            query: ({ accessToken, quizId, questionId }) => ({
+        deleteQuestion: builder.mutation<object, { quizId: string; questionId: string }>({
+            query: ({ quizId, questionId }) => ({
                 url: `api/quiz/${quizId}/questions/${questionId}`,
-                method: 'DELETE',
-                headers: { Authorization: `Bearer ${accessToken}` }
+                method: 'DELETE'
             })
         })
     })

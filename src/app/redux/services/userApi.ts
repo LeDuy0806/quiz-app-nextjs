@@ -1,64 +1,68 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API } from '../api';
 import UserType from 'src/app/types/userType';
+import { RootState } from '../store';
 
 export const apiUser = createApi({
     reducerPath: 'apiUser',
     baseQuery: fetchBaseQuery({
-        // baseUrl: 'https://server-auth-quocanh.onrender.com/',
-        baseUrl: API
+        baseUrl: API,
+        prepareHeaders: (headers, { getState }) => {
+            const token = (getState() as RootState).auth.authData?.accessToken;
+
+            headers.set('Content-Type', 'application/json');
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+
+            return headers;
+        }
     }),
     endpoints: (builder) => ({
-        getUser: builder.query<UserType, { accessToken: string; userId: string }>({
-            query: ({ accessToken, userId }) => ({
+        getUser: builder.query<UserType, { userId: string }>({
+            query: ({ userId }) => ({
                 url: `api/user/${userId}`,
-                method: 'GET',
-                headers: { Authorization: `Bearer ${accessToken}` }
+                method: 'GET'
             })
         }),
 
         getUsers: builder.query<UserType[], { accessToken: string }>({
-            query: (accessToken) => ({
+            query: () => ({
                 url: 'api/user',
-                method: 'GET',
-                headers: { Authorization: `Bearer ${accessToken}` }
+                method: 'GET'
             })
         }),
 
-        updateUser: builder.mutation<UserType, { accessToken: string; userId: string; formData: UserType }>({
-            query: ({ accessToken, userId, formData }) => ({
+        updateUser: builder.mutation<UserType, { userId: string; formData: UserType }>({
+            query: ({ userId, formData }) => ({
                 url: `api/user/${userId}`,
                 method: 'PATCH',
                 headers: {
                     Accept: '*application/json*',
-                    'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-                    Authorization: `Bearer ${accessToken}`
+                    'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
                 },
                 body: formData
             })
         }),
 
-        addFriend: builder.mutation<UserType, { accessToken: string; myId: string; friendId: string }>({
-            query: ({ accessToken, myId, friendId }) => ({
+        addFriend: builder.mutation<UserType, { myId: string; friendId: string }>({
+            query: ({ myId, friendId }) => ({
                 url: `api/user/${myId}/addFriend/${friendId}`,
-                method: 'PUT',
-                headers: { Authorization: `Bearer ${accessToken}` }
+                method: 'PUT'
             })
         }),
 
         followUser: builder.mutation<UserType, any>({
-            query: ({ accessToken, myId, friendId }) => ({
+            query: ({ myId, friendId }) => ({
                 url: `api/user/${myId}/follow/${friendId}`,
-                method: 'PUT',
-                headers: { Authorization: `Bearer ${accessToken}` }
+                method: 'PUT'
             })
         }),
 
         unFollowUser: builder.mutation<UserType, any>({
-            query: ({ accessToken, myId, friendId }) => ({
+            query: ({ myId, friendId }) => ({
                 url: `api/user/${myId}/unFollow/${friendId}`,
-                method: 'PUT',
-                headers: { Authorization: `Bearer ${accessToken}` }
+                method: 'PUT'
             })
         }),
 
@@ -69,7 +73,6 @@ export const apiUser = createApi({
                 headers: {
                     Accept: '*application/json*',
                     'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
-                    // Authorization: `Bearer ${accessToken}`,
                 },
                 body: formData
             })

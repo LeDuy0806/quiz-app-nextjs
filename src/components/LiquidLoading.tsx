@@ -26,7 +26,7 @@ function LiquidLoading() {
     return (
         true && (
             <div>
-                <div className='min-h-screen flex items-center justify-center overflow-hidden bg- z-50'>
+                <div className='min-h-screen flex items-center justify-center overflow-hidden bg-[#00000080] z-[99]'>
                     <div className='relative w-64 h-64 animate-rotate [filter:url(#gooey)]'>
                         <div className='absolute h-20 w-20 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-blue-loaing rounded-full animate-animateLoanding1'></div>
                         <div className='absolute h-20 w-20 top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 bg-gradient-blue-loaing rounded-full animate-animateLoanding2'></div>
