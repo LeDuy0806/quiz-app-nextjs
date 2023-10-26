@@ -20,6 +20,7 @@ import { useCreateLeaderBoardMutation } from 'src/app/redux/services/leaderBoard
 import { createGame } from 'src/app/redux/slices/gamesSlice';
 import { createLeaderBoard } from 'src/app/redux/slices/leaderBoardSlice';
 import { fetchQuiz } from 'src/app/redux/slices/quizSlice';
+import GameType from 'src/app/types/gameType';
 
 interface QuizCardProps {
     quiz: QuizType;
@@ -39,19 +40,20 @@ const QuizCard = (props: QuizCardProps) => {
         } else {
             dispatch(fetchQuiz(props.quiz));
             const gameData = {
-                hostId: props.quiz?.creator?._id,
-                quizId: props.quiz?._id,
+                host: props.quiz?.creator,
+                quiz: props.quiz,
                 isLive: true,
                 pin: String(Math.floor(Math.random() * 9000) + 1000),
                 playerList: [],
                 playerResultList: []
             };
             const newGameData: any = await InitGame({ newGame: gameData });
-            const newGame = newGameData.data;
+            const newGame: GameType = newGameData.data;
             dispatch(createGame(newGame));
 
             const leaderBoardData = {
-                gameId: newGame._id,
+                game: newGame,
+                quiz: props.quiz,
                 pin: newGame.pin,
                 playerResultList: [],
                 currentLeaderBoard: []
@@ -60,9 +62,16 @@ const QuizCard = (props: QuizCardProps) => {
             const newLeaderBoard = newLeaderBoardData.data;
             dispatch(createLeaderBoard(newLeaderBoard));
 
-            router.push('/game/host');
-            socket.emit('init-game', newGame, newLeaderBoard);
+            if (newGame && newLeaderBoard) {
+                router.push('/game/host');
+                socket.emit('init-game', newGame, newLeaderBoard);
+            }
         }
+    };
+
+    const handleDelete = () => {
+        dispatch(fetchQuiz(props.quiz));
+        router.push('/game/solo');
     };
 
     return (
@@ -118,7 +127,7 @@ const QuizCard = (props: QuizCardProps) => {
                         <HiPencilAlt className='ml-2 h-6 w-6 text-white' />
                     </button>
                     <button
-                        // href='#'
+                        onClick={handleDelete}
                         className='inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
                     >
                         Delete

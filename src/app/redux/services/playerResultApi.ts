@@ -28,7 +28,7 @@ export const apiPlayerResult = createApi({
             })
         }),
 
-        removePlayerResult: builder.mutation<PlayerResultType, { playerId: string | undefined }>({
+        removePlayerResult: builder.mutation<PlayerResultType, { playerId: string }>({
             query: ({ playerId }) => ({
                 url: `api/playerResult/${playerId}`,
                 method: 'DELETE'

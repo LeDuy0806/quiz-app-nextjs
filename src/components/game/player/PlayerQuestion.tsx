@@ -10,9 +10,11 @@ import { motion } from 'framer-motion';
 import QuestionType from 'src/app/types/questionType';
 
 interface QuestionProps {
-    timer: number | undefined;
+    timer: number;
     questionData: QuestionType;
     lengthQuiz: number;
+    onClick: (key: string) => void;
+    isAnswerSelect: (key: string) => boolean;
     correctAnswer?: [];
 }
 
@@ -23,7 +25,7 @@ const PlayerQuestion = (props: QuestionProps) => {
                 <div className='absolute top-[1em] right-[2em]'>
                     <CountdownCircleTimer
                         isPlaying
-                        duration={props.timer!}
+                        duration={props.timer}
                         colors={['#004777', '#F7B801', '#A30000', '#A30000']}
                         colorsTime={[10, 10 - 2, 10 - 4, 10 - 6]}
                         size={70}
@@ -38,7 +40,7 @@ const PlayerQuestion = (props: QuestionProps) => {
                     className='relative w-3/4 h-1/5 bg-textWhite flex items-center justify-center text-center rounded-md border-[2px] border-solid border-bgBorderQuestion'
                 >
                     <span className='absolute bg-bgPurple top-0 translate-y-[-50%] px-6 py-3 rounded-3xl font-bold'>
-                        Question {props.questionData?.questionIndex! + 1} of {props.lengthQuiz}
+                        Question {props.questionData?.questionIndex + 1} of {props.lengthQuiz}
                     </span>
                     <div className='text-textBlack max-w-[80%] font-semibold'>
                         {/* This is a picture taken in outdoor.There are 2 people in this picture.On the
@@ -47,13 +49,45 @@ const PlayerQuestion = (props: QuestionProps) => {
                     </div>
                 </motion.div>
                 <div className='w-3/4 flex justify-between items-center gap-[2em]'>
-                    <Answer delay={0.3} body={props.questionData?.answerList[0]?.body} isCorrect={props.questionData?.answerList[0]?.isCorrect} name='A' />
-                    <Answer delay={0.4} body={props.questionData?.answerList[1]?.body} isCorrect={props.questionData?.answerList[1]?.isCorrect} name='B' />
+                    <Answer
+                        delay={0.3}
+                        body={props.questionData?.answerList[0]?.body}
+                        name='A'
+                        onClick={() => {
+                            props.onClick('A');
+                        }}
+                        isAnswerSelect={props.isAnswerSelect('A')}
+                    />
+                    <Answer
+                        delay={0.4}
+                        body={props.questionData?.answerList[1]?.body}
+                        name='B'
+                        onClick={() => {
+                            props.onClick('B');
+                        }}
+                        isAnswerSelect={props.isAnswerSelect('B')}
+                    />
                 </div>
                 {props.questionData?.questionType !== 'True/False' && (
                     <div className='w-3/4 flex justify-between items-center gap-[2em]'>
-                        <Answer delay={0.5} body={props.questionData?.answerList[2]?.body} isCorrect={props.questionData?.answerList[2]?.isCorrect} name='C' />
-                        <Answer delay={0.6} body={props.questionData?.answerList[3]?.body} isCorrect={props.questionData?.answerList[3]?.isCorrect} name='D' />
+                        <Answer
+                            delay={0.5}
+                            body={props.questionData?.answerList[2]?.body}
+                            name='C'
+                            onClick={() => {
+                                props.onClick('C');
+                            }}
+                            isAnswerSelect={props.isAnswerSelect('C')}
+                        />
+                        <Answer
+                            delay={0.6}
+                            body={props.questionData?.answerList[3]?.body}
+                            name='D'
+                            onClick={() => {
+                                props.onClick('D');
+                            }}
+                            isAnswerSelect={props.isAnswerSelect('D')}
+                        />
                     </div>
                 )}
             </div>
@@ -89,8 +123,9 @@ const PlayerQuestion = (props: QuestionProps) => {
 interface AnswerProps {
     delay: number;
     body: string | undefined;
-    isCorrect: boolean | undefined;
     name: string;
+    onClick: () => void;
+    isAnswerSelect: boolean;
 }
 
 const Answer = (props: AnswerProps) => {
@@ -101,16 +136,19 @@ const Answer = (props: AnswerProps) => {
             transition={{ duration: 0.4, delay: props.delay }}
             className={clsx(
                 `relative flex flex-1 items-center justify-center rounded py-4 border-[2px] border-solid border-bgBorderQuestion`,
-                props.isCorrect ? 'bg-bgAnswerCorrect' : 'bg-textWhite'
+                props.isAnswerSelect ? 'bg-bgPurpleLight border-textPurpleBorder' : 'bg-textWhite border-bgBorderQuestion'
             )}
         >
             <div
-                onClick={() => {}}
-                className='w-[2.6em] h-[2.6em] rounded-full flex items-center justify-center absolute left-3 border-[3px] border-bgBorderQuestion border-solid cursor-pointer text-textBlack'
+                onClick={props.onClick}
+                className={clsx(
+                    `w-[2.6em] h-[2.6em] rounded-full flex items-center justify-center absolute left-3 border-[3px]  border-solid cursor-pointer`,
+                    props.isAnswerSelect ? 'border-textPurpleBorder' : 'border-bgBorderQuestion text-textBlack'
+                )}
             >
-                <FaCheck className='ww-[2.6em] h-[2.6em]' />
+                {props.isAnswerSelect && <FaCheck className='ww-[2.6em] h-[2.6em]' />}
             </div>
-            <h2 className={clsx(`font-semibold`, props.isCorrect ? 'text-White' : 'text-textBlack')}>{props.body}</h2>
+            <h2 className={clsx(`font-semibold`, props.isAnswerSelect ? 'text-White' : 'text-textBlack')}>{props.body}</h2>
         </motion.div>
     );
 };

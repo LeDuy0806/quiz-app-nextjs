@@ -56,7 +56,6 @@ const Host = () => {
     const [showLeaderBoardScreen, setShowLeaderBoardScreen] = useState<boolean>(false);
     const [showResultsScreen, setShowResultScreen] = useState<boolean>(false);
 
-    const [timerQuestion, setTimerQuestion] = useState<number>(0);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
     const [questionData, setQuestionData] = useState<QuestionType>(InitQuestionData);
 
@@ -66,7 +65,6 @@ const Host = () => {
 
     useEffect(() => {
         socket?.on('student-leave', (player: any, pin: string) => {
-            // console.log(player, playerList);
             const newListPlayers = playerList.filter((item: any) => item.playerId !== player.playerId);
             console.log(newListPlayers);
             setPlayerList(newListPlayers);
@@ -86,8 +84,9 @@ const Host = () => {
     };
 
     const closeGame = () => {
-        socket?.emit('host-leave-room', game?.pin);
-        router.back();
+        socket?.emit('host-leave-room', game?.pin, () => {
+            router.back();
+        });
     };
 
     const StartCountDownPreview = (second: number, index: number) => {
@@ -120,7 +119,6 @@ const Host = () => {
             socket.emit('start-question-timer', game?.pin, index, () => {
                 startQuestionCountdown(time!, index);
             });
-            // startQuestionCountdown(time!, index);
         }
     };
 

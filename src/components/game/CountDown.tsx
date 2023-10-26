@@ -1,6 +1,3 @@
-//images
-import Image from 'next/image';
-
 //animation
 import { motion } from 'framer-motion';
 
