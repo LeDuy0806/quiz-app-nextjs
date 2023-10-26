@@ -35,14 +35,14 @@ export const apiGame = createApi({
             })
         }),
 
-        deleteGame: builder.mutation<object, { gameId: string }>({
+        deleteGame: builder.mutation<void, { gameId: string }>({
             query: ({ gameId }) => ({
                 url: `api/game/${gameId}`,
                 method: 'DELETE'
             })
         }),
 
-        addPlayer: builder.mutation<any, { gameId: string; playerId: string }>({
+        addPlayer: builder.mutation<void, { gameId: string; playerId: string }>({
             query: ({ gameId, playerId }) => ({
                 url: `api/game/${gameId}/addPlayer`,
                 method: 'PATCH',
@@ -50,7 +50,7 @@ export const apiGame = createApi({
             })
         }),
 
-        removePlayer: builder.mutation<any, { gameId: string; playerId: string | undefined }>({
+        removePlayer: builder.mutation<void, { gameId: string; playerId: string }>({
             query: ({ gameId, playerId }) => ({
                 url: `api/game/${gameId}/removePlayer`,
                 method: 'PATCH',

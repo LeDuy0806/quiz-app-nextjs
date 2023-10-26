@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 //type
-import QuestionType from 'src/app/types/questionType';
+import QuestionType, { InitQuestion } from 'src/app/types/questionType';
 import QuizType from 'src/app/types/quizType';
 
 //component
@@ -23,30 +23,11 @@ import { useGetGameQuery } from 'src/app/redux/services/gameApi';
 import { useRemovePlayerMutation } from 'src/app/redux/services/gameApi';
 import { useRemovePlayerResultMutation } from 'src/app/redux/services/playerResultApi';
 
-const InitQuestionData = {
-    name: '',
-    creator: null,
-    backgroundImage: '',
-    questionIndex: 0,
-    questionType: 'Quiz',
-    optionQuestion: '',
-    isPublic: true,
-    pointType: 'Standard',
-    answerTime: 5,
-    answerList: [
-        { name: 'a', body: '', isCorrect: false },
-        { name: 'b', body: '', isCorrect: false },
-        { name: 'c', body: '', isCorrect: false },
-        { name: 'd', body: '', isCorrect: false }
-    ],
-    maxCorrectAnswer: 1,
-    correctAnswerCount: 0,
-    answerCorrect: []
-} as QuestionType;
-
 interface SearchParams {
     id: string;
 }
+
+let arrayAnswer: string[] = [];
 
 const Player = ({ searchParams }: { searchParams: SearchParams }) => {
     const router = useRouter();
@@ -68,14 +49,19 @@ const Player = ({ searchParams }: { searchParams: SearchParams }) => {
     const [showResults, setShowResult] = useState<boolean>(false);
 
     const [quizData, setQuizData] = useState<QuizType>();
-    const [questionData, setQuestionData] = useState<QuestionType>(InitQuestionData);
+
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [questionOptionCurrent, setQuestionOptionCurrent] = useState<string>();
+
+    const [answer, setAnswer] = useState<any>([]);
+    const [questionData, setQuestionData] = useState<QuestionType>(InitQuestion);
 
     const [timerQuestion, setTimerQuestion] = useState<number>(0);
 
     useEffect(() => {
         if (data) {
             setPlayerList(data.playerList);
-            setQuizData(data.quiz);
+            setQuizData(data?.quiz);
         }
     }, [data]);
 
@@ -152,6 +138,9 @@ const Player = ({ searchParams }: { searchParams: SearchParams }) => {
         socket?.on('host-start-question-timer', (questionIndex: number) => {
             console.log('Run question' + questionIndex);
             setQuestionData(quizData?.questionList[questionIndex]!);
+            setCurrentQuestionIndex(questionIndex);
+            // setQuestionOptionCurrent(quizData?.questionList[questionIndex]?.optionQuestion!);
+            setQuestionOptionCurrent(quizData?.questionList[questionIndex]?.optionQuestion);
             const time = quizData?.questionList[questionIndex]?.answerTime;
             startQuestionCountdown(time!, questionIndex);
         });
@@ -190,6 +179,23 @@ const Player = ({ searchParams }: { searchParams: SearchParams }) => {
         }
     };
 
+    const handleAnswer = (key: string) => {
+        // if (!arrayAnswer.includes(key)) {
+        //     arrayAnswer.push(key);
+        // } else {
+        //     arrayAnswer = arrayAnswer.filter((item) => item !== key);
+        // }
+        setAnswer([
+            ...answer.slice(0, currentQuestionIndex),
+            {
+                answers: questionOptionCurrent === 'Single' ? [key] : arrayAnswer,
+                questionIndex: currentQuestionIndex,
+                time: timer
+            },
+            ...answer.slice(currentQuestionIndex, answer.length)
+        ]);
+    };
+
     const handlePlayerJoin = (playerData: any) => {
         setPlayerList((prevState: any) => [...prevState, playerData]);
     };
@@ -202,8 +208,8 @@ const Player = ({ searchParams }: { searchParams: SearchParams }) => {
     const closeGame = () => {
         socket.emit('student-leave-room', data?.pin!, () => {
             playerOutRoom();
+            router.back();
         });
-        router.back();
     };
 
     return (
@@ -219,9 +225,17 @@ const Player = ({ searchParams }: { searchParams: SearchParams }) => {
                 />
             )}
             {showCountDown && <CountDown time={timer} />}
-            {showQuestion && <PlayerQuestion timer={questionData?.answerTime} questionData={questionData} lengthQuiz={quizData?.questionList?.length!} />}
+            {showQuestion && (
+                <PlayerQuestion
+                    timer={questionData?.answerTime}
+                    questionData={questionData}
+                    lengthQuiz={quizData?.questionList?.length!}
+                    onClick={(key) => handleAnswer(key)}
+                    isAnswerSelect={(key) => answer[currentQuestionIndex]?.answers.includes(key)}
+                />
+            )}
             {showLeaderBoard && <LeaderBoard />}
-            {showResults && <PlayerResult />}
+            {showResults && <PlayerResult solo={false} />}
             <ToastContainer position='top-center' />
         </>
     );

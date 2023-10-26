@@ -69,10 +69,23 @@ type QuizDataType = {
     description: string;
     pointsPerQuestion: number;
     numberOfQuestions: number;
-    isPublic: true;
-    tags: string[];
+    isPublic: boolean;
+    field: string;
     likesCount: UserType[];
     questionList: QuestionDataType[];
+};
+
+type TypePlayerResult = {
+    correctAnswer: number;
+    noAnswer: number;
+    incorrectAnswer: number;
+    pointSum: number;
+};
+
+type TypeAnswer = {
+    questionIndex: number;
+    answers: string[];
+    time: number;
 };
 
 export {
@@ -83,5 +96,7 @@ export {
     type EditProfileType,
     type ErrorLoginType,
     type QuizDataType,
-    type QuestionDataType
+    type QuestionDataType,
+    type TypePlayerResult,
+    type TypeAnswer
 };

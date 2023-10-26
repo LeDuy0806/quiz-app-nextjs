@@ -21,14 +21,14 @@ export const apiQuiz = createApi({
     }),
     keepUnusedDataFor: 20,
     endpoints: (builder) => ({
-        getPublicQuizzes: builder.query<QuizType[], any>({
+        getPublicQuizzes: builder.query<QuizType[], void>({
             query: () => ({
                 url: 'api/quiz/public',
                 method: 'GET'
             })
         }),
 
-        getTeacherQuizzes: builder.query<QuizType[], { teacherId: string | undefined }>({
+        getTeacherQuizzes: builder.query<QuizType[], { teacherId: string }>({
             query: ({ teacherId }) => ({
                 url: `api/quiz/teacher/${teacherId}`,
                 method: 'GET'
@@ -43,7 +43,7 @@ export const apiQuiz = createApi({
             })
         }),
 
-        importQuiz: builder.mutation<QuizType, any>({
+        importQuiz: builder.mutation<QuizType, { quizData: QuizType; userId: string }>({
             query: ({ quizData, userId }) => ({
                 url: `api/quiz/import`,
                 method: 'POST',
@@ -51,7 +51,7 @@ export const apiQuiz = createApi({
             })
         }),
 
-        updateQuiz: builder.mutation<QuizType, any>({
+        updateQuiz: builder.mutation<QuizType, { quizId: string; updateQuiz: QuizType }>({
             query: ({ quizId, updateQuiz }) => ({
                 url: `api/quiz/${quizId}`,
                 method: 'PUT',
@@ -59,14 +59,14 @@ export const apiQuiz = createApi({
             })
         }),
 
-        deleteQuiz: builder.mutation<object, any>({
+        deleteQuiz: builder.mutation<void, { quizId: string }>({
             query: ({ quizId }) => ({
                 url: `api/quiz/${quizId}`,
                 method: 'DELETE'
             })
         }),
 
-        likeQuiz: builder.mutation<QuizType, any>({
+        likeQuiz: builder.mutation<QuizType, { userId: string }>({
             query: ({ userId }) => ({
                 url: `api/quiz/${userId}/likeQuiz`,
                 method: 'PATCH'
