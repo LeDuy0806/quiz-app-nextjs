@@ -3,17 +3,19 @@ import UserType, { InitUser } from './userType';
 import QuizType, { InitQuiz } from './quizType';
 import PlayerResultType, { InitPlayerResult } from './playerResultType';
 
-type AnswerLeaderBoardResultType = {
+export type AnswerLeaderBoardResultType = {
     player: UserType;
-    playerPoints: number;
+    pointAnswerQuestion: number;
+    playerCurrentScore: number;
 };
 
 const InitAnswerLeaderBoard = {
     player: InitUser,
-    playerPoints: 0
+    pointAnswerQuestion: 0,
+    playerCurrentScore: 0
 } as AnswerLeaderBoardResultType;
 
-type CurrentLeaderBoard = {
+export type CurrentLeaderBoardType = {
     questionIndex: number;
     leaderBoardList: AnswerLeaderBoardResultType[];
 };
@@ -21,7 +23,7 @@ type CurrentLeaderBoard = {
 const InitCurrentLeaderBoard = {
     questionIndex: 0,
     leaderBoardList: [InitAnswerLeaderBoard]
-} as CurrentLeaderBoard;
+} as CurrentLeaderBoardType;
 
 type LeaderBoardType = {
     _id: string;
@@ -29,7 +31,7 @@ type LeaderBoardType = {
     quiz: QuizType;
     pin: string;
     playerResultList: PlayerResultType[];
-    currentLeaderBoard: CurrentLeaderBoard[];
+    currentLeaderBoard: CurrentLeaderBoardType[];
 };
 
 export const InitLeaderBoard = {

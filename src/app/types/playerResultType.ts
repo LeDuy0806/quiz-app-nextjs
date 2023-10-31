@@ -1,26 +1,26 @@
 import UserType, { InitUser } from './userType';
 import GameType, { InitGame } from './gameType';
 
-type AnswerPlayerType = {
+export type AnswerPlayerType = {
     questionIndex: number;
     answered: boolean;
     answers: string[];
-    time: number[];
-    points: number;
+    time: number;
+    point: number;
 };
 
 const InitAnswerPlayer = {
     questionIndex: 0,
     answered: true,
     answers: [],
-    time: [],
-    points: 0
+    time: 0,
+    point: 0
 };
 
 type PlayerResultType = {
     _id: string;
     player: UserType;
-    game: null;
+    game: null | string | GameType;
     score: number;
     answers: AnswerPlayerType[];
 };

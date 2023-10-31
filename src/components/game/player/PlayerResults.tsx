@@ -14,37 +14,29 @@ import { Line } from 'react-chartjs-2';
 import { useRouter } from 'next/navigation';
 import { TypeAnswer, TypePlayerResult } from 'src/app/variable';
 
-type TypeChart = {
-    Ox: number[];
-    Oy: number[];
-};
+//redux
+import { AnswerPlayerType } from 'src/app/types/playerResultType';
 
 interface ResultsProps {
     solo: boolean;
     result: TypePlayerResult;
-    answer: TypeAnswer[];
+    answer: AnswerPlayerType[];
     lengthQuiz: number;
     checkResult: () => void;
+    handleShowLeaderBoardResult?: () => void;
+    exitGame?: () => void;
 }
 
 const PlayerResult = (props: ResultsProps) => {
     const router = useRouter();
 
-    const [dataChart, setDataChart] = useState<TypeChart>({ Ox: [], Oy: [] });
+    console.log(props.solo);
 
-    // useEffect(() => {
-    //     const listTimerAnswer = props.answer.map((item: any) => item.time);
-    //     const listOfIndex = props.answer.map((item: any) => item.questionIndex);
+    const listTimerAnswer = props.answer?.map((item: AnswerPlayerType) => item.time);
+    const listOfIndex = props.answer?.map((item: AnswerPlayerType) => item.questionIndex);
 
-    //     setDataChart({ ...dataChart, Ox: listTimerAnswer, Oy: listOfIndex });
-    // }, [props.answer, dataChart]);
-
-    const listTimerAnswer = props.answer?.map((item: any) => item.time);
-    const listOfIndex = props.answer?.map((item: any) => item.questionIndex);
-
-    // console.log(props.answer);
-
-    const exitGame = () => {
+    const handleBack = () => {
+        console.log('CC');
         router.back();
     };
 
@@ -56,14 +48,22 @@ const PlayerResult = (props: ResultsProps) => {
                 </div>
                 <div className='w-3/4 h-full flex flex-row items-center justify-between'>
                     <div className='w-2/5 h-4/5 flex flex-col items-center justify-around bg-bgPurpleLight mt-20 rounded-3xl gap-3'>
-                        <div>
+                        <div className='flex flex-col items-center'>
                             <Image src={resultOne} alt='' className='z-[1] w-[20em] h-[15em] object-cover' />
                             <h1 className='text-2xl font-bold'>You finish Quiz with {props.result.pointSum} Point</h1>
+                            {!props.solo && (
+                                <button
+                                    className='text-center h-[48px] inline-flex appearance-none bg-bgButtonCloseGame border-0 rounded-md shadow-boxButtonCloseGame text-textWhite cursor-pointer justify-center items-center leading-1 text-md overflow-hidden px-4 font-semibold hover:shadow-boxButtonCloseGameHover hover:translate-y-[2px]'
+                                    onClick={props.handleShowLeaderBoardResult}
+                                >
+                                    LeaderBoard
+                                </button>
+                            )}
                         </div>
                         <div className='w-full flex flex-row justify-around'>
                             <button
                                 className='text-center h-[48px] inline-flex appearance-none bg-bgButtonStartGame border-0 rounded-md shadow-boxButtonStartGame text-textWhite cursor-pointer justify-center items-center leading-1 text-md overflow-hidden px-6 font-semibold hover:shadow-boxButtonStartGameHover hover:translate-y-[2px]'
-                                onClick={exitGame}
+                                onClick={props.solo === true ? handleBack : props.exitGame}
                             >
                                 Exit Game
                             </button>

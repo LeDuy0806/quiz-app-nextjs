@@ -1,42 +1,45 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 
 //component
-import QuestionResult from './QuestionResult';
+import LeaderBoard from './LeaderBoard';
 
 //icons
 import { BiArrowBack } from 'react-icons/bi';
 import { TypeAnswer } from 'src/app/variable';
 
-interface CheckResultProps {
-    quiz: any;
-    answer: TypeAnswer[];
+//redux
+import { useGetLeaderBoardQuery } from 'src/app/redux/services/leaderBoardApi';
+import { AnswerLeaderBoardResultType, CurrentLeaderBoardType } from 'src/app/types/leaderboardType';
+
+interface CheckLeaderBoardProps {
     listOfIndex: number[];
     handleBack: () => void;
+    leaderBoardId: string;
 }
 
-const CheckResult = (props: CheckResultProps) => {
-    const arrayAnswer = props.answer.map((item: any) => item.answers);
+const CheckLeaderBoard = (props: CheckLeaderBoardProps) => {
+    const { data, isSuccess } = useGetLeaderBoardQuery({ leaderBoardId: props.leaderBoardId });
 
     return (
-        <PaginatedItems
-            itemsPerPage={1}
-            quiz={props.quiz}
-            length={props.quiz.questionList.length}
-            handleBack={props.handleBack}
-            arrayAnswer={arrayAnswer}
-            listOfIndex={props.listOfIndex}
-        />
+        isSuccess && (
+            <PaginatedItems
+                itemsPerPage={1}
+                leaderBoardResultList={data?.currentLeaderBoard!}
+                length={props.listOfIndex.length}
+                listOfIndex={props.listOfIndex}
+                handleBack={props.handleBack}
+            />
+        )
     );
 };
 
 interface PaginatedItemsProps {
     itemsPerPage: number;
-    quiz: any;
+    leaderBoardResultList: CurrentLeaderBoardType[];
     length: number;
-    arrayAnswer: any;
     listOfIndex: number[];
     handleBack: () => void;
 }
@@ -45,25 +48,23 @@ const PaginatedItems = (props: PaginatedItemsProps) => {
     const [itemOffset, setItemOffset] = useState(0);
 
     const endOffset = itemOffset + props.itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     const currentItems = props.listOfIndex.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(props.length / props.itemsPerPage);
 
     const handlePageClick = (event: any) => {
         const newOffset = (event.selected * props.itemsPerPage) % props.listOfIndex.length;
-        console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
+        // console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
         setItemOffset(newOffset);
     };
 
+    // console.log(props.leaderBoardResultList[currentItems[0]].leaderBoardList);
+
     return (
+        // leaderBoardResult={props.leaderBoardResultList[currentItems[0]]
         <div className='relative w-screen h-screen flex flex-col '>
-            <QuestionResult
-                currentItems={currentItems}
-                questionData={props.quiz?.questionList[itemOffset]}
-                lengthQuiz={props.quiz?.questionList.length}
-                answerQuestion={props.arrayAnswer[itemOffset][0]}
-            />
-            <div className='z-[1] absolute left-[50%] translate-x-[-50%] bottom-[8em]'>
+            <LeaderBoard leaderBoardResult={props.leaderBoardResultList[currentItems[0]].leaderBoardList} questionIndex={0} />
+            <div className='z-[1] absolute left-[50%] translate-x-[-50%] bottom-[10em]'>
                 <ReactPaginate
                     previousLabel='< prev'
                     nextLabel='Next >'
@@ -88,4 +89,4 @@ const PaginatedItems = (props: PaginatedItemsProps) => {
     );
 };
 
-export default CheckResult;
+export default CheckLeaderBoard;

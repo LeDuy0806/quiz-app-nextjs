@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API } from '../api';
-import LeaderBoardType from 'src/app/types/leaderboardType';
+import LeaderBoardType, { AnswerLeaderBoardResultType } from 'src/app/types/leaderboardType';
 import { RootState } from '../store';
 
 export const apiLeaderBoard = createApi({
@@ -18,7 +18,7 @@ export const apiLeaderBoard = createApi({
             return headers;
         }
     }),
-    keepUnusedDataFor: 20,
+    keepUnusedDataFor: 2,
     endpoints: (builder) => ({
         getLeaderBoard: builder.query<LeaderBoardType, { leaderBoardId: string }>({
             query: ({ leaderBoardId }) => ({
@@ -35,6 +35,13 @@ export const apiLeaderBoard = createApi({
             })
         }),
 
+        deleteLeaderBoard: builder.mutation<void, { leaderBoardId: string }>({
+            query: ({ leaderBoardId }) => ({
+                url: `api/leaderBoard/${leaderBoardId}`,
+                method: 'DELETE'
+            })
+        }),
+
         updateQuestionLeaderBoard: builder.mutation<LeaderBoardType, { leaderBoardId: string; update: LeaderBoardType }>({
             query: ({ leaderBoardId, update }) => ({
                 url: `api/leaderBoard/${leaderBoardId}/questionLeaderBoard`,
@@ -43,15 +50,32 @@ export const apiLeaderBoard = createApi({
             })
         }),
 
-        updateCurrentLeaderBoard: builder.mutation<LeaderBoardType, { leaderBoardId: string; update: LeaderBoardType }>({
-            query: ({ leaderBoardId, update }) => ({
+        updateCurrentLeaderBoard: builder.mutation<
+            LeaderBoardType,
+            { leaderBoardId: string; questionIndex: number; formUpdate: AnswerLeaderBoardResultType[] }
+        >({
+            query: ({ leaderBoardId, questionIndex, formUpdate }) => ({
                 url: `api/leaderBoard/${leaderBoardId}/currentLeaderBoard`,
                 method: 'PATCH',
-                body: update
+                body: { questionIndex, formUpdate }
+            })
+        }),
+
+        addLeaderBoardPlayerResult: builder.mutation<void, { leaderBoardId: string; playerResultId: string }>({
+            query: ({ leaderBoardId, playerResultId }) => ({
+                url: `api/leaderBoard/${leaderBoardId}/addPlayerResult`,
+                method: 'PATCH',
+                body: { playerResultId }
             })
         })
     })
 });
 
-export const { useGetLeaderBoardQuery, useCreateLeaderBoardMutation, useUpdateQuestionLeaderBoardMutation, useUpdateCurrentLeaderBoardMutation } =
-    apiLeaderBoard;
+export const {
+    useGetLeaderBoardQuery,
+    useCreateLeaderBoardMutation,
+    useDeleteLeaderBoardMutation,
+    useUpdateQuestionLeaderBoardMutation,
+    useUpdateCurrentLeaderBoardMutation,
+    useAddLeaderBoardPlayerResultMutation
+} = apiLeaderBoard;

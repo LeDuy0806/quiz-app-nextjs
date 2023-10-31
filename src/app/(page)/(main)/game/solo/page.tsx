@@ -7,7 +7,7 @@ import CountDown from 'src/components/game/CountDown';
 import PlayerQuestion from 'src/components/game/player/PlayerQuestion';
 import QuestionResult from 'src/components/game/QuestionResult';
 import PlayerResult from 'src/components/game/player/PlayerResults';
-import CheckResult from 'src/components/game/CheckResult';
+import CheckResult from 'src/components/game/player/CheckResult';
 
 //data
 import Quiz from 'src/data';
@@ -18,14 +18,17 @@ import { TypePlayerResult, TypeAnswer } from 'src/app/variable';
 
 //redux
 import { useAppSelector } from 'src/app/redux/hooks';
+import { AnswerPlayerType } from 'src/app/types/playerResultType';
 
 let arrayAnswer: string[] = [];
 
 const InitAnswer = {
     questionIndex: 0,
+    answered: false,
     answers: [],
-    time: 0
-} as TypeAnswer;
+    time: 0,
+    point: 0
+} as AnswerPlayerType;
 
 const InitPlayerResult = {
     correctAnswer: 0,
@@ -46,15 +49,14 @@ const PlaySolo = () => {
     const [questionData, setQuestionData] = useState<QuestionType>(InitQuestion);
     const [questionPointType, setQuestionPointType] = useState<string>('');
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+    const [questionAnswer, setQuestionAnswer] = useState<string[]>();
     const [questionOptionCurrent, setQuestionOptionCurrent] = useState<string>('');
 
     const [answerQuestion, setAnswerQuestion] = useState<string>('');
     const [listOfIndex, setListOfIndex] = useState<number[]>([]);
-
-    const [answer, setAnswer] = useState<TypeAnswer[]>([InitAnswer]);
+    const [answer, setAnswer] = useState<AnswerPlayerType[]>([]);
     const [expireTimeQuestion, setExpireTimeQuestion] = useState<boolean>(false);
     const [timer, setTimer] = useState<number>(5);
-
     const [playerResult, setPlayerResult] = useState<TypePlayerResult>(InitPlayerResult);
 
     useEffect(() => {
@@ -115,21 +117,18 @@ const PlaySolo = () => {
         setQuestionData(Quiz.questionList[questionIndex]);
         setCurrentQuestionIndex(questionIndex);
         setQuestionOptionCurrent(Quiz?.questionList[questionIndex]?.optionQuestion);
+        setQuestionAnswer(Quiz?.questionList[questionIndex].answerCorrect);
         setQuestionPointType(Quiz?.questionList[questionIndex]?.pointType);
-        setAnswer((prevState: TypeAnswer[]) => [
-            ...prevState,
-            {
-                questionIndex: currentQuestionIndex,
-                answers: [],
-                time: 0
-            }
-        ]);
+        if (questionIndex < Quiz.questionList.length) {
+            setAnswer((prevState: AnswerPlayerType[]) => [...prevState, InitAnswer]);
+        }
 
         const time = Quiz?.questionList[questionIndex]?.answerTime;
         startQuestionCountdown(time, questionIndex);
     };
 
     const startQuestionCountdown = (second: number, index: number) => {
+        arrayAnswer = [];
         setExpireTimeQuestion(false);
         setShowQuestion(true);
         let time = second;
@@ -177,8 +176,10 @@ const PlaySolo = () => {
             ...answer.slice(0, currentQuestionIndex),
             {
                 answers: questionOptionCurrent === 'Single' ? [key] : arrayAnswer,
+                answered: true,
                 questionIndex: currentQuestionIndex,
-                time: timer
+                time: timer,
+                point: questionAnswer?.includes(key) ? calculatePoint() : 0
             },
             ...answer.slice(currentQuestionIndex + 1, answer?.length)
         ]);
@@ -218,7 +219,7 @@ const PlaySolo = () => {
                     isAnswerSelect={(key) => answer[currentQuestionIndex]?.answers.includes(key)}
                 />
             )}
-            {showQuestionResult && <QuestionResult answerQuestion={answerQuestion!} questionData={questionData} lengthQuiz={Quiz?.questionList?.length!} />}
+            {showQuestionResult && <QuestionResult answerQuestion={answerQuestion} questionData={questionData} lengthQuiz={Quiz?.questionList?.length!} />}
             {showResults && (
                 <PlayerResult solo={true} result={playerResult} lengthQuiz={Quiz?.questionList?.length!} answer={answer} checkResult={checkResult} />
             )}

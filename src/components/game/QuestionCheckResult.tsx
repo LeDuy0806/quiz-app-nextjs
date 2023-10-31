@@ -75,7 +75,6 @@ interface AnswerProps {
 }
 
 const Answer = (props: AnswerProps) => {
-    console.log(props.name, props.answerQuestion);
     return (
         <div
             className={clsx(
