@@ -7,18 +7,25 @@ import { logoImg } from '../../../public/assets/images/auth';
 
 //animation
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
 
-interface LeaderBoardProps {}
+//redux
+import { useGetLeaderBoardQuery } from 'src/app/redux/services/leaderBoardApi';
+
+//type
+import { AnswerLeaderBoardResultType } from 'src/app/types/leaderboardType';
+import UserType from 'src/app/types/userType';
+
+interface LeaderBoardProps {
+    leaderBoardResult: AnswerLeaderBoardResultType[];
+    questionIndex: number;
+}
 
 const LeaderBoard = (props: LeaderBoardProps) => {
     return (
         <div className='h-full w-full relative flex items-center justify-center bg-bgPurpleLight text-textWhite'>
             <div className='z-[1] relative w-3/4 h-3/4 flex flex-col items-center justify-end rounded-[40px] bg-bgQuestion pb-6'>
                 <div className='w-3/5 h-[6em] absolute grid place-content-center top-0 translate-y-[-50%] bg-bgMainLeaderBoard border-[3px] border-solid shadow-boxTitleLeaderBoard border-textBlack'>
-                    <h1 className='z-[1] text-[60px] font-leaderBoardFont order-2 font-black text-textSweet text-shadow-textLeaderBoard italic'>
-                        LeaderBoard
-                    </h1>
+                    <h1 className='z-[1] text-[60px] font-leaderBoardFont order-2 font-black text-textSweet text-shadow-textLeaderBoard italic'>LeaderBoard</h1>
                 </div>
                 <div className='w-4/5 h-4/5 bg-bgTitle rounded-3xl flex flex-col items-center justify-around'>
                     <div className='w-4/5 h-[10%] flex items-center justify-between text-textBlack font-bold '>
@@ -28,13 +35,22 @@ const LeaderBoard = (props: LeaderBoardProps) => {
                         <p className='flex-1 text-center'>Score</p>
                     </div>
                     <div className='w-4/5 h-4/5 overflow-y-scroll scrollbar-none'>
-                        {[1, 2, 3, 4, 5, 6, 7].map((index) => (
-                            <User key={index} index={index} />
-                        ))}
+                        {props.leaderBoardResult
+                            ?.slice()
+                            ?.sort((a: AnswerLeaderBoardResultType, b: AnswerLeaderBoardResultType) => b?.playerCurrentScore - a?.playerCurrentScore)
+                            .map((playerResult, index) => (
+                                <User
+                                    key={index}
+                                    index={index}
+                                    userData={playerResult.player}
+                                    pointAnswerQuestion={playerResult.pointAnswerQuestion}
+                                    playerCurrentScore={playerResult.playerCurrentScore}
+                                />
+                            ))}
                     </div>
                 </div>
             </div>
-            <div className='absolute w-[20em] h-[20em] rounded-full top-0 left-0'>
+            <div className='absolute w-[20em] h-[20em] rounded-full top-[6em] left-0'>
                 <Image src={championOne} alt='' className='w-full h-full' />
             </div>
             <div className='absolute w-[20em] h-[20em] rounded-full  bottom-[0.6em] right-[0em]'>
@@ -48,6 +64,9 @@ const LeaderBoard = (props: LeaderBoardProps) => {
 
 interface UserProps {
     index: number;
+    userData: UserType;
+    pointAnswerQuestion: number;
+    playerCurrentScore: number;
 }
 
 const User = (props: UserProps) => {
@@ -57,21 +76,21 @@ const User = (props: UserProps) => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.4, delay: props.index / 10 }}
             className={clsx(
-                `w-full h-[60px] flex flex-row items-center justify-between bg-bgUserItemLeaderBoardTwo rounded-2xl mb-10 text-textWhite font-semibold`,
-                props.index % 2 === 1 && 'bg-bgUserItemLeaderBoardOne'
+                `w-full h-[60px] flex flex-row items-center justify-between rounded-2xl mb-10 text-textWhite font-semibold`,
+                props.pointAnswerQuestion === 0 ? 'bg-bgUserItemLeaderBoardOne' : 'bg-bgUserItemLeaderBoardTwo'
             )}
         >
             <p className='flex flex-1 text-center items-center justify-center'>
                 <span className='flex items-center justify-center w-[1.5em] h-[1.5em] rounded-full border-[2px] border-solid border-textYellow  text-textYellow'>
-                    {props.index}
+                    {props.index + 1}
                 </span>
             </p>
             <div className='flex flex-2 flex-row items-center justify-center text-center gap-2'>
-                <Image src={logoImg} alt='' className='w-[2.6em] h-[2.6em]' />
-                <p>Alexander ThuHien</p>
+                <Image src={props.userData.avatar} alt='' className='w-[2.6em] h-[2.6em] rounded-full object-cover' width={50} height={50} />
+                <p>{props.userData.userName}</p>
             </div>
-            <p className='flex-1 text-center'>5</p>
-            <p className='flex-1 text-center'>20</p>
+            <p className='flex-1 text-center'>{props.pointAnswerQuestion}</p>
+            <p className='flex-1 text-center'>{props.playerCurrentScore}</p>
         </motion.div>
     );
 };

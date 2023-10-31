@@ -7,7 +7,6 @@ import { HiPencilAlt, HiPlay, HiTrash } from 'react-icons/hi';
 
 //image
 import Image from 'next/image';
-import { loadingImg } from '../../../public/assets/images/auth';
 import QuizType from 'src/app/types/quizType';
 
 //routes
@@ -20,7 +19,6 @@ import { useCreateLeaderBoardMutation } from 'src/app/redux/services/leaderBoard
 import { createGame } from 'src/app/redux/slices/gamesSlice';
 import { createLeaderBoard } from 'src/app/redux/slices/leaderBoardSlice';
 import { fetchQuiz } from 'src/app/redux/slices/quizSlice';
-import GameType from 'src/app/types/gameType';
 
 interface QuizCardProps {
     quiz: QuizType;
@@ -39,6 +37,7 @@ const QuizCard = (props: QuizCardProps) => {
             alert('Sorry , you can not open game without question');
         } else {
             dispatch(fetchQuiz(props.quiz));
+
             const gameData = {
                 host: props.quiz?.creator,
                 quiz: props.quiz,
@@ -47,24 +46,22 @@ const QuizCard = (props: QuizCardProps) => {
                 playerList: [],
                 playerResultList: []
             };
-            const newGameData: any = await InitGame({ newGame: gameData });
-            const newGame: GameType = newGameData.data;
-            dispatch(createGame(newGame));
+            const game = await InitGame({ newGame: gameData }).unwrap();
 
             const leaderBoardData = {
-                game: newGame,
+                game,
                 quiz: props.quiz,
-                pin: newGame.pin,
+                pin: game.pin,
                 playerResultList: [],
                 currentLeaderBoard: []
             };
-            const newLeaderBoardData: any = await InitLeaderBoard({ newLeaderBoard: leaderBoardData });
-            const newLeaderBoard = newLeaderBoardData.data;
-            dispatch(createLeaderBoard(newLeaderBoard));
+            const leaderBoard = await InitLeaderBoard({ newLeaderBoard: leaderBoardData }).unwrap();
 
-            if (newGame && newLeaderBoard) {
+            if (game && leaderBoard) {
+                dispatch(createGame(game));
+                dispatch(createLeaderBoard(leaderBoard));
                 router.push('/game/host');
-                socket.emit('init-game', newGame, newLeaderBoard);
+                socket.emit('init-game', game, leaderBoard);
             }
         }
     };

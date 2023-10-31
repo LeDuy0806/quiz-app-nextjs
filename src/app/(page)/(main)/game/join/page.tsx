@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 
 //images
@@ -17,7 +17,7 @@ import LoadingRoute from 'src/components/LoadingRoute';
 import { useAppSelector, useAppDispatch } from 'src/app/redux/hooks';
 import { useCreatePlayerResultMutation } from 'src/app/redux/services/playerResultApi';
 import { useAddPlayerMutation } from 'src/app/redux/services/gameApi';
-import { addPlayer } from 'src/app/redux/slices/gamesSlice';
+import { fetchPlayerResult } from 'src/app/redux/slices/playerResultSlice';
 
 //toast
 import { ToastContainer, toast } from 'react-toastify';
@@ -33,24 +33,30 @@ const Join = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [pin, setPin] = useState<string>('');
 
-    const [InitPlayerResult, isSuccess] = useCreatePlayerResultMutation();
+    const [InitPlayerResult] = useCreatePlayerResultMutation();
     const [InitAddPlayer] = useAddPlayerMutation();
 
     const result = async (message: string, playerId: string, gameId: string) => {
         if (message === 'correct') {
             const newPlayerResult = {
-                player: authData?.user?._id,
+                player: authData?.user,
                 game: gameId,
                 score: 0,
                 answers: []
             };
-            await InitPlayerResult({ newPlayerResult });
-            const { data }: any = await InitAddPlayer({ gameId, playerId });
-            dispatch(addPlayer(data));
-            setLoading(true);
-            if (data && isSuccess) {
-                router.push(`/game/player/?id=${gameId}`);
-            }
+
+            await InitPlayerResult({ newPlayerResult })
+                .unwrap()
+                .then((res) => {
+                    dispatch(fetchPlayerResult(res));
+                });
+
+            await InitAddPlayer({ gameId, playerId })
+                .unwrap()
+                .then(() => {
+                    setLoading(true);
+                    router.push(`/game/player/?id=${gameId}`);
+                });
         } else {
             toast.error('Pin does not exists');
         }

@@ -30,7 +30,7 @@ const playerResultSlice = createSlice({
     }
 });
 
-export const { createPlayerResult, fetchPlayerResults, addAnswer } = playerResultSlice.actions;
+export const { fetchPlayerResult, createPlayerResult, fetchPlayerResults, addAnswer } = playerResultSlice.actions;
 
 const playerResultReducer = playerResultSlice.reducer;
 export default playerResultReducer;

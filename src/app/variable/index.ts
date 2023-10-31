@@ -84,8 +84,16 @@ type TypePlayerResult = {
 
 type TypeAnswer = {
     questionIndex: number;
+    answered: boolean;
     answers: string[];
     time: number;
+};
+
+type TypePlayerWaitingRoom = {
+    playerId: string;
+    socketId: string;
+    userName: string;
+    avatar: string;
 };
 
 export {
@@ -98,5 +106,6 @@ export {
     type QuizDataType,
     type QuestionDataType,
     type TypePlayerResult,
-    type TypeAnswer
+    type TypeAnswer,
+    type TypePlayerWaitingRoom
 };

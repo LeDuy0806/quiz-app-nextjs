@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API } from '../api';
-import PlayerResultType from 'src/app/types/playerResultType';
+import PlayerResultType, { AnswerPlayerType } from 'src/app/types/playerResultType';
 import { RootState } from '../store';
+import { TypePlayerResult } from 'src/app/variable';
 
 export const apiPlayerResult = createApi({
     reducerPath: 'apiPlayerResult',
@@ -28,6 +29,14 @@ export const apiPlayerResult = createApi({
             })
         }),
 
+        updatePlayerResult: builder.mutation<PlayerResultType, { id: string; answers: AnswerPlayerType[]; score: number }>({
+            query: ({ id, answers, score }) => ({
+                url: `api/playerResult/${id}`,
+                method: 'PATCH',
+                body: { answers, score }
+            })
+        }),
+
         removePlayerResult: builder.mutation<PlayerResultType, { playerId: string }>({
             query: ({ playerId }) => ({
                 url: `api/playerResult/${playerId}`,
@@ -45,4 +54,4 @@ export const apiPlayerResult = createApi({
     })
 });
 
-export const { useCreatePlayerResultMutation, useAddPlayerResultMutation, useRemovePlayerResultMutation } = apiPlayerResult;
+export const { useCreatePlayerResultMutation, useUpdatePlayerResultMutation, useAddPlayerResultMutation, useRemovePlayerResultMutation } = apiPlayerResult;

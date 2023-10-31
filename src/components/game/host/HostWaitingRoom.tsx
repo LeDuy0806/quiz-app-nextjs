@@ -9,8 +9,10 @@ import { logoImg, studentsImg, teacherImg } from '../../../../public/assets/imag
 import { useAppSelector } from 'src/app/redux/hooks';
 import { useState } from 'react';
 import type { Socket } from 'socket.io-client';
-import QuizType from 'src/app/types/quizType';
 
+//type
+import QuizType from 'src/app/types/quizType';
+import { TypePlayerWaitingRoom } from 'src/app/variable';
 interface HostWaitingRoomProps {
     pin: string | undefined;
     socket: Socket;
@@ -23,7 +25,7 @@ interface HostWaitingRoomProps {
 
 const HostWaitingRoom = (props: HostWaitingRoomProps) => {
     useEffect(() => {
-        props.socket?.on('player-added', (player, pinGameCurrent) => {
+        props.socket?.on('player-added', (player: TypePlayerWaitingRoom, pinGameCurrent: string) => {
             if (props.pin === pinGameCurrent) {
                 props.handlePlayerJoin(player);
             }

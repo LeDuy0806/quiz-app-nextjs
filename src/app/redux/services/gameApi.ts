@@ -56,8 +56,17 @@ export const apiGame = createApi({
                 method: 'PATCH',
                 body: { playerId }
             })
+        }),
+
+        addGamePlayerResult: builder.mutation<void, { gameId: string; playerResultId: string }>({
+            query: ({ gameId, playerResultId }) => ({
+                url: `api/game/${gameId}/addPlayerResult`,
+                method: 'PATCH',
+                body: { playerResultId }
+            })
         })
     })
 });
 
-export const { useGetGameQuery, useCreateGameMutation, useDeleteGameMutation, useAddPlayerMutation, useRemovePlayerMutation } = apiGame;
+export const { useGetGameQuery, useCreateGameMutation, useDeleteGameMutation, useAddPlayerMutation, useRemovePlayerMutation, useAddGamePlayerResultMutation } =
+    apiGame;
