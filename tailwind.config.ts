@@ -6,6 +6,10 @@ const config: Config = {
     darkMode: 'class',
     theme: {
         extend: {
+            spacing: {
+                26: '6.5rem',
+                30: '7.5rem'
+            },
             textShadow: {
                 textLeaderBoard:
                     '3px 1px 1px #4af7ff, 2px 2px 1px #165bfb, 4px 2px 1px #4af7ff, 3px 3px 1px #165bfb, 5px 3px 1px #4af7ff, 4px 4px 1px #165bfb, 6px 4px 1px #4af7ff, 5px 5px 1px #165bfb, 7px 5px 1px #4af7ff,6px 6px 1px #165bfb, 8px 6px 1px #4af7ff, 7px 7px 1px #165bfb, 9px 7px 1px #4af7ff',
@@ -18,11 +22,12 @@ const config: Config = {
                 md: '667px',
                 mdl: '768px',
                 lg: '960px',
-                lgl: '1024px',
+                lgl: '1025px',
                 xl: '1280px'
             },
 
             backgroundImage: {
+                'gradient-white': 'linear-gradient(270deg,#f2f2f2 0%,rgba(242,242,242,0) 100%)',
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                 'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
                 'gradient-purple': 'linear-gradient(135deg,#9a7bff,#de7cff 47%,#ffc37e)',
@@ -102,6 +107,7 @@ const config: Config = {
                 bgQuestion: 'rgba(223, 215, 230, 0.8)',
                 bgBorderQuestion: 'rgba(105,105,105, 0.4)',
                 bgResultTitle: '#6868AC',
+                bgAnswerIncorrect: '#ff0000',
                 bgAnswerCorrect: '#16FF00',
                 bgBorderError: '#D80032',
                 bgPoint: '#FFACAC'
@@ -183,7 +189,7 @@ const config: Config = {
         }
     },
     plugins: [
-        require('tailwind-scrollbar'),
+        require('tailwind-scrollbar')({ nocompatible: true }),
         plugin(function ({ matchUtilities, theme }: any) {
             matchUtilities(
                 {
@@ -193,7 +199,8 @@ const config: Config = {
                 },
                 { values: theme('textShadow') }
             );
-        })
+        }),
+        plugin(function ({ addComponents, theme }) {})
     ]
 };
 export default config;

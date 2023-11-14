@@ -16,6 +16,8 @@ import { useGetPublicQuizzesQuery, useGetTeacherQuizzesQuery } from 'src/app/red
 import QuizType from 'src/app/types/quizType';
 import { fetchTeacherQuizzes } from 'src/app/redux/slices/quizSlice';
 
+import Quiz from 'src/data';
+
 function LibraryPage() {
     useEffect(() => {
         document.title = 'Library - Quizzes';
@@ -23,26 +25,7 @@ function LibraryPage() {
 
     const dispatch = useAppDispatch();
 
-    // const data: { id: number }[] = [
-    //     {
-    //         id: 1
-    //     },
-    //     {
-    //         id: 1
-    //     },
-    //     {
-    //         id: 1
-    //     },
-    //     {
-    //         id: 1
-    //     },
-    //     {
-    //         id: 1
-    //     },
-    //     {
-    //         id: 1
-    //     }
-    // ];
+    const fakeData: QuizType[] = [Quiz, Quiz, Quiz, Quiz, Quiz, Quiz, Quiz, Quiz];
 
     const authData = useAppSelector((state) => state.auth.authData);
     const teacherId = authData?.user?._id;
@@ -178,11 +161,11 @@ function LibraryPage() {
                         key={`${i}`}
                         className='w-full'
                     >
-                        <QuizCard />
+                        <QuizCard quiz={fakeData} />
                     </motion.div>
                 ))} */}
 
-                {quizzes?.map((quiz: QuizType, i) => (
+                {fakeData?.map((quiz: QuizType, i) => (
                     <motion.div
                         initial={{ x: 20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}

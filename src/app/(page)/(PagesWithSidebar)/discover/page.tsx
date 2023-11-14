@@ -1,6 +1,6 @@
 'use client';
 import { useEffect } from 'react';
-import RowQuizz from 'src/components/ShowQuiz/RowQuizz';
+import RowQuizz from 'src/components/discover/RowQuizz';
 import SearchBar from 'src/components/discover/SearchBar';
 
 function DiscoverPage() {
@@ -9,17 +9,19 @@ function DiscoverPage() {
     }, []);
 
     return (
-        <div className='p-4'>
+        <div className='p-4 scrollbar-w-[2px]'>
             <div className='w-full'>
-                <SearchBar />
+                <div className='w-full flex items-center flex-col'>
+                    <SearchBar />
+                </div>
+                <section className=' flex flex-col justify-between space-y-3.5'>
+                    <RowQuizz />
+                    <RowQuizz />
+                    <RowQuizz />
+                    <RowQuizz />
+                    <RowQuizz />
+                </section>
             </div>
-            <section className=' flex flex-col justify-between space-y-3.5'>
-                <RowQuizz />
-                {/* <RowQuizz />
-                <RowQuizz />
-                <RowQuizz />
-                <RowQuizz /> */}
-            </section>
         </div>
     );
 }

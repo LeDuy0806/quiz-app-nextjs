@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <title>Quizzes</title>
                 <link rel='shortcut icon' href='/assets/images/logoApp.png' />
             </head>
-            <body className={inter.className + ' bg-gray-100 dark:bg-slate-600 '}>
+            <body className={' bg-gray-100 dark:bg-slate-600 '}>
                 <Provider store={store}>
                     <SessionProvider>{children}</SessionProvider>
                 </Provider>
