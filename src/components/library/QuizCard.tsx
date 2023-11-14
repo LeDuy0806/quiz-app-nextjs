@@ -7,7 +7,6 @@ import { HiPencilAlt, HiPlay, HiTrash } from 'react-icons/hi';
 
 //image
 import Image from 'next/image';
-import { loadingImg } from '../../../public/assets/images/auth';
 import QuizType from 'src/app/types/quizType';
 
 //routes
@@ -66,25 +65,16 @@ const QuizCard = (props: QuizCardProps) => {
     };
 
     return (
-        <div className='flex h-52 w-full rounded-lg bg-white shadow-2xl transition-transform hover:scale-[1.005] dark:bg-gray-800'>
-            {/* Image */}
-            {/* <Link className='flex items-center justify-between max-md:hidden' href={paths.discover}>
-                <img
-                    className='m-auto h-full w-80 rounded-l-lg object-cover'
-                    // src='https://plus.unsplash.com/premium_photo-1661637676151-ff1ad622ab7e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
-                    src='https://images.unsplash.com/photo-1678711267884-ae34ed9d4c29?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
+        <div className='flex sm:h-40 w-full rounded-lg bg-white shadow-2xl transition-transform hover:scale-[1.005] dark:bg-gray-800'>
+            <div className='relative w-80  flex items-center justify-between max-md:hidden'>
+                <Image
+                    className='h-full rounded-l-lg object-cover'
+                    src={'https://cf.quizizz.com/game/img/share/quizizz_share1.png'}
                     alt=''
+                    fill
+                    quality={100}
                 />
-            </Link> */}
-            <Image
-                className='h-full w-80 rounded-l-lg object-cover'
-                src={
-                    'https://images.unsplash.com/photo-1678711267884-ae34ed9d4c29?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
-                }
-                alt=''
-                width={80}
-                height={60}
-            />
+            </div>
 
             {/* Content */}
             <div className='flex flex-col justify-between p-5'>
@@ -99,15 +89,14 @@ const QuizCard = (props: QuizCardProps) => {
                 <div className='flex w-6 justify-between gap-4'>
                     <button
                         onClick={handleOpenGame}
-                        // href='/game/host'
-                        className='inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                        className='inline-flex items-center rounded-lg bg-teal-400 px-3 py-2 text-center text-sm font-medium text-white hover:bg-teal-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
                     >
                         Play
                         {/* {isLoading ? (
                             <Image src={loadingImg} alt='' className='w-7 h-full self-center m-auto' />
-                        ) : (
-                            <HiPlay className='ml-2 h-6 w-6 text-white' />
-                        )} */}
+                            ) : (
+                                <HiPlay className='ml-2 h-6 w-6 text-white' />
+                            )} */}
                         <HiPlay className='ml-2 h-6 w-6 text-white' />
                     </button>
                     <button
@@ -119,7 +108,7 @@ const QuizCard = (props: QuizCardProps) => {
                     </button>
                     <button
                         // href='#'
-                        className='inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                        className='inline-flex items-center rounded-lg bg-red-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
                     >
                         Delete
                         <HiTrash className='ml-1 h-6 w-6 text-white' />

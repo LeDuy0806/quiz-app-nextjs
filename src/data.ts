@@ -3,8 +3,7 @@ const Quiz = {
     name: 'Lập trình hướng đối tượng',
     creator: null,
     description: 'Hướng đối tượng tuy yếu nhưng hướng về em thì mạnh',
-    backgroundImage:
-        'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313081/gcozpo8f4vcacojseih6.png',
+    backgroundImage: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313081/gcozpo8f4vcacojseih6.png',
     isPublic: true,
     pointsPerQuestion: 2,
     field: 'Tech',
@@ -18,8 +17,7 @@ const Quiz = {
             _id: '647ce337af09f3b01a81494f',
             name: 'Con gì có mấy chân',
             creator: null,
-            backgroundImage:
-                'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313167/o0utbhprtgtgo9xyxspy.jpg',
+            backgroundImage: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313167/o0utbhprtgtgo9xyxspy.jpg',
             questionIndex: 0,
             questionType: 'Quiz',
             optionQuestion: 'Single',
@@ -56,8 +54,7 @@ const Quiz = {
             _id: '647ce337af09f3b01a81494f',
             name: 'Con gì có mấy tay',
             creator: null,
-            backgroundImage:
-                'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313167/o0utbhprtgtgo9xyxspy.jpg',
+            backgroundImage: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313167/o0utbhprtgtgo9xyxspy.jpg',
             questionIndex: 1,
             questionType: 'Quiz',
             optionQuestion: 'Single',
@@ -94,8 +91,7 @@ const Quiz = {
             _id: '647ce337af09f3b01a81494f',
             name: 'Con gì có mấy dau',
             creator: null,
-            backgroundImage:
-                'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313167/o0utbhprtgtgo9xyxspy.jpg',
+            backgroundImage: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313167/o0utbhprtgtgo9xyxspy.jpg',
             questionIndex: 2,
             questionType: 'Quiz',
             optionQuestion: 'Single',

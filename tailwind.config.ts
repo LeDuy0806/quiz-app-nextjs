@@ -2,19 +2,18 @@ import type { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
-    content: [
-        './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-        './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-        './src/app/**/*.{js,ts,jsx,tsx,mdx}'
-    ],
+    content: ['./src/pages/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
     darkMode: 'class',
     theme: {
         extend: {
+            spacing: {
+                26: '6.5rem',
+                30: '7.5rem'
+            },
             textShadow: {
                 textLeaderBoard:
                     '3px 1px 1px #4af7ff, 2px 2px 1px #165bfb, 4px 2px 1px #4af7ff, 3px 3px 1px #165bfb, 5px 3px 1px #4af7ff, 4px 4px 1px #165bfb, 6px 4px 1px #4af7ff, 5px 5px 1px #165bfb, 7px 5px 1px #4af7ff,6px 6px 1px #165bfb, 8px 6px 1px #4af7ff, 7px 7px 1px #165bfb, 9px 7px 1px #4af7ff',
-                shadowTextResult:
-                    '5px 5px 0px #FFB650, 10px 10px 0px  #FF80BF, 15px 15px 0px #EF5097'
+                shadowTextResult: '5px 5px 0px #FFB650, 10px 10px 0px  #FF80BF, 15px 15px 0px #EF5097'
             },
             screens: {
                 xs: '320px',
@@ -23,42 +22,34 @@ const config: Config = {
                 md: '667px',
                 mdl: '768px',
                 lg: '960px',
-                lgl: '1024px',
+                lgl: '1025px',
                 xl: '1280px'
             },
 
             backgroundImage: {
+                'gradient-white': 'linear-gradient(270deg,#f2f2f2 0%,rgba(242,242,242,0) 100%)',
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                'gradient-conic':
-                    'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+                'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
                 'gradient-purple': 'linear-gradient(135deg,#9a7bff,#de7cff 47%,#ffc37e)',
-                'gradient-primary':
-                    'linear-gradient(135deg,rgba(180,157,255,0) 11%,#b49dff 26%,#e4a7f9 45%,#ffd9ae 72%,rgba(255,217,174,0) 89%);',
-                'gradient-middlefooter':
-                    'linear-gradient(135deg,#7d4dbc 12%,#5e4282 13%,#8460af 44%,#c594ff 50%,#2a1141 90%,#3c195c 97%)',
+                'gradient-primary': 'linear-gradient(135deg,rgba(180,157,255,0) 11%,#b49dff 26%,#e4a7f9 45%,#ffd9ae 72%,rgba(255,217,174,0) 89%);',
+                'gradient-middlefooter': 'linear-gradient(135deg,#7d4dbc 12%,#5e4282 13%,#8460af 44%,#c594ff 50%,#2a1141 90%,#3c195c 97%)',
                 'gradient-bgmiddlefooter':
                     'linear-gradient(#091a34,rgba(9,26,52,0)),url(https://global-uploads.webflow.com/6418f5b…/6498eac…_Ellipse%20blur.webp)',
                 'gradient-titleheaderfooter': 'linear-gradient(135deg,#9a7bff,#de7cff 47%,#ffc37e)',
-                'gradient-footerIntro':
-                    'linear-gradient(135deg,rgba(180,157,255,0) 11%,#b49dff 26%,#e4a7f9 45%,#ffd9ae 72%,rgba(255,217,174,0) 89%);',
-                'gradient-model':
-                    'linear-gradient(112.1deg, rgba(32, 38, 57,0.06) 11.4%, rgba(63, 76, 119,02) 70.2%);',
+                'gradient-footerIntro': 'linear-gradient(135deg,rgba(180,157,255,0) 11%,#b49dff 26%,#e4a7f9 45%,#ffd9ae 72%,rgba(255,217,174,0) 89%);',
+                'gradient-model': 'linear-gradient(112.1deg, rgba(32, 38, 57,0.06) 11.4%, rgba(63, 76, 119,02) 70.2%);',
                 'gradient-blue-loaing': 'linear-gradient(45deg, #c7eeff, #03a9f4)',
                 bgListUser: 'linear-gradient(to bottom, #9ca2af, #7a99e7)',
                 bgListOfUser: 'linear-gradient(to bottom, #9ca2af, #7a99e7)',
                 bgButtonCloseGame: 'radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)',
                 bgButtonStartGame: 'linear-gradient(135deg, #f34079 40%, #fc894d)',
                 bgTitle: 'linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%)',
-                bgMainLeaderBoard:
-                    'linear-gradient(142deg,rgba(63, 161, 251, 1) 0%,rgba(252, 70, 168, 1) 100%)',
-                bgUserItemLeaderBoardOne:
-                    'linear-gradient(150deg,rgba(254,143,85,.42) 24%,rgba(185,53,53,.42) 91%);',
-                bgUserItemLeaderBoardTwo:
-                    'linear-gradient(-150deg,rgba(85,125,254,.549) 24%,rgba(101,53,185,.541) 91%);',
+                bgMainLeaderBoard: 'linear-gradient(142deg,rgba(63, 161, 251, 1) 0%,rgba(252, 70, 168, 1) 100%)',
+                bgUserItemLeaderBoardOne: 'linear-gradient(150deg,rgba(254,143,85,.42) 24%,rgba(185,53,53,.42) 91%);',
+                bgUserItemLeaderBoardTwo: 'linear-gradient(-150deg,rgba(85,125,254,.549) 24%,rgba(101,53,185,.541) 91%);',
                 // bgResultTitle:
                 //     'linear-gradient(45deg,#ff0000, #ff7300,#fffb00,#48ff00,#00ffd5,#002bff,#7a00ff,#ff00c8,#ff0000);',
-                bgButtonCheckResult:
-                    'linear-gradient(109.6deg, rgb(255, 230, 109) 11.2%, rgb(87, 232, 107) 100.2%);',
+                bgButtonCheckResult: 'linear-gradient(109.6deg, rgb(255, 230, 109) 11.2%, rgb(87, 232, 107) 100.2%);',
                 bgResultTitle: 'linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB)'
             },
 
@@ -116,6 +107,7 @@ const config: Config = {
                 bgQuestion: 'rgba(223, 215, 230, 0.8)',
                 bgBorderQuestion: 'rgba(105,105,105, 0.4)',
                 bgResultTitle: '#6868AC',
+                bgAnswerIncorrect: '#ff0000',
                 bgAnswerCorrect: '#16FF00'
             },
 
@@ -126,15 +118,11 @@ const config: Config = {
                 boxheaderfooter: 'inset -1px -1px #3c195c, inset 1px 1px #7d4dbc',
                 boxWaiting: '0px 2px 20px #cfd8dc',
                 boxListUser: '0 7px 30px rgba(62, 9, 11, 0.3)',
-                boxButtonCloseGame:
-                    'rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset',
-                boxButtonCloseGameHover:
-                    'rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset',
+                boxButtonCloseGame: 'rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset',
+                boxButtonCloseGameHover: 'rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset',
 
-                boxButtonStartGame:
-                    'rgba(45, 35, 66, .4) 0 2px 4px,rgba(244, 42, 26, 0.1), 0 7px 13px -3px,rgba(244, 42, 26, 0.22) 0 -3px 0 inset',
-                boxButtonStartGameHover:
-                    'rgba(45, 35, 66, .4) 0 4px 8px, rgba(244, 42, 26, 0.1)0 7px 13px -3px, #D80032 0 -3px 0 inset',
+                boxButtonStartGame: 'rgba(45, 35, 66, .4) 0 2px 4px,rgba(244, 42, 26, 0.1), 0 7px 13px -3px,rgba(244, 42, 26, 0.22) 0 -3px 0 inset',
+                boxButtonStartGameHover: 'rgba(45, 35, 66, .4) 0 4px 8px, rgba(244, 42, 26, 0.1)0 7px 13px -3px, #D80032 0 -3px 0 inset',
                 boxButtonCheckResult: 'rgba(245, 247, 16, 0.8) 0 2px 4px',
                 boxUser: '#422800 3px 5px 0 0',
                 boxTitleLeaderBoard:
@@ -199,7 +187,7 @@ const config: Config = {
         }
     },
     plugins: [
-        require('tailwind-scrollbar'),
+        require('tailwind-scrollbar')({ nocompatible: true }),
         plugin(function ({ matchUtilities, theme }: any) {
             matchUtilities(
                 {
@@ -209,7 +197,8 @@ const config: Config = {
                 },
                 { values: theme('textShadow') }
             );
-        })
+        }),
+        plugin(function ({ addComponents, theme }) {})
     ]
 };
 export default config;
