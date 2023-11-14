@@ -37,31 +37,38 @@ const QuizCard = (props: QuizCardProps) => {
             alert('Sorry , you can not open game without question');
         } else {
             dispatch(fetchQuiz(props.quiz));
+
             const gameData = {
-                hostId: props.quiz?.creator?._id,
-                quizId: props.quiz?._id,
+                host: props.quiz?.creator,
+                quiz: props.quiz,
                 isLive: true,
                 pin: String(Math.floor(Math.random() * 9000) + 1000),
                 playerList: [],
                 playerResultList: []
             };
-            const newGameData: any = await InitGame({ newGame: gameData });
-            const newGame = newGameData.data;
-            dispatch(createGame(newGame));
+            const game = await InitGame({ newGame: gameData }).unwrap();
 
             const leaderBoardData = {
-                gameId: newGame._id,
-                pin: newGame.pin,
+                game,
+                quiz: props.quiz,
+                pin: game.pin,
                 playerResultList: [],
                 currentLeaderBoard: []
             };
-            const newLeaderBoardData: any = await InitLeaderBoard({ newLeaderBoard: leaderBoardData });
-            const newLeaderBoard = newLeaderBoardData.data;
-            dispatch(createLeaderBoard(newLeaderBoard));
+            const leaderBoard = await InitLeaderBoard({ newLeaderBoard: leaderBoardData }).unwrap();
 
-            router.push('/game/host');
-            socket.emit('init-game', newGame, newLeaderBoard);
+            if (game && leaderBoard) {
+                dispatch(createGame(game));
+                dispatch(createLeaderBoard(leaderBoard));
+                router.push('/game/host');
+                socket.emit('init-game', game, leaderBoard);
+            }
         }
+    };
+
+    const handleDelete = () => {
+        dispatch(fetchQuiz(props.quiz));
+        router.push('/game/solo');
     };
 
     return (
@@ -107,8 +114,8 @@ const QuizCard = (props: QuizCardProps) => {
                         <HiPencilAlt className='ml-2 h-6 w-6 text-white' />
                     </button>
                     <button
-                        // href='#'
-                        className='inline-flex items-center rounded-lg bg-red-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                        onClick={handleDelete}
+                        className='inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
                     >
                         Delete
                         <HiTrash className='ml-1 h-6 w-6 text-white' />

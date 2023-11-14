@@ -1,7 +1,15 @@
-import UserType from './userType';
+import UserType, { InitUser } from './userType';
 
-export type AuthType = {
+type AuthType = {
     user: UserType;
     accessToken: string;
     refreshToken: string;
-} | null;
+};
+
+export const InitAuth = {
+    user: InitUser,
+    accessToken: '',
+    refreshToken: ''
+} as AuthType;
+
+export default AuthType;

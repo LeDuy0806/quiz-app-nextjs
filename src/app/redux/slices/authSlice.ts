@@ -1,13 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { AuthType } from 'src/app/types/authType';
+import AuthType, { InitAuth } from 'src/app/types/authType';
 
 type InitialType = {
     authData: AuthType;
 };
 
 const initialState = {
-    authData: null
+    authData: InitAuth
 } as InitialType;
 
 const authSlice = createSlice({
@@ -21,7 +21,7 @@ const authSlice = createSlice({
 
         logOut: (state) => {
             localStorage.clear();
-            state.authData = null;
+            state.authData = InitAuth;
         }
     }
 });

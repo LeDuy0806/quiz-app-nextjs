@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API } from '../api';
-import { AuthType } from 'src/app/types/authType';
+import AuthType from 'src/app/types/authType';
 import { SignUpType, LoginType } from 'src/app/variable';
 
 export const apiAuth = createApi({

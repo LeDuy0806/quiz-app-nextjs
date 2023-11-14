@@ -108,7 +108,9 @@ const config: Config = {
                 bgBorderQuestion: 'rgba(105,105,105, 0.4)',
                 bgResultTitle: '#6868AC',
                 bgAnswerIncorrect: '#ff0000',
-                bgAnswerCorrect: '#16FF00'
+                bgAnswerCorrect: '#16FF00',
+                bgBorderError: '#D80032',
+                bgPoint: '#FFACAC'
             },
 
             boxShadow: {

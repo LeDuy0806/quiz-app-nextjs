@@ -33,6 +33,8 @@ import { useLoginUserMutation, useLoginSocialMutation } from 'src/app/redux/serv
 
 //type
 import { LoginType, ErrorLoginType } from 'src/app/variable';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+
 const InitLogin = { mail: '', password: '' } as LoginType;
 const InitErrorLogin = {
     userName: false,
@@ -47,39 +49,37 @@ import { VscLoading } from 'react-icons/vsc';
 
 const FormSignIn = () => {
     const { data: session } = useSession();
+    console.log(session);
+
     const router = useRouter();
     const dispatch = useAppDispatch();
 
     const [LoginSocial] = useLoginSocialMutation();
+    const [Login, { isLoading }] = useLoginUserMutation();
+
+    const [loading, setLoading] = useState<boolean>(false);
+    const [formData, setFormData] = useState<LoginType>(InitLogin);
+    const [formError, setFormError] = useState<ErrorLoginType>(InitErrorLogin);
+    const [click, setClick] = useState<boolean>(false);
+    const [showPassWord, setShowPassWord] = useState<boolean>(false);
 
     useEffect(() => {
         if (session) {
             const { user } = session;
             setLoading(true);
-            const handleLoginSocial = async () => {
-                const { data }: any = await LoginSocial({
-                    email: user?.email ?? '',
-                    image: user?.image ?? '',
-                    name: user?.name ?? ''
-                });
-                if (data) {
-                    dispatch(logIn(data));
+            LoginSocial({
+                email: user?.email ?? '',
+                image: user?.image ?? '',
+                name: user?.name ?? ''
+            })
+                .unwrap()
+                .then((res) => {
+                    dispatch(logIn(res));
                     router.push('/home');
-                }
-            };
-            handleLoginSocial();
+                })
+                .catch((error) => console.log(error));
         }
     }, [session, dispatch, router, LoginSocial]);
-
-    const [loading, setLoading] = useState<boolean>(false);
-
-    const [formData, setFormData] = useState<LoginType>(InitLogin);
-    const [formError, setFormError] = useState<ErrorLoginType>(InitErrorLogin);
-
-    const [click, setClick] = useState<boolean>(false);
-    const [showPassWord, setShowPassWord] = useState<boolean>(false);
-
-    const [Login, { data, isLoading, isError, error, isSuccess }] = useLoginUserMutation();
 
     useEffect(() => {
         if (!formData.mail || !formData.password || !EmailFormat(formData.mail)) {
@@ -89,50 +89,45 @@ const FormSignIn = () => {
         }
     }, [formData.mail, formData.password]);
 
-    useEffect(() => {
-        if (isSuccess && data) {
-            setLoading(true);
-            dispatch(logIn(data));
-            router.push('/home');
-        }
-    }, [isSuccess, data, dispatch, router]);
-
-    useEffect(() => {
-        if (isError) {
-            const { data }: any = error;
-            switch (data?.message) {
-                case 'Account not exist':
-                    setFormError(() => {
-                        var newError = { ...InitErrorLogin, userName: true };
-                        return newError;
-                    });
-                    break;
-                case 'Wrong password':
-                    setFormError(() => {
-                        var newError = { ...InitErrorLogin, password: true };
-                        return newError;
-                    });
-                    break;
-
-                case 'Email is auth account':
-                    setFormError(() => {
-                        var newError = { ...InitErrorLogin, authAccount: true };
-                        return newError;
-                    });
-                    break;
-                default:
-                    break;
-            }
-        }
-    }, [isError, error]);
-
     const handleChangeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         setFormError(InitErrorLogin);
-        Login(formData);
+        await Login(formData)
+            .unwrap()
+            .then((result) => {
+                setLoading(true);
+                dispatch(logIn(result));
+                router.push('/home');
+            })
+            .catch((error: FetchBaseQueryError) => {
+                const { message }: any = error?.data;
+                switch (message) {
+                    case 'Account not exist':
+                        setFormError(() => {
+                            var newError = { ...InitErrorLogin, userName: true };
+                            return newError;
+                        });
+                        break;
+                    case 'Wrong password':
+                        setFormError(() => {
+                            var newError = { ...InitErrorLogin, password: true };
+                            return newError;
+                        });
+                        break;
+
+                    case 'Email is auth account':
+                        setFormError(() => {
+                            var newError = { ...InitErrorLogin, authAccount: true };
+                            return newError;
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            });
     };
 
     return (

@@ -1,17 +1,29 @@
-import GameType from './gameType';
-import UserType from './userType';
-import QuizType from './quizType';
-import PlayerResultType from './playerResultType';
+import GameType, { InitGame } from './gameType';
+import UserType, { InitUser } from './userType';
+import QuizType, { InitQuiz } from './quizType';
+import PlayerResultType, { InitPlayerResult } from './playerResultType';
 
-type AnswerLeaderBoardResultType = {
+export type AnswerLeaderBoardResultType = {
     player: UserType;
-    playerPoints: number;
+    pointAnswerQuestion: number;
+    playerCurrentScore: number;
 };
 
-type CurrentLeaderBoard = {
+const InitAnswerLeaderBoard = {
+    player: InitUser,
+    pointAnswerQuestion: 0,
+    playerCurrentScore: 0
+} as AnswerLeaderBoardResultType;
+
+export type CurrentLeaderBoardType = {
     questionIndex: number;
     leaderBoardList: AnswerLeaderBoardResultType[];
 };
+
+const InitCurrentLeaderBoard = {
+    questionIndex: 0,
+    leaderBoardList: [InitAnswerLeaderBoard]
+} as CurrentLeaderBoardType;
 
 type LeaderBoardType = {
     _id: string;
@@ -19,7 +31,16 @@ type LeaderBoardType = {
     quiz: QuizType;
     pin: string;
     playerResultList: PlayerResultType[];
-    currentLeaderBoard: CurrentLeaderBoard[];
-} | null;
+    currentLeaderBoard: CurrentLeaderBoardType[];
+};
+
+export const InitLeaderBoard = {
+    _id: '',
+    game: InitGame,
+    quiz: InitQuiz,
+    pin: '',
+    playerResultList: [InitPlayerResult],
+    currentLeaderBoard: [InitCurrentLeaderBoard]
+} as LeaderBoardType;
 
 export default LeaderBoardType;

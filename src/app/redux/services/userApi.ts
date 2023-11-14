@@ -26,7 +26,7 @@ export const apiUser = createApi({
             })
         }),
 
-        getUsers: builder.query<UserType[], { accessToken: string }>({
+        getUsers: builder.query<UserType[], void>({
             query: () => ({
                 url: 'api/user',
                 method: 'GET'
@@ -52,14 +52,14 @@ export const apiUser = createApi({
             })
         }),
 
-        followUser: builder.mutation<UserType, any>({
+        followUser: builder.mutation<UserType, { myId: string; friendId: string }>({
             query: ({ myId, friendId }) => ({
                 url: `api/user/${myId}/follow/${friendId}`,
                 method: 'PUT'
             })
         }),
 
-        unFollowUser: builder.mutation<UserType, any>({
+        unFollowUser: builder.mutation<UserType, { myId: string; friendId: string }>({
             query: ({ myId, friendId }) => ({
                 url: `api/user/${myId}/unFollow/${friendId}`,
                 method: 'PUT'
