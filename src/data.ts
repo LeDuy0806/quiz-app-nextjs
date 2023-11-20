@@ -4,22 +4,27 @@ const Quiz = {
     _id: '647ce2dbaf09f3b01a814925',
     name: 'Cấu trúc dữ liệu và giải thuật',
     description: 'Môn học mở mang trí tuệ ha',
-    backgroundImage: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313469/ypif1asizikuluavrixb.png',
-    creatorName: 'ThuHien',
+    backgroundImage: '',
     pointsPerQuestion: 1,
     numberOfQuestions: 3,
     isPublic: true,
+    tags: ['Science', 'Math'],
     likesCount: [],
     comments: [],
+    dateCreated: '2023-06-09T12:24:23.802Z',
     questionList: [
         {
             _id: '647d4109ec2aeb4204caa5e2',
+            creatorId: '645669996e2607839bc293eb',
+            quizId: '647d555eec2aeb4204cab642',
+            tags: [''],
             questionType: 'True/False',
             optionQuestion: 'Single',
             isPublic: true,
             pointType: 'Standard',
             answerTime: 5,
-            backgroundImage: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313167/o0utbhprtgtgo9xyxspy.jpg',
+            backgroundImage: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686314376/k60awx2gstidqsrzktvh.jpg',
+            question: 'Có nên học môn cấu trúc dữ liệu và giải thuật không ?',
             answerList: [
                 {
                     name: 'a',
@@ -34,22 +39,26 @@ const Quiz = {
                     _id: '647d4157ec2aeb4204caa5ff'
                 }
             ],
-            questionIndex: 0,
+            questionIndex: 1,
             maxCorrectAnswer: 1,
             correctAnswerCount: 1,
             answerCorrect: ['A'],
-            field: 'Tech',
-            creator: InitUser,
-            name: 'Có nên học môn cấu trúc dữ liệu và giải thuật không ?'
+            createdAt: '2023-06-05T01:57:29.256Z',
+            updatedAt: '2023-06-09T12:49:54.395Z',
+            __v: 0
         },
         {
             _id: '647d4170ec2aeb4204caa62b',
+            creatorId: '645669996e2607839bc293eb',
+            quizId: '647d555eec2aeb4204cab642',
+            tags: [''],
             questionType: 'Quiz',
             optionQuestion: 'Single',
             isPublic: true,
             pointType: 'Standard',
             answerTime: 10,
-            backgroundImage: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313281/ovcyk7rwriuapkfviwbh.jpg',
+            backgroundImage: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686315027/oftibctcr8e1dtfiwuaz.jpg',
+            question: 'Giữa 2 thuật toán merge và Qick thì cái nào có đôi phức tạp cao',
             answerList: [
                 {
                     name: 'A',
@@ -76,22 +85,26 @@ const Quiz = {
                     _id: '647d41dfec2aeb4204caa656'
                 }
             ],
-            questionIndex: 1,
+            questionIndex: 2,
             maxCorrectAnswer: 1,
             correctAnswerCount: 1,
             answerCorrect: ['B'],
-            creator: InitUser,
-            field: 'Tech',
-            name: 'Giữa 2 thuật toán merge và Qick thì cái nào có đôi phức tạp cao'
+            createdAt: '2023-06-05T01:59:12.106Z',
+            updatedAt: '2023-06-09T12:50:21.351Z',
+            __v: 0
         },
         {
             _id: '647d4202ec2aeb4204caa668',
+            creatorId: '645669996e2607839bc293eb',
+            quizId: '647d555eec2aeb4204cab642',
+            tags: [''],
             questionType: 'Quiz',
             optionQuestion: 'Single',
             isPublic: true,
             pointType: 'Standard',
             answerTime: 5,
-            backgroundImage: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686313584/nvj3wnq7ojpot4vgfj0p.jpg',
+            backgroundImage: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686315078/l3lz2hvnis1zchqjhhv5.jpg',
+            question: 'Cây nhị phân tương đồng thuật toán nào',
             answerList: [
                 {
                     name: 'A',
@@ -118,20 +131,34 @@ const Quiz = {
                     _id: '647d427fec2aeb4204caa69d'
                 }
             ],
-            questionIndex: 2,
+            questionIndex: 3,
             maxCorrectAnswer: 1,
             correctAnswerCount: 1,
             answerCorrect: ['D'],
-            creator: InitUser,
-            field: 'Tech',
-            name: 'Cây nhị phân tương đồng thuật toán nào'
+            createdAt: '2023-06-05T02:01:38.513Z',
+            updatedAt: '2023-06-09T12:51:11.933Z',
+            __v: 0
         }
     ],
     createdAt: '2023-06-04T19:15:39.123Z',
-    updatedAt: '2023-07-12T07:15:38.337Z',
-    __v: 9,
-    field: 'Math',
-    creator: InitUser
+    updatedAt: '2023-11-20T09:28:41.297Z',
+    __v: 6,
+    creator: {
+        _id: '645663106e2607839bc293a0',
+        avatar: '',
+        userType: 'Teacher',
+        firstName: 'Thu',
+        lastName: 'Hien',
+        userName: 'ThuHien'
+    },
+    category: {
+        _id: '655468e0a290596784bc9764',
+        name: 'Other'
+    },
+    grade: {
+        _id: '655b1d3fcde7744d26347070',
+        name: 'All'
+    }
 };
 
 // const Quiz = {

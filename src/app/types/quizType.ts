@@ -1,28 +1,51 @@
 import QuestionType, { InitQuestion } from './questionType';
 import UserType, { InitUser } from './userType';
-import MessageType, { InitMessage } from './messageType';
+
+type CreatorType = {
+    _id: string;
+    userName: string;
+    userType: string;
+    avatar: string;
+    firstName: string;
+    lastName: string;
+};
 
 type QuizType = {
     _id: string;
     name: string;
-    creator: UserType;
+    creator: CreatorType;
     description: string;
     backgroundImage: string;
     isPublic: boolean;
-    field: string;
+    field?: string;
     pointsPerQuestion: number;
+    numberOfQuestions: number;
     importFrom?: UserType;
     likesCount: UserType[];
-    comments: MessageType[];
     questionList: QuestionType[];
     createdAt?: string;
     updatedAt?: string;
+    category?: {
+        _id: string;
+        name: string;
+    };
+    grade?: {
+        _id: string;
+        name: string;
+    };
 };
 
 export const InitQuiz = {
     _id: '',
     name: '',
-    creator: InitUser,
+    creator: {
+        _id: '',
+        userName: '',
+        userType: '',
+        avatar: '',
+        firstName: '',
+        lastName: ''
+    },
     description: '',
     backgroundImage: '',
     isPublic: true,
@@ -30,7 +53,6 @@ export const InitQuiz = {
     field: '',
     importFrom: InitUser,
     likesCount: [InitUser],
-    comments: [InitMessage],
     questionList: [InitQuestion],
     createdAt: '',
     updatedAt: ''

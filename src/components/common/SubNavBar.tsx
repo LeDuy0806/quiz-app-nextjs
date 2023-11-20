@@ -98,24 +98,24 @@ function SubNavBar({ toggleSidebar }: IProps) {
     }, [isSuccess, session, router, dispatch, socket]);
 
     return (
-        <nav className=' shadow-sm fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
+        <nav className=' shadow-sm fixed top-0 z-[97] w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
             <div className='px-3 py-3 lg:px-5 lg:pl-3'>
                 <div className='flex items-center justify-between'>
                     <div className='flex items-center justify-start'>
                         <button
                             type='button'
-                            className='inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
+                            className=' inline-flex items-center p-2 text-sm text-gray-500 rounded-lg mdl:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
                             onClick={toggleSidebar}
                         >
                             <span className='sr-only'>Open sidebar</span>
                             <BsFilterLeft className='w-6 h-6' />
                         </button>
-                        <Link href={'#'} className='flex items-center ml-2 md:mr-24'>
+                        <Link href={'#'} className='flex items-center ml-2 md:mr-24 max-mdl:hidden'>
                             <div className='mr-3 h-6 w-6 sm:h-9 sm:w-9 relative'>
                                 <Image src={'/assets/images/logoApp.png'} alt='EzQuiz Logo' fill />
                             </div>
 
-                            <span className=' text-gray-600 self-center whitespace-nowrap text-xl font-semibold dark:text-white'>Quizzes</span>
+                            <span className=' text-gray-600 font-poppins self-center whitespace-nowrap text-2xl font-semibold dark:text-white'>Quizzes</span>
                         </Link>
                     </div>
                     {/* button open user menu */}

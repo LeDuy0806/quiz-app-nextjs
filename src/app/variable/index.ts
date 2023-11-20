@@ -50,17 +50,12 @@ type QuestionDataType = {
     answerTime: number;
     backgroundImage: string;
     question: string;
-    answerList: [
-        { name: string; body: string; isCorrect: boolean },
-        { name: string; body: string; isCorrect: boolean },
-        { name: string; body: string; isCorrect: boolean },
-        { name: string; body: string; isCorrect: boolean }
-    ];
+    answerList: { name: string; body: string; isCorrect: boolean }[];
     questionIndex: number;
     maxCorrectAnswer: number;
     correctAnswerCount: number;
     answerCorrect: string[];
-    isSave: boolean;
+    isSave?: boolean;
 };
 
 type QuizDataType = {
@@ -70,9 +65,18 @@ type QuizDataType = {
     pointsPerQuestion: number;
     numberOfQuestions: number;
     isPublic: boolean;
-    field: string;
+    field?: string;
     likesCount: UserType[];
     questionList: QuestionDataType[];
+    creator?: { _id: string; userName: string; userType: string; avatar: string; firstName: string; lastName: string };
+    category?: {
+        _id: string;
+        name: string;
+    };
+    grade?: {
+        _id: string;
+        name: string;
+    };
 };
 
 type TypePlayerResult = {

@@ -45,7 +45,7 @@ const PlayerQuestion = (props: QuestionProps) => {
                     <div className='text-textBlack max-w-[80%] font-semibold'>
                         {/* This is a picture taken in outdoor.There are 2 people in this picture.On the
                         left,a woman with black hair is holding paper while talking on the phone */}
-                        {props.questionData?.name}
+                        {props.questionData?.question}
                     </div>
                 </motion.div>
                 <div className='w-3/4 flex justify-between items-center gap-[2em]'>
