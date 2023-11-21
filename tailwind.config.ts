@@ -7,6 +7,8 @@ const config: Config = {
     theme: {
         extend: {
             spacing: {
+                15: '3.75rem',
+                18: '4.5rem',
                 26: '6.5rem',
                 30: '7.5rem'
             },
@@ -441,6 +443,9 @@ const config: Config = {
                     '0%': { top: '100%' },
                     '50%, 100%': { top: '0' }
                 }
+            },
+            transitionProperty: {
+                'border-color': 'border-color'
             },
 
             animation: {
