@@ -1,16 +1,19 @@
 'use client';
 
+import ContentEditor from 'src/components/Creator/ContentEditor';
 import CreatorNavbar from 'src/components/Creator/CreatorNavbar';
 import CreatorSidebar from 'src/components/Creator/CreatorSidebar';
 
+import QuestionSettingSidebar from 'src/components/Creator/QuestionSettingSidebar';
+
 function CreatorPage() {
     return (
-        <div>
+        <main>
             <CreatorNavbar />
             <CreatorSidebar />
-            <div></div>
-            <div></div>
-        </div>
+            <ContentEditor />
+            <QuestionSettingSidebar />
+        </main>
     );
 }
 

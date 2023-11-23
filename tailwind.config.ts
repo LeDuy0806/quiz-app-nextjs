@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
+    important: true,
     content: ['./src/pages/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
     darkMode: 'class',
     theme: {
@@ -118,6 +119,10 @@ const config: Config = {
                 lightPrimary: '#F4F7FE',
                 blueSecondary: '#4318FF',
                 brandLinear: '#868CFF',
+                bgAnswerTriangle: '#F03440',
+                bgAnswerDiamond: '#2E64D1',
+                bgAnswerCircle: '#EFA920',
+                bgAnswerSquare: '#00D164',
                 // gray: {
                 //     50: '#F5F6FA',
                 //     100: '#EEF0F6',
