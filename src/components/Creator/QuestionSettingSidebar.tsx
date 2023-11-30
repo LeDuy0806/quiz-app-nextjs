@@ -1,10 +1,25 @@
 import { TbAdjustmentsQuestion, TbClock } from 'react-icons/tb';
 import { IoMedalOutline } from 'react-icons/io5';
 import { BsUiChecksGrid } from 'react-icons/bs';
+import { cn } from 'src/utils/tailwind.util';
+import { FaChevronLeft } from 'react-icons/fa';
 
-export default function QuestionSettingSidebar() {
+export default function QuestionSettingSidebar({ isOpen, setOpen }: { isOpen: boolean; setOpen: any }) {
     return (
-        <div className='fixed right-0 top-0 z-50 mt-15 w-60 p-4 text-left'>
+        <div
+            className={cn('fixed right-0 top-0 z-50 mt-15 h-full w-72 transform bg-white p-4 text-left duration-300 ', {
+                'translate-x-0': isOpen,
+                'translate-x-full': !isOpen
+            })}
+        >
+            <div
+                onClick={() => setOpen(!isOpen)}
+                className={cn('fixed -left-8 top-1/3 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded bg-white', {
+                    'max-lg:hidden': !isOpen
+                })}
+            >
+                <FaChevronLeft className={cn('text-2xl', { 'rotate-180 transform': isOpen })} />
+            </div>
             {/* Question Type */}
             <div className=''>
                 <div className='flex items-center'>
@@ -21,7 +36,6 @@ export default function QuestionSettingSidebar() {
                     </option>
                 </select>
             </div>
-
             <div className='mt-8 w-full outline outline-1 outline-gray-300'></div>
 
             {/* Time Limit */}
