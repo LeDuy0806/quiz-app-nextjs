@@ -8,7 +8,7 @@ import QuestionSettingSidebar from './QuestionSettingSidebar';
 import { cn } from 'src/utils/tailwind.util';
 
 export default function MainContent() {
-    const [isOpenQuestionSettingSidebar, setIsOpenQuestionSettingSidebar] = useState(false);
+    const [isOpenQuestionSettingSidebar, setIsOpenQuestionSettingSidebar] = useState(true);
 
     const handleOpenSettingQuiz = () => {
         setIsOpenQuestionSettingSidebar(!isOpenQuestionSettingSidebar);

@@ -27,9 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </head>
             <body>
                 <Provider store={store}>
-                    <SessionProvider>
-                        <div id='portal'>{children}</div>
-                    </SessionProvider>
+                    <SessionProvider>{children}</SessionProvider>
                 </Provider>
             </body>
         </html>
