@@ -10,7 +10,11 @@ import { RxExit } from 'react-icons/rx';
 // Constants
 import paths from 'src/constants/paths';
 
-function CreatorNavbar() {
+function CreatorNavbar({ setIsOpenModal }: { setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>> }) {
+    const handleOpenModal = () => {
+        setIsOpenModal(true);
+    };
+
     return (
         <div className='fixed left-0 top-0 z-[110] w-full bg-white px-2 py-2.5 shadow dark:bg-gray-900'>
             <div className='flex w-full items-center justify-between'>
@@ -25,7 +29,7 @@ function CreatorNavbar() {
                     </Link>
 
                     {/* Quiz Settings */}
-                    <button className='ml-4 flex items-center rounded-md md:p-1 md:outline md:outline-1 md:outline-gray-300'>
+                    <button onClick={handleOpenModal} className='ml-4 flex items-center rounded-md md:p-1 md:outline md:outline-1 md:outline-gray-300'>
                         <p className='ml-1 line-clamp-1 hidden w-2/3 overflow-hidden text-ellipsis font-bold text-gray-400 md:inline md:pr-6 lgl:pr-12'>
                             Enter your quiz title...
                         </p>
