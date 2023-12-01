@@ -1,7 +1,7 @@
 'use client';
 import SideBar from 'src/components/common/SideBar';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function PagesWithSidebarLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang='en'>
             <body>

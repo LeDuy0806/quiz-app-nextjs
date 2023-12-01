@@ -2,17 +2,17 @@ import Image from 'next/image';
 import { FaCheckSquare, FaRegCheckCircle, FaRegClock } from 'react-icons/fa';
 import QuestionType from 'src/app/types/questionType';
 
-function QuestionCard({ questionData }: { questionData: QuestionType }) {
+function QuestionCard({ questionData, onClick }: { questionData: QuestionType; onClick: () => void }) {
     return (
-        <div className='flex flex-col border border-solid border-slate-200 rounded-lg mb-4 cursor-pointer bg-white hover:bg-gray-100'>
-            <div className='p-4 rounded-t-lg shadow-sm'>
+        <div onClick={onClick} className='mb-4 flex cursor-pointer flex-col rounded-lg border border-solid border-slate-200 bg-white hover:bg-gray-100'>
+            <div className='rounded-t-lg p-4 shadow-sm'>
                 <div>
                     <div className='flex justify-between pb-4'>
                         {/* type of question */}
-                        <div className='flex flex-col xs:flex-row gap-2 xs:gap-0'>
-                            <span className='inline-flex items-center min-w-max'>
-                                <div className='items-center inline-flex text-xs font-semibold py-0.5 rounded px-1.5'>
-                                    <span className='mr-2 relative flex items-center justify-center text-cyan-700'>
+                        <div className='flex flex-col gap-2 xs:flex-row xs:gap-0'>
+                            <span className='inline-flex min-w-max items-center'>
+                                <div className='inline-flex items-center rounded px-1.5 py-0.5 text-xs font-semibold'>
+                                    <span className='relative mr-2 flex items-center justify-center text-cyan-700'>
                                         <FaCheckSquare className='flex items-center text-xs' />
                                     </span>
                                     <span>Multiple Choice</span>
@@ -20,46 +20,46 @@ function QuestionCard({ questionData }: { questionData: QuestionType }) {
                             </span>
                         </div>
                         {/* question time and points */}
-                        <span className='ml-auto self-start flex'>
-                            <div className='items-center inline-flex text-xs py-0.5 rounded px-1.5 ml-2 border bg-white border-gray-200 min-w-max'>
-                                <FaRegClock className='flex items-center text-xs mr-1' />
+                        <span className='ml-auto flex self-start'>
+                            <div className='ml-2 inline-flex min-w-max items-center rounded border border-gray-200 bg-white px-1.5 py-0.5 text-xs'>
+                                <FaRegClock className='mr-1 flex items-center text-xs' />
                                 <span> {questionData.answerTime + ' Seconds'}</span>
                             </div>
-                            <div className='items-center inline-flex text-xs py-0.5 rounded px-1.5 ml-2 border bg-white border-gray-200 min-w-max'>
-                                <FaRegCheckCircle className='flex items-center text-xs mr-1' />
+                            <div className='ml-2 inline-flex min-w-max items-center rounded border border-gray-200 bg-white px-1.5 py-0.5 text-xs'>
+                                <FaRegCheckCircle className='mr-1 flex items-center text-xs' />
                                 <span> {'10 Points'}</span>
                             </div>
                         </span>
                     </div>
-                    <div className='flex items-center mb-4'>
+                    <div className='mb-4 flex items-center'>
                         {/* question image */}
-                        <div className='flex items-center justify-center shrink-0 w-26 h-26 rounded overflow-hidden mr-4 bg-gray-200'>
-                            <div className='flex items-center w-full h-full cursor-zoom-in relative'>
+                        <div className='mr-4 flex h-26 w-26 shrink-0 items-center justify-center overflow-hidden rounded bg-gray-200'>
+                            <div className='relative flex h-full w-full cursor-zoom-in items-center'>
                                 <Image src={'/assets/images/default_quiz_background.png'} alt='Question Image' fill objectFit='contain' />
                             </div>
                         </div>
                         {/* question title */}
-                        <div className=' flex items-center overflow-hidden w-full text-slate-800'>
+                        <div className=' flex w-full items-center overflow-hidden text-slate-800'>
                             <p className='font-semibold'>{questionData.question}</p>
                         </div>
                     </div>
                 </div>
-                <div className='h-px mb-4 bg-gray-300'>
-                    <span className='absolute px-2 text-[10px] left-4 transform -translate-y-1/2 text-gray-500 bg-white'>List answers</span>
+                <div className='mb-4 h-px bg-gray-300'>
+                    <span className='absolute left-4 -translate-y-1/2 transform bg-white px-2 text-[10px] text-gray-500'>List answers</span>
                 </div>
                 {/* list answer */}
                 <div className='flex flex-wrap'>
                     {questionData.answerList?.map((answer, index) => {
                         return answer.isCorrect ? (
-                            <div key={index} className='flex items-start mb-2 mdl:w-1/2 w-full'>
-                                <span className='w-4 h-4 rounded-full my-1 mr-2 shrink-0 relative bg-bgAnswerCorrect'></span>
+                            <div key={index} className='mb-2 flex w-full items-start mdl:w-1/2'>
+                                <span className='relative my-1 mr-2 h-4 w-4 shrink-0 rounded-full bg-bgAnswerCorrect'></span>
                                 <span className=' text-gray-800'>
                                     <p>{answer.body}</p>
                                 </span>
                             </div>
                         ) : (
-                            <div key={index} className='flex items-start mb-2 mdl:w-1/2 w-full'>
-                                <span className='w-4 h-4 rounded-full my-1 mr-2 shrink-0 relative bg-bgAnswerIncorrect'></span>
+                            <div key={index} className='mb-2 flex w-full items-start mdl:w-1/2'>
+                                <span className='relative my-1 mr-2 h-4 w-4 shrink-0 rounded-full bg-bgAnswerIncorrect'></span>
                                 <span className=' text-gray-800'>
                                     <p>{answer.body}</p>
                                 </span>
