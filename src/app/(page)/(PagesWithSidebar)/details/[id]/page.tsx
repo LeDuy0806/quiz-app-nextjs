@@ -1,11 +1,14 @@
 'use client';
+import Modal from 'react-modal';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import QuestionType from 'src/app/types/questionType';
 import QuizType from 'src/app/types/quizType';
 import ListQuestions from 'src/components/QuizDetail/ListQuestions';
 import QuizInfo from 'src/components/QuizDetail/QuizInfo';
 import Suggestions from 'src/components/QuizDetail/Suggestions';
 import Quiz from 'src/data';
+import PreviewQuestionModal from 'src/components/QuizDetail/PreviewQuestionModal';
 
 type QuizParams = {
     id: string;
@@ -15,25 +18,54 @@ function QuizDetail() {
     const { id } = useParams() as QuizParams;
 
     const [quizData, setQuizData] = useState<QuizType | null>(null);
+    const [isOpenPreviewModal, setIsOpenPreviewModal] = useState<boolean>(false);
+    const [currentQuestionModal, setCurrentQuestionModal] = useState<QuestionType | undefined>();
+    const [currentIndexQuestionModal, setCurrentIndexQuestionModal] = useState<number>(0);
+
+    const handleOpenModal = (questionIndex: number) => {
+        setIsOpenPreviewModal(true);
+        setCurrentIndexQuestionModal(questionIndex);
+        setCurrentQuestionModal(quizData?.questionList[questionIndex]);
+    };
+
+    const handleCloseModal = () => {
+        setIsOpenPreviewModal(false);
+    };
 
     useEffect(() => {
         setQuizData(Quiz);
     }, []);
 
     return (
-        <div className='flex flex-grow overflow-auto bg-gray-100'>
-            <section className='flex flex-col w-full'>
-                <div id='quiz-detail-page-container' className='relative flex justify-center w-full p-2 max-xl:flex-col max-xl:items-center'>
-                    <div className='lgl:min-w-[40rem] w-[calc(100%-32px)] lgl:max-w-[800px] xl:w-[calc(100%-384px)]'>
-                        <QuizInfo quizData={quizData} />
-                        <ListQuestions listQuestionsData={quizData?.questionList} numberOfQuestions={quizData?.numberOfQuestions} />
-                    </div>
-                    <div className='max-xl:w-full flex flex-col'>
-                        <Suggestions />
+        <>
+            <div id='portal'></div>
+            <section>
+                <div className='flex flex-grow overflow-auto bg-gray-100'>
+                    <div className='flex w-full flex-col'>
+                        <div id='quiz-detail-page-container' className='relative flex w-full justify-center p-2 max-xl:flex-col max-xl:items-center'>
+                            <div className='w-[calc(100%-32px)] lgl:min-w-[40rem] lgl:max-w-[800px] xl:w-[calc(100%-384px)]'>
+                                <QuizInfo quizData={quizData} />
+                                <ListQuestions
+                                    openModal={handleOpenModal}
+                                    listQuestionsData={quizData?.questionList}
+                                    numberOfQuestions={quizData?.numberOfQuestions}
+                                />
+                            </div>
+                            <div className='flex flex-col max-xl:w-full'>
+                                <Suggestions />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
-        </div>
+
+            <PreviewQuestionModal
+                isOpenModal={isOpenPreviewModal}
+                numberOfQuestions={quizData?.numberOfQuestions || 0}
+                QuestionData={currentQuestionModal}
+                handleCloseModal={handleCloseModal}
+            />
+        </>
     );
 }
 
