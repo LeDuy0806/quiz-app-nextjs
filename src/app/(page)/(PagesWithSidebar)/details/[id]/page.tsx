@@ -28,6 +28,14 @@ function QuizDetail() {
         setCurrentQuestionModal(quizData?.questionList[questionIndex]);
     };
 
+    useEffect(() => {
+        if (quizData?.numberOfQuestions === undefined) return;
+        if (currentIndexQuestionModal < 0) setCurrentIndexQuestionModal(0);
+        if (currentIndexQuestionModal >= quizData?.numberOfQuestions || currentIndexQuestionModal === undefined)
+            setCurrentIndexQuestionModal(quizData?.numberOfQuestions - 1);
+        setCurrentQuestionModal(quizData?.questionList[currentIndexQuestionModal]);
+    }, [currentIndexQuestionModal]);
+
     const handleCloseModal = () => {
         setIsOpenPreviewModal(false);
     };
@@ -38,9 +46,8 @@ function QuizDetail() {
 
     return (
         <>
-            <div id='portal'></div>
             <section>
-                <div className='flex flex-grow overflow-auto bg-gray-100'>
+                <div className='z-40 flex h-[calc(100vh-65px)] flex-grow overflow-auto bg-gray-100'>
                     <div className='flex w-full flex-col'>
                         <div id='quiz-detail-page-container' className='relative flex w-full justify-center p-2 max-xl:flex-col max-xl:items-center'>
                             <div className='w-[calc(100%-32px)] lgl:min-w-[40rem] lgl:max-w-[800px] xl:w-[calc(100%-384px)]'>
@@ -64,6 +71,7 @@ function QuizDetail() {
                 numberOfQuestions={quizData?.numberOfQuestions || 0}
                 QuestionData={currentQuestionModal}
                 handleCloseModal={handleCloseModal}
+                setCurrentIndexQuestionModal={setCurrentIndexQuestionModal}
             />
         </>
     );
