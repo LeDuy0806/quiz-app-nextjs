@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
-import { persistReducer } from 'redux-persist';
+// import { persistReducer } from 'redux-persist';
 
 //api
 import { apiAuth } from './services/authApi';
@@ -15,6 +15,7 @@ import { apiCommunity } from './services/communityApi';
 import authReducer from './slices/authSlice';
 import searchReducer from './slices/searchSlice';
 import quizReducer from './slices/quizSlice';
+import quizCreatorReducer from './slices/quizCreatorSlice';
 import userReducer from './slices/usersSlice';
 import socketReducer from './slices/socketSlice';
 import gameReducer from './slices/gamesSlice';
@@ -34,6 +35,7 @@ const store = configureStore({
 
         auth: authReducer,
         quiz: quizReducer,
+        quizCreator: quizCreatorReducer,
         user: userReducer,
         socket: socketReducer,
         game: gameReducer,
@@ -47,12 +49,7 @@ const store = configureStore({
         getDefaultMiddleware({
             serializableCheck: false,
             immutableCheck: {
-                ignoredPaths: [
-                    'ignoredPath',
-                    'ignoredNested.one',
-                    'ignoredNested.two',
-                    'items.data'
-                ]
+                ignoredPaths: ['ignoredPath', 'ignoredNested.one', 'ignoredNested.two', 'items.data']
             }
         }).concat([
             apiAuth.middleware,

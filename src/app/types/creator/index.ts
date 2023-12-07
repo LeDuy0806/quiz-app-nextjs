@@ -108,5 +108,67 @@ type QuizType = {
     };
 };
 
+const initialQuestion: QuestionType = {
+    _id: '',
+    question: '',
+    creator: '',
+    backgroundImage: '',
+    questionIndex: 1,
+    questionType: QuestionTypeEnum.QUIZ,
+    optionQuestion: OptionQuestionEnum.SINGLE,
+    pointType: PointTypeEnum.STANDARD,
+    isPublic: true,
+    answerTime: AnswerTimeEnum.TEN_SECONDS,
+    maxCorrectAnswer: 0,
+    answerList: [
+        {
+            name: AnswerNameEnum.A,
+            body: '',
+            isCorrect: false
+        },
+        {
+            name: AnswerNameEnum.B,
+            body: '',
+            isCorrect: false
+        },
+        {
+            name: AnswerNameEnum.C,
+            body: '',
+            isCorrect: false
+        },
+        {
+            name: AnswerNameEnum.D,
+            body: '',
+            isCorrect: false
+        }
+    ],
+    correctAnswerCount: 0,
+    answerCorrect: []
+};
+
+const initialQuiz: QuizType = {
+    _id: '',
+    name: '',
+    creator: '',
+    description: '',
+    backgroundImage: '',
+    isPublic: true,
+    pointsPerQuestion: 1,
+    field: '',
+    importFrom: '',
+    likesCount: [],
+    questionList: [initialQuestion],
+    numberOfQuestions: 1,
+    category: {
+        _id: '',
+        name: ''
+    },
+    grade: {
+        _id: '',
+        name: ''
+    }
+};
+
+export { initialQuestion, initialQuiz };
 export { OptionQuestionEnum, QuestionTypeEnum, AnswerTimeEnum, PointTypeEnum, AnswerNameEnum, CategoryEnum };
 export type { AnswerType, QuestionType, QuizType };

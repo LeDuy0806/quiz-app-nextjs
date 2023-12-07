@@ -7,70 +7,23 @@ import CreatorNavbar from 'src/components/Creator/CreatorNavbar';
 import CreatorSidebar from 'src/components/Creator/CreatorSidebar';
 import QuizSettingModal from 'src/components/Creator/QuizSettingModal';
 
-import { QuestionType, QuizType, AnswerNameEnum, OptionQuestionEnum, PointTypeEnum, QuestionTypeEnum, AnswerTimeEnum } from 'src/app/types/creator';
-
-export const initialQuestion: QuestionType = {
-    _id: '',
-    question: '',
-    creator: '',
-    backgroundImage: '',
-    questionIndex: 1,
-    questionType: QuestionTypeEnum.QUIZ,
-    optionQuestion: OptionQuestionEnum.SINGLE,
-    pointType: PointTypeEnum.STANDARD,
-    isPublic: true,
-    answerTime: AnswerTimeEnum.TEN_SECONDS,
-    maxCorrectAnswer: 0,
-    answerList: [
-        {
-            name: AnswerNameEnum.A,
-            body: '',
-            isCorrect: false
-        },
-        {
-            name: AnswerNameEnum.B,
-            body: '',
-            isCorrect: false
-        },
-        {
-            name: AnswerNameEnum.C,
-            body: '',
-            isCorrect: false
-        },
-        {
-            name: AnswerNameEnum.D,
-            body: '',
-            isCorrect: false
-        }
-    ],
-    correctAnswerCount: 0,
-    answerCorrect: []
-};
-
-const initialQuiz: QuizType = {
-    _id: '',
-    name: '',
-    creator: '',
-    description: '',
-    backgroundImage: '',
-    isPublic: true,
-    pointsPerQuestion: 1,
-    field: '',
-    importFrom: '',
-    likesCount: [],
-    questionList: [initialQuestion],
-    numberOfQuestions: 1,
-    category: {
-        _id: '',
-        name: ''
-    },
-    grade: {
-        _id: '',
-        name: ''
-    }
-};
+import {
+    QuestionType,
+    QuizType,
+    AnswerNameEnum,
+    OptionQuestionEnum,
+    PointTypeEnum,
+    QuestionTypeEnum,
+    AnswerTimeEnum,
+    initialQuiz
+} from 'src/app/types/creator';
+import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
+import { RootState } from 'src/app/redux/store';
 
 function CreatorPage() {
+    const { quiz: quizState, activeQuestion: activeQuestionState } = useAppSelector((state: RootState) => state.quizCreator);
+    const dispatch = useAppDispatch();
+
     // useState
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [quiz, setQuiz] = useState<QuizType>(initialQuiz);

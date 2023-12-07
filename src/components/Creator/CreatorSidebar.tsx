@@ -1,9 +1,8 @@
 'use client';
 
-import { QuestionType, QuizType } from 'src/app/types/creator';
+import { QuestionType, QuizType, initialQuestion } from 'src/app/types/creator';
 import QuestionItem from './QuestionItem';
 import { FaPlus } from 'react-icons/fa';
-import { initialQuestion } from 'src/app/(page)/(main)/creator/page';
 
 interface IProps {
     questionList: QuestionType[];
