@@ -1,55 +1,59 @@
 import { InputBase } from '@mui/material';
-import { useState } from 'react';
 import { BsDiamondFill, BsTriangleFill, BsSquareFill, BsCircleFill } from 'react-icons/bs';
 import { FaCheck } from 'react-icons/fa';
+import { AnswerNameEnum, AnswerType } from 'src/app/types/creator';
 import { cn } from 'src/utils/tailwind.util';
 
-function AnswerItem({ type }: { type: string }) {
-    const [value, setValue] = useState('');
-    const [isCorrect, setIsCorrect] = useState(false);
+interface IProps {
+    isTrueFalse: boolean;
+    answer: AnswerType;
+    handleChangeAnswer?: (name: AnswerNameEnum, body: string) => void;
+    handleChangeCorrectAnswer: (name: AnswerNameEnum) => void;
+}
 
+function AnswerItem({ isTrueFalse = false, answer, handleChangeAnswer = () => {}, handleChangeCorrectAnswer }: IProps) {
     return (
         <div
-            className={cn('flex w-full items-center justify-between rounded p-2 transition-colors duration-200 max-lg:mb-4', [`${getBgColor(type)}`], {
-                'bg-white': !value
+            className={cn('flex w-full items-center justify-between rounded p-2 transition-colors duration-200 max-lg:mb-4', [`${getBgColor(answer.name)}`], {
+                'bg-white': !answer.body
             })}
         >
             <div className='flex w-[calc(100%-3.5rem)]'>
-                <Icon type={type} className='rounded px-2 py-6 lg:py-12'></Icon>
+                <Icon answer={answer} className='rounded px-2 py-6 lg:py-12' />
                 <InputBase
                     className={cn('mx-2 w-full text-lg text-white scrollbar-none sml:mx-3', {
-                        'text-black': !value
+                        'text-black': !answer.body
                     })}
                     minRows={1}
                     maxRows={2}
                     multiline
                     placeholder='Add answer'
-                    value={value}
+                    value={answer.body}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') e.preventDefault();
                     }}
-                    onChange={(e) => setValue(e.target.value)}
+                    onChange={(e) => handleChangeAnswer(answer.name, e.target.value)}
                     inputProps={{
                         maxLength: 120,
                         className: 'scrollbar-none'
                     }}
+                    readOnly={isTrueFalse}
                 />
             </div>
-            {value && (
+
+            {answer.body && (
                 <div
-                    onClick={() => {
-                        setIsCorrect(!isCorrect);
-                    }}
+                    onClick={() => handleChangeCorrectAnswer(answer.name)}
                     className={cn(
-                        'group flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border-4 border-white bg-inherit hover:bg-green-600 md:mr-2',
+                        'group flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border-4 border-white bg-inherit hover:bg-green-400 md:mr-2',
                         {
-                            'bg-green-600': isCorrect
+                            'bg-green-600': answer.isCorrect
                         }
                     )}
                 >
                     <FaCheck
                         className={cn('hidden text-2xl text-white group-hover:inline-block', {
-                            'inline-block': isCorrect
+                            'inline-block': answer.isCorrect
                         })}
                     />
                 </div>
@@ -58,27 +62,27 @@ function AnswerItem({ type }: { type: string }) {
     );
 }
 
-const Icon = ({ type, className }: { type: string; className: string }) => {
-    switch (type) {
-        case 'first':
+const Icon = ({ answer, className }: { answer: AnswerType; className: string }) => {
+    switch (answer.name) {
+        case AnswerNameEnum.A:
             return (
                 <div className={cn('bg-bgAnswerTriangle', className)}>
                     <BsTriangleFill className='inline-block text-2xl text-white' />
                 </div>
             );
-        case 'second':
+        case AnswerNameEnum.B:
             return (
                 <div className={cn('bg-bgAnswerDiamond', className)}>
                     <BsDiamondFill className='inline-block text-2xl text-white' />
                 </div>
             );
-        case 'third':
+        case AnswerNameEnum.C:
             return (
                 <div className={cn('bg-bgAnswerSquare', className)}>
                     <BsSquareFill className='inline-block text-2xl text-white' />
                 </div>
             );
-        case 'fourth':
+        case AnswerNameEnum.D:
             return (
                 <div className={cn('bg-bgAnswerCircle', className)}>
                     <BsCircleFill className='inline-block text-2xl text-white' />
@@ -87,15 +91,15 @@ const Icon = ({ type, className }: { type: string; className: string }) => {
     }
 };
 
-const getBgColor = (type: string) => {
-    switch (type) {
-        case 'first':
+const getBgColor = (answer: AnswerNameEnum) => {
+    switch (answer) {
+        case AnswerNameEnum.A:
             return 'bg-bgAnswerTriangle';
-        case 'second':
+        case AnswerNameEnum.B:
             return 'bg-bgAnswerDiamond';
-        case 'third':
+        case AnswerNameEnum.C:
             return 'bg-bgAnswerSquare';
-        case 'fourth':
+        case AnswerNameEnum.D:
             return 'bg-bgAnswerCircle';
     }
 };

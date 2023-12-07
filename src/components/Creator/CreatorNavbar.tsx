@@ -10,7 +10,13 @@ import { RxExit } from 'react-icons/rx';
 // Constants
 import paths from 'src/constants/paths';
 
-function CreatorNavbar({ setIsOpenModal }: { setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>> }) {
+interface IProps {
+    handleQuizSubmit: () => void;
+    setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+    title: string;
+}
+
+function CreatorNavbar({ setIsOpenModal, handleQuizSubmit, title }: IProps) {
     const handleOpenModal = () => {
         setIsOpenModal(true);
     };
@@ -29,9 +35,12 @@ function CreatorNavbar({ setIsOpenModal }: { setIsOpenModal: React.Dispatch<Reac
                     </Link>
 
                     {/* Quiz Settings */}
-                    <button onClick={handleOpenModal} className='ml-4 flex items-center rounded-md md:p-1 md:outline md:outline-1 md:outline-gray-300'>
-                        <p className='ml-1 line-clamp-1 hidden w-2/3 overflow-hidden text-ellipsis font-bold text-gray-400 md:inline md:pr-6 lgl:pr-12'>
-                            Enter your quiz title...
+                    <button
+                        onClick={handleOpenModal}
+                        className='ml-4 flex min-w-[360px] items-center justify-between rounded-md md:p-1 md:outline md:outline-1 md:outline-gray-300'
+                    >
+                        <p className='ml-1 line-clamp-1 hidden w-2/3 overflow-hidden text-ellipsis text-left font-bold text-gray-400 md:inline md:pr-6 lgl:pr-12'>
+                            {title || 'Enter your quiz title...'}
                         </p>
                         <div className='flex items-center justify-center rounded bg-gray-300 px-1 py-1 max-md:h-8 max-md:w-8 md:justify-between md:px-2'>
                             <IoSettingsOutline className='h-5 w-5 md:mr-1' />
@@ -53,15 +62,12 @@ function CreatorNavbar({ setIsOpenModal }: { setIsOpenModal: React.Dispatch<Reac
                     </div>
 
                     {/* Create Button */}
-                    <div className='flex items-center'>
-                        <Link
-                            href={paths.home}
-                            className='flex items-center justify-center rounded-lg bg-purple-700 px-2.5 py-2.5 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 md:px-5 '
-                        >
+                    <button onClick={handleQuizSubmit} className='flex items-center'>
+                        <div className='flex items-center justify-center rounded-lg bg-purple-700 px-2.5 py-2.5 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 md:px-5 '>
                             <BiSave className='h-5 w-5' />
                             <span className='ml-1 font-bold max-md:hidden'>Save</span>
-                        </Link>
-                    </div>
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>

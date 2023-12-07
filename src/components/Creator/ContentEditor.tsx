@@ -1,17 +1,142 @@
+import Image from 'next/image';
 import { useState } from 'react';
 import { InputBase } from '@mui/material';
-import Image from 'next/image';
 import { HiDotsVertical, HiPlus } from 'react-icons/hi';
-import AnswerItem from 'src/components/Creator/AnswerItem';
-import { newCreatorBg } from '../../../public/assets/images/creator';
-import QuestionSettingSidebar from './QuestionSettingSidebar';
-import { cn } from 'src/utils/tailwind.util';
 
-export default function MainContent() {
+import { newCreatorBg } from '../../../public/assets/images/creator';
+import { cn } from 'src/utils/tailwind.util';
+import AnswerItem from 'src/components/Creator/AnswerItem';
+import QuestionSettingSidebar from './QuestionSettingSidebar';
+import { AnswerNameEnum, AnswerTimeEnum, OptionQuestionEnum, PointTypeEnum, QuestionType, QuestionTypeEnum } from 'src/app/types/creator';
+
+interface IProps {
+    question: QuestionType;
+    setQuestion: React.Dispatch<React.SetStateAction<QuestionType>>;
+    handleDeleteCurrentQuestion: () => void;
+}
+
+export default function ContentEditor({ question, setQuestion, handleDeleteCurrentQuestion }: IProps) {
     const [isOpenQuestionSettingSidebar, setIsOpenQuestionSettingSidebar] = useState(true);
+
+    const { questionType, pointType, answerTime, optionQuestion } = question;
+
+    // Handle change
+    const handleChangeQuestionType = (questionType: QuestionTypeEnum) => {
+        setQuestion({ ...question, questionType });
+
+        // Reset correct answer when change question type
+        setQuestion((prev) => ({
+            ...prev,
+            answerList: [
+                ...prev.answerList.map((answer) => {
+                    return { ...answer, body: '', isCorrect: false };
+                })
+            ]
+        }));
+
+        // Reset option question when change question type
+        setQuestion((prev) => ({
+            ...prev,
+            optionQuestion: OptionQuestionEnum.SINGLE
+        }));
+    };
+
+    const handleChangePointType = (pointType: PointTypeEnum) => {
+        setQuestion({ ...question, pointType });
+    };
+
+    const handleChangeAnswerTime = (answerTime: AnswerTimeEnum) => {
+        setQuestion({ ...question, answerTime });
+    };
+
+    const handleChangeOptionQuestion = (optionQuestion: OptionQuestionEnum) => {
+        // Check if question is true/false
+        if (question.questionType === QuestionTypeEnum.TRUE_FALSE) {
+            return alert('True/False question cannot be multiple choice');
+        }
+
+        // Set option question
+        setQuestion({ ...question, optionQuestion });
+
+        // Reset correct answer when change option question
+        if (optionQuestion === OptionQuestionEnum.SINGLE) {
+            setQuestion((prev) => ({
+                ...prev,
+                answerList: [
+                    ...prev.answerList.map((answer) => {
+                        return { ...answer, isCorrect: false };
+                    })
+                ]
+            }));
+        }
+    };
 
     const handleOpenSettingQuiz = () => {
         setIsOpenQuestionSettingSidebar(!isOpenQuestionSettingSidebar);
+    };
+
+    const handleChangeQuestion = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        setQuestion({ ...question, question: e.target.value });
+    };
+
+    const handleChangeAnswer = (name: AnswerNameEnum, body: string) => {
+        setQuestion((prev) => ({
+            ...prev,
+            answerList: [
+                ...prev.answerList.map((answer) => {
+                    if (answer.name === name) {
+                        return { ...answer, body };
+                    }
+                    return answer;
+                })
+            ]
+        }));
+    };
+
+    const handleChangeCorrectAnswer = (name: AnswerNameEnum) => {
+        // Check if have correct answer
+        let isHaveCorrectAnswer = question.answerList.some((answer) => answer.isCorrect);
+        if (question.questionType === QuestionTypeEnum.TRUE_FALSE) {
+            if (isHaveCorrectAnswer) {
+                setQuestion((prev) => ({
+                    ...prev,
+                    answerList: [
+                        ...prev.answerList.map((answer) => {
+                            return { ...answer, isCorrect: !answer.isCorrect };
+                        })
+                    ]
+                }));
+                return;
+            }
+        }
+
+        // Set option question to multiple if have correct answer
+        if (isHaveCorrectAnswer) {
+            setQuestion({ ...question, optionQuestion: OptionQuestionEnum.MULTIPLE });
+        }
+
+        // Set correct answer
+        setQuestion((prev) => ({
+            ...prev,
+            answerList: [
+                ...prev.answerList.map((answer) => {
+                    if (answer.name === name) {
+                        return { ...answer, isCorrect: !answer.isCorrect };
+                    }
+                    return answer;
+                })
+            ]
+        }));
+
+        // let numberOfCorrectAnswer = question.answerList.filter((answer) => answer.isCorrect).length;
+
+        // if (numberOfCorrectAnswer === 1 && question.optionQuestion === OptionQuestionEnum.MULTIPLE) {
+        //     setQuestion((prev) => ({
+        //         ...prev,
+        //         optionQuestion: OptionQuestionEnum.SINGLE
+        //     }));
+        // }
+        // End handle change
     };
 
     return (
@@ -42,6 +167,8 @@ export default function MainContent() {
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') e.preventDefault();
                             }}
+                            value={question.question}
+                            onChange={handleChangeQuestion}
                         />
 
                         {/* Setting Quiz mobile */}
@@ -64,13 +191,57 @@ export default function MainContent() {
 
                     {/* Answer List */}
                     <div className='mt-8 flex flex-col items-center justify-center gap-2 lg:grid lg:grid-cols-2'>
-                        {['first', 'second', 'third', 'fourth'].map((type, index) => (
-                            <AnswerItem key={index} type={type} />
-                        ))}
+                        {questionType === QuestionTypeEnum.TRUE_FALSE ? (
+                            <>
+                                <AnswerItem
+                                    isTrueFalse={true}
+                                    answer={
+                                        (question.answerList[0] = {
+                                            ...question.answerList[0],
+                                            body: 'True'
+                                        })
+                                    }
+                                    handleChangeCorrectAnswer={handleChangeCorrectAnswer}
+                                />
+                                <AnswerItem
+                                    isTrueFalse={true}
+                                    answer={
+                                        (question.answerList[1] = {
+                                            ...question.answerList[1],
+                                            body: 'False'
+                                        })
+                                    }
+                                    handleChangeCorrectAnswer={handleChangeCorrectAnswer}
+                                />
+                            </>
+                        ) : (
+                            question.answerList.map((answer, index) => (
+                                <AnswerItem
+                                    isTrueFalse={false}
+                                    key={index}
+                                    answer={answer}
+                                    handleChangeAnswer={handleChangeAnswer}
+                                    handleChangeCorrectAnswer={handleChangeCorrectAnswer}
+                                />
+                            ))
+                        )}
                     </div>
                 </div>
             </div>
-            <QuestionSettingSidebar isOpen={isOpenQuestionSettingSidebar} setOpen={setIsOpenQuestionSettingSidebar} />
+
+            <QuestionSettingSidebar
+                isOpen={isOpenQuestionSettingSidebar}
+                questionType={questionType}
+                answerTime={answerTime}
+                pointType={pointType}
+                optionQuestion={optionQuestion}
+                setOpen={setIsOpenQuestionSettingSidebar}
+                handleChangeQuestionType={handleChangeQuestionType}
+                handleChangePointType={handleChangePointType}
+                handleChangeAnswerTime={handleChangeAnswerTime}
+                handleChangeOptionQuestion={handleChangeOptionQuestion}
+                handleDeleteCurrentQuestion={handleDeleteCurrentQuestion}
+            />
         </>
     );
 }
