@@ -62,6 +62,26 @@ enum CategoryEnum {
     OTHER = 'Other'
 }
 
+enum GradeEnum {
+    KINDERGARTEN = 'Kindergarten',
+    ELEMENTARY = 'Elementary (1st - 5th)',
+    JUNIOR_HIGH_SCHOOL = 'Junior high school (6th - 9th)',
+    HIGH_SCHOOL = 'High school (10th - 12th)',
+    UNIVERSITY = 'University',
+    PROFESSIONAL_DEVELOPMENT = 'Professional development',
+    ALL = 'All'
+}
+
+type ObjectCategoryType = {
+    _id: string;
+    name: CategoryEnum | null;
+};
+
+type ObjectGradeType = {
+    _id: string;
+    name: GradeEnum | null;
+};
+
 type AnswerType = {
     name: AnswerNameEnum;
     body: string;
@@ -80,8 +100,8 @@ type QuestionType = {
     isPublic: boolean;
     answerTime: AnswerTimeEnum;
     maxCorrectAnswer: number;
-    answerList: AnswerType[];
     correctAnswerCount: number;
+    answerList: AnswerType[];
     answerCorrect: AnswerNameEnum[];
 };
 
@@ -98,14 +118,8 @@ type QuizType = {
     likesCount: string[];
     questionList: QuestionType[];
     numberOfQuestions: number;
-    category: {
-        _id: string;
-        name: string;
-    };
-    grade: {
-        _id: string;
-        name: string;
-    };
+    category: ObjectCategoryType;
+    grade: ObjectGradeType;
 };
 
 const initialQuestion: QuestionType = {
@@ -161,14 +175,14 @@ const initialQuiz: QuizType = {
     numberOfQuestions: 1,
     category: {
         _id: '',
-        name: ''
+        name: null
     },
     grade: {
         _id: '',
-        name: ''
+        name: null
     }
 };
 
 export { initialQuestion, initialQuiz };
-export { OptionQuestionEnum, QuestionTypeEnum, AnswerTimeEnum, PointTypeEnum, AnswerNameEnum, CategoryEnum };
-export type { AnswerType, QuestionType, QuizType };
+export { OptionQuestionEnum, QuestionTypeEnum, AnswerTimeEnum, PointTypeEnum, AnswerNameEnum, CategoryEnum, GradeEnum };
+export type { AnswerType, QuestionType, QuizType, ObjectCategoryType, ObjectGradeType };

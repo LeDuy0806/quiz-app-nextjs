@@ -1,17 +1,19 @@
 import { InputBase } from '@mui/material';
 import { BsDiamondFill, BsTriangleFill, BsSquareFill, BsCircleFill } from 'react-icons/bs';
 import { FaCheck } from 'react-icons/fa';
+import { useAppDispatch } from 'src/app/redux/hooks';
+import { setCorrectAnswer, setQuestionAnswer } from 'src/app/redux/slices/quizCreatorSlice';
 import { AnswerNameEnum, AnswerType } from 'src/app/types/creator';
 import { cn } from 'src/utils/tailwind.util';
 
 interface IProps {
     isTrueFalse: boolean;
     answer: AnswerType;
-    handleChangeAnswer?: (name: AnswerNameEnum, body: string) => void;
-    handleChangeCorrectAnswer: (name: AnswerNameEnum) => void;
 }
 
-function AnswerItem({ isTrueFalse = false, answer, handleChangeAnswer = () => {}, handleChangeCorrectAnswer }: IProps) {
+function AnswerItem({ isTrueFalse = false, answer }: IProps) {
+    const dispatch = useAppDispatch();
+
     return (
         <div
             className={cn('flex w-full items-center justify-between rounded p-2 transition-colors duration-200 max-lg:mb-4', [`${getBgColor(answer.name)}`], {
@@ -32,7 +34,14 @@ function AnswerItem({ isTrueFalse = false, answer, handleChangeAnswer = () => {}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') e.preventDefault();
                     }}
-                    onChange={(e) => handleChangeAnswer(answer.name, e.target.value)}
+                    onChange={(e) =>
+                        dispatch(
+                            setQuestionAnswer({
+                                name: answer.name,
+                                body: e.target.value
+                            })
+                        )
+                    }
                     inputProps={{
                         maxLength: 120,
                         className: 'scrollbar-none'
@@ -43,7 +52,9 @@ function AnswerItem({ isTrueFalse = false, answer, handleChangeAnswer = () => {}
 
             {answer.body && (
                 <div
-                    onClick={() => handleChangeCorrectAnswer(answer.name)}
+                    onClick={() => {
+                        dispatch(setCorrectAnswer(answer.name));
+                    }}
                     className={cn(
                         'group flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border-4 border-white bg-inherit hover:bg-green-400 md:mr-2',
                         {

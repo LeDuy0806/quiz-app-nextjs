@@ -1,9 +1,11 @@
-import { FormControlLabel, InputBase, Radio, RadioGroup } from '@mui/material';
+import { FormControlLabel, InputBase, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent } from '@mui/material';
 import Image from 'next/image';
 import Modal from 'react-modal';
-import { QuizType } from 'src/app/types/creator';
+import { CategoryEnum, GradeEnum, ObjectCategoryType, ObjectGradeType } from 'src/app/types/creator';
 import defaultCoverImage from '../../../public/assets/images/creator/background.webp';
 import { ChangeEvent, useState } from 'react';
+import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
+import { updateQuizInfo } from 'src/app/redux/slices/quizCreatorSlice';
 
 const customStylesModal: any = {
     overlay: {
@@ -13,7 +15,7 @@ const customStylesModal: any = {
         right: 0,
         bottom: 0,
         backgroundColor: 'rgba(0, 0, 0, 0.75)',
-        zIndex: 9998,
+        zIndex: 298,
         cursor: ''
     },
     content: {
@@ -26,28 +28,33 @@ const customStylesModal: any = {
         padding: '0',
         border: 'none',
         outline: 'none',
-        zIndex: 9999
+        zIndex: 299
     }
 };
 
 interface IProps {
     isOpenModal: boolean;
-    quiz: QuizType;
     setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-    setQuiz: React.Dispatch<React.SetStateAction<QuizType>>;
 }
 
 type ModalDataType = {
     name: string;
     description: string;
     isPublic: boolean;
+    category: ObjectCategoryType;
+    grade: ObjectGradeType;
 };
 
-function QuizSettingModal({ isOpenModal, setIsOpenModal, quiz, setQuiz }: IProps) {
+function QuizSettingModal({ isOpenModal, setIsOpenModal }: IProps) {
+    const dispatch = useAppDispatch();
+    const { quiz } = useAppSelector((state) => state.quizCreator);
+
     const initialModalData: ModalDataType = {
         name: quiz.name,
         description: quiz.description,
-        isPublic: quiz.isPublic
+        isPublic: quiz.isPublic,
+        category: quiz.category,
+        grade: quiz.grade
     };
 
     const [modalData, setModalData] = useState<ModalDataType>(initialModalData);
@@ -77,13 +84,37 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal, quiz, setQuiz }: IProps
         });
     };
 
+    const handleUpdateQuizCategory = (e: SelectChangeEvent<CategoryEnum>) => {
+        setModalData({
+            ...modalData,
+            category: {
+                ...modalData.category,
+                name: e.target.value as CategoryEnum
+            }
+        });
+    };
+
+    const handleUpdateQuizGrade = (e: SelectChangeEvent<GradeEnum>) => {
+        setModalData({
+            ...modalData,
+            grade: {
+                ...modalData.grade,
+                name: e.target.value as GradeEnum
+            }
+        });
+    };
+
     const handleUpdateQuiz = () => {
-        setQuiz((prev) => ({
-            ...prev,
-            name: modalData.name,
-            description: modalData.description,
-            isPublic: modalData.isPublic
-        }));
+        dispatch(
+            updateQuizInfo({
+                ...quiz,
+                name: modalData.name,
+                description: modalData.description,
+                isPublic: modalData.isPublic,
+                category: modalData.category,
+                grade: modalData.grade
+            })
+        );
         setIsOpenModal(false);
     };
 
@@ -93,9 +124,10 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal, quiz, setQuiz }: IProps
                 <h1 className='text-lg font-bold'>Quiz Summary</h1>
 
                 {/* Content */}
-                <div className='mt-8 justify-between gap-8 lg:flex'>
+                <div className='mt-8 flex justify-between gap-8 max-lg:mt-4 max-lg:flex-col-reverse'>
                     {/* Left Content */}
                     <div className='lg:w-3/5'>
+                        {/* Title */}
                         <div>
                             <h2 className='font-semibold'>Title</h2>
                             <InputBase
@@ -107,11 +139,13 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal, quiz, setQuiz }: IProps
                                 onChange={handleUpdateQuizName}
                             />
                         </div>
+
+                        {/* Description */}
                         <div className='mt-4'>
                             <h2 className='font-semibold'>Description</h2>
                             <InputBase
                                 multiline
-                                rows={6}
+                                rows={3}
                                 className='mt-2 min-w-full rounded px-4 py-2 outline outline-1 active:outline-blue-300'
                                 inputProps={{
                                     placeholder: 'Enter your quiz description...'
@@ -119,6 +153,54 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal, quiz, setQuiz }: IProps
                                 value={modalData.description}
                                 onChange={handleUpdateQuizDescription}
                             />
+                        </div>
+
+                        {/* Category */}
+                        <div className='mt-4'>
+                            <h2 className='font-semibold'>Category</h2>
+                            <Select
+                                className='mt-2 w-full'
+                                value={modalData.category.name || ''}
+                                MenuProps={{
+                                    PaperProps: {
+                                        style: {
+                                            maxHeight: 200,
+                                            zIndex: 300
+                                        }
+                                    }
+                                }}
+                                onChange={handleUpdateQuizCategory}
+                            >
+                                {Object.values(CategoryEnum).map((category, index) => (
+                                    <MenuItem key={index} value={category}>
+                                        {category}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </div>
+
+                        {/* Grade */}
+                        <div className='mt-4'>
+                            <h2 className='font-semibold'>Grade</h2>
+                            <Select
+                                className='mt-2 w-full'
+                                value={modalData.grade.name || ''}
+                                MenuProps={{
+                                    PaperProps: {
+                                        style: {
+                                            maxHeight: 200,
+                                            zIndex: 300
+                                        }
+                                    }
+                                }}
+                                onChange={handleUpdateQuizGrade}
+                            >
+                                {Object.values(GradeEnum).map((grade, index) => (
+                                    <MenuItem key={index} value={grade}>
+                                        {grade}
+                                    </MenuItem>
+                                ))}
+                            </Select>
                         </div>
                     </div>
 
@@ -148,18 +230,18 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal, quiz, setQuiz }: IProps
                 </div>
 
                 {/* Buttons */}
-                <div className='mt-12 flex justify-center gap-4'>
+                <div className='mt-12 flex justify-center gap-4 max-lg:pb-10'>
                     <button
                         onClick={handleCloseModal}
                         className='w-32 rounded bg-[#f2f2f2] px-4 pb-3 pt-2 shadow-[inset_0_-5px_rgba(0,0,0,0.3)] duration-100 hover:mt-[2px] hover:pb-[10px] hover:shadow-[inset_0_-4px_rgba(0,0,0,0.3)] active:mt-1 active:pb-2 active:shadow-[inset_0_-2px_rgba(0,0,0,0.3)]'
                     >
-                        <span className='font-semibold text-black max-lg:hidden'>Cancel</span>
+                        <span className='font-semibold text-black'>Cancel</span>
                     </button>
                     <button
                         onClick={handleUpdateQuiz}
                         className='w-32 rounded bg-[#26890c] px-4 pb-3 pt-2 shadow-[inset_0_-5px_rgba(0,0,0,0.3)] duration-100 hover:mt-[2px] hover:pb-[10px] hover:shadow-[inset_0_-4px_rgba(0,0,0,0.3)] active:mt-1 active:pb-2 active:shadow-[inset_0_-2px_rgba(0,0,0,0.3)]'
                     >
-                        <span className='font-semibold text-white max-lg:hidden'>Save</span>
+                        <span className='font-semibold text-white'>Save</span>
                     </button>
                 </div>
             </div>

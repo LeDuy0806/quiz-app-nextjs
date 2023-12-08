@@ -9,34 +9,20 @@ import { FaChevronLeft } from 'react-icons/fa';
 // utils
 import { cn } from 'src/utils/tailwind.util';
 import { OptionQuestionEnum, PointTypeEnum, QuestionTypeEnum, AnswerTimeEnum } from 'src/app/types/creator';
+import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
+import { deleteQuestion, duplicateQuestion, setAnswerTime, setOptionQuestion, setPointType, setQuestionType } from 'src/app/redux/slices/quizCreatorSlice';
 
 interface IProps {
     isOpen: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    questionType: QuestionTypeEnum;
-    answerTime: AnswerTimeEnum;
-    pointType: PointTypeEnum;
-    optionQuestion: OptionQuestionEnum;
-    handleChangeQuestionType: (questionType: QuestionTypeEnum) => void;
-    handleChangePointType: (pointType: PointTypeEnum) => void;
-    handleChangeAnswerTime: (answerTimeType: AnswerTimeEnum) => void;
-    handleChangeOptionQuestion: (OptionQuestionEnum: OptionQuestionEnum) => void;
-    handleDeleteCurrentQuestion: () => void;
 }
 
-export default function QuestionSettingSidebar({
-    isOpen,
-    setOpen,
-    answerTime,
-    optionQuestion,
-    pointType,
-    questionType,
-    handleChangeAnswerTime,
-    handleChangeOptionQuestion,
-    handleChangePointType,
-    handleChangeQuestionType,
-    handleDeleteCurrentQuestion
-}: IProps) {
+export default function QuestionSettingSidebar({ isOpen, setOpen }: IProps) {
+    const { activeQuestion } = useAppSelector((state) => state.quizCreator);
+    const dispatch = useAppDispatch();
+
+    const { questionType, answerTime, pointType, optionQuestion, questionIndex } = activeQuestion;
+
     return (
         <div
             className={cn(
@@ -47,8 +33,8 @@ export default function QuestionSettingSidebar({
                 }
             )}
         >
-            {/* Setting question sidebar button*/}
             <div>
+                {/* Setting question sidebar button mobile*/}
                 <button
                     onClick={() => setOpen(!isOpen)}
                     className={cn('fixed -left-8 top-1/3 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded bg-white', {
@@ -70,7 +56,7 @@ export default function QuestionSettingSidebar({
                         id='question-type'
                         value={questionType}
                         onChange={(e: SelectChangeEvent<QuestionTypeEnum>) => {
-                            handleChangeQuestionType(e.target.value as QuestionTypeEnum);
+                            dispatch(setQuestionType(e.target.value as QuestionTypeEnum));
                         }}
                     >
                         <MenuItem value={QuestionTypeEnum.QUIZ}>Quiz</MenuItem>
@@ -92,7 +78,7 @@ export default function QuestionSettingSidebar({
                         id='time-limit'
                         value={answerTime}
                         onChange={(e: SelectChangeEvent<AnswerTimeEnum>) => {
-                            handleChangeAnswerTime(e.target.value as AnswerTimeEnum);
+                            dispatch(setAnswerTime(e.target.value as AnswerTimeEnum));
                         }}
                     >
                         <MenuItem value={AnswerTimeEnum.TEN_SECONDS}>10 seconds</MenuItem>
@@ -116,7 +102,7 @@ export default function QuestionSettingSidebar({
                         id='time-limit'
                         value={pointType}
                         onChange={(e: SelectChangeEvent<PointTypeEnum>) => {
-                            handleChangePointType(e.target.value as PointTypeEnum);
+                            dispatch(setPointType(e.target.value as PointTypeEnum));
                         }}
                     >
                         <MenuItem value={PointTypeEnum.STANDARD}>Standard</MenuItem>
@@ -135,9 +121,7 @@ export default function QuestionSettingSidebar({
                         className='mt-4 w-full'
                         id='time-limit'
                         value={optionQuestion}
-                        onChange={(e: SelectChangeEvent<OptionQuestionEnum>) => {
-                            handleChangeOptionQuestion(e.target.value as OptionQuestionEnum);
-                        }}
+                        onChange={(e: SelectChangeEvent<OptionQuestionEnum>) => dispatch(setOptionQuestion(e.target.value as OptionQuestionEnum))}
                     >
                         <MenuItem value={OptionQuestionEnum.SINGLE}>Single answer</MenuItem>
                         <MenuItem value={OptionQuestionEnum.MULTIPLE}>Multiple answer</MenuItem>
@@ -151,10 +135,10 @@ export default function QuestionSettingSidebar({
 
                 {/* Buttons */}
                 <div className='mt-4 flex justify-center gap-4'>
-                    <button onClick={handleDeleteCurrentQuestion} className='rounded-md px-4 py-1 hover:bg-slate-200'>
+                    <button onClick={() => dispatch(deleteQuestion(questionIndex))} className='rounded-md px-4 py-1 hover:bg-slate-200'>
                         <span className='font-semibold'>delete</span>
                     </button>
-                    <button className='rounded-md px-4 py-1 outline outline-1 hover:bg-slate-200'>
+                    <button onClick={() => dispatch(duplicateQuestion(questionIndex))} className='rounded-md px-4 py-1 outline outline-1 hover:bg-slate-200'>
                         <span className='font-semibold'>duplicate</span>
                     </button>
                 </div>
