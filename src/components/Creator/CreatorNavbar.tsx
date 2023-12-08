@@ -9,16 +9,23 @@ import { RxExit } from 'react-icons/rx';
 
 // Constants
 import paths from 'src/constants/paths';
+import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
+import { saveQuiz } from 'src/app/redux/slices/quizCreatorSlice';
 
 interface IProps {
-    handleQuizSubmit: () => void;
     setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-    title: string;
 }
 
-function CreatorNavbar({ setIsOpenModal, handleQuizSubmit, title }: IProps) {
+function CreatorNavbar({ setIsOpenModal }: IProps) {
+    const dispatch = useAppDispatch();
+    const { name } = useAppSelector((state) => state.quizCreator.quiz);
+
     const handleOpenModal = () => {
         setIsOpenModal(true);
+    };
+
+    const handleQuizSubmit = () => {
+        dispatch(saveQuiz());
     };
 
     return (
@@ -40,7 +47,7 @@ function CreatorNavbar({ setIsOpenModal, handleQuizSubmit, title }: IProps) {
                         className='ml-4 flex min-w-[360px] items-center justify-between rounded-md md:p-1 md:outline md:outline-1 md:outline-gray-300'
                     >
                         <p className='ml-1 line-clamp-1 hidden w-2/3 overflow-hidden text-ellipsis text-left font-bold text-gray-400 md:inline md:pr-6 lgl:pr-12'>
-                            {title || 'Enter your quiz title...'}
+                            {name || 'Enter your quiz title...'}
                         </p>
                         <div className='flex items-center justify-center rounded bg-gray-300 px-1 py-1 max-md:h-8 max-md:w-8 md:justify-between md:px-2'>
                             <IoSettingsOutline className='h-5 w-5 md:mr-1' />

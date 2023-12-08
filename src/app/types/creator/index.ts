@@ -62,6 +62,26 @@ enum CategoryEnum {
     OTHER = 'Other'
 }
 
+enum GradeEnum {
+    KINDERGARTEN = 'Kindergarten',
+    ELEMENTARY = 'Elementary (1st - 5th)',
+    JUNIOR_HIGH_SCHOOL = 'Junior high school (6th - 9th)',
+    HIGH_SCHOOL = 'High school (10th - 12th)',
+    UNIVERSITY = 'University',
+    PROFESSIONAL_DEVELOPMENT = 'Professional development',
+    ALL = 'All'
+}
+
+type ObjectCategoryType = {
+    _id: string;
+    name: CategoryEnum | null;
+};
+
+type ObjectGradeType = {
+    _id: string;
+    name: GradeEnum | null;
+};
+
 type AnswerType = {
     name: AnswerNameEnum;
     body: string;
@@ -80,8 +100,8 @@ type QuestionType = {
     isPublic: boolean;
     answerTime: AnswerTimeEnum;
     maxCorrectAnswer: number;
-    answerList: AnswerType[];
     correctAnswerCount: number;
+    answerList: AnswerType[];
     answerCorrect: AnswerNameEnum[];
 };
 
@@ -98,15 +118,71 @@ type QuizType = {
     likesCount: string[];
     questionList: QuestionType[];
     numberOfQuestions: number;
-    category: {
-        _id: string;
-        name: string;
-    };
-    grade: {
-        _id: string;
-        name: string;
-    };
+    category: ObjectCategoryType;
+    grade: ObjectGradeType;
 };
 
-export { OptionQuestionEnum, QuestionTypeEnum, AnswerTimeEnum, PointTypeEnum, AnswerNameEnum, CategoryEnum };
-export type { AnswerType, QuestionType, QuizType };
+const initialQuestion: QuestionType = {
+    _id: '',
+    question: '',
+    creator: '',
+    backgroundImage: '',
+    questionIndex: 1,
+    questionType: QuestionTypeEnum.QUIZ,
+    optionQuestion: OptionQuestionEnum.SINGLE,
+    pointType: PointTypeEnum.STANDARD,
+    isPublic: true,
+    answerTime: AnswerTimeEnum.TEN_SECONDS,
+    maxCorrectAnswer: 0,
+    answerList: [
+        {
+            name: AnswerNameEnum.A,
+            body: '',
+            isCorrect: false
+        },
+        {
+            name: AnswerNameEnum.B,
+            body: '',
+            isCorrect: false
+        },
+        {
+            name: AnswerNameEnum.C,
+            body: '',
+            isCorrect: false
+        },
+        {
+            name: AnswerNameEnum.D,
+            body: '',
+            isCorrect: false
+        }
+    ],
+    correctAnswerCount: 0,
+    answerCorrect: []
+};
+
+const initialQuiz: QuizType = {
+    _id: '',
+    name: '',
+    creator: '',
+    description: '',
+    backgroundImage: '',
+    isPublic: true,
+    pointsPerQuestion: 1,
+    field: '',
+    importFrom: '',
+    likesCount: [],
+    questionList: [initialQuestion],
+    numberOfQuestions: 1,
+    category: {
+        _id: '',
+        name: null
+    },
+    grade: {
+        _id: '',
+        name: null
+    }
+};
+
+export { initialQuestion, initialQuiz };
+export { OptionQuestionEnum, QuestionTypeEnum, AnswerTimeEnum, PointTypeEnum, AnswerNameEnum, CategoryEnum, GradeEnum };
+export type { AnswerType, QuestionType, QuizType, ObjectCategoryType, ObjectGradeType };
