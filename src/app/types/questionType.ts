@@ -15,7 +15,7 @@ const InitAnswer = {
 
 type QuestionType = {
     _id?: string;
-    question: string;
+    content: string;
     creator?: UserType;
     backgroundImage: string;
     questionIndex: number;
@@ -35,7 +35,7 @@ type QuestionType = {
 export const InitQuestion = {
     _id: '',
     field: '',
-    question: '',
+    content: '',
     creator: InitUser,
     backgroundImage: '',
     questionIndex: 0,

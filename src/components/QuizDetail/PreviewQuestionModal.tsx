@@ -170,7 +170,7 @@ function PreviewQuestionModal({ isOpenModal, handleCloseModal, QuestionData, num
                                 <div className='relative flex h-full w-full flex-1 items-center justify-center overflow-y-auto overflow-x-hidden'>
                                     <div className='flex h-full w-full flex-col px-2 text-white'>
                                         {/* Question title */}
-                                        <QuestionTitle Question={QuestionData?.question} QuestionImage={QuestionData?.backgroundImage} />
+                                        <QuestionTitle Question={QuestionData?.content} QuestionImage={QuestionData?.backgroundImage} />
                                         {/* Answer */}
                                         <div className='flex h-[55%] items-center justify-center  lg:p-4'>
                                             <div className=' flex w-full flex-wrap items-center justify-center'>

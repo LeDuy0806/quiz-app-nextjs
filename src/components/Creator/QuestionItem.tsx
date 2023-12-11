@@ -62,7 +62,7 @@ function QuestionItem({ isActive = false, questionData }: IProps) {
             >
                 {/* title */}
                 <div className='flex w-full flex-col lg:h-full lg:p-2'>
-                    <h4 className='max-h-4 max-w-full truncate text-center text-xs tracking-[0.2px] text-gray-600'>{questionData.question || 'Question'}</h4>
+                    <h4 className='max-h-4 max-w-full truncate text-center text-xs tracking-[0.2px] text-gray-600'>{questionData.content || 'Question'}</h4>
                 </div>
 
                 {/* Body */}

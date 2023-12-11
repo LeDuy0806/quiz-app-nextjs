@@ -53,6 +53,9 @@ const quizCreatorSlice = createSlice({
             // change option question type
             state.activeQuestion.optionQuestion = OptionQuestionEnum.SINGLE;
 
+            // update answer correct list in question
+            state.activeQuestion.answerCorrect = state.activeQuestion.answerList.filter((answer) => answer.isCorrect === true).map((answer) => answer.name);
+
             // change question type in quiz
             state.quiz.questionList[state.activeQuestion.questionIndex - 1] = state.activeQuestion;
         },
@@ -84,12 +87,17 @@ const quizCreatorSlice = createSlice({
                 }));
             }
 
+            //update answer correct list in question
+            state.activeQuestion.answerCorrect = state.activeQuestion.answerList.filter((answer) => answer.isCorrect === true).map((answer) => answer.name);
+
+            // set option question in active question
             state.activeQuestion.optionQuestion = action.payload;
+            // update question list in quiz
             state.quiz.questionList[state.activeQuestion.questionIndex - 1] = state.activeQuestion;
         },
 
         setQuestionContent: (state, action: PayloadAction<string>) => {
-            state.activeQuestion.question = action.payload;
+            state.activeQuestion.content = action.payload;
             state.quiz.questionList[state.activeQuestion.questionIndex - 1] = state.activeQuestion;
         },
 
@@ -143,6 +151,10 @@ const quizCreatorSlice = createSlice({
                 state.activeQuestion.answerList = answerList.map((answer) => (answer.name === action.payload ? toggleAnswerCorrectness(answer) : answer));
             }
 
+            //set answer correct list inquestion
+            state.activeQuestion.answerCorrect = state.activeQuestion.answerList.filter((answer) => answer.isCorrect === true).map((answer) => answer.name);
+
+            //update question list
             state.quiz.questionList[state.activeQuestion.questionIndex - 1].answerList = state.activeQuestion.answerList;
         },
 
