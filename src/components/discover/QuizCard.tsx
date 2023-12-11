@@ -1,34 +1,51 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React from 'react';
+import QuizType from 'src/app/types/quizType';
 
-const QuizCard = () => {
+const QuizCard = ({ QuizData }: { QuizData: QuizType }) => {
+    const router = useRouter();
+
+    const handleClickQuizCard = () => {
+        router.push(`/details/${QuizData._id}`);
+    };
+
     return (
-        <div className='quiz-card mb-4 md:mb-8 h-60 md:h-72 rounded-lg bg-white text-left ring-1 ring-gray-300 flex-shrink-0 cursor-pointer hover:shadow-lg max-w-[11rem] md:max-w-[15rem] md:hover:scale-[1.02]'>
-            <div className='overflow-hidden rounded-t-lg h-full'>
+        <div
+            onClick={handleClickQuizCard}
+            className='quiz-card mb-4 h-60 max-w-[11rem] flex-shrink-0 cursor-pointer rounded-lg bg-white text-left ring-1 ring-gray-300 hover:shadow-lg md:mb-8 md:h-72 md:max-w-[15rem] md:hover:scale-[1.02]'
+        >
+            <div className='h-full overflow-hidden rounded-t-lg'>
                 <div>
-                    <div className='w-44 md:w-60 h-28 md:h-40 object-cover relative'>
-                        <Image src='https://cf.quizizz.com/game/img/share/quizizz_share1.png' alt='Image' className='w-full h-full' fill objectFit='cover' />
+                    <div className='relative h-28 w-44 object-cover md:h-40 md:w-60'>
+                        <Image
+                            src={QuizData.backgroundImage ? QuizData.backgroundImage : 'https://cf.quizizz.com/game/img/share/quizizz_share1.png'}
+                            alt='Image'
+                            className='h-full w-full'
+                            fill
+                            objectFit='cover'
+                        />
                     </div>
                 </div>
 
-                <div className='px-2.5 pt-2.5 pb-3.5 flex flex-col h-30'>
+                <div className='flex h-30 flex-col px-2.5 pb-3.5 pt-2.5'>
                     <div className='flex items-center'>
-                        <div className='items-center inline-flex text-[10px] font-thin rounded-full px-1.5 bg-gray-100 '>
+                        <div className='inline-flex items-center rounded-full bg-gray-100 px-1.5 text-[10px] font-thin '>
                             <span>QUIZ</span>
                         </div>
                     </div>
-                    <div className='mt-2 mb-2 text-sm md:text-base '>
-                        <h2 className='w-full max-h-12 text-base text-black font-semibold line-clamp-2 text-ellipsis '>Logic Gates & Truth Tables</h2>
+                    <div className='mb-2 mt-2 text-sm md:text-base '>
+                        <h2 className='line-clamp-1 max-h-12 w-full text-ellipsis text-base font-semibold text-black '>{QuizData.name}</h2>
 
                         <div className=' flex flex-row '>
                             <span className='text-[12px] text-gray-500'>By: </span>
-                            <span className='text-[12px] text-gray-900'>Mr.Ryan Truong</span>
+                            <span className='text-[12px] text-gray-900'>{QuizData.creator.firstName + ' ' + QuizData.creator.lastName}</span>
                         </div>
                     </div>
 
-                    <div className='flex text-[10px] md:text-xs mt-auto'>
-                        <div className='mr-1.5'>14 Questions</div>
-                        <div className='mr-1.5 ml-1.5'>300 plays</div>
+                    <div className='mt-auto flex text-[10px] md:text-xs'>
+                        <div className='mr-1.5'>{QuizData.numberOfQuestions + ' Questions'}</div>
+                        {/* <div className='ml-1.5 mr-1.5'>300 plays</div> */}
                     </div>
                 </div>
             </div>

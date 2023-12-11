@@ -9,6 +9,7 @@ import QuizInfo from 'src/components/QuizDetail/QuizInfo';
 import Suggestions from 'src/components/QuizDetail/Suggestions';
 import Quiz from 'src/data';
 import PreviewQuestionModal from 'src/components/QuizDetail/PreviewQuestionModal';
+import { useGetQuizByIdQuery } from 'src/app/redux/services/quizApi';
 
 type QuizParams = {
     id: string;
@@ -40,9 +41,15 @@ function QuizDetail() {
         setIsOpenPreviewModal(false);
     };
 
+    const { data, isSuccess, isLoading } = useGetQuizByIdQuery({ quizId: id });
+
     useEffect(() => {
-        setQuizData(Quiz);
-    }, []);
+        if (isSuccess && data) setQuizData(data);
+    }, [data, isSuccess, isLoading]);
+
+    if (isLoading) return <div>Loading...</div>;
+
+    if (isSuccess && !data) return <div>Not found</div>;
 
     return (
         <>

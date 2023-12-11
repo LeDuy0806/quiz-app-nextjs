@@ -1,10 +1,10 @@
 import UserType, { InitUser } from './userType';
-import QuizType, { InitQuiz } from './quizType';
+import QuizType, { CreatorType, InitQuiz } from './quizType';
 import PlayerResultType, { InitPlayerResult } from './playerResultType';
 
 type GameType = {
     _id: string;
-    host: UserType;
+    host: CreatorType;
     quiz: QuizType;
     pin: string;
     isLive: boolean;

@@ -7,24 +7,24 @@ function SearchBar() {
     return (
         <>
             <div className='w-[90%] md:w-[80%] xl:w-[60%]'>
-                <div className='text-bgDark text-center font-semibold md:block text-lg md:text-5xl mb-8 mt-4 md:mt-12'>
+                <div className='mb-8 mt-4 text-center text-lg font-semibold text-bgDark md:mt-12 md:block md:text-5xl'>
                     <span>What will you choose today?</span>
                 </div>
-                <div className='xs:max-md:mx-auto flex items-center z-10 bg-gray-100 shadow-md relative p-0 md:py-3 md:px-6 rounded-lg'>
+                <div className='relative z-10 flex items-center rounded-lg bg-gray-100/60 p-0 shadow-md xs:max-md:mx-auto md:px-6 md:py-3'>
                     <div className='w-full'>
-                        <div className='relative w-full flex-grow z-[11]'>
+                        <div className='relative z-[11] w-full flex-grow'>
                             <div className='relative'>
                                 <input
                                     type='text'
                                     autoComplete='off'
-                                    className='focus:outline-none h-10 w-full py-2 text-sm placeholder-sm border-radius-inherit remove-number-selector pl-3 font-semibold  md:text-2xl text-dark-2 placeholder-dark-5 border-dark-4 placeholder-dark-5 pr-9 '
+                                    className='placeholder-sm border-radius-inherit remove-number-selector text-dark-2 placeholder-dark-5 border-dark-4 placeholder-dark-5 h-10 w-full py-2  pl-3 pr-9 text-sm font-semibold focus:outline-none md:text-2xl '
                                     placeholder='Search for quizzes on any topic'
                                     maxLength={-1}
                                     tabIndex={0}
                                     aria-required='false'
                                 />
-                                <div className='w-6 h-6 flex items-center justify-center absolute right-2 top-2 pt-0.5 '>
-                                    <i className='flex items-center text-gray-800 cursor-pointer'>
+                                <div className='absolute right-2 top-2 flex h-6 w-6 items-center justify-center pt-0.5 '>
+                                    <i className='flex cursor-pointer items-center text-gray-800'>
                                         <FaChevronRight />
                                     </i>
                                 </div>
@@ -33,9 +33,9 @@ function SearchBar() {
                     </div>
                 </div>
             </div>
-            <div className='flex w-full pt-4 pb-4 -mt-6'>
-                <div className='relative mx-auto mt-8 mb-4 overflow-hidden md:mt-16'>
-                    <div className='flex px-4 py-1 mx-auto space-x-5 overflow-x-auto overflow-y-hidden md:space-x-8 scroll-smooth scrollbar-none'>
+            <div className='-mt-6 flex w-full pb-4 pt-4'>
+                <div className='relative mx-auto mb-4 mt-8 overflow-hidden md:mt-16'>
+                    <div className='mx-auto flex space-x-5 overflow-x-auto overflow-y-hidden scroll-smooth px-4 py-1 scrollbar-none md:space-x-8'>
                         <SubjectsButton />
                         <SubjectsButton />
                         <SubjectsButton />
