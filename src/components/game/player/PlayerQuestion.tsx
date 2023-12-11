@@ -20,9 +20,9 @@ interface QuestionProps {
 
 const PlayerQuestion = (props: QuestionProps) => {
     return (
-        <div className='h-full w-full relative flex items-center justify-center bg-bgPurpleLight text-textWhite'>
-            <div className='z-[1] relative w-3/4 h-3/4 flex flex-col items-center justify-center  rounded-[40px] bg-bgQuestion gap-[1em]'>
-                <div className='absolute top-[1em] right-[2em]'>
+        <div className='relative flex h-full w-full items-center justify-center bg-bgPurpleLight text-textWhite'>
+            <div className='relative z-[1] flex h-3/4 w-3/4 flex-col items-center justify-center  gap-[1em] rounded-[40px] bg-bgQuestion'>
+                <div className='absolute right-[2em] top-[1em]'>
                     <CountdownCircleTimer
                         isPlaying
                         duration={props.timer}
@@ -37,18 +37,18 @@ const PlayerQuestion = (props: QuestionProps) => {
                     initial={{ x: 20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.2 }}
-                    className='relative w-3/4 h-1/5 bg-textWhite flex items-center justify-center text-center rounded-md border-[2px] border-solid border-bgBorderQuestion'
+                    className='relative flex h-1/5 w-3/4 items-center justify-center rounded-md border-[2px] border-solid border-bgBorderQuestion bg-textWhite text-center'
                 >
-                    <span className='absolute bg-bgPurple top-0 translate-y-[-50%] px-6 py-3 rounded-3xl font-bold'>
+                    <span className='absolute top-0 translate-y-[-50%] rounded-3xl bg-bgPurple px-6 py-3 font-bold'>
                         Question {props.questionData?.questionIndex + 1} of {props.lengthQuiz}
                     </span>
-                    <div className='text-textBlack max-w-[80%] font-semibold'>
+                    <div className='max-w-[80%] font-semibold text-textBlack'>
                         {/* This is a picture taken in outdoor.There are 2 people in this picture.On the
                         left,a woman with black hair is holding paper while talking on the phone */}
-                        {props.questionData?.question}
+                        {props.questionData?.content}
                     </div>
                 </motion.div>
-                <div className='w-3/4 flex justify-between items-center gap-[2em]'>
+                <div className='flex w-3/4 items-center justify-between gap-[2em]'>
                     <Answer
                         delay={0.3}
                         body={props.questionData?.answerList[0]?.body}
@@ -69,7 +69,7 @@ const PlayerQuestion = (props: QuestionProps) => {
                     />
                 </div>
                 {props.questionData?.questionType !== 'True/False' && (
-                    <div className='w-3/4 flex justify-between items-center gap-[2em]'>
+                    <div className='flex w-3/4 items-center justify-between gap-[2em]'>
                         <Answer
                             delay={0.5}
                             body={props.questionData?.answerList[2]?.body}
@@ -96,25 +96,25 @@ const PlayerQuestion = (props: QuestionProps) => {
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className='absolute w-[10em] h-[10em] rounded-full bg-bgPurple top-[1em] left-[8em]'
+                className='absolute left-[8em] top-[1em] h-[10em] w-[10em] rounded-full bg-bgPurple'
             ></motion.div>
             <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className='absolute w-[20em] h-[20em] rounded-full bg-bgPurple bottom-[0.6em] right-[3em]'
+                className='absolute bottom-[0.6em] right-[3em] h-[20em] w-[20em] rounded-full bg-bgPurple'
             ></motion.div>
             <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className='absolute w-[5em] h-[5em] rounded-full bg-textPurpleHover bottom-[0.4em] left-[20em]'
+                className='absolute bottom-[0.4em] left-[20em] h-[5em] w-[5em] rounded-full bg-textPurpleHover'
             ></motion.div>
             <motion.div
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className='absolute w-[3em] h-[3em] rounded-full bg-textPurpleHover top-[1em] right-[20em]'
+                className='absolute right-[20em] top-[1em] h-[3em] w-[3em] rounded-full bg-textPurpleHover'
             ></motion.div>
         </div>
     );
@@ -135,14 +135,14 @@ const Answer = (props: AnswerProps) => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.4, delay: props.delay }}
             className={clsx(
-                `relative flex flex-1 items-center justify-center rounded py-4 border-[2px] border-solid border-bgBorderQuestion`,
-                props.isAnswerSelect ? 'bg-bgPurpleLight border-textPurpleBorder' : 'bg-textWhite border-bgBorderQuestion'
+                `relative flex flex-1 items-center justify-center rounded border-[2px] border-solid border-bgBorderQuestion py-4`,
+                props.isAnswerSelect ? 'border-textPurpleBorder bg-bgPurpleLight' : 'border-bgBorderQuestion bg-textWhite'
             )}
         >
             <div
                 onClick={props.onClick}
                 className={clsx(
-                    `w-[2.6em] h-[2.6em] rounded-full flex items-center justify-center absolute left-3 border-[3px]  border-solid cursor-pointer`,
+                    `absolute left-3 flex h-[2.6em] w-[2.6em] cursor-pointer items-center justify-center rounded-full  border-[3px] border-solid`,
                     props.isAnswerSelect ? 'border-textPurpleBorder' : 'border-bgBorderQuestion text-textBlack'
                 )}
             >

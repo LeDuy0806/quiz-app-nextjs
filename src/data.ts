@@ -24,7 +24,7 @@ const Quiz = {
             pointType: 'Standard',
             answerTime: 5,
             backgroundImage: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686314376/k60awx2gstidqsrzktvh.jpg',
-            question: 'Có nên học môn cấu trúc dữ liệu và giải thuật không ?',
+            content: 'Có nên học môn cấu trúc dữ liệu và giải thuật không ?',
             answerList: [
                 {
                     name: 'a',
@@ -58,7 +58,7 @@ const Quiz = {
             pointType: 'Standard',
             answerTime: 10,
             backgroundImage: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686315027/oftibctcr8e1dtfiwuaz.jpg',
-            question: 'Giữa 2 thuật toán merge và Qick thì cái nào có đôi phức tạp cao',
+            content: 'Giữa 2 thuật toán merge và Qick thì cái nào có đôi phức tạp cao',
             answerList: [
                 {
                     name: 'A',
@@ -104,7 +104,7 @@ const Quiz = {
             pointType: 'Standard',
             answerTime: 5,
             backgroundImage: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1686315078/l3lz2hvnis1zchqjhhv5.jpg',
-            question: 'Cây nhị phân tương đồng thuật toán nào',
+            content: 'Cây nhị phân tương đồng thuật toán nào',
             answerList: [
                 {
                     name: 'A',

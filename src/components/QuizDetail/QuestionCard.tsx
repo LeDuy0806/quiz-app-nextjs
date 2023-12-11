@@ -40,7 +40,7 @@ function QuestionCard({ questionData, onClick }: { questionData: QuestionType; o
                         </div>
                         {/* question title */}
                         <div className=' flex w-full items-center overflow-hidden text-slate-800'>
-                            <p className='font-semibold'>{questionData.question}</p>
+                            <p className='font-semibold'>{questionData.content}</p>
                         </div>
                     </div>
                 </div>

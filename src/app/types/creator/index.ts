@@ -90,7 +90,7 @@ type AnswerType = {
 
 type QuestionType = {
     _id: string;
-    question: string;
+    content: string;
     creator: string;
     backgroundImage: string;
     questionIndex: number;
@@ -124,7 +124,7 @@ type QuizType = {
 
 const initialQuestion: QuestionType = {
     _id: '',
-    question: '',
+    content: '',
     creator: '',
     backgroundImage: '',
     questionIndex: 1,
