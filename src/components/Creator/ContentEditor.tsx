@@ -17,7 +17,7 @@ export default function ContentEditor() {
 
     const [isOpenQuestionSettingSidebar, setIsOpenQuestionSettingSidebar] = useState(true);
 
-    const { questionType, answerList, question } = activeQuestion;
+    const { questionType, answerList, content } = activeQuestion;
 
     const handleOpenSettingQuiz = () => {
         setIsOpenQuestionSettingSidebar(!isOpenQuestionSettingSidebar);
@@ -51,7 +51,7 @@ export default function ContentEditor() {
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') e.preventDefault();
                             }}
-                            value={question}
+                            value={content}
                             onChange={(e) => dispatch(setQuestionContent(e.target.value))}
                         />
 

@@ -3,12 +3,16 @@ import QuizType, { InitQuiz } from 'src/app/types/quizType';
 
 type InitialType = {
     quiz: QuizType;
+    TeacherQuizzes: QuizType[];
     quizzes: QuizType[];
+    FilteredTeacherQuizzes: QuizType[];
 };
 
 const initialState = {
     quiz: InitQuiz,
-    quizzes: []
+    TeacherQuizzes: [],
+    quizzes: [],
+    FilteredTeacherQuizzes: []
 } as InitialType;
 
 const quizSlice = createSlice({
@@ -20,7 +24,14 @@ const quizSlice = createSlice({
         },
 
         fetchTeacherQuizzes: (state, action: PayloadAction<QuizType[]>) => {
-            state.quizzes = action.payload;
+            state.TeacherQuizzes = action.payload;
+            state.FilteredTeacherQuizzes = state.TeacherQuizzes;
+        },
+
+        filterTeacherQuizzesByName: (state, action: PayloadAction<string>) => {
+            state.FilteredTeacherQuizzes = state.TeacherQuizzes.filter((quiz) => {
+                return quiz?.name?.toLowerCase().includes(action.payload?.toLowerCase());
+            });
         },
 
         fetchPublicQuizzes: (state, action) => {
@@ -68,6 +79,7 @@ const quizSlice = createSlice({
 export const {
     fetchPublicQuizzes,
     fetchTeacherQuizzes,
+    filterTeacherQuizzesByName,
     fetchQuizzesBySearch,
     updateQuiz,
     likeQuiz,

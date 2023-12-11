@@ -1,7 +1,7 @@
 import QuestionType, { InitQuestion } from './questionType';
 import UserType, { InitUser } from './userType';
 
-type CreatorType = {
+export type CreatorType = {
     _id: string;
     userName: string;
     userType: string;
@@ -13,7 +13,7 @@ type CreatorType = {
 type QuizType = {
     _id: string;
     name: string;
-    creator: CreatorType;
+    creator: CreatorType | string;
     description: string;
     backgroundImage: string;
     isPublic: boolean;

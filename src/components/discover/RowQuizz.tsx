@@ -2,8 +2,9 @@ import React, { useRef, useState } from 'react';
 
 import QuizCard from './QuizCard';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import QuizType from 'src/app/types/quizType';
 
-const RowQuizz = () => {
+const RowQuizz = ({ CategoryName, ListQuiz }: { CategoryName: string; ListQuiz: QuizType[] }) => {
     const rowRef = useRef<HTMLDivElement>(null);
     const [isMoved, setIsMoved] = useState(false);
 
@@ -22,11 +23,11 @@ const RowQuizz = () => {
         <>
             <div className='justify-start space-y-2.5'>
                 <div className='flex'>
-                    <h2 className='w-56 cursor-pointer text-xl font-semibold text-black transition duration-200 hover:text-gray-300'>Recent Activity</h2>
-                    <div className='block ml-auto'>
-                        <button className='transition-colors duration-200 ease-in-out flex items-center justify-center px-4 py-1 text-sm h-8 base bg-purple-200 text-purple-700 hover:text-purple-500 active:text-purple-950 rounded-full  relative min-w-max ml-auto'>
+                    <h2 className='w-fit cursor-pointer text-xl font-semibold text-black transition duration-200 hover:text-gray-300'>{CategoryName}</h2>
+                    <div className='ml-auto block'>
+                        <button className='base relative ml-auto flex h-8 min-w-max items-center justify-center rounded-full bg-purple-200 px-4 py-1 text-sm text-purple-700 transition-colors duration-200  ease-in-out hover:text-purple-500 active:text-purple-950'>
                             <span>See more</span>
-                            <i className='flex items-center ml-2 text-base'>
+                            <i className='ml-2 flex items-center text-base'>
                                 <FaChevronRight />
                             </i>
                         </button>
@@ -34,33 +35,23 @@ const RowQuizz = () => {
                 </div>
                 <div className='group relative flex w-full justify-between md:ml-2'>
                     <FaChevronLeft
-                        className={`absolute top-0 bottom-0 left-2 z-40 m-auto
+                        className={`absolute bottom-0 left-2 top-0 z-40 m-auto
         h-9 w-9 cursor-pointer opacity-0 transition group-hover:opacity-100 ${!isMoved && 'hidden'}`}
                         onClick={() => handleMove('Left')}
                     />
 
                     <div
                         ref={rowRef}
-                        className='flex w-full items-center space-x-4 overflow-hidden overflow-x-scroll py-2 scroll-smooth scrollbar-none sm:py-4'
+                        className='flex w-full items-center space-x-4 overflow-hidden overflow-x-scroll scroll-smooth py-2 scrollbar-none sm:py-4'
                     >
-                        <QuizCard />
-                        <QuizCard />
-                        <QuizCard />
-                        <QuizCard />
-                        <QuizCard />
-                        <QuizCard />
-                        <QuizCard />
-                        <QuizCard />
-                        <QuizCard />
-                        <QuizCard />
-                        <QuizCard />
-                        <QuizCard />
-                        <QuizCard />
+                        {ListQuiz.map((quiz) => (
+                            <QuizCard key={quiz._id} QuizData={quiz} />
+                        ))}
                     </div>
 
                     <div className='bg-gradient-white'>
                         <FaChevronRight
-                            className='absolute top-0 bottom-0 right-2 z-40 m-auto
+                            className='absolute bottom-0 right-2 top-0 z-40 m-auto
               h-9 w-9 cursor-pointer opacity-0 transition group-hover:opacity-100'
                             onClick={() => handleMove('Right')}
                         />

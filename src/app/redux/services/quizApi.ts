@@ -4,6 +4,10 @@ import QuizType from 'src/app/types/quizType';
 import QuestionType from 'src/app/types/questionType';
 import { RootState } from '../store';
 
+type DiscoverQuizType = {
+    [key: string]: QuizType[];
+};
+
 export const apiQuiz = createApi({
     reducerPath: 'apiQuiz',
     baseQuery: fetchBaseQuery({
@@ -24,6 +28,20 @@ export const apiQuiz = createApi({
         getPublicQuizzes: builder.query<QuizType[], void>({
             query: () => ({
                 url: 'api/quiz/public',
+                method: 'GET'
+            })
+        }),
+
+        getQuizById: builder.query<QuizType, { quizId: string }>({
+            query: ({ quizId }) => ({
+                url: `api/quiz/${quizId}`,
+                method: 'GET'
+            })
+        }),
+
+        getDiscoverQuizzes: builder.query<DiscoverQuizType, void>({
+            query: () => ({
+                url: 'api/quiz/discover',
                 method: 'GET'
             })
         }),
@@ -122,6 +140,8 @@ export const apiQuiz = createApi({
 
 export const {
     useGetPublicQuizzesQuery,
+    useGetQuizByIdQuery,
+    useGetDiscoverQuizzesQuery,
     useGetTeacherQuizzesQuery,
     useImportQuizMutation,
     useCreateQuizMutation,
