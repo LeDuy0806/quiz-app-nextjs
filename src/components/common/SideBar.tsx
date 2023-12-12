@@ -94,7 +94,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
 
     return (
         <>
-            {hideSideBar || <div className='fixed top-0 left-0 w-screen h-screen bg-[#09090980] z-[98]'></div>}
+            {hideSideBar || <div className='fixed left-0 top-0 z-[98] h-screen w-screen bg-[#09090980]'></div>}
             <div ref={sidebarRef} className='font-dm'>
                 <SubNavBar toggleSidebar={toggleSidebar} />
 
@@ -102,28 +102,28 @@ function SideBar({ children }: { children: React.ReactNode }) {
                     id='logo-sidebar'
                     className={
                         `${hideSideBar ? '-translate-x-full' : '-translate-x-0'}` +
-                        ' mdl:translate-x-0 shadow-xl fixed top-0 left-0  max-mdl:w-60 w-52 mdl:max-xl:w-[6rem] z-[99] mdl:z-[96] h-screen pt-16 transition-transform duration-300  bg-white border-r border-gray-200  dark:bg-gray-800 dark:border-gray-700'
+                        ' fixed left-0 top-0 z-[99] h-screen  w-52 border-r border-gray-200 bg-white pt-16 shadow-xl transition-transform duration-300 dark:border-gray-700  dark:bg-gray-800 max-mdl:w-60 mdl:z-[96]  mdl:translate-x-0 mdl:max-xl:w-[6rem]'
                     }
                 >
-                    <div className='mt-[-4rem] pt-2 mb-2 px-5 mdl:hidden'>
+                    <div className='mb-2 mt-[-4rem] px-5 pt-2 mdl:hidden'>
                         <button
                             type='button'
-                            className='inline-flex items-center p-2 text-sm text-gray-500 rounded-lg  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
+                            className='inline-flex items-center rounded-lg p-2 text-sm text-gray-500  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
                             onClick={toggleSidebar}
                         >
                             <span className='sr-only'>Open sidebar</span>
-                            <BsFilterLeft className='w-6 h-6' />
+                            <BsFilterLeft className='h-6 w-6' />
                         </button>
-                        <Link href={'#'} className='flex items-center mx-auto'>
-                            <div className='mr-3 h-9 w-9 sm:h-12 sm:w-12 relative'>
+                        <Link href={'#'} className='mx-auto flex items-center'>
+                            <div className='relative mr-3 h-9 w-9 sm:h-12 sm:w-12'>
                                 <Image src={'/assets/images/logoApp.png'} alt='EzQuiz Logo' fill />
                             </div>
 
-                            <span className=' text-gray-600 font-poppins self-center whitespace-nowrap text-3xl font-semibold dark:text-white'>Quizzes</span>
+                            <span className=' self-center whitespace-nowrap font-poppins text-3xl font-semibold text-gray-600 dark:text-white'>Quizzes</span>
                         </Link>
                     </div>
-                    <div className='h-full max-mdl:h-[calc(100%-2rem)] w-full pt-2 px-2 pb-4 flex flex-col justify-between overflow-y-auto bg-white divide-y divide-gray-200 dark:bg-gray-800'>
-                        <ul className='space-y-2 mt-2 font-medium mb-4 mdl:max-xl:flex mdl:max-xl:items-center mdl:max-xl:flex-col'>
+                    <div className='flex h-full w-full flex-col justify-between divide-y divide-gray-200 overflow-y-auto bg-white px-2 pb-4 pt-2 dark:bg-gray-800 max-mdl:h-[calc(100%-2rem)]'>
+                        <ul className='mb-4 mt-2 space-y-2 font-medium mdl:max-xl:flex mdl:max-xl:flex-col mdl:max-xl:items-center'>
                             {listLinks.map(
                                 (
                                     link: {
@@ -151,42 +151,42 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                             shallow={true}
                                             className={
                                                 pathName === link.to
-                                                    ? 'active relative group hover:scale-105 mdl:max-xl:flex-col mdl:max-xl:justify-center mdl:max-xl:items-center  flex p-2 font-bold text-bgPurple rounded-lg rounded-tl-lg dark:text-bgPurple hover:bg-gray-100 dark:hover:bg-gray-700'
-                                                    : 'group relative hover:scale-105 mdl:max-xl:flex-col mdl:max-xl:justify-center mdl:max-xl:items-center  flex p-2 text-gray-600 rounded-tr-lg rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
+                                                    ? 'active group relative flex rounded-lg rounded-tl-lg p-2  font-bold text-bgPurple hover:scale-105 hover:bg-gray-100 dark:text-bgPurple dark:hover:bg-gray-700 mdl:max-xl:flex-col mdl:max-xl:items-center mdl:max-xl:justify-center'
+                                                    : 'group relative flex rounded-lg rounded-tr-lg p-2  text-gray-600 hover:scale-105 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 mdl:max-xl:flex-col mdl:max-xl:items-center mdl:max-xl:justify-center'
                                             }
                                         >
                                             {pathName === link.to ? (
                                                 <link.icon.fill
                                                     className={
-                                                        ' ml-2 mdl:max-xl:ml-0 w-5 h-5 text-xl transform group-hover:scale-105 text-bgPurplePower opacity-70 transition duration-75 dark:text-bgPurplePower group-hover:opacity-90 dark:group-hover:text-purple-500'
+                                                        ' ml-2 h-5 w-5 transform text-xl text-bgPurplePower opacity-70 transition duration-75 group-hover:scale-105 group-hover:opacity-90 dark:text-bgPurplePower dark:group-hover:text-purple-500 mdl:max-xl:ml-0'
                                                     }
                                                 />
                                             ) : (
                                                 <link.icon.outline
                                                     className={
-                                                        'ml-2 mdl:max-xl:ml-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:scale-105 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white'
+                                                        'ml-2 h-5 w-5 text-gray-500 transition duration-75 group-hover:scale-105 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white mdl:max-xl:ml-0'
                                                     }
                                                 />
                                             )}
-                                            <span className='ml-3 mdl:max-xl:ml-0 mdl:max-xl:text-xs group-hover:font-semibold'>{link.name}</span>
+                                            <span className='ml-3 group-hover:font-semibold mdl:max-xl:ml-0 mdl:max-xl:text-xs'>{link.name}</span>
                                             {pathName === link.to && (
-                                                <div className='absolute -right-[3px] top-0 h-9 mdl:max-xl:hidden w-1 rounded-lg bg-bgPurple dark:bg-brand-400'></div>
+                                                <div className='absolute -right-[3px] top-0 h-9 w-1 rounded-lg bg-bgPurple dark:bg-brand-400 mdl:max-xl:hidden'></div>
                                             )}
                                         </Link>
                                     </motion.li>
                                 )
                             )}
                         </ul>
-                        <ul className='space-y-2 font-medium mdl:max-xl:flex mdl:max-xl:items-center mdl:max-xl:flex-col'>
+                        <ul className='space-y-2 font-medium mdl:max-xl:flex mdl:max-xl:flex-col mdl:max-xl:items-center'>
                             <li>
-                                <button className='group w-full mdl:max-xl:flex-col flex items-center p-2 text-gray-600 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'>
-                                    <AiOutlineGift className='w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white' />
+                                <button className='group flex w-full items-center rounded p-2 text-gray-600 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 mdl:max-xl:flex-col'>
+                                    <AiOutlineGift className='h-5 w-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white' />
                                     <span className='ml-3 mdl:max-xl:ml-0 mdl:max-xl:text-xs'>What&apos;s news?</span>
                                 </button>
                             </li>
                             <li>
-                                <button className='group w-full mdl:max-xl:flex-col flex items-center p-2 text-gray-600 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'>
-                                    <BiHelpCircle className='w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white' />
+                                <button className='group flex w-full items-center rounded p-2 text-gray-600 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 mdl:max-xl:flex-col'>
+                                    <BiHelpCircle className='h-5 w-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white' />
                                     <span className='ml-3 mdl:max-xl:ml-0 mdl:max-xl:text-xs'>Help</span>
                                 </button>
                             </li>
@@ -194,7 +194,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
                     </div>
                 </aside>
             </div>
-            <main className='mdl:ml-[6rem] xl:ml-52 mt-16'>{children}</main>
+            <main className='mt-16 mdl:ml-[6rem] xl:ml-52'>{children}</main>
         </>
     );
 }

@@ -2,13 +2,13 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { usePathname } from 'next/navigation';
-import { useState, useEffect, useRef } from 'react';
-import { AiOutlineGift, AiFillSetting, AiOutlineAppstoreAdd } from 'react-icons/ai';
+import { signOut, useSession } from 'next-auth/react';
+import { useState, useEffect } from 'react';
+import { useAnimate, stagger, motion } from 'framer-motion';
 
-import { BsFilterLeft, BsPlusLg } from 'react-icons/bs';
+import { AiFillSetting, AiOutlineAppstoreAdd } from 'react-icons/ai';
+import { BsFilterLeft } from 'react-icons/bs';
 import { FaExclamation } from 'react-icons/fa';
-
 import { VscSignOut } from 'react-icons/vsc';
 import { BsQuestionLg } from 'react-icons/bs';
 
@@ -19,10 +19,10 @@ const DynamicThemeSwitcher = dynamic(() => import('src/components/ThemeSwitcher'
 //redux
 import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
 import { useUserLogOutMutation } from 'src/app/redux/services/authApi';
-
-import { useAnimate, stagger, motion } from 'framer-motion';
-import { signOut, useSession } from 'next-auth/react';
 import { deleteSocket } from 'src/app/redux/slices/socketSlice';
+
+//
+import CreateQuizButton from '../Creator/CreateQuizButton';
 
 const staggerMenuItems = stagger(0.1, { startDelay: 0.15 });
 function useMenuAnimation(isOpen: boolean) {
@@ -98,39 +98,39 @@ function SubNavBar({ toggleSidebar }: IProps) {
     }, [isSuccess, session, router, dispatch, socket]);
 
     return (
-        <nav className=' shadow-sm fixed top-0 z-[97] w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
+        <nav className=' fixed top-0 z-[97] w-full border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800'>
             <div className='px-3 py-3 lg:px-5 lg:pl-3'>
                 <div className='flex items-center justify-between'>
                     <div className='flex items-center justify-start'>
                         <button
                             type='button'
-                            className=' inline-flex items-center p-2 text-sm text-gray-500 rounded-lg mdl:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
+                            className=' inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 mdl:hidden'
                             onClick={toggleSidebar}
                         >
                             <span className='sr-only'>Open sidebar</span>
-                            <BsFilterLeft className='w-6 h-6' />
+                            <BsFilterLeft className='h-6 w-6' />
                         </button>
-                        <Link href={'#'} className='flex items-center ml-2 md:mr-24 max-mdl:hidden'>
-                            <div className='mr-3 h-6 w-6 sm:h-9 sm:w-9 relative'>
+                        <Link href={'#'} className='ml-2 flex items-center max-mdl:hidden md:mr-24'>
+                            <div className='relative mr-3 h-6 w-6 sm:h-9 sm:w-9'>
                                 <Image src={'/assets/images/logoApp.png'} alt='EzQuiz Logo' fill />
                             </div>
 
-                            <span className=' text-gray-600 font-poppins self-center whitespace-nowrap text-2xl font-semibold dark:text-white'>Quizzes</span>
+                            <span className=' self-center whitespace-nowrap font-poppins text-2xl font-semibold text-gray-600 dark:text-white'>Quizzes</span>
                         </Link>
                     </div>
                     {/* button open user menu */}
                     <div className='flex items-center'>
-                        <div className='flex items-center ml-3'>
+                        <div className='ml-3 flex items-center'>
                             <Link
                                 href='/game/join'
-                                className='mr-1 max-md:h-8 max-md:w-8 md:px-5 md:py-2.5 flex items-center justify-center rounded-lg bg-purple-700 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 '
+                                className='mr-1 flex items-center justify-center rounded-lg bg-purple-700 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 max-md:h-8 max-md:w-8 md:px-5 md:py-2.5 '
                             >
                                 <AiOutlineAppstoreAdd className='h-5 w-5' />
                                 <span className='ml-1 max-md:hidden'>Join</span>
                             </Link>
                         </div>
 
-                        <div className='flex items-center ml-3'>
+                        {/* <div className='flex items-center ml-3'>
                             <Link
                                 href='/creator'
                                 className='mr-1 max-md:h-8 max-md:w-8 md:px-5 md:py-2.5 flex items-center justify-center rounded-lg bg-purple-700 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 '
@@ -138,9 +138,13 @@ function SubNavBar({ toggleSidebar }: IProps) {
                                 <BsPlusLg className='h-5 w-5' />
                                 <span className='ml-1 max-md:hidden'>Create Quiz</span>
                             </Link>
+                        </div> */}
+
+                        <div className='ml-3 flex items-center'>
+                            <CreateQuizButton />
                         </div>
 
-                        <div ref={scope} className='flex items-center ml-3'>
+                        <div ref={scope} className='ml-3 flex items-center'>
                             <motion.button
                                 whileTap={{ scale: 0.97 }}
                                 type='button'
@@ -148,7 +152,7 @@ function SubNavBar({ toggleSidebar }: IProps) {
                                 onClick={() => setUserMenuOpen(!userMenuOpen)}
                             >
                                 <span className='sr-only'>Open user menu</span>
-                                <div className='h-8 w-8  relative'>
+                                <div className='relative h-8  w-8'>
                                     <Image
                                         fill
                                         src={user?.avatar ? user.avatar : '/assets/images/default_avatar.png'}
@@ -167,14 +171,14 @@ function SubNavBar({ toggleSidebar }: IProps) {
                                 }}
                                 className={
                                     `${userMenuOpen ? 'block' : 'hidden'}` +
-                                    ' w-[60%] sm:w-[50%] md:w-[30%] xl:w-[20%] absolute top-12 right-0 sm:right-1 xl:right-4 z-50 my-4 pt-2 py-4 text-base list-none bg-white divide-y divide-gray-200 rounded shadow-lg dark:bg-gray-700 dark:divide-gray-600'
+                                    ' absolute right-0 top-12 z-50 my-4 w-[60%] list-none divide-y divide-gray-200 rounded bg-white py-4 pt-2 text-base shadow-lg dark:divide-gray-600 dark:bg-gray-700 sm:right-1 sm:w-[50%] md:w-[30%] xl:right-4 xl:w-[20%]'
                                 }
                                 id='dropdown-user'
                             >
                                 <li>
-                                    <div className='px-4 py-3 flex items-center justify-between group cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600'>
+                                    <div className='group flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600'>
                                         <div className='flex items-center'>
-                                            <div className='h-8 w-8 mr-2 relative '>
+                                            <div className='relative mr-2 h-8 w-8 '>
                                                 <Image
                                                     fill
                                                     src={user?.avatar ? user.avatar : '/assets/images/default_avatar.png'}
@@ -184,55 +188,55 @@ function SubNavBar({ toggleSidebar }: IProps) {
                                             </div>
                                             <span className='block text-sm text-gray-900 dark:text-white'>{user?.userName || 'UserName'}</span>
                                         </div>
-                                        <span className='block text-xs text-gray-900 dark:text-white hover:underline'>View ProFile</span>
+                                        <span className='block text-xs text-gray-900 hover:underline dark:text-white'>View ProFile</span>
                                     </div>
                                 </li>
 
-                                <li className='flex gap-1 items-center hover:bg-gray-100 rounded-lg px-4'>
-                                    <span className='flex items-center justify-center h-[36px] w-[36px] bg-bgGray rounded-full'>
-                                        <FaExclamation className='w-3/4 h-3/4' />
+                                <li className='flex items-center gap-1 rounded-lg px-4 hover:bg-gray-100'>
+                                    <span className='flex h-[36px] w-[36px] items-center justify-center rounded-full bg-bgGray'>
+                                        <FaExclamation className='h-3/4 w-3/4' />
                                     </span>
 
                                     <button
-                                        className='flex-1 px-4 py-3 text-sm text-textBlack font-semibold dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white text-left'
+                                        className='flex-1 px-4 py-3 text-left text-sm font-semibold text-textBlack dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white'
                                         role='menuitem'
                                     >
                                         Opinion
                                     </button>
                                 </li>
-                                <li className='flex gap-1 items-center hover:bg-gray-100 rounded-lg px-4'>
-                                    <span className='flex items-center justify-center h-[36px] w-[36px] bg-bgGray rounded-full'>
-                                        <AiFillSetting className='w-3/4 h-3/4' />
+                                <li className='flex items-center gap-1 rounded-lg px-4 hover:bg-gray-100'>
+                                    <span className='flex h-[36px] w-[36px] items-center justify-center rounded-full bg-bgGray'>
+                                        <AiFillSetting className='h-3/4 w-3/4' />
                                     </span>
 
                                     <button
-                                        className='flex-1 px-4 py-3 text-sm text-textBlack font-semibold dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white text-left'
+                                        className='flex-1 px-4 py-3 text-left text-sm font-semibold text-textBlack dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white'
                                         role='menuitem'
                                     >
                                         Settings
                                     </button>
                                 </li>
-                                <li className='flex gap-1 items-center hover:bg-gray-100 rounded-lg px-4'>
-                                    <span className='flex items-center justify-center h-[36px] w-[36px] bg-bgGray rounded-full'>
-                                        <BsQuestionLg className='w-3/4 h-3/4' />
+                                <li className='flex items-center gap-1 rounded-lg px-4 hover:bg-gray-100'>
+                                    <span className='flex h-[36px] w-[36px] items-center justify-center rounded-full bg-bgGray'>
+                                        <BsQuestionLg className='h-3/4 w-3/4' />
                                     </span>
 
                                     <button
-                                        className='flex-1 px-4 py-3 text-sm text-textBlack font-semibold dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white text-left'
+                                        className='flex-1 px-4 py-3 text-left text-sm font-semibold text-textBlack dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white'
                                         role='menuitem'
                                     >
                                         Help Q&A
                                     </button>
                                 </li>
 
-                                <li className='flex gap-1 items-center hover:bg-gray-100 rounded-lg px-4'>
-                                    <span className='flex items-center justify-center h-[36px] w-[36px] bg-bgGray rounded-full'>
-                                        <VscSignOut className='w-3/4 h-3/4' />
+                                <li className='flex items-center gap-1 rounded-lg px-4 hover:bg-gray-100'>
+                                    <span className='flex h-[36px] w-[36px] items-center justify-center rounded-full bg-bgGray'>
+                                        <VscSignOut className='h-3/4 w-3/4' />
                                     </span>
 
                                     <button
                                         onClick={handleButton}
-                                        className='flex-1 px-4 py-3 text-sm text-textBlack font-semibold dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white text-left'
+                                        className='flex-1 px-4 py-3 text-left text-sm font-semibold text-textBlack dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white'
                                         role='menuitem'
                                     >
                                         Sign out
@@ -240,7 +244,7 @@ function SubNavBar({ toggleSidebar }: IProps) {
                                 </li>
                             </ul>
                         </div>
-                        <div className='flex items-center ml-2 sm:ml-4 xl:ml-6'>
+                        <div className='ml-2 flex items-center sm:ml-4 xl:ml-6'>
                             <DynamicThemeSwitcher />
                         </div>
                     </div>

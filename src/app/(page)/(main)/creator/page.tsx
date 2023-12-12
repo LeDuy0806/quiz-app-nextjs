@@ -1,39 +1,16 @@
 'use client';
-import { useEffect, useState } from 'react';
-import Modal from 'react-modal';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-import ContentEditor from 'src/components/Creator/ContentEditor';
-import CreatorNavbar from 'src/components/Creator/CreatorNavbar';
-import CreatorSidebar from 'src/components/Creator/CreatorSidebar';
-import QuizSettingModal from 'src/components/Creator/QuizSettingModal';
-
-import { useAppSelector } from 'src/app/redux/hooks';
+import paths from 'src/constants/paths';
 
 function CreatorPage() {
-    const { quiz } = useAppSelector((state) => state.quizCreator);
-
-    const [isOpenModal, setIsOpenModal] = useState(false);
+    const { push } = useRouter();
 
     useEffect(() => {
-        document.title = 'Quizzes Creator';
-    }, []);
-    Modal.setAppElement('body');
-
-    useEffect(() => {
-        console.log(quiz);
-    }, [quiz]);
-
-    return (
-        <>
-            <main>
-                <CreatorNavbar setIsOpenModal={setIsOpenModal} />
-                <CreatorSidebar />
-                <ContentEditor />
-            </main>
-
-            <QuizSettingModal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
-        </>
-    );
+        push(paths.library);
+    }, [push]);
+    return <></>;
 }
 
 export default CreatorPage;

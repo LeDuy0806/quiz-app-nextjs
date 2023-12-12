@@ -9,7 +9,7 @@ import Manage from 'src/components/landing/Manage/Manage';
 
 export default function Home() {
     return (
-        <main className='w-full max-w-full min-h-screen z-[100] flex flex-col  items-end font-fontFamily bg-bgGray overflow-hidden mx-auto mt-auto'>
+        <main className='font-fontFamily z-[100] mx-auto mt-auto flex min-h-screen w-full max-w-full flex-col items-end overflow-hidden bg-bgGray'>
             <Navbar />
             <Intro />
             <Manage />

@@ -34,8 +34,12 @@ const quizSlice = createSlice({
             });
         },
 
-        fetchPublicQuizzes: (state, action) => {
-            state.quizzes = action.payload;
+        fetchPublicQuizzes: (state, action: PayloadAction) => {
+            state.FilteredTeacherQuizzes = state.TeacherQuizzes.filter((quiz) => quiz?.isPublic);
+        },
+
+        fetchPrivateQuizzes: (state, action: PayloadAction) => {
+            state.FilteredTeacherQuizzes = state.TeacherQuizzes.filter((quiz) => !quiz?.isPublic);
         },
 
         setQuizPlay: (state, action: PayloadAction<QuizType>) => {
@@ -77,7 +81,6 @@ const quizSlice = createSlice({
 });
 
 export const {
-    fetchPublicQuizzes,
     fetchTeacherQuizzes,
     filterTeacherQuizzesByName,
     fetchQuizzesBySearch,
@@ -87,7 +90,9 @@ export const {
     deleteQuiz,
     fetchQuiz,
     setQuizPlay,
-    addLibraryQuiz
+    addLibraryQuiz,
+    fetchPublicQuizzes,
+    fetchPrivateQuizzes
 } = quizSlice.actions;
 
 const quizReducer = quizSlice.reducer;
