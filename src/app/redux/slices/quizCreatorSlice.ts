@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import {
     QuizType,
     QuestionType,
@@ -10,24 +11,30 @@ import {
     AnswerNameEnum,
     AnswerType
 } from 'src/app/types/creator';
+import { CreatorMessages } from 'src/constants/messages';
+import { ToastOptions } from 'src/constants/toast';
 
-type InitialType = {
+type CreatorStateType = {
     quiz: QuizType;
     activeQuestion: QuestionType;
+    deleteQuestionIndex: number | null;
+    openDeleteQuestionDialog: boolean;
     isUpdate: boolean;
 };
 
 const initialState = {
     quiz: initialQuiz,
     activeQuestion: initialQuestion,
+    deleteQuestionIndex: null,
+    openDeleteQuestionDialog: false,
     isUpdate: false
-} as InitialType;
+} as CreatorStateType;
 
 const quizCreatorSlice = createSlice({
     name: 'quizCreator',
     initialState,
     reducers: {
-        updateQuizInfo: (state, action: PayloadAction<QuizType>) => {
+        setQuiz: (state, action: PayloadAction<QuizType>) => {
             state.quiz = action.payload;
         },
 
@@ -75,7 +82,7 @@ const quizCreatorSlice = createSlice({
 
             // check if question type is true/false
             if (state.activeQuestion.questionType === QuestionTypeEnum.TRUE_FALSE) {
-                alert('You cannot change option question type for true/false question');
+                toast.error(CreatorMessages.ERROR.CHANGE_QUESTION_TYPE, ToastOptions);
                 return;
             }
 
@@ -158,18 +165,30 @@ const quizCreatorSlice = createSlice({
             state.quiz.questionList[state.activeQuestion.questionIndex - 1].answerList = state.activeQuestion.answerList;
         },
 
-        addQuestion: (state) => {
+        addQuestion: (state, action: PayloadAction<string>) => {
+            // new question
             state.activeQuestion = {
                 ...initialQuestion,
-                questionIndex: state.quiz.questionList.length + 1
+                creator: action.payload,
+                questionIndex: state.activeQuestion.questionIndex + 1
             };
 
-            state.quiz.questionList.push({
-                ...initialQuestion,
-                questionIndex: state.quiz.questionList.length + 1
-            });
+            // add new question to question list
+            state.quiz.questionList = [
+                ...state.quiz.questionList.slice(0, state.activeQuestion.questionIndex - 1),
+                state.activeQuestion,
+                ...state.quiz.questionList.slice(state.activeQuestion.questionIndex - 1)
+            ];
+
+            // reset question index
+            state.quiz.questionList = state.quiz.questionList.map((question, index) => ({
+                ...question,
+                questionIndex: index + 1
+            }));
 
             state.quiz.numberOfQuestions = state.quiz.questionList.length;
+
+            toast.success(CreatorMessages.SUCCESS.ADD_QUESTION, ToastOptions);
         },
 
         setActiveQuestion: (state, action: PayloadAction<number>) => {
@@ -181,16 +200,19 @@ const quizCreatorSlice = createSlice({
             state.activeQuestion = state.quiz.questionList[action.payload - 1];
         },
 
-        deleteQuestion: (state, action: PayloadAction<number>) => {
-            // check if there is only one question left
-            if (state.quiz.questionList.length === 1) {
-                alert('You cannot delete the last question');
-                return;
-            }
+        setDeleteQuestionIndex: (state, action: PayloadAction<number | null>) => {
+            state.deleteQuestionIndex = action.payload;
+        },
 
+        setOpenDeleteQuestionDialog: (state, action: PayloadAction<boolean>) => {
+            state.openDeleteQuestionDialog = action.payload;
+        },
+
+        deleteQuestion: (state, action: PayloadAction<number>) => {
             // delete question
             state.quiz.questionList = state.quiz.questionList.filter((question) => question.questionIndex !== action.payload);
             state.quiz.numberOfQuestions = state.quiz.questionList.length;
+            toast.success(CreatorMessages.SUCCESS.DELETE_QUESTION, ToastOptions);
 
             // reset question index
             state.quiz.questionList = state.quiz.questionList.map((question, index) => ({
@@ -242,6 +264,7 @@ const quizCreatorSlice = createSlice({
 
             // reset active question
             state.activeQuestion = state.quiz.questionList[action.payload];
+            toast.success(CreatorMessages.SUCCESS.DUPLICATE_QUESTION, ToastOptions);
         },
 
         saveQuiz: (state) => {
@@ -263,7 +286,7 @@ const quizCreatorSlice = createSlice({
 });
 
 export const {
-    updateQuizInfo,
+    setQuiz,
     setQuestionType,
     setAnswerTime,
     setPointType,
@@ -273,7 +296,9 @@ export const {
     setCorrectAnswer,
     addQuestion,
     setActiveQuestion,
+    setDeleteQuestionIndex,
     deleteQuestion,
+    setOpenDeleteQuestionDialog,
     duplicateQuestion,
     saveQuiz
 } = quizCreatorSlice.actions;

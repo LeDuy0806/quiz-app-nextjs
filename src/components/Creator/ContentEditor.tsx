@@ -2,8 +2,8 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { InputBase } from '@mui/material';
 import { HiDotsVertical, HiPlus } from 'react-icons/hi';
-
 import { newCreatorBg } from '../../../public/assets/images/creator';
+
 import { cn } from 'src/utils/tailwind.util';
 import AnswerItem from 'src/components/Creator/AnswerItem';
 import QuestionSettingSidebar from './QuestionSettingSidebar';

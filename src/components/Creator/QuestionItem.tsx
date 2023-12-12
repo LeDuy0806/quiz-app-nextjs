@@ -1,22 +1,60 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
-import { QuestionType, QuestionTypeEnum } from 'src/app/types/creator';
-import { cn } from 'src/utils/tailwind.util';
 import { FaRegTrashCan } from 'react-icons/fa6';
 import { HiOutlineDuplicate } from 'react-icons/hi';
-import { useAppDispatch } from 'src/app/redux/hooks';
-import { deleteQuestion, duplicateQuestion, setActiveQuestion } from 'src/app/redux/slices/quizCreatorSlice';
-import { useState } from 'react';
+import { Tooltip, TooltipProps, styled, tooltipClasses } from '@mui/material';
+
+import { QuestionType, QuestionTypeEnum } from 'src/app/types/creator';
+import { cn } from 'src/utils/tailwind.util';
+import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
+import { duplicateQuestion, setActiveQuestion, setDeleteQuestionIndex, setOpenDeleteQuestionDialog } from 'src/app/redux/slices/quizCreatorSlice';
+import { toast } from 'react-toastify';
+import { CreatorMessages } from 'src/constants/messages';
+import { ToastOptions } from 'src/constants/toast';
 
 interface IProps {
     isActive: boolean;
     questionData: QuestionType;
 }
 
+const LightTooltip = styled(({ className, ...props }: TooltipProps) => <Tooltip {...props} arrow classes={{ popper: className }} />)(({ theme }) => ({
+    [`& .${tooltipClasses.arrow}`]: {
+        color: theme.palette.common.black
+    },
+
+    [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+        boxShadow: theme.shadows[1],
+        fontSize: 14
+    }
+}));
+
 function QuestionItem({ isActive = false, questionData }: IProps) {
+    const { quiz } = useAppSelector((state) => state.quizCreator);
+
     const dispatch = useAppDispatch();
     const [isHovered, setIsHovered] = useState(false);
+
+    const handleDeleteQuestion = () => {
+        // check if there is only one question left
+        if (quiz.questionList.length === 1) {
+            toast.error(CreatorMessages.ERROR.DELETE_LAST_QUESTION, ToastOptions);
+            return;
+        }
+        dispatch(setDeleteQuestionIndex(questionData.questionIndex));
+        dispatch(setOpenDeleteQuestionDialog(true));
+    };
+
+    const handleDuplicateQuestion = () => {
+        dispatch(duplicateQuestion(questionData.questionIndex));
+    };
+
+    const handleActiveQuestion = () => {
+        dispatch(setActiveQuestion(questionData.questionIndex));
+    };
 
     return (
         <div
@@ -40,24 +78,22 @@ function QuestionItem({ isActive = false, questionData }: IProps) {
                         hidden: !isActive && !isHovered
                     })}
                 >
-                    <button
-                        onClick={() => dispatch(deleteQuestion(questionData.questionIndex))}
-                        className='rounded-full p-1 transition hover:bg-red-500 hover:text-white'
-                    >
-                        <FaRegTrashCan className='h-4 w-4' />
-                    </button>
-                    <button
-                        onClick={() => dispatch(duplicateQuestion(questionData.questionIndex))}
-                        className='rounded-full p-1 transition hover:bg-blue-500 hover:text-white'
-                    >
-                        <HiOutlineDuplicate className='h-5 w-5' />
-                    </button>
+                    <LightTooltip title='Delete'>
+                        <button onClick={handleDeleteQuestion} className='rounded-full p-1 transition hover:bg-red-500 hover:text-white'>
+                            <FaRegTrashCan className='h-4 w-4' />
+                        </button>
+                    </LightTooltip>
+                    <LightTooltip title='Duplicate'>
+                        <button onClick={handleDuplicateQuestion} className='rounded-full p-1 transition hover:bg-blue-500 hover:text-white'>
+                            <HiOutlineDuplicate className='h-5 w-5' />
+                        </button>
+                    </LightTooltip>
                 </div>
             </div>
 
             {/* Question Card */}
             <div
-                onClick={() => dispatch(setActiveQuestion(questionData.questionIndex))}
+                onClick={handleActiveQuestion}
                 className='w-full cursor-pointer rounded-lg bg-[#f2f2f2] p-1 shadow-[0px_0px_0px_4px_transparent] outline-none transition-shadow hover:shadow-[0px_0px_0px_4px_rgb(201,201,201)] max-lg:w-30 lg:min-h-[8rem]'
             >
                 {/* title */}

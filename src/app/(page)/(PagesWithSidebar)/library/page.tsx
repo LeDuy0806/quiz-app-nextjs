@@ -1,22 +1,29 @@
 'use client';
 import { useEffect, useState } from 'react';
-
-//icons
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { HiMagnifyingGlass } from 'react-icons/hi2';
-
-//animation
 import { motion } from 'framer-motion';
 
-//component
+// component
 import QuizCard from 'src/components/library/QuizCard';
 
-//redux
+// redux
 import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
 import { useGetTeacherQuizzesQuery } from 'src/app/redux/services/quizApi';
 import QuizType from 'src/app/types/quizType';
-import { fetchTeacherQuizzes, filterTeacherQuizzesByName } from 'src/app/redux/slices/quizSlice';
+import { fetchPrivateQuizzes, fetchPublicQuizzes, fetchTeacherQuizzes, filterTeacherQuizzesByName } from 'src/app/redux/slices/quizSlice';
 
+// utils
+import { cn } from 'src/utils/tailwind.util';
+
+// data
 import Quiz, { ListQuiz } from 'src/data';
+
+enum FilterEnum {
+    ALL = 'all',
+    PUBLIC = 'public',
+    PRIVATE = 'private'
+}
 
 function LibraryPage() {
     useEffect(() => {
@@ -28,98 +35,87 @@ function LibraryPage() {
     const fakeData: QuizType[] = ListQuiz;
 
     const authData = useAppSelector((state) => state.auth.authData);
+
     const teacherId = authData?.user?._id;
 
-    const { data, isLoading, isSuccess } = useGetTeacherQuizzesQuery({ teacherId });
+    // const { data, isLoading, isSuccess } = useGetTeacherQuizzesQuery({ teacherId });
 
-    useEffect(() => {
-        if (isSuccess && data) {
-            dispatch(fetchTeacherQuizzes(data));
-        }
-    }, [dispatch, data, isSuccess]);
+    // useEffect(() => {
+    //     if (isSuccess && data) {
+    //         dispatch(fetchTeacherQuizzes(data));
+    //     }
+    // }, [dispatch, data, isSuccess]);
 
     const quizzes = useAppSelector((state) => state.quiz.FilteredTeacherQuizzes);
 
-    // useEffect(() => {
-    //     dispatch(fetchTeacherQuizzes(fakeData));
-    // }, []);
+    const [filter, setFilter] = useState(FilterEnum.ALL);
 
-    if (isLoading) return <div>Loading...</div>;
+    useEffect(() => {
+        dispatch(fetchTeacherQuizzes(fakeData));
+    }, [dispatch, fakeData]);
+
+    // if (isLoading) return <div>Loading...</div>;
+
+    const handleChangeFilter = (event: React.MouseEvent<HTMLElement, MouseEvent>, newFilter: FilterEnum) => {
+        setFilter(newFilter);
+
+        if (newFilter === FilterEnum.PUBLIC) {
+            dispatch(fetchPublicQuizzes());
+            return;
+        }
+
+        if (newFilter === FilterEnum.PRIVATE) {
+            dispatch(fetchPrivateQuizzes());
+            return;
+        }
+
+        dispatch(fetchTeacherQuizzes(fakeData));
+    };
 
     return (
-        <div className='w-full px-4 pt-6'>
-            {/* Responsive: Mobile View */}
-            <div className='md:hidden'>
-                <form className='mb-4 flex items-center'>
-                    <label htmlFor='simple-search' className='sr-only'>
-                        Search
-                    </label>
-                    <div className='relative w-full'>
-                        <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
-                            <HiMagnifyingGlass className='h-5 w-5 text-gray-500 dark:text-gray-400' />
-                        </div>
-                        <input
-                            type='text'
-                            id='simple-search'
-                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500'
-                            placeholder='Search...'
-                            onChange={(e) => {
-                                dispatch(filterTeacherQuizzesByName(e.target.value));
-                            }}
-                        />
-                    </div>
-                    <button
-                        type='submit'
-                        className='ml-2 rounded-lg border border-blue-700 bg-blue-700 p-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-                    >
-                        <svg className='h-5 w-5' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
-                        </svg>
-                        <span className='sr-only'>Search</span>
-                    </button>
-                </form>
-
-                <label htmlFor='tabs' className='sr-only'>
-                    Select
-                </label>
-                <select
-                    id='tabs'
-                    className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500'
-                >
-                    <option>All</option>
-                    <option>Public</option>
-                    <option>Private</option>
-                </select>
-            </div>
-
-            {/* Setting Visibility and Search Bar */}
-            <ul className='hidden w-full rounded-lg text-center text-sm font-medium text-gray-500 dark:divide-gray-700 dark:text-gray-400 md:flex'>
-                <li className='w-20'>
-                    <button
-                        className='active inline-block w-full rounded-l-lg bg-gray-100 p-4 text-gray-900 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-gray-700 dark:text-white'
-                        aria-current='page'
+        <div className='px-4 py-6'>
+            <div className='w-full md:flex'>
+                {/* Setting Visibility and Search Bar */}
+                <ToggleButtonGroup className='mr-4 max-md:w-full' value={filter}>
+                    <ToggleButton
+                        color='standard'
+                        value={FilterEnum.ALL}
+                        className={cn('inline-block w-full rounded-l-lg md:w-20', {
+                            'font-semibold': filter === FilterEnum.ALL
+                        })}
+                        onClick={handleChangeFilter}
                     >
                         All
-                    </button>
-                </li>
-                <li className='w-20'>
-                    <button className='inline-block w-full bg-white p-4 hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white'>
+                    </ToggleButton>
+                    <ToggleButton
+                        color='success'
+                        value={FilterEnum.PUBLIC}
+                        className={cn('inline-block w-full md:w-20', {
+                            'font-semibold': filter === FilterEnum.PUBLIC
+                        })}
+                        onClick={handleChangeFilter}
+                    >
                         Public
-                    </button>
-                </li>
-                <li className='mr-2 w-20'>
-                    <button className='inline-block w-full rounded-r-lg bg-white p-4 hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white'>
+                    </ToggleButton>
+                    <ToggleButton
+                        color='error'
+                        value={FilterEnum.PRIVATE}
+                        className={cn('inline-block w-full rounded-r-lg md:w-20', {
+                            'font-semibold': filter === FilterEnum.PRIVATE
+                        })}
+                        onClick={handleChangeFilter}
+                    >
                         Private
-                    </button>
-                </li>
+                    </ToggleButton>
+                </ToggleButtonGroup>
 
                 {/* Search Bar */}
-                <li className='w-full'>
+                <div className='w-full max-md:mt-4'>
                     <form>
                         <label htmlFor='default-search' className='sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white'>
                             Search
                         </label>
-                        <div className='relative'>
+                        <div className='relative w-full'>
                             <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
                                 <svg
                                     aria-hidden='true'
@@ -141,19 +137,13 @@ function LibraryPage() {
                                     dispatch(filterTeacherQuizzesByName(e.target.value));
                                 }}
                             />
-                            <button
-                                type='submit'
-                                className='absolute bottom-2.5 right-2.5 rounded-lg bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-                            >
-                                Search
-                            </button>
                         </div>
                     </form>
-                </li>
-            </ul>
+                </div>
+            </div>
 
             {/* List Quiz Card */}
-            <ul className='flex flex-wrap items-center justify-between gap-6 py-6 max-xl:gap-4'>
+            <ul className='mt-4 flex flex-wrap items-center justify-between gap-6 max-xl:gap-4'>
                 {quizzes &&
                     quizzes.map((quiz, i) => (
                         <motion.div

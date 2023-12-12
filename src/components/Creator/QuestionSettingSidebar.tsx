@@ -1,4 +1,10 @@
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Dispatch, SetStateAction } from 'react';
+import { toast } from 'react-toastify';
+
+// constants
+import { CreatorMessages } from 'src/constants/messages';
+import { ToastOptions } from 'src/constants/toast';
 
 // icons
 import { TbAdjustmentsQuestion, TbClock } from 'react-icons/tb';
@@ -8,20 +14,46 @@ import { FaChevronLeft } from 'react-icons/fa';
 
 // utils
 import { cn } from 'src/utils/tailwind.util';
+
+// types
 import { OptionQuestionEnum, PointTypeEnum, QuestionTypeEnum, AnswerTimeEnum } from 'src/app/types/creator';
+
+// redux
 import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
-import { deleteQuestion, duplicateQuestion, setAnswerTime, setOptionQuestion, setPointType, setQuestionType } from 'src/app/redux/slices/quizCreatorSlice';
+import {
+    duplicateQuestion,
+    setAnswerTime,
+    setDeleteQuestionIndex,
+    setOpenDeleteQuestionDialog,
+    setOptionQuestion,
+    setPointType,
+    setQuestionType
+} from 'src/app/redux/slices/quizCreatorSlice';
 
 interface IProps {
     isOpen: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function QuestionSettingSidebar({ isOpen, setOpen }: IProps) {
-    const { activeQuestion } = useAppSelector((state) => state.quizCreator);
+    const { quiz, activeQuestion } = useAppSelector((state) => state.quizCreator);
     const dispatch = useAppDispatch();
 
     const { questionType, answerTime, pointType, optionQuestion, questionIndex } = activeQuestion;
+
+    const handleDeleteQuestion = () => {
+        // check if there is only one question left
+        if (quiz.questionList.length === 1) {
+            toast.error(CreatorMessages.ERROR.DELETE_LAST_QUESTION, ToastOptions);
+            return;
+        }
+        dispatch(setDeleteQuestionIndex(questionIndex));
+        dispatch(setOpenDeleteQuestionDialog(true));
+    };
+
+    const handleDuplicateQuestion = () => {
+        dispatch(duplicateQuestion(questionIndex));
+    };
 
     return (
         <div
@@ -135,10 +167,10 @@ export default function QuestionSettingSidebar({ isOpen, setOpen }: IProps) {
 
                 {/* Buttons */}
                 <div className='mt-4 flex justify-center gap-4'>
-                    <button onClick={() => dispatch(deleteQuestion(questionIndex))} className='rounded-md px-4 py-1 hover:bg-slate-200'>
+                    <button onClick={handleDeleteQuestion} className='rounded-md px-4 py-1 hover:bg-slate-200'>
                         <span className='font-semibold'>delete</span>
                     </button>
-                    <button onClick={() => dispatch(duplicateQuestion(questionIndex))} className='rounded-md px-4 py-1 outline outline-1 hover:bg-slate-200'>
+                    <button onClick={handleDuplicateQuestion} className='rounded-md px-4 py-1 outline outline-1 hover:bg-slate-200'>
                         <span className='font-semibold'>duplicate</span>
                     </button>
                 </div>

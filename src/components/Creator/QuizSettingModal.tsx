@@ -1,11 +1,12 @@
-import { FormControlLabel, InputBase, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent } from '@mui/material';
 import Image from 'next/image';
 import Modal from 'react-modal';
-import { CategoryEnum, GradeEnum, ObjectCategoryType, ObjectGradeType } from 'src/app/types/creator';
-import defaultCoverImage from '../../../public/assets/images/creator/background.webp';
 import { ChangeEvent, useState } from 'react';
+import { FormControlLabel, InputBase, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent } from '@mui/material';
+import defaultCoverImage from '../../../public/assets/images/creator/background.webp';
+
+import { CategoryEnum, GradeEnum, ObjectCategoryType, ObjectGradeType } from 'src/app/types/creator';
 import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
-import { updateQuizInfo } from 'src/app/redux/slices/quizCreatorSlice';
+import { setQuiz } from 'src/app/redux/slices/quizCreatorSlice';
 
 const customStylesModal: any = {
     overlay: {
@@ -60,10 +61,11 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal }: IProps) {
     const [modalData, setModalData] = useState<ModalDataType>(initialModalData);
 
     const handleCloseModal = () => {
+        setModalData(initialModalData);
         setIsOpenModal(false);
     };
 
-    const handleUpdateQuizName = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleUpdateQuizName = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setModalData({
             ...modalData,
             name: e.target.value
@@ -77,7 +79,7 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal }: IProps) {
         });
     };
 
-    const handleUpdateQuizVisibility = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleUpdateQuizVisibility = (e: ChangeEvent<HTMLInputElement>) => {
         setModalData({
             ...modalData,
             isPublic: e.target.value === 'public'
@@ -106,7 +108,7 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal }: IProps) {
 
     const handleUpdateQuiz = () => {
         dispatch(
-            updateQuizInfo({
+            setQuiz({
                 ...quiz,
                 name: modalData.name,
                 description: modalData.description,
@@ -221,7 +223,7 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal }: IProps) {
 
                         <div className='mt-4'>
                             <h2 className='font-semibold'>Visibility</h2>
-                            <RadioGroup defaultValue='public' row onChange={handleUpdateQuizVisibility}>
+                            <RadioGroup defaultValue='public' row onChange={handleUpdateQuizVisibility} value={modalData.isPublic ? 'public' : 'private'}>
                                 <FormControlLabel value='public' control={<Radio />} label='Public' />
                                 <FormControlLabel value='private' control={<Radio />} label='Private' />
                             </RadioGroup>
