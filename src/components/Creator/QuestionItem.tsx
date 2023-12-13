@@ -110,7 +110,14 @@ function QuestionItem({ isActive = false, questionData }: IProps) {
                     {/* preview image */}
                     <div className='h-10 w-10  border border-dashed border-gray-300 p-2'>
                         <div className='relative h-full w-full'>
-                            <Image src={'/assets/images/defaultQuestionImage.png'} alt='Quizzes logo' fill />
+                            <Image
+                                src={questionData.backgroundImage || '/assets/images/defaultQuestionImage.png'}
+                                alt='Question Image'
+                                fill
+                                sizes='100%'
+                                className='object-contain'
+                                priority={true}
+                            />
                         </div>
                     </div>
                 </div>

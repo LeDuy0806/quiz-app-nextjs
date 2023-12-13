@@ -8,6 +8,7 @@ import { setActiveQuestion, setQuiz } from 'src/app/redux/slices/quizCreatorSlic
 import { useRouter } from 'next/navigation';
 
 import { initialQuiz } from 'src/app/types/creator';
+import { CreatorType } from 'src/app/types/quizType';
 
 const customStylesModal: any = {
     overlay: {
@@ -45,16 +46,11 @@ type ModalDataType = {
 export default function CreateQuizButton({}: IProps) {
     const dispatch = useAppDispatch();
     const {
-        creator: { quiz },
+        quizCreator: { quiz },
         auth: {
-            authData: {
-                user: { userName }
-            }
+            authData: { user }
         }
-    } = useAppSelector((state) => ({
-        creator: state.quizCreator,
-        auth: state.auth
-    }));
+    } = useAppSelector((state) => state);
 
     const router = useRouter();
 
@@ -98,11 +94,18 @@ export default function CreateQuizButton({}: IProps) {
         dispatch(
             setQuiz({
                 ...initialQuiz,
-                _id: newId,
+                _id: '',
                 name: modalData.name,
                 description: modalData.description,
                 isPublic: modalData.isPublic,
-                creator: userName
+                creator: {
+                    _id: user._id,
+                    userName: user.userName,
+                    avatar: user.avatar,
+                    userType: user.userType,
+                    firstName: user.firstName,
+                    lastName: user.lastName
+                }
             })
         );
         dispatch(setActiveQuestion(quiz.questionList[0].questionIndex));

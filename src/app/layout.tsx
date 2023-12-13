@@ -2,7 +2,6 @@
 
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { Provider } from 'react-redux';
 import { SessionProvider } from 'next-auth/react';
 
@@ -11,8 +10,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import store from './redux/store';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
     title: 'Quizzes',
@@ -25,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang='en'>
             <head>
                 <title>Quizzes</title>
-                <link rel='shortcut icon' href='/assets/images/logoApp.png' />
+                <link rel='icon' href='/assets/images/logoApp.png' />
             </head>
             <body>
                 <Provider store={store}>

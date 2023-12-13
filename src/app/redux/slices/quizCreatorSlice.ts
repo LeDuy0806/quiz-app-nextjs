@@ -11,6 +11,7 @@ import {
     AnswerNameEnum,
     AnswerType
 } from 'src/app/types/creator';
+import { CreatorType } from 'src/app/types/quizType';
 import { CreatorMessages } from 'src/constants/messages';
 import { ToastOptions } from 'src/constants/toast';
 
@@ -36,6 +37,11 @@ const quizCreatorSlice = createSlice({
     reducers: {
         setQuiz: (state, action: PayloadAction<QuizType>) => {
             state.quiz = action.payload;
+        },
+
+        setQuestionBackgroundImage: (state, action: PayloadAction<string>) => {
+            state.activeQuestion.backgroundImage = action.payload;
+            state.quiz.questionList[state.activeQuestion.questionIndex - 1] = state.activeQuestion;
         },
 
         setQuestionType: (state, action: PayloadAction<QuestionTypeEnum>) => {
@@ -287,6 +293,7 @@ const quizCreatorSlice = createSlice({
 
 export const {
     setQuiz,
+    setQuestionBackgroundImage,
     setQuestionType,
     setAnswerTime,
     setPointType,

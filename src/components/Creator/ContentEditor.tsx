@@ -9,15 +9,16 @@ import AnswerItem from 'src/components/Creator/AnswerItem';
 import QuestionSettingSidebar from './QuestionSettingSidebar';
 import { QuestionTypeEnum } from 'src/app/types/creator';
 import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
-import { setQuestionContent } from 'src/app/redux/slices/quizCreatorSlice';
+import { setQuestionBackgroundImage, setQuestionContent } from 'src/app/redux/slices/quizCreatorSlice';
+import { CldUploadWidget } from 'next-cloudinary';
 
 export default function ContentEditor() {
     const { activeQuestion } = useAppSelector((state) => state.quizCreator);
     const dispatch = useAppDispatch();
 
-    const [isOpenQuestionSettingSidebar, setIsOpenQuestionSettingSidebar] = useState(true);
+    const [isOpenQuestionSettingSidebar, setIsOpenQuestionSettingSidebar] = useState(false);
 
-    const { questionType, answerList, content } = activeQuestion;
+    const { questionType, answerList, content, backgroundImage } = activeQuestion;
 
     const handleOpenSettingQuiz = () => {
         setIsOpenQuestionSettingSidebar(!isOpenQuestionSettingSidebar);
@@ -39,7 +40,7 @@ export default function ContentEditor() {
                     {/* Input */}
                     <div className='flex text-center'>
                         <InputBase
-                            className='w-full rounded-md bg-white px-4 lg:text-3xl'
+                            className='w-full rounded-md bg-white px-4 pb-2 pt-2 shadow-[inset_0_-4px_rgba(0,0,0,0.1)] lg:text-3xl'
                             placeholder='Start typing your question ...'
                             multiline
                             minRows={1}
@@ -62,14 +63,40 @@ export default function ContentEditor() {
                     </div>
 
                     {/* Image */}
-                    <div className='mt-8 flex items-center justify-center'>
-                        <div className='flex w-full flex-col items-center justify-center rounded-lg bg-gray-100 py-16 text-center max-lg:h-96 2xl:w-1/4'>
-                            <>
-                                <div className='inline-flex items-center justify-center rounded-lg bg-white p-2'>
-                                    <HiPlus className='text-3xl' />
-                                </div>
-                                <p className='mt-4'>Find and insert media</p>
-                            </>
+                    <div className='mt-8 flex items-center justify-center rounded'>
+                        <div className='relative flex h-60 w-full flex-col items-center justify-center rounded-lg  text-center max-lg:h-96 2xl:w-1/4'>
+                            <CldUploadWidget
+                                uploadPreset='quiz_upload'
+                                options={{
+                                    folder: 'examples/avatar',
+                                    sources: ['local', 'url', 'google_drive'],
+                                    multiple: false,
+                                    styles: {}
+                                }}
+                                onSuccess={(results: any) => {
+                                    dispatch(setQuestionBackgroundImage(results.info.secure_url));
+                                }}
+                            >
+                                {({ open }) => {
+                                    return (
+                                        <div className='h-full w-96 cursor-pointer rounded bg-white shadow-md' onClick={() => open()}>
+                                            <div className='relative h-full w-full'>
+                                                {backgroundImage && (
+                                                    <Image src={backgroundImage} fill className='object-contain' alt='Question Image' sizes='100%' />
+                                                )}
+                                            </div>
+                                            {!backgroundImage && (
+                                                <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
+                                                    <div className='inline-flex items-center justify-center rounded-lg bg-white p-2'>
+                                                        <HiPlus className='text-3xl' />
+                                                    </div>
+                                                    <p className='mt-4'>Find and insert media</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                                }}
+                            </CldUploadWidget>
                         </div>
                     </div>
 

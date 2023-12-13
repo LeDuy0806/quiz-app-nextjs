@@ -17,9 +17,13 @@ function AnswerItem({ isTrueFalse = false, answer }: IProps) {
 
     return (
         <div
-            className={cn('flex w-full items-center justify-between rounded p-2 transition-colors duration-200 max-lg:mb-4', [`${getBgColor(answer.name)}`], {
-                'bg-white': !answer.body
-            })}
+            className={cn(
+                'flex w-full items-center justify-between rounded p-2 shadow transition-colors duration-200 max-lg:mb-4',
+                [`${getBgColor(answer.name)}`],
+                {
+                    'bg-white': !answer.body
+                }
+            )}
         >
             <div className='flex w-[calc(100%-3.5rem)]'>
                 <Icon answer={answer} className='rounded px-2 py-6 lg:py-12' />

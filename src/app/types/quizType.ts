@@ -1,14 +1,7 @@
 import QuestionType, { InitQuestion } from './questionType';
 import UserType, { InitUser } from './userType';
 
-export type CreatorType = {
-    _id: string;
-    userName: string;
-    userType: string;
-    avatar: string;
-    firstName: string;
-    lastName: string;
-};
+export type CreatorType = Pick<UserType, '_id' | 'userName' | 'userType' | 'avatar' | 'firstName' | 'lastName'>;
 
 type QuizType = {
     _id: string;
@@ -17,7 +10,7 @@ type QuizType = {
     description: string;
     backgroundImage: string;
     isPublic: boolean;
-    field?: string;
+    tags?: string[];
     pointsPerQuestion: number;
     numberOfQuestions: number;
     importFrom?: UserType;
@@ -50,10 +43,19 @@ export const InitQuiz = {
     backgroundImage: '',
     isPublic: true,
     pointsPerQuestion: 1,
-    field: '',
+    numberOfQuestions: 1,
+
     importFrom: InitUser,
     likesCount: [InitUser],
     questionList: [InitQuestion],
+    category: {
+        _id: '',
+        name: ''
+    },
+    grade: {
+        _id: '',
+        name: ''
+    },
     createdAt: '',
     updatedAt: ''
 } as QuizType;

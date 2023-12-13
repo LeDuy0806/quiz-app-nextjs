@@ -1,3 +1,5 @@
+import { CreatorType } from '../quizType';
+
 enum QuestionTypeEnum {
     QUIZ = 'Quiz',
     TRUE_FALSE = 'True/false'
@@ -108,12 +110,12 @@ type QuestionType = {
 type QuizType = {
     _id: string;
     name: string;
-    creator: string;
+    creator: CreatorType;
     description: string;
     backgroundImage: string;
     isPublic: boolean;
     pointsPerQuestion: number;
-    field: string;
+    tags: string[];
     importFrom: string;
     likesCount: string[];
     questionList: QuestionType[];
@@ -163,12 +165,19 @@ const initialQuestion: QuestionType = {
 const initialQuiz: QuizType = {
     _id: '',
     name: '',
-    creator: '',
+    creator: {
+        _id: '',
+        userName: '',
+        userType: '',
+        avatar: '',
+        firstName: '',
+        lastName: ''
+    },
     description: '',
     backgroundImage: '',
     isPublic: true,
     pointsPerQuestion: 1,
-    field: '',
+    tags: [],
     importFrom: '',
     likesCount: [],
     questionList: [initialQuestion],
