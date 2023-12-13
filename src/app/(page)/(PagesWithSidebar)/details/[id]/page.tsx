@@ -49,7 +49,9 @@ function QuizDetail() {
 
     if (isLoading) return <div>Loading...</div>;
 
-    if (isSuccess && !data) return <div>Not found</div>;
+    if ((isSuccess && !data) || !quizData) return <div>Not found</div>;
+
+    // if (!quizData) return <div>Not found</div>;
 
     return (
         <>

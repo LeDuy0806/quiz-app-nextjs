@@ -25,11 +25,11 @@ type QuizType = {
     questionList: QuestionType[];
     createdAt?: string;
     updatedAt?: string;
-    category?: {
+    category: {
         _id: string;
         name: string;
     };
-    grade?: {
+    grade: {
         _id: string;
         name: string;
     };
