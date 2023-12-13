@@ -122,7 +122,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
                         </button>
                         <Link href={'#'} className='mx-auto flex items-center'>
                             <div className='relative mr-3 h-9 w-9 sm:h-12 sm:w-12'>
-                                <Image src={'/assets/images/logoApp.png'} alt='EzQuiz Logo' fill />
+                                <Image src={'/assets/images/logoApp.png'} alt='EzQuiz Logo' fill sizes='100%' />
                             </div>
 
                             <span className=' self-center whitespace-nowrap font-poppins text-3xl font-semibold text-gray-600 dark:text-white'>Quizzes</span>

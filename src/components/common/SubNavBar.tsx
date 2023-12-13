@@ -24,6 +24,10 @@ import { deleteSocket } from 'src/app/redux/slices/socketSlice';
 //
 import CreateQuizButton from '../Creator/CreateQuizButton';
 
+// const CreateQuizButton = dynamic(() => import('../Creator/CreateQuizButton'), {
+//     ssr: false
+// });
+
 const staggerMenuItems = stagger(0.1, { startDelay: 0.15 });
 function useMenuAnimation(isOpen: boolean) {
     const [scope, animate] = useAnimate();
@@ -112,7 +116,7 @@ function SubNavBar({ toggleSidebar }: IProps) {
                         </button>
                         <Link href={'#'} className='ml-2 flex items-center max-mdl:hidden md:mr-24'>
                             <div className='relative mr-3 h-6 w-6 sm:h-9 sm:w-9'>
-                                <Image src={'/assets/images/logoApp.png'} alt='EzQuiz Logo' fill />
+                                <Image src={'/assets/images/logoApp.png'} alt='EzQuiz Logo' fill sizes='100%' />
                             </div>
 
                             <span className=' self-center whitespace-nowrap font-poppins text-2xl font-semibold text-gray-600 dark:text-white'>Quizzes</span>

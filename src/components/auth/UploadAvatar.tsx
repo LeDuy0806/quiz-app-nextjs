@@ -23,7 +23,7 @@ import { MdCloudUpload } from 'react-icons/md';
 
 //icons
 import { AiOutlineCheck } from 'react-icons/ai';
-import { loGin } from 'src/app/redux/slices/authSlice';
+import { logIn } from 'src/app/redux/slices/authSlice';
 
 interface FormTypeProps {
     setShowFormUserType: (state: boolean) => void;
@@ -42,8 +42,7 @@ const UploadAvatar = (props: FormTypeProps) => {
     const [skip, setSkip] = useState<boolean>(false);
     const [loadingUpload, setLoadingUpload] = useState<boolean>(false);
 
-    const [Register, { data, isSuccess, isLoading }] =
-        useRegisterUserMutation();
+    const [Register, { data, isSuccess, isLoading }] = useRegisterUserMutation();
 
     const handleSignUp = () => {
         Register(props.formData);
@@ -52,7 +51,7 @@ const UploadAvatar = (props: FormTypeProps) => {
     useEffect(() => {
         if (isSuccess && data) {
             props.setLoading();
-            dispatch(loGin(data));
+            dispatch(logIn(data));
             route.push('/home');
         }
     }, [isSuccess, data]);
@@ -79,13 +78,13 @@ const UploadAvatar = (props: FormTypeProps) => {
     };
 
     return (
-        <div className='absolute w-[760px] min-h-full mdl:min-h-[600px] rounded-[50px] bg-bgBlackLight top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] overflow-hidden py-[75px] px-[210px]'>
-            <div className='flex flex-col text-center px-6 items-center gap-8'>
+        <div className='absolute left-[50%] top-[50%] min-h-full w-[760px] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-[50px] bg-bgBlackLight px-[210px] py-[75px] mdl:min-h-[600px]'>
+            <div className='flex flex-col items-center gap-8 px-6 text-center'>
                 <motion.h2
                     initial={{ y: -100, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.1 }}
-                    className='text-textWhite text-center font-bold tracking-tight text-[1.5rem] leading-8'
+                    className='text-center text-[1.5rem] font-bold leading-8 tracking-tight text-textWhite'
                 >
                     Choose your image
                 </motion.h2>
@@ -93,24 +92,18 @@ const UploadAvatar = (props: FormTypeProps) => {
                     initial={{ y: -100, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.2 }}
-                    className='text-textGray min-w-[400px] text-sm text-center'
+                    className='min-w-[400px] text-center text-sm text-textGray'
                 >
-                    Give your server a personality with a name and an image. You
-                    can always change it later.
+                    Give your server a personality with a name and an image. You can always change it later.
                 </motion.p>
-                <motion.div
-                    initial={{ y: -100, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.4, delay: 0.3 }}
-                    className='px-6'
-                >
+                <motion.div initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.4, delay: 0.3 }} className='px-6'>
                     <div className='flex items-center justify-center'>
-                        <div className='flex flex-col items-center justify-center rounded-lg text-center py-10 px-6 border border-dashed border-textGray gap-3'>
-                            <MdCloudUpload className='w-12 h-12 m-auto text-textWhite' />
-                            <label className='relative flex flex-col w-[16rem] cursor-pointer justify-center text-sm font-semibold text-textBlueLight'>
+                        <div className='flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-textGray px-6 py-10 text-center'>
+                            <MdCloudUpload className='m-auto h-12 w-12 text-textWhite' />
+                            <label className='relative flex w-[16rem] cursor-pointer flex-col justify-center text-sm font-semibold text-textBlueLight'>
                                 Choose files or drag and drop
                                 <input
-                                    className='absolute w-[1px] h-[1px] p-0 m-[-1px] overflow-hidden whitespace-nowrap'
+                                    className='absolute m-[-1px] h-[1px] w-[1px] overflow-hidden whitespace-nowrap p-0'
                                     type='file'
                                     id='avatar'
                                     name='avatar'
@@ -127,16 +120,12 @@ const UploadAvatar = (props: FormTypeProps) => {
                                 />
                             </label>
 
-                            <div className='leading-6 text-textGray'>
-                                Image(4MB)
-                            </div>
+                            <div className='leading-6 text-textGray'>Image(4MB)</div>
                             {file && (
                                 <button
                                     className={clsx(
-                                        `flex items-center justify-center text-sm  px-6 py-2 rounded-xl text-textWhite font-bold leading-7`,
-                                        props.avatar
-                                            ? 'bg-textGreen'
-                                            : 'bg-bgBlue hover:font-extrabold'
+                                        `flex items-center justify-center rounded-xl  px-6 py-2 text-sm font-bold leading-7 text-textWhite`,
+                                        props.avatar ? 'bg-textGreen' : 'bg-bgBlue hover:font-extrabold'
                                     )}
                                     onClick={() => {
                                         setLoadingUpload(true);
@@ -145,16 +134,12 @@ const UploadAvatar = (props: FormTypeProps) => {
                                 >
                                     {!props.avatar ? (
                                         loadingUpload ? (
-                                            <Image
-                                                src={loadingImg}
-                                                alt=''
-                                                className='w-7 h-7'
-                                            />
+                                            <Image src={loadingImg} alt='' className='h-7 w-7' />
                                         ) : (
                                             'Upload File'
                                         )
                                     ) : (
-                                        <AiOutlineCheck className='w-[20px] h-[20px] font-extrabold' />
+                                        <AiOutlineCheck className='h-[20px] w-[20px] font-extrabold' />
                                     )}
                                 </button>
                             )}
@@ -166,7 +151,7 @@ const UploadAvatar = (props: FormTypeProps) => {
                     initial={{ y: -100, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.4 }}
-                    className='block w-full text-textWhite text-sm py-4 hover:rounded-[18px] hover:text-[15px] font-bold'
+                    className='block w-full py-4 text-sm font-bold text-textWhite hover:rounded-[18px] hover:text-[15px]'
                     onClick={() => {
                         setSkip(!skip);
                     }}
@@ -178,7 +163,7 @@ const UploadAvatar = (props: FormTypeProps) => {
                     initial={{ y: -100, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.4 }}
-                    className='block w-full text-textWhite text-sm py-4 hover:rounded-[18px] hover:text-[15px] font-bold mb-4'
+                    className='mb-4 block w-full py-4 text-sm font-bold text-textWhite hover:rounded-[18px] hover:text-[15px]'
                     onClick={() => {
                         props.setShowFormUserType(true);
                         props.setShowUploadImage(false);
@@ -191,7 +176,7 @@ const UploadAvatar = (props: FormTypeProps) => {
                 initial={{ x: 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.5 }}
-                className='absolute flex flex-row justify-end py-6 px-6 bg-bgGrayLight bottom-0 right-0 left-0'
+                className='absolute bottom-0 left-0 right-0 flex flex-row justify-end bg-bgGrayLight px-6 py-6'
             >
                 {/* <motion.button
                     initial={{ x: 100, opacity: 0 }}
@@ -219,18 +204,10 @@ const UploadAvatar = (props: FormTypeProps) => {
                         initial={{ x: 100, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.4, delay: 0.6 }}
-                        className='text-sm  px-6 py-2 rounded-xl text-textWhite font-bold leading-7 hover:font-black bg-textGreen cursor-pointer'
+                        className='cursor-pointer  rounded-xl bg-textGreen px-6 py-2 text-sm font-bold leading-7 text-textWhite hover:font-black'
                         onClick={handleSignUp}
                     >
-                        {isLoading ? (
-                            <Image
-                                src={loadingImg}
-                                alt=''
-                                className='w-7 h-7 self-center'
-                            />
-                        ) : (
-                            'Finish'
-                        )}
+                        {isLoading ? <Image src={loadingImg} alt='' className='h-7 w-7 self-center' /> : 'Finish'}
                     </motion.button>
                 )}
             </motion.div>

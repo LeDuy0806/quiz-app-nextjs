@@ -5,20 +5,19 @@ import { FaPlus } from 'react-icons/fa';
 import QuestionItem from './QuestionItem';
 import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
 import { addQuestion } from 'src/app/redux/slices/quizCreatorSlice';
+import { CreatorType } from 'src/app/types/quizType';
 
 function CreatorSidebar() {
     const {
         quizCreator: { activeQuestion, quiz },
         auth: {
-            authData: {
-                user: { _id }
-            }
+            authData: { user }
         }
     } = useAppSelector((state) => ({ quizCreator: state.quizCreator, auth: state.auth }));
     const dispatch = useAppDispatch();
 
     const handleAddQuestion = () => {
-        dispatch(addQuestion(_id));
+        dispatch(addQuestion(user._id));
     };
 
     return (
