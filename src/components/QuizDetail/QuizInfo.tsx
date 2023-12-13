@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { FaBook, FaBullseye, FaExclamationTriangle, FaGraduationCap, FaHeart, FaPlay, FaRegCopy, FaRegFolder, FaShare } from 'react-icons/fa';
-import QuizType from 'src/app/types/quizType';
+import QuizType, { CreatorType } from 'src/app/types/quizType';
 
-function QuizInfo({ quizData }: { quizData: QuizType | null }) {
+function QuizInfo({ quizData }: { quizData: QuizType }) {
     return (
         <div className='relative my-4  w-full lgl:block'>
             <div>
@@ -117,7 +117,7 @@ function QuizInfo({ quizData }: { quizData: QuizType | null }) {
                             </div>
                             <div className='flex flex-col items-start'>
                                 <p className='max-w-[7rem] cursor-pointer truncate text-xs text-slate-800 hover:underline'>
-                                    <span>{quizData?.creator.firstName + ' ' + quizData?.creator.lastName}</span>
+                                    <span>{(quizData.creator as CreatorType).firstName + ' ' + (quizData.creator as CreatorType).lastName}</span>
                                 </p>
                                 <div className='text-[10px] text-slate-600'> 1 years</div>
                             </div>

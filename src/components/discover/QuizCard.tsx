@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import QuizType from 'src/app/types/quizType';
+import QuizType, { CreatorType } from 'src/app/types/quizType';
 
 const QuizCard = ({ QuizData }: { QuizData: QuizType }) => {
     const router = useRouter();
@@ -39,7 +39,9 @@ const QuizCard = ({ QuizData }: { QuizData: QuizType }) => {
 
                         <div className=' flex flex-row '>
                             <span className='text-[12px] text-gray-500'>By: </span>
-                            <span className='text-[12px] text-gray-900'>{QuizData.creator.firstName + ' ' + QuizData.creator.lastName}</span>
+                            <span className='text-[12px] text-gray-900'>
+                                {(QuizData.creator as CreatorType).firstName + ' ' + (QuizData.creator as CreatorType).lastName}
+                            </span>
                         </div>
                     </div>
 

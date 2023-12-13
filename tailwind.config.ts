@@ -96,6 +96,7 @@ const config: Config = {
             },
 
             colors: {
+                lilac: 'rgb(136,84,192)',
                 textGray: '#9696a5',
                 textPurple: '#a157f6',
                 textPurpleBorder: '#b982f8',

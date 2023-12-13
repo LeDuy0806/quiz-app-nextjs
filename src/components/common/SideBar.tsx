@@ -17,6 +17,7 @@ import { motion } from 'framer-motion';
 import paths from 'src/constants/paths';
 import Image from 'next/image';
 import { BsFilterLeft } from 'react-icons/bs';
+import { cn } from 'src/utils/tailwind.util';
 
 function SideBar({ children }: { children: React.ReactNode }) {
     const [hideSideBar, setHideSideBar] = useState(true);
@@ -28,6 +29,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
     const { height, width } = useWindowDimensions();
 
     const pathName = usePathname();
+
     useEffect(() => {
         if (width > 769) {
             if (!hideSideBar) setHideSideBar(true);
@@ -100,10 +102,14 @@ function SideBar({ children }: { children: React.ReactNode }) {
 
                 <aside
                     id='logo-sidebar'
-                    className={
-                        `${hideSideBar ? '-translate-x-full' : '-translate-x-0'}` +
-                        ' fixed left-0 top-0 z-[99] h-screen  w-52 border-r border-gray-200 bg-white pt-16 shadow-xl transition-transform duration-300 dark:border-gray-700  dark:bg-gray-800 max-mdl:w-60 mdl:z-[96]  mdl:translate-x-0 mdl:max-xl:w-[6rem]'
-                    }
+                    className={cn(
+                        ' fixed left-0 top-0 z-[99] h-screen  w-52 border-r border-gray-200 bg-white pt-16 shadow-xl transition-transform duration-300 dark:border-gray-700  dark:bg-gray-800 max-mdl:w-60 mdl:z-[96]  mdl:translate-x-0 ',
+                        hideSideBar ? ' -translate-x-full' : '- translate-x-0',
+                        {
+                            'mdl:w-14': pathName.includes(paths.search),
+                            'mdl:max-xl:w-24': !pathName.includes(paths.search)
+                        }
+                    )}
                 >
                     <div className='mb-2 mt-[-4rem] px-5 pt-2 mdl:hidden'>
                         <button
@@ -123,7 +129,13 @@ function SideBar({ children }: { children: React.ReactNode }) {
                         </Link>
                     </div>
                     <div className='flex h-full w-full flex-col justify-between divide-y divide-gray-200 overflow-y-auto bg-white px-2 pb-4 pt-2 dark:bg-gray-800 max-mdl:h-[calc(100%-2rem)]'>
-                        <ul className='mb-4 mt-2 space-y-2 font-medium mdl:max-xl:flex mdl:max-xl:flex-col mdl:max-xl:items-center'>
+                        <ul
+                            className={cn('mb-4 mt-2 space-y-2 font-medium mdl:max-xl:flex mdl:max-xl:flex-col mdl:max-xl:items-center', {
+                                'mdl:flex': pathName.includes(paths.search),
+                                'mdl:flex-col': pathName.includes(paths.search),
+                                'mdl:items-center': pathName.includes(paths.search)
+                            })}
+                        >
                             {listLinks.map(
                                 (
                                     link: {
@@ -148,53 +160,86 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                     >
                                         <Link
                                             href={link.to}
-                                            shallow={true}
-                                            className={
-                                                pathName === link.to
-                                                    ? 'active group relative flex rounded-lg rounded-tl-lg p-2  font-bold text-bgPurple hover:scale-105 hover:bg-gray-100 dark:text-bgPurple dark:hover:bg-gray-700 mdl:max-xl:flex-col mdl:max-xl:items-center mdl:max-xl:justify-center'
-                                                    : 'group relative flex rounded-lg rounded-tr-lg p-2  text-gray-600 hover:scale-105 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 mdl:max-xl:flex-col mdl:max-xl:items-center mdl:max-xl:justify-center'
-                                            }
+                                            className={cn({
+                                                'active group relative flex rounded-lg rounded-tl-lg p-2  font-bold text-bgPurple hover:scale-105 hover:bg-gray-100 dark:text-bgPurple dark:hover:bg-gray-700 mdl:max-xl:flex-col mdl:max-xl:items-center mdl:max-xl:justify-center':
+                                                    pathName === link.to,
+                                                'group relative flex rounded-lg rounded-tr-lg p-2  text-gray-600 hover:scale-105 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 mdl:max-xl:flex-col mdl:max-xl:items-center mdl:max-xl:justify-center':
+                                                    pathName !== link.to,
+                                                'mdl:flex': pathName.includes(paths.search),
+                                                'mdl:flex-col': pathName.includes(paths.search),
+                                                'mdl:items-center': pathName.includes(paths.search)
+                                            })}
                                         >
                                             {pathName === link.to ? (
                                                 <link.icon.fill
-                                                    className={
-                                                        ' ml-2 h-5 w-5 transform text-xl text-bgPurplePower opacity-70 transition duration-75 group-hover:scale-105 group-hover:opacity-90 dark:text-bgPurplePower dark:group-hover:text-purple-500 mdl:max-xl:ml-0'
-                                                    }
+                                                    className={cn(
+                                                        ' ml-2 h-5 w-5 transform text-xl text-bgPurplePower opacity-70 transition duration-75 group-hover:scale-105 group-hover:opacity-90 dark:text-bgPurplePower dark:group-hover:text-purple-500 mdl:max-xl:ml-0',
+                                                        {
+                                                            'mdl:ml-0': pathName.includes(paths.search)
+                                                        }
+                                                    )}
                                                 />
                                             ) : (
                                                 <link.icon.outline
-                                                    className={
-                                                        'ml-2 h-5 w-5 text-gray-500 transition duration-75 group-hover:scale-105 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white mdl:max-xl:ml-0'
-                                                    }
+                                                    className={cn(
+                                                        'ml-2 h-5 w-5 text-gray-500 transition duration-75 group-hover:scale-105 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white mdl:max-xl:ml-0',
+                                                        {
+                                                            'mdl:ml-0': pathName.includes(paths.search)
+                                                        }
+                                                    )}
                                                 />
                                             )}
-                                            <span className='ml-3 group-hover:font-semibold mdl:max-xl:ml-0 mdl:max-xl:text-xs'>{link.name}</span>
+                                            <span
+                                                className={cn('ml-3 group-hover:font-semibold mdl:max-xl:ml-0 mdl:max-xl:text-xs', {
+                                                    'mdl:hidden': pathName.includes(paths.search),
+                                                    'mdl:text-xs': pathName.includes(paths.search)
+                                                })}
+                                            >
+                                                {link.name}
+                                            </span>
                                             {pathName === link.to && (
-                                                <div className='absolute -right-[3px] top-0 h-9 w-1 rounded-lg bg-bgPurple dark:bg-brand-400 mdl:max-xl:hidden'></div>
+                                                <div
+                                                    className={cn(
+                                                        'absolute -right-[3px] top-0 h-9 w-1 rounded-lg bg-bgPurple dark:bg-brand-400 mdl:max-xl:hidden',
+                                                        {
+                                                            'mdl:hidden': pathName.includes(paths.search)
+                                                        }
+                                                    )}
+                                                ></div>
                                             )}
                                         </Link>
                                     </motion.li>
                                 )
                             )}
                         </ul>
-                        <ul className='space-y-2 font-medium mdl:max-xl:flex mdl:max-xl:flex-col mdl:max-xl:items-center'>
-                            <li>
-                                <button className='group flex w-full items-center rounded p-2 text-gray-600 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 mdl:max-xl:flex-col'>
-                                    <AiOutlineGift className='h-5 w-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white' />
-                                    <span className='ml-3 mdl:max-xl:ml-0 mdl:max-xl:text-xs'>What&apos;s news?</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button className='group flex w-full items-center rounded p-2 text-gray-600 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 mdl:max-xl:flex-col'>
-                                    <BiHelpCircle className='h-5 w-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white' />
-                                    <span className='ml-3 mdl:max-xl:ml-0 mdl:max-xl:text-xs'>Help</span>
-                                </button>
-                            </li>
-                        </ul>
+                        {!pathName.includes(paths.search) && (
+                            <ul className='space-y-2 font-medium mdl:max-xl:flex mdl:max-xl:flex-col mdl:max-xl:items-center'>
+                                <li>
+                                    <button className='group flex w-full items-center rounded p-2 text-gray-600 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 mdl:max-xl:flex-col'>
+                                        <AiOutlineGift className='h-5 w-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white' />
+                                        <span className='ml-3 mdl:max-xl:ml-0 mdl:max-xl:text-xs'>What&apos;s news?</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button className='group flex w-full items-center rounded p-2 text-gray-600 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 mdl:max-xl:flex-col'>
+                                        <BiHelpCircle className='h-5 w-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white' />
+                                        <span className='ml-3 mdl:max-xl:ml-0 mdl:max-xl:text-xs'>Help</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        )}
                     </div>
                 </aside>
             </div>
-            <main className='mt-16 mdl:ml-[6rem] xl:ml-52'>{children}</main>
+            <main
+                className={cn('mt-16  ', {
+                    'xl:ml-52': !pathName.includes(paths.search),
+                    'mdl:ml-14': pathName.includes(paths.search),
+                    'mdl:ml-[6rem]': !pathName.includes(paths.search)
+                })}
+            >
+                {children}
+            </main>
         </>
     );
 }
