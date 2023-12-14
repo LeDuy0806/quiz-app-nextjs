@@ -2,7 +2,7 @@ import { CreatorType } from '../quizType';
 
 enum QuestionTypeEnum {
     QUIZ = 'Quiz',
-    TRUE_FALSE = 'True/false'
+    TRUE_FALSE = 'True/False'
 }
 
 enum AnswerTimeEnum {
@@ -94,6 +94,7 @@ type QuestionType = {
     _id: string;
     content: string;
     creator: string;
+    tags: string[];
     backgroundImage: string;
     questionIndex: number;
     questionType: QuestionTypeEnum;
@@ -128,6 +129,7 @@ const initialQuestion: QuestionType = {
     _id: '',
     content: '',
     creator: '',
+    tags: [],
     backgroundImage: '',
     questionIndex: 1,
     questionType: QuestionTypeEnum.QUIZ,
