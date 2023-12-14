@@ -127,8 +127,8 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal }: IProps) {
 
     return (
         <Modal isOpen={isOpenModal} style={customStylesModal} onRequestClose={handleCloseModal}>
-            <div className='h-screen  w-screen rounded md:h-[80vh] md:w-[90vw] lg:w-[80vw] xl:w-[70vw] '>
-                <div className='h-full w-full bg-white p-4 md:p-6 lg:p-10'>
+            <div className='h-screen  w-screen rounded md:h-[90vh]  md:w-[90vw] lg:w-[80vw] xl:w-[70vw] '>
+                <div className='h-full w-full bg-white p-4 md:px-6 md:pb-2 md:pt-4  lg:p-10'>
                     <h1 className='text-lg font-bold'>Quiz Summary</h1>
 
                     {/* Content */}
@@ -269,7 +269,7 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal }: IProps) {
                     </div>
 
                     {/* Buttons */}
-                    <div className='mt-12 flex justify-center gap-4 max-lg:pb-10'>
+                    <div className='mt-12 flex justify-center gap-4 max-lg:pb-4'>
                         <button
                             onClick={handleCloseModal}
                             className='w-32 rounded bg-[#f2f2f2] px-4 pb-3 pt-2 shadow-[inset_0_-5px_rgba(0,0,0,0.3)] duration-100 hover:mt-[2px] hover:pb-[10px] hover:shadow-[inset_0_-4px_rgba(0,0,0,0.3)] active:mt-1 active:pb-2 active:shadow-[inset_0_-2px_rgba(0,0,0,0.3)]'

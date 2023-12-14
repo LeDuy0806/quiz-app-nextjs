@@ -1,5 +1,5 @@
 import { FormControlLabel, InputBase, Radio, RadioGroup } from '@mui/material';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { BsPlusLg } from 'react-icons/bs';
 
@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 
 import { initialQuiz } from 'src/app/types/creator';
 import { CreatorType } from 'src/app/types/quizType';
+import { cn } from 'src/utils/tailwind.util';
 
 const customStylesModal: any = {
     overlay: {
@@ -35,7 +36,9 @@ const customStylesModal: any = {
     }
 };
 
-interface IProps {}
+interface IProps {
+    buttonElement?: React.JSX.Element;
+}
 
 type ModalDataType = {
     name: string;
@@ -43,7 +46,7 @@ type ModalDataType = {
     isPublic: boolean;
 };
 
-export default function CreateQuizButton({}: IProps) {
+export default function CreateQuizButton({ buttonElement }: IProps) {
     const dispatch = useAppDispatch();
     const {
         quizCreator: { quiz },
@@ -112,18 +115,28 @@ export default function CreateQuizButton({}: IProps) {
         router.push(`/creator/${newId}`);
     };
 
+    Modal.setAppElement('body');
+
     return (
         <>
-            <button
-                onClick={() => setIsOpenModal(true)}
-                className='mr-1 flex items-center justify-center rounded-lg bg-purple-700 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 max-md:h-8 max-md:w-8 md:px-5 md:py-2.5'
-            >
-                <BsPlusLg className='h-5 w-5' />
-                <span className='ml-1 max-md:hidden'>Create Quiz</span>
-            </button>
+            {buttonElement !== null && buttonElement !== undefined ? (
+                <div onClick={() => setIsOpenModal(true)} className={cn('cursor-pointer', buttonElement.props.className)}>
+                    {buttonElement}
+                </div>
+            ) : (
+                <button
+                    onClick={() => setIsOpenModal(true)}
+                    className={
+                        'mr-1 flex items-center justify-center rounded-lg bg-purple-700 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 max-md:h-8 max-md:w-8 md:px-5 md:py-2.5'
+                    }
+                >
+                    <BsPlusLg className='h-5 w-5' />
+                    <span className='ml-1 max-md:hidden'>{'Create Quiz'}</span>
+                </button>
+            )}
 
             <Modal isOpen={isOpenModal} style={customStylesModal} onRequestClose={handleCloseModal}>
-                <div className='rounded bg-white p-10 max-sml:h-screen max-sml:w-screen'>
+                <div className='rounded bg-white p-10 '>
                     <h1 className='text-lg font-bold'>Create Quiz</h1>
 
                     {/* Title */}
