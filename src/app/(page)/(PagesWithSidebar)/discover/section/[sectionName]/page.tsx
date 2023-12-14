@@ -12,19 +12,27 @@ import useDebounce from 'src/hooks/useDebounce';
 import QuizPreviewContainer from 'src/components/discover/SectionPage/QuizPreviewContainer';
 import CreateQuizButton from 'src/components/Creator/CreateQuizButton';
 import { BsPlusLg } from 'react-icons/bs';
+import { useGetPublicQuizesQuery } from 'src/app/redux/services/quizApi';
 
 function Page() {
     const { sectionName } = useParams();
 
-    const FakeData: QuizType[] = [...ListQuiz];
-
+    const [paginationOption, setPaginationOption] = useState({
+        page: 1,
+        pageSize: 10
+    });
     const [quizDataPreview, setQuizDataPreview] = useState<QuizType | null>(null);
-
     const quizDataPreviewdebounceValue = useDebounce(quizDataPreview, 500);
+
+    const { data, isSuccess, isLoading, isError } = useGetPublicQuizesQuery(paginationOption);
+
+    const ListQuizResult = data?.data;
 
     const handleSetQuizDataPreview = (quizData: QuizType) => {
         setQuizDataPreview(quizData);
     };
+    if (isError) return <div className='w-full items-center justify-center text-red-600'>Error</div>;
+    if (isLoading) return <div className='w-full items-center justify-center text-blue-600'>Loading...</div>;
 
     return (
         <div className=' h-[calc(100vh-4rem)] w-full overflow-hidden bg-gray-100'>
@@ -70,31 +78,32 @@ function Page() {
 
                 <div className=' flex w-full justify-between mdl:mt-4'>
                     <div className='flex w-full flex-col  gap-1 md:gap-2 xl:w-7/12'>
-                        {FakeData.map((quiz, index) => {
-                            return (
-                                <motion.div
-                                    initial={{ x: 20, opacity: 0 }}
-                                    animate={{ x: 0, opacity: 1 }}
-                                    transition={{
-                                        duration: 0.4,
-                                        delay: 0.1 + index * 0.05
-                                    }}
-                                    key={`${index}`}
-                                    className='h-full w-full'
-                                >
-                                    <QuizSectionCard
-                                        key={quiz._id + index}
-                                        category={quiz.category.name}
-                                        grade={quiz.grade.name}
-                                        image={quiz.backgroundImage}
-                                        numberOfQuestion={quiz.numberOfQuestions}
-                                        title={quiz.name}
-                                        author={quiz.creator as CreatorType}
-                                        onMouseEnter={() => handleSetQuizDataPreview(quiz)}
-                                    />
-                                </motion.div>
-                            );
-                        })}
+                        {ListQuizResult &&
+                            ListQuizResult.map((quiz, index) => {
+                                return (
+                                    <motion.div
+                                        initial={{ x: 20, opacity: 0 }}
+                                        animate={{ x: 0, opacity: 1 }}
+                                        transition={{
+                                            duration: 0.4,
+                                            delay: 0.1 + index * 0.05
+                                        }}
+                                        key={`${index}`}
+                                        className='h-full w-full'
+                                    >
+                                        <QuizSectionCard
+                                            key={quiz._id + index}
+                                            category={quiz.category.name}
+                                            grade={quiz.grade.name}
+                                            image={quiz.backgroundImage}
+                                            numberOfQuestion={quiz.numberOfQuestions}
+                                            title={quiz.name}
+                                            author={quiz.creator as CreatorType}
+                                            onMouseEnter={() => handleSetQuizDataPreview(quiz)}
+                                        />
+                                    </motion.div>
+                                );
+                            })}
                     </div>
                     <div className='sticky top-0 hidden h-[calc(100vh-10rem)] w-2/5 overflow-hidden rounded border  border-gray-100 px-2 py-3 shadow-md xl:block'>
                         <div className='h-full w-full overflow-auto rounded'>

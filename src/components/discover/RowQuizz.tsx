@@ -3,6 +3,8 @@ import React, { useRef, useState } from 'react';
 import QuizCard from './QuizCard';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import QuizType from 'src/app/types/quizType';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const RowQuizz = ({ CategoryName, ListQuiz }: { CategoryName: string; ListQuiz: QuizType[] }) => {
     const rowRef = useRef<HTMLDivElement>(null);
@@ -25,12 +27,14 @@ const RowQuizz = ({ CategoryName, ListQuiz }: { CategoryName: string; ListQuiz: 
                 <div className='flex'>
                     <h2 className='w-fit cursor-pointer text-xl font-semibold text-black transition duration-200 hover:text-gray-300'>{CategoryName}</h2>
                     <div className='ml-auto block'>
-                        <button className='base relative ml-auto flex h-8 min-w-max items-center justify-center rounded-full bg-purple-200 px-4 py-1 text-sm text-purple-700 transition-colors duration-200  ease-in-out hover:text-purple-500 active:text-purple-950'>
-                            <span>See more</span>
-                            <i className='ml-2 flex items-center text-base'>
-                                <FaChevronRight />
-                            </i>
-                        </button>
+                        <Link href={'/discover/section/public'}>
+                            <button className='base relative ml-auto flex h-8 min-w-max items-center justify-center rounded-full bg-purple-200 px-4 py-1 text-sm text-purple-700 transition-colors duration-200  ease-in-out hover:text-purple-500 active:text-purple-950'>
+                                <span>See more</span>
+                                <i className='ml-2 flex items-center text-base'>
+                                    <FaChevronRight />
+                                </i>
+                            </button>
+                        </Link>
                     </div>
                 </div>
                 <div className='group relative flex w-full justify-between md:ml-2'>

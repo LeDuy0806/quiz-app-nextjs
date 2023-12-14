@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import LeaderBoardType, { InitLeaderBoard } from 'src/app/types/leaderboardType';
 
+export const LeaderBoardSliceKey = 'leaderBoard';
+
 type InitialType = {
     leaderBoard: LeaderBoardType;
     leaderBoards: LeaderBoardType[];
@@ -12,7 +14,7 @@ const initialState = {
 } as InitialType;
 
 const leaderBoardSlice = createSlice({
-    name: 'leaderBoard',
+    name: LeaderBoardSliceKey,
     initialState,
     reducers: {
         fetchLeaderBoard: (state, action: PayloadAction<LeaderBoardType>) => {

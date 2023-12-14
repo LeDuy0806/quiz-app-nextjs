@@ -7,6 +7,12 @@ import { RootState } from '../store';
 type DiscoverQuizType = {
     [key: string]: QuizType[];
 };
+type PublicQuizesType = {
+    data: QuizType[];
+    currentPage: number;
+    pageSize: number;
+    numberOfPages: number;
+};
 
 export const apiQuiz = createApi({
     reducerPath: 'apiQuiz',
@@ -25,9 +31,9 @@ export const apiQuiz = createApi({
     }),
     keepUnusedDataFor: 20,
     endpoints: (builder) => ({
-        getPublicQuizzes: builder.query<QuizType[], void>({
-            query: () => ({
-                url: 'api/quiz/public',
+        getPublicQuizes: builder.query<PublicQuizesType, { sectionName?: string; page: number; pageSize: number }>({
+            query: ({ sectionName, page, pageSize }) => ({
+                url: `api/quiz/public?sectionName=${sectionName ? sectionName : ''}&page=${page}&pageSize=${pageSize}`,
                 method: 'GET'
             })
         }),
@@ -139,7 +145,7 @@ export const apiQuiz = createApi({
 });
 
 export const {
-    useGetPublicQuizzesQuery,
+    useGetPublicQuizesQuery,
     useGetQuizByIdQuery,
     useGetDiscoverQuizzesQuery,
     useGetTeacherQuizzesQuery,

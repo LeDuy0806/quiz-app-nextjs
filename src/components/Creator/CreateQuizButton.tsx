@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { initialQuiz } from 'src/app/types/creator';
 import { CreatorType } from 'src/app/types/quizType';
 import { cn } from 'src/utils/tailwind.util';
+import { RootState } from 'src/app/redux/store';
 
 const customStylesModal: any = {
     overlay: {
@@ -53,7 +54,7 @@ export default function CreateQuizButton({ buttonElement }: IProps) {
         auth: {
             authData: { user }
         }
-    } = useAppSelector((state) => state);
+    } = useAppSelector((state: RootState) => state);
 
     const router = useRouter();
 

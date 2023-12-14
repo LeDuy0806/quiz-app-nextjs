@@ -4,14 +4,8 @@ import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import Image from 'next/image';
 
 const images = [
-    '/assets/images/home/banner-make-quiz.png',
-    '/assets/images/home/banner-welcome.png',
-    '/assets/images/home/banner-make-quiz.png',
-    '/assets/images/home/banner-welcome.png',
-    '/assets/images/home/banner-make-quiz.png',
-    '/assets/images/home/banner-welcome.png',
-    '/assets/images/home/banner-make-quiz.png',
-    '/assets/images/home/banner-welcome.png'
+    'https://res.cloudinary.com/dfoiuc0jw/image/upload/v1702574719/quiz-app/banner/banner-make-quiz_pjbso7.png',
+    'https://res.cloudinary.com/dfoiuc0jw/image/upload/v1702574717/quiz-app/banner/banner-welcome_f96upq.png'
 ];
 
 const variants = {
@@ -46,13 +40,7 @@ const variants = {
     }
 };
 
-function CarouselBanner({
-    autoSlide = false,
-    autoSlideInterval = 3000
-}: {
-    autoSlide?: boolean;
-    autoSlideInterval?: number;
-}) {
+function CarouselBanner({ autoSlide = false, autoSlideInterval = 3000 }: { autoSlide?: boolean; autoSlideInterval?: number }) {
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState(0);
 
@@ -84,60 +72,49 @@ function CarouselBanner({
             initial={{ scale: 0.9, y: -20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className='group flex h-40 md:h-60 lg:h-96 min-w-full'
+            className='group flex h-40 min-w-full md:h-60 lg:h-96'
         >
-            <div className=' relative overflow-hidden rounded-2xl w-full'>
+            <div className=' relative w-full overflow-hidden rounded-2xl'>
                 <AnimatePresence initial={false} custom={direction}>
-                    {/* <motion.img
+                    <motion.img
                         variants={variants}
                         animate='animate'
                         initial='initial'
                         exit='exit'
                         src={images[index]}
                         alt='slides'
-                        className='absolute top-0 left-0 h-full w-full object-cover object-center'
-                        key={images[index]}
+                        className='absolute left-0 top-0 h-full w-full object-cover'
+                        // key={images[index]}
                         custom={direction}
-                    /> */}
-                    <motion.div
+                    />
+                    {/* <motion.div
                         variants={variants}
                         animate='animate'
                         initial='initial'
                         exit='exit'
-                        className='absolute top-0 left-0 h-full w-full object-cover object-center'
+                        className='relative h-full w-full rounded-lg bg-slate-300'
                         key={images[index]}
                         custom={direction}
                     >
-                        <Image
-                            src={images[index]}
-                            alt=''
-                            fill
-                            quality={100}
-                            className='w-full'
-                        />
-                    </motion.div>
+                        <Image src={images[index]} alt='' fill objectFit='cover' />
+                    </motion.div> */}
                 </AnimatePresence>
                 <div className='absolute inset-0 flex items-center justify-between p-4 opacity-0 hover:opacity-100'>
-                    <button
-                        onClick={prevStep}
-                        className='p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white'
-                    >
+                    <button onClick={prevStep} className='rounded-full bg-white/80 p-1 text-gray-800 shadow hover:bg-white'>
                         <BiChevronLeft size={40} />
                     </button>
-                    <button
-                        onClick={nextStep}
-                        className='p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white'
-                    >
+                    <button onClick={nextStep} className='rounded-full bg-white/80 p-1 text-gray-800 shadow hover:bg-white'>
                         <BiChevronRight size={40} />
                     </button>
                 </div>
-                <div className='absolute bottom-4 right-0 left-0'>
+                <div className='absolute bottom-4 left-0 right-0'>
                     <div className='flex items-center justify-center gap-2'>
                         {images.map((_, i) => (
                             <div
+                                onClick={() => setIndex(i)}
                                 key={i}
                                 className={`
-              transition-all w-3 h-3 bg-white rounded-full
+              h-3 w-3 cursor-pointer rounded-full bg-white transition-all
               ${index === i ? 'p-2' : 'bg-opacity-50'}
             `}
                             />

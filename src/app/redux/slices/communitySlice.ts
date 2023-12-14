@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import CommunityType, { InitCommunity } from 'src/app/types/communityType';
 
+export const CommunitySliceKey = 'community';
+
 type InitialType = {
     community: CommunityType;
     communities: CommunityType[];
@@ -12,7 +14,7 @@ const initialState = {
 } as InitialType;
 
 const communitySlice = createSlice({
-    name: 'community',
+    name: CommunitySliceKey,
     initialState,
     reducers: {
         fetchCommunity: (state, action: PayloadAction<CommunityType>) => {

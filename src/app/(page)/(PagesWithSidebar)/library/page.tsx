@@ -32,29 +32,28 @@ function LibraryPage() {
 
     const dispatch = useAppDispatch();
 
-    const fakeData: QuizType[] = ListQuiz;
+    // const fakeData: QuizType[] = ListQuiz;
 
     const authData = useAppSelector((state) => state.auth.authData);
+    const quizzes = useAppSelector((state) => state.quiz.FilteredTeacherQuizzes);
 
     const teacherId = authData?.user?._id;
 
-    // const { data, isLoading, isSuccess } = useGetTeacherQuizzesQuery({ teacherId });
-
-    // useEffect(() => {
-    //     if (isSuccess && data) {
-    //         dispatch(fetchTeacherQuizzes(data));
-    //     }
-    // }, [dispatch, data, isSuccess]);
-
-    const quizzes = useAppSelector((state) => state.quiz.FilteredTeacherQuizzes);
+    const { data, isLoading, isSuccess } = useGetTeacherQuizzesQuery({ teacherId });
 
     const [filter, setFilter] = useState(FilterEnum.ALL);
 
-    useEffect(() => {
-        dispatch(fetchTeacherQuizzes(fakeData));
-    }, [dispatch, fakeData]);
+    // useEffect(() => {
+    //     dispatch(fetchTeacherQuizzes(fakeData));
+    // }, [dispatch, fakeData]);
 
-    // if (isLoading) return <div>Loading...</div>;
+    useEffect(() => {
+        if (isSuccess && data) {
+            dispatch(fetchTeacherQuizzes(data));
+        }
+    }, [dispatch, data, isSuccess]);
+
+    if (isLoading) return <div>Loading...</div>;
 
     const handleChangeFilter = (event: React.MouseEvent<HTMLElement, MouseEvent>, newFilter: FilterEnum) => {
         setFilter(newFilter);
@@ -68,8 +67,7 @@ function LibraryPage() {
             dispatch(fetchPrivateQuizzes());
             return;
         }
-
-        dispatch(fetchTeacherQuizzes(fakeData));
+        if (isSuccess && data) dispatch(fetchTeacherQuizzes(data));
     };
 
     return (

@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import GameType, { InitGame } from 'src/app/types/gameType';
 
+export const GameSliceKey = 'game';
+
 type InitialType = {
     game: GameType;
     games: GameType[];
@@ -12,7 +14,7 @@ const initialState = {
 } as InitialType;
 
 const gameSlice = createSlice({
-    name: 'game',
+    name: GameSliceKey,
     initialState,
     reducers: {
         fetchGame: (state, action: PayloadAction<GameType>) => {
