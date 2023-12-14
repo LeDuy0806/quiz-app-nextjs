@@ -22,8 +22,16 @@ function HomePage() {
     const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.auth.authData?.user);
 
+    const socket = useAppSelector((state) => state.socket.socket);
+
+    // useEffect(() => {
+    //     // if (socket) {
+    //     //     console.log(socket);
+    //     // }
+    // }, [socket]);
+
     useEffect(() => {
-        if (user) {
+        if (user && !socket) {
             const socket: Socket = io(API, {
                 transports: ['websocket']
             });
@@ -33,26 +41,26 @@ function HomePage() {
             //     socket.disconnect();
             // };
         }
-    }, [user, dispatch]);
+    }, [user, dispatch, socket]);
 
     return (
-        <div className='p-4 dark:bg-slate-600 min-h-[calc(100vh-4rem)] max-md:flex-col'>
-            <div className='w-full mb-4'>
+        <div className='min-h-[calc(100vh-4rem)] p-4 dark:bg-slate-600 max-md:flex-col'>
+            <div className='mb-4 w-full'>
                 {/* <CarouselBanner autoSlide={true} autoSlideInterval={10000000} /> */}
                 <CarouselBanner autoSlide={true} />
             </div>
-            <div className='flex w-full mb-2 gap-2 max-md:flex-col'>
-                <div className='flex px-2 w-full'>
+            <div className='mb-2 flex w-full gap-2 max-md:flex-col'>
+                <div className='flex w-full px-2'>
                     <UserInfoCard />
                 </div>
-                <div className='flex px-2 w-full'>
+                <div className='flex w-full px-2'>
                     <LibraryBox />
                 </div>
             </div>
-            <div className='px-2 mt-4'>
+            <div className='mt-4 px-2'>
                 <HomeCard />
             </div>
-            <div className='flex flex-col items-center w-full mt-4'>
+            <div className='mt-4 flex w-full flex-col items-center'>
                 <div className='xl:w-[50%]'>
                     <TopPickBox />
                 </div>

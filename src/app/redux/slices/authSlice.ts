@@ -3,6 +3,8 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import AuthType, { InitAuth } from 'src/app/types/authType';
 import UserType from 'src/app/types/userType';
 
+export const AuthSliceKey = 'auth';
+
 type InitialType = {
     authData: AuthType;
 };
@@ -12,7 +14,7 @@ const initialState = {
 } as InitialType;
 
 const authSlice = createSlice({
-    name: 'auth',
+    name: AuthSliceKey,
     initialState,
     reducers: {
         logIn: (state, action: PayloadAction<AuthType>) => {

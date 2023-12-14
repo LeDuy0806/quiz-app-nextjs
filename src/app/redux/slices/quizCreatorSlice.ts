@@ -15,6 +15,8 @@ import { CreatorType } from 'src/app/types/quizType';
 import { CreatorMessages } from 'src/constants/messages';
 import { ToastOptions } from 'src/constants/toast';
 
+export const QuizCreatorSliceKey = 'quizCreator';
+
 type CreatorStateType = {
     quiz: QuizType;
     activeQuestion: QuestionType;
@@ -32,7 +34,7 @@ const initialState = {
 } as CreatorStateType;
 
 const quizCreatorSlice = createSlice({
-    name: 'quizCreator',
+    name: QuizCreatorSliceKey,
     initialState,
     reducers: {
         setQuiz: (state, action: PayloadAction<QuizType>) => {

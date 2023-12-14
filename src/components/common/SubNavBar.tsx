@@ -161,6 +161,7 @@ function SubNavBar({ toggleSidebar }: IProps) {
                                         src={user?.avatar ? user.avatar : '/assets/images/default_avatar.png'}
                                         alt='user photo'
                                         className='rounded-full object-cover'
+                                        sizes='100%'
                                     />
                                 </div>
                             </motion.button>

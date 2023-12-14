@@ -294,7 +294,7 @@ const FormSignIn = () => {
                     </p>
                 </div>
             </div>
-            {loading && <LiquidLoading />}
+            {/* {loading && <LiquidLoading />} */}
         </motion.main>
     );
 };

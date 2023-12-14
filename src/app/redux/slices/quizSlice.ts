@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import QuizType, { InitQuiz } from 'src/app/types/quizType';
 
+export const QuizSliceKey = 'quiz';
+
 type InitialType = {
     quiz: QuizType;
     TeacherQuizzes: QuizType[];
@@ -16,7 +18,7 @@ const initialState = {
 } as InitialType;
 
 const quizSlice = createSlice({
-    name: 'quiz',
+    name: QuizSliceKey,
     initialState,
     reducers: {
         fetchQuiz: (state, action: PayloadAction<QuizType>) => {

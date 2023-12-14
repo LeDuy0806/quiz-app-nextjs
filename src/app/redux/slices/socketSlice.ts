@@ -5,12 +5,14 @@ type InitialType = {
     socket: any;
 };
 
+export const SocketSliceKey = 'socket';
+
 const initialState = {
     socket: null
 } as InitialType;
 
 const socketSlice = createSlice({
-    name: 'socket',
+    name: SocketSliceKey,
     initialState,
     reducers: {
         createSocket: (state, action: PayloadAction<Socket>) => {

@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import PlayerResultType, { InitPlayerResult } from 'src/app/types/playerResultType';
 
+export const PlayerResultSliceKey = 'playerResult';
+
 type InitialType = {
     playerResult: PlayerResultType;
     playerResults: PlayerResultType[];
@@ -8,7 +10,7 @@ type InitialType = {
 const initialState = { playerResult: InitPlayerResult, playerResults: [] } as InitialType;
 
 const playerResultSlice = createSlice({
-    name: 'playerResult',
+    name: PlayerResultSliceKey,
     initialState,
     reducers: {
         fetchPlayerResult: (state, action: PayloadAction<PlayerResultType>) => {

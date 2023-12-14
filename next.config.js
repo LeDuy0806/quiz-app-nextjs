@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+// const nodeExternals = require('webpack-node-externals');
+
 const nextConfig = {
     reactStrictMode: false,
     experimental: {
@@ -24,6 +26,15 @@ const nextConfig = {
             'global-uploads.webflow.com',
             'demos.creative-tim.com'
         ]
+    },
+
+    webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+        config.externals.push({
+            'utf-8-validate': 'commonjs utf-8-validate',
+            bufferutil: 'commonjs bufferutil',
+            'supports-color': 'commonjs supports-color'
+        });
+        return config;
     }
 };
 
