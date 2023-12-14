@@ -41,7 +41,7 @@ const config: Config = {
                 shadowTextResult: '5px 5px 0px #FFB650, 10px 10px 0px  #FF80BF, 15px 15px 0px #EF5097'
             },
             screens: {
-                xs: '320px',
+                xs: '330px',
                 sm: '415px',
                 sml: '500px',
                 md: '667px',
