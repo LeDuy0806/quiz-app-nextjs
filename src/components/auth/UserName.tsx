@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import clsx from 'clsx';
 
 //animation
@@ -30,10 +30,20 @@ interface FormSignUpProps {
 }
 
 const FormUserName = (props: FormSignUpProps) => {
+    const mounted = useRef<boolean>(true);
     const [click, setClick] = useState<boolean>(false);
 
-    const [checkUserName, { data, isError, isSuccess, isLoading }] =
-        useCheckUserNameExitsMutation();
+    const [language, setLanguage] = useState('');
+    useEffect(() => {
+        mounted.current = true;
+        const value = JSON.parse(localStorage.getItem('language')!);
+        setLanguage(value);
+        return () => {
+            mounted.current = false;
+        };
+    }, []);
+
+    const [checkUserName, { data, isError, isSuccess, isLoading }] = useCheckUserNameExitsMutation();
 
     useEffect(() => {
         if (
@@ -64,23 +74,18 @@ const FormUserName = (props: FormSignUpProps) => {
     }, [isSuccess]);
 
     return (
-        <div className='absolute w-[760px] min-h-full mdl:min-h-[600px] rounded-[50px] bg-bgBlackLight top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] overflow-hidden py-[75px] px-[210px]'>
-            <div className='w-full h-full flex flex-col items-center justify-center gap-y-2'>
-                <motion.div
-                    initial={{ x: 20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.4, delay: 0.2 }}
-                    className='text-[6rem]'
-                >
+        <div className='absolute left-[50%] top-[50%] min-h-full w-[760px] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-[50px] bg-bgBlackLight px-[210px] py-[75px] mdl:min-h-[600px]'>
+            <div className='flex h-full w-full flex-col items-center justify-center gap-y-2'>
+                <motion.div initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.4, delay: 0.2 }} className='text-[6rem]'>
                     👋
                 </motion.div>
                 <motion.h1
                     initial={{ x: 20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.3 }}
-                    className='text-[2rem] text-textWhite mb-[15px]'
+                    className='mb-[15px] text-[2rem] text-textWhite'
                 >
-                    What's your name?
+                    {language === 'en' ? "What's your name?" : 'Tên của bạn là gì?'}
                 </motion.h1>
                 <motion.div
                     initial={{ x: 100, opacity: 0 }}
@@ -88,35 +93,31 @@ const FormUserName = (props: FormSignUpProps) => {
                     transition={{ duration: 0.4, delay: 0.4 }}
                     className='flex flex-row items-center justify-around'
                 >
-                    <div className='w-2/5 relative mb-[7px]'>
+                    <div className='relative mb-[7px] w-2/5'>
                         <input
                             value={props.firstName}
                             type='text'
                             name='firstName'
                             className={clsx(
-                                `w-full block m-0 py-[13.5px] px-5 text-[1rem] leading-normal bg-clip-padding bg-bgInput border border-solid border-textFog rounded-[18px] placeholder:italic text-textWhite font-semibold outline-none focus:border-bgBlue focus:border-[2px]`,
-                                RequireShort(props.firstName) === 'weak' &&
-                                    'border-textError focus:border-textError',
-                                RequireShort(props.firstName) === 'strong' &&
-                                    'border-textGreen focus:border-textGreen'
+                                `m-0 block w-full rounded-[18px] border border-solid border-textFog bg-bgInput bg-clip-padding px-5 py-[13.5px] text-[1rem] font-semibold leading-normal text-textWhite outline-none placeholder:italic focus:border-[2px] focus:border-bgBlue`,
+                                RequireShort(props.firstName) === 'weak' && 'border-textError focus:border-textError',
+                                RequireShort(props.firstName) === 'strong' && 'border-textGreen focus:border-textGreen'
                             )}
-                            placeholder='firstName'
+                            placeholder={language === 'en' ? 'firstName' : 'Tên đầu'}
                             onChange={props.handleChangeForm}
                         />
                     </div>
-                    <div className='w-2/5 relative mb-[7px]'>
+                    <div className='relative mb-[7px] w-2/5'>
                         <input
                             value={props.lastName}
                             type='text'
                             name='lastName'
                             className={clsx(
-                                `w-full block m-0 py-[13.5px] px-5 text-[1rem] leading-normal bg-clip-padding bg-bgInput border border-solid border-textFog rounded-[18px] placeholder:italic text-textWhite font-semibold outline-none focus:border-bgBlue focus:border-[2px]`,
-                                RequireShort(props.lastName) === 'weak' &&
-                                    'border-textError focus:border-textError',
-                                RequireShort(props.lastName) === 'strong' &&
-                                    'border-textGreen focus:border-textGreen'
+                                `m-0 block w-full rounded-[18px] border border-solid border-textFog bg-bgInput bg-clip-padding px-5 py-[13.5px] text-[1rem] font-semibold leading-normal text-textWhite outline-none placeholder:italic focus:border-[2px] focus:border-bgBlue`,
+                                RequireShort(props.lastName) === 'weak' && 'border-textError focus:border-textError',
+                                RequireShort(props.lastName) === 'strong' && 'border-textGreen focus:border-textGreen'
                             )}
-                            placeholder='lastName'
+                            placeholder={language === 'en' ? 'lastName' : 'Tên cuối'}
                             onChange={props.handleChangeForm}
                         />
                     </div>
@@ -126,49 +127,37 @@ const FormUserName = (props: FormSignUpProps) => {
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.5 }}
-                    className='w-full relative mb-[7px]'
+                    className='relative mb-[7px] w-full'
                 >
                     <input
                         value={props.userName}
                         name='userName'
                         className={clsx(
-                            `w-full block m-0 py-[13.5px] px-5 text-[1rem] leading-normal bg-clip-padding bg-bgInput border border-solid border-textFog rounded-[18px] placeholder:italic text-textWhite font-semibold outline-none focus:border-bgBlue focus:border-[2px]`,
-                            RequireLong(props.userName) === 'weak' &&
-                                'border-textError focus:border-textError',
-                            RequireLong(props.userName) === 'strong' &&
-                                'border-textGreen focus:border-textGreen'
+                            `m-0 block w-full rounded-[18px] border border-solid border-textFog bg-bgInput bg-clip-padding px-5 py-[13.5px] text-[1rem] font-semibold leading-normal text-textWhite outline-none placeholder:italic focus:border-[2px] focus:border-bgBlue`,
+                            RequireLong(props.userName) === 'weak' && 'border-textError focus:border-textError',
+                            RequireLong(props.userName) === 'strong' && 'border-textGreen focus:border-textGreen'
                         )}
-                        placeholder='userName'
+                        placeholder={language === 'en' ? 'userName' : 'Tên của bạn'}
                         onChange={props.handleChangeForm}
                     />
                 </motion.div>
 
-                {isError && <ErrorNotify message='UserName already exists' />}
+                {isError && <ErrorNotify message={language === 'en' ? 'UserName already exists' : 'Tên đã tồn tại'} />}
 
                 <motion.div
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.6 }}
-                    className='w-full h-[60px] flex flex-col items-center justify-center'
+                    className='flex h-[60px] w-full flex-col items-center justify-center'
                 >
                     <button
                         className={clsx(
-                            `w-full flex items-center justify-center min-w-[300px] text-[16px] rounded-[20px] bg-bgBlue text-textWhite font-semibold px-20 py-[10px] mt-2`,
-                            click
-                                ? 'bg-bgBlue cursor-pointer hover:py-[12px] hover:font-bold'
-                                : 'bg-textGray cursor-default'
+                            `mt-2 flex w-full min-w-[300px] items-center justify-center rounded-[20px] bg-bgBlue px-20 py-[10px] text-[16px] font-semibold text-textWhite`,
+                            click ? 'cursor-pointer bg-bgBlue hover:py-[12px] hover:font-bold' : 'cursor-default bg-textGray'
                         )}
                         onClick={handleContinue}
                     >
-                        {isLoading ? (
-                            <Image
-                                src={loadingImg}
-                                alt=''
-                                className='w-7 h-7 self-center'
-                            />
-                        ) : (
-                            "That's me"
-                        )}
+                        {isLoading ? <Image src={loadingImg} alt='' className='h-7 w-7 self-center' /> : language === 'en' ? `That's me` : 'Đó là tôi'}
                     </button>
                 </motion.div>
 
@@ -176,13 +165,13 @@ const FormUserName = (props: FormSignUpProps) => {
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.7 }}
-                    className='block w-full text-sm py-4 hover:rounded-[18px] hover:text-[15px] font-bold text-textWhite'
+                    className='block w-full py-4 text-sm font-bold text-textWhite hover:rounded-[18px] hover:text-[15px]'
                     onClick={() => {
                         props.setShowFormSignUp(true);
                         props.setShowFormUserName(false);
                     }}
                 >
-                    Back
+                    {language === 'en' ? 'Back' : 'Trở về'}
                 </motion.button>
             </div>
         </div>

@@ -9,6 +9,7 @@ type SignUpType = {
     userName: string;
     mail: string;
     password: string;
+    workspace: { name: { en: string; vn: string } };
 };
 
 type ErrorExistSingUp = {
@@ -27,6 +28,14 @@ type ErrorUserType = {
 type LoginType = {
     mail: string;
     password: string;
+};
+
+type EditUserType = {
+    userName: string;
+    firstName: string;
+    lastName: string;
+    avatar: any;
+    bio: string;
 };
 
 type ErrorLoginType = {
@@ -104,6 +113,7 @@ export {
     type SignUpType,
     type ErrorExistSingUp,
     type ErrorUserType,
+    type EditUserType,
     type LoginType,
     type EditProfileType,
     type ErrorLoginType,

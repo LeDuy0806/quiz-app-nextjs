@@ -22,6 +22,7 @@ import gameReducer from './slices/gamesSlice';
 import leaderBoardReducer from './slices/leaderBoardSlice';
 import playerResultReducer from './slices/playerResultSlice';
 import communityReducer from './slices/communitySlice';
+import languageReducer from './slices/languageSlice';
 
 const store = configureStore({
     reducer: {
@@ -42,7 +43,8 @@ const store = configureStore({
         search: searchReducer,
         leaderBoard: leaderBoardReducer,
         playerResult: playerResultReducer,
-        community: communityReducer
+        community: communityReducer,
+        language: languageReducer
     },
 
     middleware: (getDefaultMiddleware) =>

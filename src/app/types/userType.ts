@@ -7,6 +7,8 @@ type UserType = {
     avatar: string;
     userType: string;
     point: number;
+    workspace: { logo: string; name: { en: string; vn: string } };
+    bio: string;
     follows: UserType[];
     friends: UserType[];
     emailToken: '';
@@ -29,6 +31,8 @@ export const InitUser = {
     point: 0,
     follows: [],
     friends: [],
+    workspace: { logo: '', name: { en: '', vn: '' } },
+    bio: '',
     emailToken: '',
     isVerified: true,
     update: {

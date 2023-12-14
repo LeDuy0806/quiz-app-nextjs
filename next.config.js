@@ -20,7 +20,9 @@ const nextConfig = {
             'platform-lookaside.fbsbx.com',
             'scontent.fsgn21-1.fna.fbcdn.net',
             'images.unsplash.com',
-            'cf.quizizz.com'
+            'cf.quizizz.com',
+            'global-uploads.webflow.com',
+            'demos.creative-tim.com'
         ]
     }
 };

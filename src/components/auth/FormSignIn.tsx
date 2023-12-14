@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import clsx from 'clsx';
 import { signIn } from 'next-auth/react';
 
@@ -21,7 +21,6 @@ import { motion } from 'framer-motion';
 
 //components
 import ErrorNotify from './Error';
-import LoadingRoute from '../LoadingRoute';
 
 //validates
 import { EmailFormat } from 'src/app/validates';
@@ -30,10 +29,10 @@ import { EmailFormat } from 'src/app/validates';
 import { useAppDispatch } from 'src/app/redux/hooks';
 import { logIn } from 'src/app/redux/slices/authSlice';
 import { useLoginUserMutation, useLoginSocialMutation } from 'src/app/redux/services/authApi';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 
 //type
 import { LoginType, ErrorLoginType } from 'src/app/variable';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 
 const InitLogin = { mail: '', password: '' } as LoginType;
 const InitErrorLogin = {
@@ -48,8 +47,18 @@ import LiquidLoading from '../LiquidLoading';
 import { VscLoading } from 'react-icons/vsc';
 
 const FormSignIn = () => {
+    const mounted = useRef<boolean>(true);
     const { data: session } = useSession();
-    console.log(session);
+
+    const [language, setLanguage] = useState('');
+    useEffect(() => {
+        mounted.current = true;
+        const value = JSON.parse(localStorage.getItem('language')!);
+        setLanguage(value);
+        return () => {
+            mounted.current = false;
+        };
+    }, []);
 
     const router = useRouter();
     const dispatch = useAppDispatch();
@@ -135,20 +144,20 @@ const FormSignIn = () => {
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.1 }}
-            className='w-full max-w-full min-h-screen z-[49] flex flex-col bg-bgPink overflow-hidden mx-auto mt-auto'
+            className='z-[49] mx-auto mt-auto flex min-h-screen w-full max-w-full flex-col overflow-hidden bg-bgPink'
         >
-            <div className='absolute w-[760px] min-h-full mdl:min-h-[600px] rounded-[50px] bg-textWhite top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] overflow-hidden py-[60px] px-[210px]'>
+            <div className='absolute left-[50%] top-[50%] min-h-full w-[760px] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-[50px] bg-textWhite px-[210px] py-[60px] mdl:min-h-[600px]'>
                 <motion.div
                     initial={{ x: -20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.2 }}
-                    className='flex flex-row items-center justify-center gap-x-4 mb-[30px]'
+                    className='mb-[30px] flex flex-row items-center justify-center gap-x-4'
                 >
                     <Image src={logoImg} alt='' className='h-[50px] w-[50px]' />
-                    <p className='text-[36px] text-textBlack font-black'>Quizzes</p>
+                    <p className='text-[36px] font-black text-textBlack'>Quizzes</p>
                 </motion.div>
                 <div className='block h-full'>
-                    <div className='flex flex-col mt-4'>
+                    <div className='mt-4 flex flex-col'>
                         <div className=''>
                             <motion.div
                                 initial={{ x: -20, opacity: 0 }}
@@ -160,10 +169,10 @@ const FormSignIn = () => {
                                     type='email'
                                     name='mail'
                                     className={clsx(
-                                        `block min-h-[auto] w-full rounded-2xl border-[2px] px-3 py-[0.8rem] font-semibold outline-none focus:border-bgBlue focus:border-[2px] placeholder-gray-400 placeholder:italic`,
-                                        EmailFormat(formData.mail) === false && 'focus:border-textError border-textError'
+                                        `block min-h-[auto] w-full rounded-2xl border-[2px] px-3 py-[0.8rem] font-semibold placeholder-gray-400 outline-none placeholder:italic focus:border-[2px] focus:border-bgBlue`,
+                                        EmailFormat(formData.mail) === false && 'border-textError focus:border-textError'
                                     )}
-                                    placeholder='Enter email'
+                                    placeholder={language === 'en' ? 'Enter email' : 'Nhập email'}
                                     onChange={handleChangeForm}
                                 />
                             </motion.div>
@@ -177,63 +186,65 @@ const FormSignIn = () => {
                                 <input
                                     type={showPassWord ? 'text' : 'password'}
                                     name='password'
-                                    className='min-h-[auto] w-full rounded-2xl border-[2px] bg-transparent px-3 py-[0.8rem] font-semibold outline-none focus:border-bgBlue focus:border-[2px] placeholder-gray-400 placeholder:italic'
-                                    placeholder='Password'
+                                    className='min-h-[auto] w-full rounded-2xl border-[2px] bg-transparent px-3 py-[0.8rem] font-semibold placeholder-gray-400 outline-none placeholder:italic focus:border-[2px] focus:border-bgBlue'
+                                    placeholder={language === 'en' ? 'Password' : 'Mật khẩu'}
                                     onChange={handleChangeForm}
                                 />
                                 <button
-                                    className='absolute right-4 translate-y-[-50%] top-[50%] cursor-pointer'
+                                    className='absolute right-4 top-[50%] translate-y-[-50%] cursor-pointer'
                                     onClick={() => {
                                         setShowPassWord(!showPassWord);
                                     }}
                                 >
-                                    {showPassWord ? <AiFillEye className=' w-[20px] h-[20px]' /> : <AiFillEyeInvisible className=' w-[20px] h-[20px]' />}
+                                    {showPassWord ? <AiFillEye className=' h-[20px] w-[20px]' /> : <AiFillEyeInvisible className=' h-[20px] w-[20px]' />}
                                 </button>
                             </motion.div>
 
-                            {formError.userName && <ErrorNotify message='Email does not exists' />}
+                            {formError.userName && <ErrorNotify message={language === 'en' ? 'Email does not exists!' : 'Email không tồn tại!'} />}
 
-                            {formError.password && <ErrorNotify message='Your password is wrong' />}
+                            {formError.password && <ErrorNotify message={language === 'en' ? 'Your password is wrong!' : 'Mật khẩu không đúng!'} />}
 
-                            {formError.authAccount && <ErrorNotify message='Email is auth account' />}
+                            {formError.authAccount && <ErrorNotify message={language === 'en' ? 'Email is auth account' : 'Tài khoảng đã được sử dụng'} />}
 
                             <motion.button
                                 initial={{ x: -20, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
                                 transition={{ duration: 0.4, delay: 0.5 }}
                                 className={clsx(
-                                    `w-full flex items-center justify-center rounded-2xl py-[0.6rem] text-textWhite font-bold leading-7`,
-                                    click ? 'bg-bgBlue cursor-pointer' : 'bg-textGray cursor-default'
+                                    `flex w-full items-center justify-center rounded-2xl py-[0.6rem] font-bold leading-7 text-textWhite`,
+                                    click ? 'cursor-pointer bg-bgBlue' : 'cursor-default bg-textGray'
                                 )}
                                 onClick={handleLogin}
                             >
                                 {isLoading || loading ? (
                                     <>
-                                        <VscLoading className='animate-spin h-5 w-5 mr-3 text-white' />
-                                        Processing...
+                                        <VscLoading className='mr-3 h-5 w-5 animate-spin text-white' />
+                                        {language === 'en' ? 'Processing...' : 'Đang tải...'}
                                     </>
-                                ) : (
+                                ) : language === 'en' ? (
                                     'Sign In'
+                                ) : (
+                                    'Đăng nhập'
                                 )}
                             </motion.button>
                         </div>
-                        <div className='flex flex-col w-full gap-y-2 mt-3'>
+                        <div className='mt-3 flex w-full flex-col gap-y-2'>
                             <motion.button
                                 initial={{ x: -20, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
                                 transition={{ duration: 0.5, delay: 0.6 }}
                                 onClick={() => router.push('/signUp')}
-                                className='block w-full text-sm py-4 font-semibold hover:bg-bgGrayLight hover:rounded-[18px] hover:text-[15px]'
+                                className='block w-full py-4 text-sm font-semibold hover:rounded-[18px] hover:bg-bgGrayLight hover:text-[15px]'
                             >
-                                No account? Sign up for FREE
+                                {language === 'en' ? 'No account? Sign up for FREE' : 'Chưa có tài khoản? Đăng ký miễn phí'}
                             </motion.button>
                             <motion.button
                                 initial={{ x: -20, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
                                 transition={{ duration: 0.4, delay: 0.7 }}
-                                className='block w-full  text-sm py-4 font-semibold hover:bg-bgGrayLight lue hover:rounded-[18px] hover:text-[15px]'
+                                className='lue block  w-full py-4 text-sm font-semibold hover:rounded-[18px] hover:bg-bgGrayLight hover:text-[15px]'
                             >
-                                I forgot my password
+                                {language === 'en' ? 'I forgot my password' : 'Quên mật khẩu'}
                             </motion.button>
 
                             <motion.button
@@ -241,11 +252,11 @@ const FormSignIn = () => {
                                 initial={{ x: -20, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
                                 transition={{ duration: 0.4, delay: 0.8 }}
-                                className='w-full flex flex-row items-center justify-around bg-white rounded-2xl py-[0.8rem] text-textGray font-bold border-[2px] border-textPurple hover:bg-textPurpleBorder hover:text-textWhite'
+                                className='flex w-full flex-row items-center justify-around rounded-2xl border-[2px] border-textPurple bg-white py-[0.8rem] font-bold text-textGray hover:bg-textPurpleBorder hover:text-textWhite'
                                 onClick={() => signIn('google')}
                             >
-                                <Image src={googleImg} alt='' className='block w-[20px] h-[20px]' />
-                                <span className='inline-block'>Sign in with google</span>
+                                <Image src={googleImg} alt='' className='block h-[20px] w-[20px]' />
+                                <span className='inline-block'>{language === 'en' ? 'Sign in with Google' : 'Đăng nhập bằng Google'}</span>
                                 <span />
                             </motion.button>
 
@@ -253,11 +264,11 @@ const FormSignIn = () => {
                                 initial={{ x: -20, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
                                 transition={{ duration: 0.4, delay: 0.8 }}
-                                className='w-full flex flex-row items-center justify-around bg-white rounded-2xl py-[0.8rem] text-textGray font-bold border-[2px] border-textBlue hover:bg-bgBlue hover:text-textWhite'
+                                className='flex w-full flex-row items-center justify-around rounded-2xl border-[2px] border-textBlue bg-white py-[0.8rem] font-bold text-textGray hover:bg-bgBlue hover:text-textWhite'
                                 onClick={() => signIn('facebook')}
                             >
-                                <Image src={facebookImg} alt='' className='block w-[20px] h-[20px]' />
-                                <span className='inline-block'>Sign in with Facebook</span>
+                                <Image src={facebookImg} alt='' className='block h-[20px] w-[20px]' />
+                                <span className='inline-block'>{language === 'en' ? 'Sign in with Facebook' : 'Đăng nhập bằng Facebook'}</span>
                                 <span />
                             </motion.button>
 
@@ -266,17 +277,20 @@ const FormSignIn = () => {
                                     initial={{ x: -20, opacity: 0 }}
                                     animate={{ x: 0, opacity: 1 }}
                                     transition={{ duration: 0.4, delay: 0.9 }}
-                                    className='block w-full text-sm py-4 hover:bg-bgGrayLight hover:rounded-[18px] hover:text-[15px] font-bold mb-3'
+                                    className='mb-3 block w-full py-4 text-sm font-bold hover:rounded-[18px] hover:bg-bgGrayLight hover:text-[15px]'
                                 >
-                                    Back
+                                    {language === 'en' ? 'Back' : 'Trở về'}
                                 </motion.button>
                             </Link>
                         </div>
                     </div>
                 </div>
-                <div className='absolute w-full text-center min-h-[70px] bottom-0 left-[50%] translate-x-[-50%]'>
-                    <p className='text-textGray font-semibold'>
-                        ©2023 quizzes GmbH -<span className='text-textBlack font-bold'>Imprint & Privacy Policy</span>
+                <div className='absolute bottom-0 left-[50%] min-h-[70px] w-full translate-x-[-50%] text-center'>
+                    <p className='font-semibold text-textGray'>
+                        ©2023 quizzes GmbH -
+                        <span className='font-bold text-textBlack'>
+                            {language === 'en' ? ' Imprint & Privacy Policy' : ' Điều khoản & và chính sách bảo mật'}
+                        </span>
                     </p>
                 </div>
             </div>
