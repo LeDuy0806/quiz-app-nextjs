@@ -13,6 +13,7 @@ import { motion } from 'framer-motion';
 //type
 import { SignUpType } from 'src/app/variable';
 import UploadAvatar from 'src/components/auth/UploadAvatar';
+import FormWorkSpace from 'src/components/auth/WorkSpace';
 
 const InitSignUp = {
     avatar: '',
@@ -21,7 +22,8 @@ const InitSignUp = {
     userType: '',
     userName: '',
     mail: '',
-    password: ''
+    password: '',
+    workspace: { logo: '', name: { en: '', vn: '' } }
 } as SignUpType;
 
 const SignUp = () => {
@@ -29,6 +31,7 @@ const SignUp = () => {
     const [showFormSignUp, setShowFormSignUp] = useState<boolean>(true);
     const [showFormUserName, setShowFormUserName] = useState<boolean>(false);
     const [showFormUserType, setShowFormUserType] = useState<boolean>(false);
+    const [showFormWorkSpace, setShowFormWorkSpace] = useState<boolean>(false);
     const [showUpLoadImage, setShowUploadImage] = useState<boolean>(false);
 
     const [formData, setFormData] = useState<SignUpType>(InitSignUp);
@@ -43,14 +46,10 @@ const SignUp = () => {
 
     return (
         <motion.div
-            initial={
-                !showFormSignUp ? { y: -10, opacity: 0 } : { x: 10, opacity: 0 }
-            }
-            animate={
-                !showFormSignUp ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 }
-            }
+            initial={!showFormSignUp ? { y: -10, opacity: 0 } : { x: 10, opacity: 0 }}
+            animate={!showFormSignUp ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 }}
             transition={{ duration: 0.1 }}
-            className='w-full max-w-full min-h-screen z-[100] flex flex-col items-end font-fontFamily bg-bgPink overflow-hidden mx-auto mt-auto'
+            className='font-fontFamily z-[100] mx-auto mt-auto flex min-h-screen w-full max-w-full flex-col items-end overflow-hidden bg-bgPink'
         >
             {showFormSignUp && (
                 <FormSignUp
@@ -76,15 +75,25 @@ const SignUp = () => {
                 <FormUserType
                     setShowFormUserName={setShowFormUserName}
                     setShowFormUserType={setShowFormUserType}
-                    setShowUploadImage={setShowUploadImage}
+                    setShowFormWorkSpace={setShowFormWorkSpace}
                     handleChangeForm={handleChangeForm}
                     userType={formData.userType}
                     handleSignUp={handleSignUp}
                 />
             )}
+            {showFormWorkSpace && (
+                <FormWorkSpace
+                    setShowFormUserType={setShowFormUserType}
+                    setShowFormWorkSpace={setShowFormWorkSpace}
+                    setShowUploadImage={setShowUploadImage}
+                    handleChangeForm={handleChangeForm}
+                    workspace={formData.workspace}
+                    handleSignUp={handleSignUp}
+                />
+            )}
             {showUpLoadImage && (
                 <UploadAvatar
-                    setShowFormUserType={setShowFormUserType}
+                    setShowFormWorkSpace={setShowFormWorkSpace}
                     setShowUploadImage={setShowUploadImage}
                     handleChangeForm={handleChangeForm}
                     formData={formData}

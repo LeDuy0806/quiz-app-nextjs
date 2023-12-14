@@ -71,18 +71,18 @@ const Join = () => {
     };
 
     return (
-        <div className='relative h-full w-full flex flex-col'>
-            <Image src={bgJoin} className='w-full h-full absolute object-cover' alt='' />
-            <div className='w-full relative flex flex-1 flex-col justify-center items-center'>
-                <div className='flex flex-col gap-10 items-center justify-center'>
-                    <div className='w-full flex flex-row items-center justify-evenly'>
+        <div className='relative flex h-full w-full flex-col'>
+            <Image src={bgJoin} className='absolute h-full w-full object-cover' alt='' />
+            <div className='relative flex w-full flex-1 flex-col items-center justify-center'>
+                <div className='flex flex-col items-center justify-center gap-10'>
+                    <div className='flex w-full flex-row items-center justify-evenly'>
                         <Image src={logoImg} alt='' className='w-[3rem]' />
-                        <p className='font-joinFont text-textWhite font-extrabold text-[2rem]'>Quizzes</p>
+                        <p className='font-joinFont text-[2rem] font-extrabold text-textWhite'>Quizzes</p>
                     </div>
-                    <div className='w-full bg-textWhite p-4 rounded shadow-lg flex flex-col gap-4'>
+                    <div className='flex w-full flex-col gap-4 rounded bg-textWhite p-4 shadow-lg'>
                         <input
                             value={pin}
-                            className='w-full min-w-[6.25rem] min-h-[2.375rem] max-h-[48px] leading-9 text-center text-textBlack outline-none text-[1rem] rounded py-3 font-bold text-xl border-2'
+                            className='max-h-[48px] min-h-[2.375rem] w-full min-w-[6.25rem] rounded border-2 py-3 text-center text-[1rem] text-xl font-bold leading-9 text-textBlack outline-none'
                             placeholder='Game PIN'
                             onChange={(e) => {
                                 setPin(e.target.value);
@@ -90,8 +90,8 @@ const Join = () => {
                         />
                         <button
                             className={clsx(
-                                `w-full inline-block align-text-bottom bg-textGray rounded text-textWhite font-bold items-center min-w-[48px] py-3`,
-                                pin ? 'bg-textGreen cursor-pointer' : 'bg-textGray'
+                                `inline-block w-full min-w-[48px] items-center rounded bg-textGray py-3 align-text-bottom font-bold text-textWhite`,
+                                pin ? 'cursor-pointer bg-textGreen' : 'bg-textGray'
                             )}
                             onClick={joinGame}
                         >
@@ -100,7 +100,7 @@ const Join = () => {
                     </div>
                 </div>
             </div>
-            <div className='z-[1] flex flex-col justify-center items-center text-textWhite font-semibold'>
+            <div className='z-[1] flex flex-col items-center justify-center font-semibold text-textWhite'>
                 <p>Create your own quizzes for Free at quizzes.com</p>
                 <p>Terms | Privacy</p>
             </div>

@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API } from '../api';
 import UserType from 'src/app/types/userType';
 import { RootState } from '../store';
+import { EditUserType } from 'src/app/variable';
+import AuthType from 'src/app/types/authType';
 
 export const apiUser = createApi({
     reducerPath: 'apiUser',
@@ -33,7 +35,7 @@ export const apiUser = createApi({
             })
         }),
 
-        updateUser: builder.mutation<UserType, { userId: string; formData: UserType }>({
+        updateUser: builder.mutation<UserType, { userId: string; formData: EditUserType }>({
             query: ({ userId, formData }) => ({
                 url: `api/user/${userId}`,
                 method: 'PATCH',

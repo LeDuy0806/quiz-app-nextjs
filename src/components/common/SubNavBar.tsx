@@ -90,7 +90,6 @@ function SubNavBar({ toggleSidebar }: IProps) {
 
     useEffect(() => {
         if (isSuccess) {
-            localStorage.clear();
             if (session) {
                 signOut({ callbackUrl: '/' });
             } else {
@@ -192,7 +191,9 @@ function SubNavBar({ toggleSidebar }: IProps) {
                                             </div>
                                             <span className='block text-sm text-gray-900 dark:text-white'>{user?.userName || 'UserName'}</span>
                                         </div>
-                                        <span className='block text-xs text-gray-900 hover:underline dark:text-white'>View ProFile</span>
+                                        <Link href='/profile' className='block text-xs text-gray-900 hover:underline dark:text-white'>
+                                            View ProFile
+                                        </Link>
                                     </div>
                                 </li>
 

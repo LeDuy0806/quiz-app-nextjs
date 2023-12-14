@@ -1,4 +1,5 @@
 'use client';
+import { useRef, useEffect, useState } from 'react';
 
 //images
 import Image from 'next/image';
@@ -12,38 +13,44 @@ import { studentsImg, teacherImg } from '../../../public/assets/images/auth';
 interface FormTypeProps {
     setShowFormUserName: (state: boolean) => void;
     setShowFormUserType: (state: boolean) => void;
-    setShowUploadImage: (state: boolean) => void;
+    setShowFormWorkSpace: (state: boolean) => void;
     handleChangeForm: (e: React.ChangeEvent<HTMLInputElement> | any) => void;
     handleSignUp: () => void;
     userType: string;
 }
 
 const FormUserType = (props: FormTypeProps) => {
+    const mounted = useRef<boolean>(true);
+    const [language, setLanguage] = useState('');
     const handleContinue = () => {
         if (props.userType) {
             props.setShowFormUserType(false);
-            props.setShowUploadImage(true);
+            props.setShowFormWorkSpace(true);
         }
     };
 
+    useEffect(() => {
+        mounted.current = true;
+        const value = JSON.parse(localStorage.getItem('language')!);
+        setLanguage(value);
+        return () => {
+            mounted.current = false;
+        };
+    }, []);
+
     return (
-        <div className='absolute w-[760px] min-h-full mdl:min-h-[600px] rounded-[50px] bg-bgBlackLight top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] overflow-hidden py-[75px] px-[210px]'>
-            <div className='w-full h-full flex flex-col items-center justify-center gap-y-2'>
-                <motion.div
-                    initial={{ x: 100, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.4, delay: 0.2 }}
-                    className='text-[6rem]'
-                >
+        <div className='absolute left-[50%] top-[50%] min-h-full w-[760px] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-[50px] bg-bgBlackLight px-[210px] py-[75px] font-sans mdl:min-h-[600px]'>
+            <div className='flex h-full w-full flex-col items-center justify-center gap-y-2'>
+                <motion.div initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.4, delay: 0.2 }} className='text-[6rem]'>
                     👨‍💻
                 </motion.div>
                 <motion.h1
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.3 }}
-                    className='mdl:w-[560px] text-[2rem] text-textWhite mb-[15px] text-center font-black leading-[1.3em] break-words px-2'
+                    className='mb-[15px] break-words px-2 text-center text-[2rem] font-black leading-[1.3em] text-textWhite mdl:w-[560px]'
                 >
-                    What kind of customer are you using quizzes for?
+                    {language === 'en' ? `What kind of customer are you using quizzes for?` : 'Vai trò của bạn là gì khi sử dụng ứng dụng Quizzes?'}
                 </motion.h1>
 
                 <motion.div
@@ -51,9 +58,8 @@ const FormUserType = (props: FormTypeProps) => {
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.4 }}
                     className={clsx(
-                        `w-[400px] mdl:w-[600px] min-h-[50px] flex flex-row flex-1 items-center justify-between outline-none bg-bgBlackType rounded-[20px] px-4 hover:bg-bgBlackHover cursor-pointer`,
-                        props.userType === 'Student' &&
-                            'border-[2px] border-bgBlue'
+                        `flex min-h-[50px] w-[400px] flex-1 cursor-pointer flex-row items-center justify-between rounded-[20px] bg-bgBlackType px-4 outline-none hover:bg-bgBlackHover mdl:w-[600px]`,
+                        props.userType === 'Student' && 'border-[2px] border-bgBlue'
                     )}
                     onClick={() => {
                         props.handleChangeForm({
@@ -61,20 +67,12 @@ const FormUserType = (props: FormTypeProps) => {
                         });
                     }}
                 >
-                    <div className='flex flex-row gap-x-2 items-center justify-center'>
-                        <Image
-                            alt=''
-                            src={studentsImg}
-                            className='w-[30px] h-[30px]'
-                        />
-                        <span className='text-textWhite font-semibold'>
-                            Student
-                        </span>
+                    <div className='flex flex-row items-center justify-center gap-x-2'>
+                        <Image alt='' src={studentsImg} className='h-[30px] w-[30px]' />
+                        <span className='min-w-[100px] font-semibold text-textWhite'>{language === 'en' ? 'Student' : 'Học sinh'}</span>
                     </div>
                     <div>
-                        <p className='text-textGray'>
-                            Join game to play with friends.
-                        </p>
+                        <p className='text-textGray'>{language === 'en' ? 'Join game to play with friends.' : 'Tham gia trò chơi cùng với bạn bè'}</p>
                     </div>
                 </motion.div>
 
@@ -83,9 +81,8 @@ const FormUserType = (props: FormTypeProps) => {
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.5 }}
                     className={clsx(
-                        `w-[400px] mdl:w-[600px] min-h-[50px] flex flex-row flex-1 items-center justify-between outline-none bg-bgBlackType rounded-[20px] px-4 hover:bg-bgBlackHover cursor-pointer`,
-                        props.userType === 'Teacher' &&
-                            'border-[2px] border-bgBlue'
+                        `flex min-h-[50px] w-[400px] flex-1 cursor-pointer flex-row items-center justify-between rounded-[20px] bg-bgBlackType px-4 outline-none hover:bg-bgBlackHover mdl:w-[600px]`,
+                        props.userType === 'Teacher' && 'border-[2px] border-bgBlue'
                     )}
                     onClick={() => {
                         props.handleChangeForm({
@@ -93,20 +90,15 @@ const FormUserType = (props: FormTypeProps) => {
                         });
                     }}
                 >
-                    <div className='flex flex-row gap-x-2 items-center justify-center'>
-                        <Image
-                            alt=''
-                            src={teacherImg}
-                            className='w-[30px] h-[30px]'
-                        />
-                        <span className='text-textWhite font-semibold'>
-                            Teacher
-                        </span>
+                    <div className='flex flex-row items-center justify-center gap-x-2'>
+                        <Image alt='' src={teacherImg} className='h-[30px] w-[30px]' />
+                        <span className='min-w-[100px] font-semibold text-textWhite'>{language === 'en' ? 'Teacher' : 'Giáo viên'}</span>
                     </div>
                     <div className='max-w-[220px] mdl:max-w-full'>
                         <p className='text-textGray'>
-                            Create, quizzes store , organize for students
-                            joining game
+                            {language === 'en'
+                                ? 'Create, quizzes store , organize for students joining game.'
+                                : 'Tạo , lưu trữ câu đố , tổ chức phòng chơi cho các học sinh tham gia'}
                         </p>
                     </div>
                 </motion.div>
@@ -115,20 +107,18 @@ const FormUserType = (props: FormTypeProps) => {
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.6 }}
-                    className='w-full h-[60px] flex flex-col items-center justify-center'
+                    className='flex h-[60px] w-full flex-col items-center justify-center'
                 >
                     <button
                         className={clsx(
-                            `max-w-[200px] w-[160px] flex items-center justify-center text-[16px] rounded-[20px] bg-bgBlue text-textWhite py-[12px] mt-2 text-center`,
+                            `mt-2 flex w-[160px] max-w-[200px] items-center justify-center rounded-[20px] bg-bgBlue py-[12px] text-center text-[16px] text-textWhite`,
                             props.userType
-                                ? 'bg-bgBlue font-semibold cursor-pointer hover:font-bold hover:py-[14px]'
-                                : 'bg-textGray font-semibold cursor-default',
-                            false &&
-                                'bg-textGreen font-semibold cursor-default hover:py-[12px]'
+                                ? 'cursor-pointer bg-bgBlue font-semibold hover:py-[14px] hover:font-bold'
+                                : 'cursor-default bg-textGray font-semibold'
                         )}
                         onClick={handleContinue}
                     >
-                        Continue
+                        {language === 'en' ? 'Continue' : 'Tiếp theo'}
                     </button>
                 </motion.div>
 
@@ -136,13 +126,13 @@ const FormUserType = (props: FormTypeProps) => {
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.7 }}
-                    className='block w-full text-textWhite text-sm py-4  hover:rounded-[18px] hover:text-[15px] font-bold'
+                    className='block w-full py-4 text-sm font-bold  text-textWhite hover:rounded-[18px] hover:text-[15px]'
                     onClick={() => {
                         props.setShowFormUserType(false);
                         props.setShowFormUserName(true);
                     }}
                 >
-                    Back
+                    {language === 'en' ? 'Back' : 'Trở về'}
                 </motion.button>
             </div>
         </div>

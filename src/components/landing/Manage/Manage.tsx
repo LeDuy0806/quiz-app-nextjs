@@ -1,70 +1,53 @@
-import Image from "next/image";
-import {
-  CarlaImg,
-  LisaImg,
-  PhillipImg,
-} from "../../../../public/assets/images/landing";
+import Image from 'next/image';
+import { CarlaImg, LisaImg, PhillipImg } from '../../../../public/assets/images/landing';
 
 //animation
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
-const Manage = () => {
-  return (
-    <motion.section
-      initial={{ y: -10, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.1, delay: 1.2 }}
-      id="manager"
-      className="w-full max-w-[1440px] block bg-transparent rounded mx-auto px-[3.13rem] pt-20 pb-[4em]"
-    >
-      <div className="relative flex flex-col z-[1] pt-[5.63em] items-center px-0 bg-white rounded-[2.5em]">
-        <div className="h-[60em] absolute flex justify-center my-[-3.13em] top-0 left-0 right-0 overflow-hidden">
-          <div className="absolute w-[22.69em] bottom-20 opacity-1">
-            <Image
-              src={PhillipImg}
-              alt=""
-              className="relative w-full h-full max-w-full inline-block object-fill"
-            />
-          </div>
-          <div className="absolute w-[26.88em] left-0 top-[5em]">
-            <Image
-              src={LisaImg}
-              alt=""
-              className="relative w-full h-full max-w-full inline-block object-fill"
-            />
-          </div>
-          <div className="absolute w-[26.13em]  top-0 right-0 overflow-hidden">
-            <Image
-              src={CarlaImg}
-              alt=""
-              className="relative w-full h-full max-w-full inline-block object-fill"
-            />
-          </div>
-        </div>
-        <div className="sticky flex flex-col top-[7.5em] mb-[8em] items-center text-center gap-y-[0.5em]">
-          <div className="my-0 text-[4em] tracking-tight font-extrabold leading-[1]">
-            Quizzes is Over Power
-            <br />
-          </div>
-          <div className="bg-bgBlueLight text-textBlue pt-0 px-[30px] pb-[16px] rounded-[60px]">
-            <div className="my-0 text-[4em] font-extrabold tracking-tight leading-[1]">
-              project management
+import { useLocalStorage } from 'src/hooks/useLocalStorage';
+interface ManageProps {
+    language: string;
+}
+const Manage = (props: ManageProps) => {
+    const { language } = props;
+    // const [language] = useLocalStorage('language');
+    return (
+        <motion.section
+            initial={{ y: -10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.1, delay: 1.2 }}
+            id='manager'
+            className='mx-auto block w-full max-w-[1440px] rounded bg-transparent px-[3.13rem] pb-[4em] pt-20'
+        >
+            <div className='relative z-[1] flex flex-col items-center rounded-[2.5em] bg-white px-0 pt-[5.63em]'>
+                <div className='absolute left-0 right-0 top-0 my-[-3.13em] flex h-[60em] flex-col justify-center overflow-hidden md:flex-row'>
+                    <div className='bottom-20 w-[22.69em] md:absolute'>
+                        <Image src={PhillipImg} alt='' className='relative inline-block h-full w-full max-w-full object-contain  md:object-fill' />
+                    </div>
+                    <div className='left-0  top-[5em] w-[26.88em] md:absolute'>
+                        <Image src={LisaImg} alt='' className='relative inline-block h-full w-full max-w-full object-contain  md:object-fill' />
+                    </div>
+                    <div className='right-0 top-0 w-[26.13em] md:absolute'>
+                        <Image src={CarlaImg} alt='' className='relative inline-block h-full w-full max-w-full object-contain  md:object-fill' />
+                    </div>
+                </div>
+                <div className='sticky top-[7.5em] mb-[8em] flex flex-col items-center gap-y-[0.5em] text-center'>
+                    <div className='my-0 text-[4em] font-extrabold leading-[1] tracking-tight'>
+                        Quizzes is Over Power
+                        <br />
+                    </div>
+                    <div className='rounded-[60px] bg-bgBlueLight px-[30px] pb-[16px] pt-0 text-textBlue'>
+                        <div className='my-0 font-sans text-[4em] font-extrabold leading-[1] tracking-tight'>
+                            {language === 'en' ? 'project management' : 'quản lý dự án'}
+                        </div>
+                    </div>
+                </div>
+                <div className='sticky top-[38vh] z-[5] flex h-[24.8em] w-full items-center'>
+                    <div className='absolute left-[1.13em] flex min-w-[16px] flex-col items-center gap-y-[6px]'></div>
+                </div>
             </div>
-            {/* <div className="">
-              team scheduling
-            </div>
-            <div className="c-title-2">
-              time tracking
-            </div> */}
-          </div>
-        </div>
-        <div className="sticky z-[5] w-full h-[24.8em] flex top-[38vh] items-center">
-          <div className="absolute flex flex-col min-w-[16px] gap-y-[6px] items-center left-[1.13em]"></div>
-        </div>
-        {/* <div></div> */}
-      </div>
-    </motion.section>
-  );
+        </motion.section>
+    );
 };
 
 export default Manage;

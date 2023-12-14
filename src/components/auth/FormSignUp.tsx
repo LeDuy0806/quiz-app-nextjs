@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Switch from 'react-switch';
 import clsx from 'clsx';
 
@@ -37,23 +37,27 @@ interface FormSignUpProps {
 }
 
 const FormSignUp = (props: FormSignUpProps) => {
+    const mounted = useRef<boolean>(true);
     const router = useRouter();
+
+    const [language, setLanguage] = useState('');
+    useEffect(() => {
+        mounted.current = true;
+        const value = JSON.parse(localStorage.getItem('language')!);
+        setLanguage(value);
+        return () => {
+            mounted.current = false;
+        };
+    }, []);
 
     const [click, setClick] = useState<boolean>(false);
     const [check, setCheck] = useState<boolean>(false);
     const [showPassWord, setShowPassWord] = useState<boolean>(false);
 
-    const [checkMail, { data, isError, isLoading, isSuccess }] =
-        useCheckMailExistsMutation();
+    const [checkMail, { data, isError, isLoading, isSuccess }] = useCheckMailExistsMutation();
 
     useEffect(() => {
-        if (
-            !props.mail ||
-            !props.password ||
-            !check ||
-            RequirePassword(props.password) !== 'strong' ||
-            !EmailFormat(props.mail)
-        ) {
+        if (!props.mail || !props.password || !check || RequirePassword(props.password) !== 'strong' || !EmailFormat(props.mail)) {
             setClick(false);
         } else {
             setClick(true);
@@ -74,18 +78,18 @@ const FormSignUp = (props: FormSignUpProps) => {
     }, [isSuccess]);
 
     return (
-        <div className='absolute w-[760px] min-h-full mdl:min-h-[600px] rounded-[50px] bg-textWhite top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] overflow-hidden py-[75px] px-[210px]'>
+        <div className='absolute left-[50%] top-[50%] min-h-full w-[760px] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-[50px] bg-textWhite px-[210px] py-[75px] mdl:min-h-[600px]'>
             <motion.div
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className='flex flex-row items-center justify-center gap-x-4 mb-[30px]'
+                className='mb-[30px] flex flex-row items-center justify-center gap-x-4'
             >
                 <Image src={logoImg} alt='' className='h-[50px] w-[50px]' />
-                <p className='text-[36px] text-textBlack font-black'>Quizzes</p>
+                <p className='text-[36px] font-black text-textBlack'>Quizzes</p>
             </motion.div>
             <div className='block h-full'>
-                <div className='flex flex-col mt-4'>
+                <div className='mt-4 flex flex-col'>
                     <div className='flex flex-col'>
                         <motion.div
                             initial={{ x: -20, opacity: 0 }}
@@ -99,13 +103,11 @@ const FormSignUp = (props: FormSignUpProps) => {
                                 type='email'
                                 name='mail'
                                 className={clsx(
-                                    `block min-h-[auto] w-full rounded-2xl border-[2px] px-3 py-[0.8rem] font-semibold outline-none focus:border-bgBlue focus:border-[2px] placeholder-gray-400 placeholder:italic`,
-                                    EmailFormat(props.mail) === false &&
-                                        'focus:border-textError border-textError',
-                                    EmailFormat(props.mail) === true &&
-                                        'focus:border-textGreen border-textGreen'
+                                    `block min-h-[auto] w-full rounded-2xl border-[2px] px-3 py-[0.8rem] font-semibold placeholder-gray-400 outline-none placeholder:italic focus:border-[2px] focus:border-bgBlue`,
+                                    EmailFormat(props.mail) === false && 'border-textError focus:border-textError',
+                                    EmailFormat(props.mail) === true && 'border-textGreen focus:border-textGreen'
                                 )}
-                                placeholder='Enter email'
+                                placeholder={language === 'en' ? 'Enter email' : 'Nhập email'}
                                 onChange={props.handleChangeForm}
                             />
                         </motion.div>
@@ -122,31 +124,21 @@ const FormSignUp = (props: FormSignUpProps) => {
                                 type={showPassWord ? 'text' : 'password'}
                                 name='password'
                                 className={clsx(
-                                    `min-h-[auto] w-full rounded-2xl border bg-transparent px-3 py-[0.8rem] outline-none font-semibold focus:border-bgBlue focus:border-[2px] placeholder-gray-400 placeholder:italic`,
-                                    RequirePassword(props.password) ===
-                                        'strong' &&
-                                        'border-textGreen focus:border-textGreen',
-                                    RequirePassword(props.password) ===
-                                        'weak' &&
-                                        'border-textError focus:border-textError',
-                                    RequirePassword(props.password) ===
-                                        'medium' &&
-                                        'border-textYellow focus:border-textYellow'
+                                    `min-h-[auto] w-full rounded-2xl border bg-transparent px-3 py-[0.8rem] font-semibold placeholder-gray-400 outline-none placeholder:italic focus:border-[2px] focus:border-bgBlue`,
+                                    RequirePassword(props.password) === 'strong' && 'border-textGreen focus:border-textGreen',
+                                    RequirePassword(props.password) === 'weak' && 'border-textError focus:border-textError',
+                                    RequirePassword(props.password) === 'medium' && 'border-textYellow focus:border-textYellow'
                                 )}
-                                placeholder='Set password'
+                                placeholder={language === 'en' ? 'Set password' : 'Cài đặt mật khẩu'}
                                 onChange={props.handleChangeForm}
                             />
                             <button
-                                className='absolute right-4 translate-y-[-50%] top-[50%] cursor-pointer'
+                                className='absolute right-4 top-[50%] translate-y-[-50%] cursor-pointer'
                                 onClick={() => {
                                     setShowPassWord(!showPassWord);
                                 }}
                             >
-                                {showPassWord ? (
-                                    <AiFillEye className=' w-[20px] h-[20px]' />
-                                ) : (
-                                    <AiFillEyeInvisible className=' w-[20px] h-[20px]' />
-                                )}
+                                {showPassWord ? <AiFillEye className=' h-[20px] w-[20px]' /> : <AiFillEyeInvisible className=' h-[20px] w-[20px]' />}
                             </button>
                         </motion.div>
 
@@ -154,56 +146,35 @@ const FormSignUp = (props: FormSignUpProps) => {
                             initial={{ x: -20, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ duration: 0.4, delay: 0.5 }}
-                            className='w-full flex justify-center items-center text-right mb-4'
+                            className='mb-4 flex w-full items-center justify-center text-right'
                         >
-                            {/* <div className="relative flex ml-0 float-none items-center justify-center">
-                <label className="relative inline-block text-[13px] h-[30px] w-[52px] bg-bgSwitch leading-[24px] cursor-pointer rounded-[15px] self-center">
-                  <span className="absolute inline-block w-1/2 h-[calc(100%-4px)] bg-textWhite rounded-full left-1 shadow-white"></span>
-                </label>
-              </div> */}
                             <Switch
                                 onChange={() => {
                                     setCheck(!check);
                                 }}
                                 checked={check}
                             />
-                            <span className='inline-block h-[30px] leading-[30px] ml-[10px] mt-0 font-semibold text-sm'>
-                                {'Accept '}
-                                <a className='outline-none text-textBlueLight'>
-                                    Terms of use
-                                </a>
-                                {' and '}
-                                <a className='outline-none text-textBlueLight'>
-                                    Privacy policy
-                                </a>
+                            <span className='ml-[10px] mt-0 inline-block h-[30px] text-sm font-semibold leading-[30px]'>
+                                {language === 'en' ? 'Accept' : 'Chấp nhận'}
+                                <a className='text-textBlueLight outline-none'>{language === 'en' ? ' Terms of use ' : ' Sử dụng '}</a>
+                                {language === 'en' ? 'and' : 'và'}
+                                <a className='text-textBlueLight outline-none'>{language === 'en' ? ' Privacy policy' : ' Bảo mật'}</a>
                             </span>
                         </motion.div>
 
-                        {isError && (
-                            <ErrorNotify message='Email already exists' />
-                        )}
+                        {isError && <ErrorNotify message='Email already exists' />}
 
                         <motion.button
                             initial={{ x: -20, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ duration: 0.4, delay: 0.6 }}
                             className={clsx(
-                                `w-full flex items-center justify-center bg-bgBlue rounded-2xl py-[0.6rem] text-textWhite font-bold leading-7`,
-                                click
-                                    ? 'bg-bgBlue cursor-pointer'
-                                    : 'bg-textGray cursor-default'
+                                `flex w-full items-center justify-center rounded-2xl bg-bgBlue py-[0.6rem] font-bold leading-7 text-textWhite`,
+                                click ? 'cursor-pointer bg-bgBlue' : 'cursor-default bg-textGray'
                             )}
                             onClick={handleContinue}
                         >
-                            {isLoading ? (
-                                <Image
-                                    src={loadingImg}
-                                    alt=''
-                                    className='w-7 h-7 self-center'
-                                />
-                            ) : (
-                                'Sign Up'
-                            )}
+                            {isLoading ? <Image src={loadingImg} alt='' className='h-7 w-7 self-center' /> : language === 'en' ? 'Sign Up' : 'Đăng ký'}
                         </motion.button>
                     </div>
 
@@ -211,30 +182,28 @@ const FormSignUp = (props: FormSignUpProps) => {
                         initial={{ x: -20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.4, delay: 0.7 }}
-                        className='flex flex-col w-full gap-y-2 mt-3'
+                        className='mt-3 flex w-full flex-col gap-y-2'
                     >
                         <button
                             onClick={() => router.push('/signIn')}
-                            className='block w-full text-sm py-4 font-semibold hover:bg-bgGrayLight hover:rounded-[18px] hover:text-[15px]'
+                            className='block w-full py-4 text-sm font-semibold hover:rounded-[18px] hover:bg-bgGrayLight hover:text-[15px]'
                         >
-                            Already have an account? Sign In
+                            {language === 'en' ? 'Already have an account? Sign In' : 'Bạn đã có tài khoảng? Đăng nhập'}
                         </button>
 
                         <button
-                            className='block w-full text-sm py-4 hover:bg-bgGrayLight hover:rounded-[18px] hover:text-[15px] font-bold'
+                            className='block w-full py-4 text-sm font-bold hover:rounded-[18px] hover:bg-bgGrayLight hover:text-[15px]'
                             onClick={() => router.back()}
                         >
-                            Back
+                            {language === 'en' ? 'Back' : 'Trở về'}
                         </button>
                     </motion.div>
                 </div>
             </div>
-            <motion.div className='absolute w-full text-center min-h-[70px] bottom-0 left-[50%] translate-x-[-50%]'>
-                <p className='text-textGray font-semibold'>
+            <motion.div className='absolute bottom-0 left-[50%] min-h-[70px] w-full translate-x-[-50%] text-center'>
+                <p className='font-semibold text-textGray'>
                     ©2023 quizzes GmbH -
-                    <span className='text-textBlack font-bold'>
-                        Imprint & Privacy Policy
-                    </span>
+                    <span className='font-bold text-textBlack'> {language === 'en' ? 'Imprint & Privacy Policy' : 'Điều khoảng & và chính sách bảo mật'}</span>
                 </p>
             </motion.div>
         </div>
