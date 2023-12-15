@@ -1,5 +1,5 @@
 import { FormControlLabel, InputBase, Radio, RadioGroup } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { BsPlusLg } from 'react-icons/bs';
 
@@ -7,10 +7,13 @@ import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
 import { setActiveQuestion, setQuiz } from 'src/app/redux/slices/quizCreatorSlice';
 import { useRouter } from 'next/navigation';
 
-import { initialQuiz } from 'src/app/types/creator';
-import { CreatorType } from 'src/app/types/quizType';
+import { QuizType, initialQuiz } from 'src/app/types/creator';
 import { cn } from 'src/utils/tailwind.util';
 import { RootState } from 'src/app/redux/store';
+import { useCreateDraftQuizMutation } from 'src/app/redux/services/quizApi';
+import { useGetAllCategoriesQuery } from 'src/app/redux/services/categoryApi';
+import { useGetAllGradesQuery } from 'src/app/redux/services/gradeApi';
+import { setCategories, setGrades } from 'src/app/redux/slices/quizSlice';
 
 const customStylesModal: any = {
     overlay: {
@@ -49,12 +52,13 @@ type ModalDataType = {
 
 export default function CreateQuizButton({ buttonElement }: IProps) {
     const dispatch = useAppDispatch();
-    const {
-        quizCreator: { quiz },
-        auth: {
-            authData: { user }
-        }
-    } = useAppSelector((state: RootState) => state);
+
+    const { quiz } = useAppSelector((state: RootState) => state.quizCreator);
+    const { user } = useAppSelector((state: RootState) => state.auth.authData);
+
+    const [createDraftQuiz, { data, isSuccess }] = useCreateDraftQuizMutation();
+    const { data: categoriesData, isSuccess: isGetCategoriesSuccess } = useGetAllCategoriesQuery();
+    const { data: gradesData, isSuccess: isGetGradesSuccess } = useGetAllGradesQuery();
 
     const router = useRouter();
 
@@ -67,6 +71,38 @@ export default function CreateQuizButton({ buttonElement }: IProps) {
     };
 
     const [modalData, setModalData] = useState<ModalDataType>(initialModalData);
+
+    useEffect(() => {
+        if (isGetCategoriesSuccess) {
+            dispatch(setCategories(categoriesData));
+        }
+        if (isGetGradesSuccess) {
+            dispatch(setGrades(gradesData));
+        }
+        if (isSuccess) {
+            dispatch(
+                setQuiz({
+                    ...initialQuiz,
+                    _id: data?._id as string,
+                    name: modalData.name,
+                    description: modalData.description,
+                    isPublic: modalData.isPublic,
+                    creator: {
+                        _id: user._id,
+                        userName: user.userName,
+                        avatar: user.avatar,
+                        userType: user.userType,
+                        firstName: user.firstName,
+                        lastName: user.lastName
+                    }
+                })
+            );
+
+            dispatch(setActiveQuestion(quiz.questionList[0].questionIndex));
+            router.push(`/creator/${data?._id}`);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isSuccess]);
 
     const handleCloseModal = () => {
         setIsOpenModal(false);
@@ -94,26 +130,24 @@ export default function CreateQuizButton({ buttonElement }: IProps) {
     };
 
     const handleCreateQuiz = () => {
-        const newId = Math.random().toString(36);
-        dispatch(
-            setQuiz({
-                ...initialQuiz,
-                _id: '',
-                name: modalData.name,
-                description: modalData.description,
-                isPublic: modalData.isPublic,
-                creator: {
-                    _id: user._id,
-                    userName: user.userName,
-                    avatar: user.avatar,
-                    userType: user.userType,
-                    firstName: user.firstName,
-                    lastName: user.lastName
-                }
-            })
-        );
-        dispatch(setActiveQuestion(quiz.questionList[0].questionIndex));
-        router.push(`/creator/${newId}`);
+        const quizData: QuizType = {
+            ...initialQuiz,
+            name: modalData.name,
+            questionList: [],
+            numberOfQuestions: 0,
+            description: modalData.description,
+            isPublic: modalData.isPublic,
+            creator: {
+                _id: user._id,
+                userName: user.userName,
+                avatar: user.avatar,
+                userType: user.userType,
+                firstName: user.firstName,
+                lastName: user.lastName
+            }
+        };
+
+        createDraftQuiz({ quizData });
     };
 
     Modal.setAppElement('body');

@@ -23,8 +23,10 @@ import { useCreateGameMutation } from 'src/app/redux/services/gameApi';
 import { useCreateLeaderBoardMutation } from 'src/app/redux/services/leaderBoardApi';
 import { createGame } from 'src/app/redux/slices/gamesSlice';
 import { createLeaderBoard } from 'src/app/redux/slices/leaderBoardSlice';
-import { fetchQuiz } from 'src/app/redux/slices/quizSlice';
+import { deleteQuiz, fetchQuiz, fetchTeacherQuizzes } from 'src/app/redux/slices/quizSlice';
 import { setQuiz } from 'src/app/redux/slices/quizCreatorSlice';
+import { useDeleteQuizMutation } from 'src/app/redux/services/quizApi';
+import { useEffect } from 'react';
 
 interface QuizCardProps {
     quiz: QuizType;
@@ -35,6 +37,10 @@ const QuizCard = (props: QuizCardProps) => {
     const dispatch = useAppDispatch();
     const [InitGame, { isLoading }] = useCreateGameMutation();
     const [InitLeaderBoard] = useCreateLeaderBoardMutation();
+
+    const [deleteQuizMutation, { isSuccess }] = useDeleteQuizMutation();
+
+    const { user } = useAppSelector((state) => state.auth.authData);
 
     const socket = useAppSelector((state) => state.socket.socket);
 
@@ -72,19 +78,26 @@ const QuizCard = (props: QuizCardProps) => {
         }
     };
 
+    useEffect(() => {
+        if (isSuccess) {
+            dispatch(deleteQuiz(props.quiz));
+        }
+    }, [isSuccess, dispatch, props.quiz]);
+
     const handleEditQuiz = () => {
         // dispatch(setQuiz({}));
         router.push(`creator/${props.quiz._id}`);
     };
 
     const handleDelete = () => {
-        // dispatch(fetchQuiz(props.quiz));
+        deleteQuizMutation({ quizId: props.quiz._id });
+
         // router.push('/game/solo');
     };
 
     return (
         <div className='flex w-full rounded-lg bg-white shadow-2xl transition-transform hover:scale-[1.005] dark:bg-gray-800 sm:h-40'>
-            <div className='relative flex  w-80 items-center justify-between max-md:hidden'>
+            <div className='relative flex min-w-[320px] items-center justify-between max-md:hidden'>
                 <Image
                     className='h-full rounded-l-lg object-cover'
                     src={'https://cf.quizizz.com/game/img/share/quizizz_share1.png'}

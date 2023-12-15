@@ -1,14 +1,15 @@
 import Image from 'next/image';
 import Modal from 'react-modal';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { FormControlLabel, InputBase, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent } from '@mui/material';
 import defaultCoverImage from '../../../public/assets/images/creator/background.webp';
 
 import { CldUploadWidget } from 'next-cloudinary';
 
-import { CategoryEnum, GradeEnum, ObjectCategoryType, ObjectGradeType } from 'src/app/types/creator';
 import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
 import { setQuiz } from 'src/app/redux/slices/quizCreatorSlice';
+import CategoryType from 'src/app/types/categoryType';
+import GradeType from 'src/app/types/gradeType';
 
 const customStylesModal: any = {
     overlay: {
@@ -45,13 +46,14 @@ type ModalDataType = {
     description: string;
     backgroundImage: string;
     isPublic: boolean;
-    category: ObjectCategoryType;
-    grade: ObjectGradeType;
+    category: CategoryType;
+    grade: GradeType;
 };
 
 function QuizSettingModal({ isOpenModal, setIsOpenModal }: IProps) {
     const dispatch = useAppDispatch();
     const { quiz } = useAppSelector((state) => state.quizCreator);
+    const { categories, grades } = useAppSelector((state) => state.quiz);
 
     const initialModalData: ModalDataType = {
         name: quiz.name,
@@ -90,23 +92,17 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal }: IProps) {
         });
     };
 
-    const handleUpdateQuizCategory = (e: SelectChangeEvent<CategoryEnum>) => {
+    const handleUpdateQuizCategory = (e: SelectChangeEvent) => {
         setModalData({
             ...modalData,
-            category: {
-                ...modalData.category,
-                name: e.target.value as CategoryEnum
-            }
+            category: categories.find((category) => category.name === e.target.value) as CategoryType
         });
     };
 
-    const handleUpdateQuizGrade = (e: SelectChangeEvent<GradeEnum>) => {
+    const handleUpdateQuizGrade = (e: SelectChangeEvent) => {
         setModalData({
             ...modalData,
-            grade: {
-                ...modalData.grade,
-                name: e.target.value as GradeEnum
-            }
+            grade: grades.find((grade) => grade.name === e.target.value) as GradeType
         });
     };
 
@@ -168,7 +164,7 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal }: IProps) {
                                 <h2 className='font-semibold'>Category</h2>
                                 <Select
                                     className='mt-2 w-full'
-                                    value={modalData.category.name || ''}
+                                    value={modalData.category.name}
                                     MenuProps={{
                                         PaperProps: {
                                             style: {
@@ -179,9 +175,9 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal }: IProps) {
                                     }}
                                     onChange={handleUpdateQuizCategory}
                                 >
-                                    {Object.values(CategoryEnum).map((category, index) => (
-                                        <MenuItem key={index} value={category}>
-                                            {category}
+                                    {categories.map((category, index) => (
+                                        <MenuItem key={index} value={category.name}>
+                                            {category.name}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -192,7 +188,7 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal }: IProps) {
                                 <h2 className='font-semibold'>Grade</h2>
                                 <Select
                                     className='mt-2 w-full'
-                                    value={modalData.grade.name || ''}
+                                    value={modalData.grade.name}
                                     MenuProps={{
                                         PaperProps: {
                                             style: {
@@ -203,9 +199,9 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal }: IProps) {
                                     }}
                                     onChange={handleUpdateQuizGrade}
                                 >
-                                    {Object.values(GradeEnum).map((grade, index) => (
-                                        <MenuItem key={index} value={grade}>
-                                            {grade}
+                                    {grades.map((grade, index) => (
+                                        <MenuItem key={index} value={grade.name}>
+                                            {grade.name}
                                         </MenuItem>
                                     ))}
                                 </Select>

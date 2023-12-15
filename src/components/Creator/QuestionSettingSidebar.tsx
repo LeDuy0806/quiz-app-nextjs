@@ -16,7 +16,6 @@ import { FaChevronLeft } from 'react-icons/fa';
 import { cn } from 'src/utils/tailwind.util';
 
 // types
-import { OptionQuestionEnum, PointTypeEnum, QuestionTypeEnum, AnswerTimeEnum } from 'src/app/types/creator';
 
 // redux
 import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
@@ -29,6 +28,7 @@ import {
     setPointType,
     setQuestionType
 } from 'src/app/redux/slices/quizCreatorSlice';
+import { AnswerTimeEnum, OptionQuestionEnum, PointTypeEnum, QuestionTypeEnum } from 'src/constants/enum';
 
 interface IProps {
     isOpen: boolean;

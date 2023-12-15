@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import CategoryType from 'src/app/types/categoryType';
+import GradeType from 'src/app/types/gradeType';
 import QuizType, { InitQuiz } from 'src/app/types/quizType';
 
 export const QuizSliceKey = 'quiz';
@@ -8,13 +10,17 @@ type InitialType = {
     TeacherQuizzes: QuizType[];
     quizzes: QuizType[];
     FilteredTeacherQuizzes: QuizType[];
+    categories: CategoryType[];
+    grades: GradeType[];
 };
 
 const initialState = {
     quiz: InitQuiz,
     TeacherQuizzes: [],
     quizzes: [],
-    FilteredTeacherQuizzes: []
+    FilteredTeacherQuizzes: [],
+    categories: [],
+    grades: []
 } as InitialType;
 
 const quizSlice = createSlice({
@@ -78,6 +84,20 @@ const quizSlice = createSlice({
             state.quizzes = state.quizzes.filter((quiz) => {
                 return quiz?._id !== action.payload?._id;
             });
+            // state.TeacherQuizzes = state.TeacherQuizzes.filter((quiz) => {
+            //     return quiz?._id !== action.payload?._id;
+            // });
+            // state.FilteredTeacherQuizzes = state.FilteredTeacherQuizzes.filter((quiz) => {
+            //     return quiz?._id !== action.payload?._id;
+            // });
+        },
+
+        setCategories: (state, action: PayloadAction<CategoryType[]>) => {
+            state.categories = action.payload;
+        },
+
+        setGrades: (state, action: PayloadAction<GradeType[]>) => {
+            state.grades = action.payload;
         }
     }
 });
@@ -94,7 +114,9 @@ export const {
     setQuizPlay,
     addLibraryQuiz,
     fetchPublicQuizzes,
-    fetchPrivateQuizzes
+    fetchPrivateQuizzes,
+    setCategories,
+    setGrades
 } = quizSlice.actions;
 
 const quizReducer = quizSlice.reducer;

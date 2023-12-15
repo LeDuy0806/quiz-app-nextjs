@@ -6,13 +6,14 @@ import { FaRegTrashCan } from 'react-icons/fa6';
 import { HiOutlineDuplicate } from 'react-icons/hi';
 import { Tooltip, TooltipProps, styled, tooltipClasses } from '@mui/material';
 
-import { QuestionType, QuestionTypeEnum } from 'src/app/types/creator';
 import { cn } from 'src/utils/tailwind.util';
 import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
 import { duplicateQuestion, setActiveQuestion, setDeleteQuestionIndex, setOpenDeleteQuestionDialog } from 'src/app/redux/slices/quizCreatorSlice';
 import { toast } from 'react-toastify';
 import { CreatorMessages } from 'src/constants/messages';
 import { ToastOptions } from 'src/constants/toast';
+import { QuestionType } from 'src/app/types/creator';
+import { QuestionTypeEnum } from 'src/constants/enum';
 
 interface IProps {
     isActive: boolean;

@@ -7,16 +7,16 @@ import { newCreatorBg } from '../../../public/assets/images/creator';
 import { cn } from 'src/utils/tailwind.util';
 import AnswerItem from 'src/components/Creator/AnswerItem';
 import QuestionSettingSidebar from './QuestionSettingSidebar';
-import { QuestionTypeEnum } from 'src/app/types/creator';
 import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
 import { setQuestionBackgroundImage, setQuestionContent } from 'src/app/redux/slices/quizCreatorSlice';
 import { CldUploadWidget } from 'next-cloudinary';
+import { QuestionTypeEnum } from 'src/constants/enum';
 
 export default function ContentEditor() {
     const { activeQuestion } = useAppSelector((state) => state.quizCreator);
     const dispatch = useAppDispatch();
 
-    const [isOpenQuestionSettingSidebar, setIsOpenQuestionSettingSidebar] = useState(false);
+    const [isOpenQuestionSettingSidebar, setIsOpenQuestionSettingSidebar] = useState(true);
 
     const { questionType, answerList, content, backgroundImage } = activeQuestion;
 
