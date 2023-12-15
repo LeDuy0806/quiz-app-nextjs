@@ -17,6 +17,7 @@ import { createSocket } from 'src/app/redux/slices/socketSlice';
 import type { Socket } from 'socket.io-client';
 import io from 'socket.io-client';
 import { API } from 'src/app/redux/api';
+import { useGetPublicQuizesQuery, useGetTeacherQuizzesQuery } from 'src/app/redux/services/quizApi';
 
 function HomePage() {
     const dispatch = useAppDispatch();
@@ -24,14 +25,11 @@ function HomePage() {
 
     const socket = useAppSelector((state) => state.socket.socket);
 
-    // useEffect(() => {
-    //     // if (socket) {
-    //     //     console.log(socket);
-    //     // }
-    // }, [socket]);
+    const { data: teacherQuizzes } = useGetTeacherQuizzesQuery({ teacherId: user._id });
+    const { data: publicQuizzes } = useGetPublicQuizesQuery({ page: 1, pageSize: 5 });
 
     useEffect(() => {
-        if (user && !socket) {
+        if (user._id !== '' && !socket) {
             const socket: Socket = io(API, {
                 transports: ['websocket']
             });
@@ -51,19 +49,15 @@ function HomePage() {
             </div>
             <div className='mb-2 flex w-full gap-2 max-md:flex-col'>
                 <div className='flex w-full px-2'>
-                    <UserInfoCard />
+                    <UserInfoCard userData={user} />
                 </div>
-                <div className='flex w-full px-2'>
-                    <LibraryBox />
-                </div>
+                <div className='flex w-full px-2'>{teacherQuizzes && <LibraryBox teacherQuizzes={teacherQuizzes} />}</div>
             </div>
             <div className='mt-4 px-2'>
                 <HomeCard />
             </div>
             <div className='mt-4 flex w-full flex-col items-center'>
-                <div className='xl:w-[50%]'>
-                    <TopPickBox />
-                </div>
+                <div className='xl:w-[50%]'>{publicQuizzes && <TopPickBox publicQuizzes={publicQuizzes.data} />}</div>
             </div>
         </div>
     );

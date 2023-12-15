@@ -50,7 +50,7 @@ export const apiAuth = createApi({
             })
         }),
 
-        userLogOut: builder.mutation<void, { userId: string }>({
+        userLogOut: builder.mutation<any, { userId: string }>({
             query: (data) => ({
                 url: `api/auth/logout/${data.userId}`,
                 method: 'POST'

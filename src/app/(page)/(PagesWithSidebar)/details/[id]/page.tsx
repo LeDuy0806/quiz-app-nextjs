@@ -44,7 +44,7 @@ function QuizDetail() {
     const { data, isSuccess, isLoading } = useGetQuizByIdQuery({ quizId: id });
 
     useEffect(() => {
-        if (isSuccess && data) setQuizData(data);
+        if (isSuccess && data) setQuizData(data as QuizType);
     }, [data, isSuccess, isLoading]);
 
     if (isLoading) return <div>Loading...</div>;

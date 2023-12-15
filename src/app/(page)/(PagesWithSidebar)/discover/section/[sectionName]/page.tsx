@@ -13,6 +13,7 @@ import QuizPreviewContainer from 'src/components/discover/SectionPage/QuizPrevie
 import CreateQuizButton from 'src/components/Creator/CreateQuizButton';
 import { BsPlusLg } from 'react-icons/bs';
 import { useGetPublicQuizesQuery } from 'src/app/redux/services/quizApi';
+import Link from 'next/link';
 
 function Page() {
     const { sectionName } = useParams();
@@ -91,16 +92,18 @@ function Page() {
                                         key={`${index}`}
                                         className='h-full w-full'
                                     >
-                                        <QuizSectionCard
-                                            key={quiz._id + index}
-                                            category={quiz.category.name}
-                                            grade={quiz.grade.name}
-                                            image={quiz.backgroundImage}
-                                            numberOfQuestion={quiz.numberOfQuestions}
-                                            title={quiz.name}
-                                            author={quiz.creator as CreatorType}
-                                            onMouseEnter={() => handleSetQuizDataPreview(quiz)}
-                                        />
+                                        <Link href={'/details/' + quiz._id}>
+                                            <QuizSectionCard
+                                                key={quiz._id + index}
+                                                category={quiz.category.name}
+                                                grade={quiz.grade.name}
+                                                image={quiz.backgroundImage}
+                                                numberOfQuestion={quiz.numberOfQuestions}
+                                                title={quiz.name}
+                                                author={quiz.creator as CreatorType}
+                                                onMouseEnter={() => handleSetQuizDataPreview(quiz)}
+                                            />
+                                        </Link>
                                     </motion.div>
                                 );
                             })}

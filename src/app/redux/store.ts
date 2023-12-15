@@ -30,8 +30,18 @@ import languageReducer, { LanguageSliceKey } from './slices/languageSlice';
 const persistConfig = {
     key: 'root',
     storage: storage,
-    whitelist: [AuthSliceKey, LanguageSliceKey, SearchSliceKey, QuizSliceKey, UserSliceKey, CommunitySliceKey],
-    blacklist: [QuizCreatorSliceKey, SocketSliceKey, GameSliceKey, LeaderBoardSliceKey, PlayerResultSliceKey]
+    whitelist: [AuthSliceKey, LanguageSliceKey],
+    blacklist: [
+        QuizCreatorSliceKey,
+        SearchSliceKey,
+        QuizSliceKey,
+        UserSliceKey,
+        CommunitySliceKey,
+        SocketSliceKey,
+        GameSliceKey,
+        LeaderBoardSliceKey,
+        PlayerResultSliceKey
+    ]
 };
 
 const combinedReducer = combineReducers({
@@ -59,6 +69,10 @@ const combinedReducer = combineReducers({
 });
 
 const rootReducer = (state: any, action: any) => {
+    if (action.type === 'auth/logOut') {
+        state = undefined;
+    }
+
     return combinedReducer(state, action);
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);

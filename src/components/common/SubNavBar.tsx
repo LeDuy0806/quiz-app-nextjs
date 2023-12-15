@@ -23,6 +23,7 @@ import { deleteSocket } from 'src/app/redux/slices/socketSlice';
 
 //
 import CreateQuizButton from '../Creator/CreateQuizButton';
+import { logOut } from 'src/app/redux/slices/authSlice';
 
 // const CreateQuizButton = dynamic(() => import('../Creator/CreateQuizButton'), {
 //     ssr: false
@@ -84,8 +85,15 @@ function SubNavBar({ toggleSidebar }: IProps) {
     }, [scope]);
 
     const [Logout, { isSuccess }] = useUserLogOutMutation();
-    const handleButton = () => {
-        Logout({ userId: user?._id || '' });
+    const handleButton = async () => {
+        await Logout({ userId: user._id })
+            .unwrap()
+            .then((res) => {
+                dispatch(logOut({}));
+                dispatch(deleteSocket({}));
+                socket?.disconnect();
+                router.push('/');
+            });
     };
 
     useEffect(() => {
@@ -95,10 +103,8 @@ function SubNavBar({ toggleSidebar }: IProps) {
             } else {
                 router.push('/');
             }
-            socket.disconnect();
-            dispatch(deleteSocket);
         }
-    }, [isSuccess, session, router, dispatch, socket]);
+    }, [isSuccess, session]);
 
     return (
         <nav className=' fixed top-0 z-[97] w-full border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800'>

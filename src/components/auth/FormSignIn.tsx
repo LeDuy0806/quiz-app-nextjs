@@ -215,6 +215,7 @@ const FormSignIn = () => {
                                     click ? 'cursor-pointer bg-bgBlue' : 'cursor-default bg-textGray'
                                 )}
                                 onClick={handleLogin}
+                                disabled={!click}
                             >
                                 {isLoading || loading ? (
                                     <>

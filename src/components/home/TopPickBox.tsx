@@ -3,38 +3,38 @@
 import { BsFillStarFill } from 'react-icons/bs';
 import QuizCard from './Quizcard';
 import { motion } from 'framer-motion';
+import QuizType from 'src/app/types/quizType';
+import Link from 'next/link';
+import paths from 'src/constants/paths';
 
-function TopPickBox() {
+function TopPickBox({ publicQuizzes }: { publicQuizzes: QuizType[] }) {
     return (
         <motion.div
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className=' py-2 bg-slate-50 shadow-xl rounded-md w-full'
+            className=' w-full rounded-md bg-slate-50 py-2 shadow-xl'
         >
             <div className='px-6 py-1'>
-                <span className='text-xl font-bold pb-2 '>
+                <span className='pb-2 text-xl font-bold '>
                     Top Pick{' '}
-                    <span className='inline-block text-yellow-400 ml-1'>
+                    <span className='ml-1 inline-block text-yellow-400'>
                         <BsFillStarFill />
                     </span>
                 </span>
             </div>
-            <div className='space-y-2 pt-3 px-4 overflow-hidden '>
-                <QuizCard />
-                <QuizCard />
-                <QuizCard />
-                <QuizCard />
-                <QuizCard />
+            <div className='space-y-2 overflow-hidden px-4 pt-3 '>
+                {publicQuizzes.map((quiz, i) => (
+                    <QuizCard key={quiz._id} quiz={quiz} />
+                ))}
             </div>
-            <div className='py-4 px-6 flex items-center justify-center flex-col'>
-                <p className='p-2 text-center font-bold'>
-                    More amazing things are still waiting for you! Discover for
-                    yourself.
-                </p>
-                <button className=' inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-bgPurple rounded-lg hover:bg-bgPurplePower focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800'>
-                    Discover Quiz
-                </button>
+            <div className='flex flex-col items-center justify-center px-6 py-4'>
+                <p className='p-2 text-center font-bold'>More amazing things are still waiting for you! Discover for yourself.</p>
+                <Link href={paths.discover}>
+                    <button className=' inline-flex items-center rounded-lg bg-bgPurple px-3 py-2 text-center text-sm font-medium text-white hover:bg-bgPurplePower focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800'>
+                        Discover Quiz
+                    </button>
+                </Link>
             </div>
         </motion.div>
     );

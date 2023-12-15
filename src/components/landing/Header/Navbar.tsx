@@ -177,7 +177,7 @@ const Navbar = (props: NavbarProps) => {
                                 transition={{ duration: 0.1, delay: 0.6 }}
                                 className='mt-1 cursor-pointer flex-row items-center rounded-xl px-2 py-1 font-bold tracking-wide'
                             >
-                                <select value={language} className='w-full' defaultValue='English' onChange={(e) => handleChangeLanguage(e.target.value)}>
+                                <select value={language} className='w-full' onChange={(e) => handleChangeLanguage(e.target.value)}>
                                     <option value='en'>English 🇺🇸</option>
                                     <option value='vn'>VietNam 🇻🇳</option>
                                 </select>

@@ -48,8 +48,16 @@ const RowQuizz = ({ CategoryName, ListQuiz }: { CategoryName: string; ListQuiz: 
                         ref={rowRef}
                         className='flex w-full items-center space-x-4 overflow-hidden overflow-x-scroll scroll-smooth py-2 scrollbar-none sm:py-4'
                     >
-                        {ListQuiz.map((quiz) => (
-                            <QuizCard key={quiz._id} QuizData={quiz} />
+                        {ListQuiz.map((quiz, index) => (
+                            <Link
+                                key={quiz._id + index}
+                                href={'details/' + quiz._id}
+                                onClick={() => {
+                                    console.log(quiz._id);
+                                }}
+                            >
+                                <QuizCard QuizData={quiz} />
+                            </Link>
                         ))}
                     </div>
 
