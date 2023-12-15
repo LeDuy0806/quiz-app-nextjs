@@ -10,10 +10,10 @@ type QuizType = {
     description: string;
     backgroundImage: string;
     isPublic: boolean;
-    tags?: string[];
+    tags: string[];
     pointsPerQuestion: number;
     numberOfQuestions: number;
-    importFrom?: UserType;
+    importFrom: UserType | string | null;
     likesCount: UserType[];
     questionList: QuestionType[];
     createdAt?: string;

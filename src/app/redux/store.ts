@@ -11,6 +11,8 @@ import { apiGame } from './services/gameApi';
 import { apiLeaderBoard } from './services/leaderBoardApi';
 import { apiPlayerResult } from './services/playerResultApi';
 import { apiCommunity } from './services/communityApi';
+import { apiCategory } from './services/categoryApi';
+import { apiGrade } from './services/gradeApi';
 
 // Slices
 import authReducer, { AuthSliceKey } from './slices/authSlice';
@@ -51,7 +53,9 @@ const combinedReducer = combineReducers({
     [apiGame.reducerPath]: apiGame.reducer,
     [apiLeaderBoard.reducerPath]: apiLeaderBoard.reducer,
     [apiPlayerResult.reducerPath]: apiPlayerResult.reducer,
-    [apiCommunity.reducerPath]: apiCommunity.reducer
+    [apiCommunity.reducerPath]: apiCommunity.reducer,
+    [apiCategory.reducerPath]: apiCategory.reducer,
+    [apiGrade.reducerPath]: apiGrade.reducer
 });
 
 const rootReducer = (state: any, action: any) => {
@@ -74,6 +78,8 @@ const store = configureStore({
             }
         }).concat([
             apiAuth.middleware,
+            apiCategory.middleware,
+            apiGrade.middleware,
             apiQuiz.middleware,
             apiUser.middleware,
             apiGame.middleware,

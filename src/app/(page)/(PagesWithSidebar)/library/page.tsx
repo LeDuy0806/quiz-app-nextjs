@@ -48,6 +48,10 @@ function LibraryPage() {
     // }, [dispatch, fakeData]);
 
     useEffect(() => {
+        console.log('Teacher ID', teacherId);
+    }, [teacherId]);
+
+    useEffect(() => {
         if (isSuccess && data) {
             dispatch(fetchTeacherQuizzes(data));
         }

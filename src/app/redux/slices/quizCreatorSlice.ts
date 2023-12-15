@@ -1,17 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import {
-    QuizType,
-    QuestionType,
-    initialQuiz,
-    initialQuestion,
-    QuestionTypeEnum,
-    OptionQuestionEnum,
-    PointTypeEnum,
-    AnswerNameEnum,
-    AnswerType
-} from 'src/app/types/creator';
-import { CreatorType } from 'src/app/types/quizType';
+import { QuizType, QuestionType, initialQuiz, initialQuestion, AnswerType } from 'src/app/types/creator';
+import { AnswerNameEnum, OptionQuestionEnum, PointTypeEnum, QuestionTypeEnum } from 'src/constants/enum';
 import { CreatorMessages } from 'src/constants/messages';
 import { ToastOptions } from 'src/constants/toast';
 
@@ -39,6 +29,11 @@ const quizCreatorSlice = createSlice({
     reducers: {
         setQuiz: (state, action: PayloadAction<QuizType>) => {
             state.quiz = action.payload;
+        },
+
+        setQuizFromParams: (state, action: PayloadAction<QuizType>) => {
+            state.quiz = action.payload;
+            state.activeQuestion = state.quiz.questionList[0];
         },
 
         setQuestionBackgroundImage: (state, action: PayloadAction<string>) => {
@@ -295,6 +290,7 @@ const quizCreatorSlice = createSlice({
 
 export const {
     setQuiz,
+    setQuizFromParams,
     setQuestionBackgroundImage,
     setQuestionType,
     setAnswerTime,

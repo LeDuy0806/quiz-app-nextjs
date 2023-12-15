@@ -1,6 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API } from '../api';
 import QuizType from 'src/app/types/quizType';
+
+import { QuizType as CreatorQuizType } from 'src/app/types/creator';
+
 import QuestionType from 'src/app/types/questionType';
 import { RootState } from '../store';
 
@@ -38,7 +41,7 @@ export const apiQuiz = createApi({
             })
         }),
 
-        getQuizById: builder.query<QuizType, { quizId: string }>({
+        getQuizById: builder.query<QuizType | CreatorQuizType, { quizId: string }>({
             query: ({ quizId }) => ({
                 url: `api/quiz/${quizId}`,
                 method: 'GET'
@@ -59,7 +62,22 @@ export const apiQuiz = createApi({
             })
         }),
 
-        createQuiz: builder.mutation<QuizType, { quizData: Omit<QuizType, '_id'> }>({
+        createDraftQuiz: builder.mutation<CreatorQuizType, { quizData: Omit<CreatorQuizType, '_id'> }>({
+            query: ({ quizData }) => ({
+                url: `api/quiz/draft`,
+                method: 'POST',
+                body: quizData
+            })
+        }),
+
+        getDraftQuiz: builder.query<CreatorQuizType | QuizType, { quizId: string }>({
+            query: ({ quizId }) => ({
+                url: `api/quiz/draft/${quizId}`,
+                method: 'GET'
+            })
+        }),
+
+        createQuiz: builder.mutation<CreatorQuizType, { quizData: Omit<CreatorQuizType, '_id'> }>({
             query: ({ quizData }) => ({
                 url: `api/quiz`,
                 method: 'POST',
@@ -150,6 +168,8 @@ export const {
     useGetDiscoverQuizzesQuery,
     useGetTeacherQuizzesQuery,
     useImportQuizMutation,
+    useGetDraftQuizQuery,
+    useCreateDraftQuizMutation,
     useCreateQuizMutation,
     useUpdateQuizMutation,
     useDeleteQuizMutation,
