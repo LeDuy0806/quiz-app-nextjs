@@ -1,0 +1,27 @@
+{
+    "name": "Công nghệ Web và ứng dụng",
+    "description": "Môn học mang đến cho bạn nhiều kiến thức bổ ",
+    "backgroundImage": "https://res.cloudinary.com/dfl3qnj7z/image/upload/v1702574062/anh-background-cong-nghe-chat-luong-cao_035952942_g4br4d.jpg",
+    "pointsPerQuestion": 4,
+    "isPublic": true,
+    "tags": ["Technique"],
+    "likesCount": [],
+    "questionList": [{ "$oid": "657b3ce3bf04a7a3dff66902" }, { "$oid": "657b3ce3bf04a7a3dff66903" }, { "$oid": "657b3ce3bf04a7a3dff66904" }],
+    "creator": {
+        "$oid": "657b09b8ad6fdaff8dc68aa8"
+    },
+    "category": {
+        "_id": "6549f62b6e93124e61b94307",
+        "name": "Technology"
+    },
+    "grade": {
+        "_id": "655b1d3fcde7744d26347070",
+        "name": "University"
+    },
+    "createdAt": {
+        "$date": "2023-06-04T19:17:11.876Z"
+    },
+    "updatedAt": {
+        "$date": "2023-06-09T12:23:19.081Z"
+    }
+}

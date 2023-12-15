@@ -154,7 +154,13 @@ const Profile = () => {
                             <div className='border-blueGray-200 mt-10 border-t py-10 text-center'>
                                 <div className='flex flex-wrap justify-center'>
                                     <div className='w-full px-4 lg:w-9/12'>
-                                        <p className='text-blueGray-700 mb-4 text-lg leading-relaxed'>{user.bio}</p>
+                                        {/* <p className='text-blueGray-700 mb-4 text-lg leading-relaxed'>{user.bio}</p> */}
+                                        <p className='text-blueGray-700 mb-4 text-lg leading-relaxed'>
+                                            {user.bio
+                                                ? user.bio
+                                                : 'By focusing on making sure Hendrick Motorsports ends up in the winner’s circle at every race, Jerry has been able to put the racing certifications he earned at driver’s school to good use. Over the years, his strengths at Hendrick Motorsports have garnered some recognition for winning several races each year. Jerry may spend his days at the racetrack, but it’s the thrill of the race and the glory of coming in first that gets him up in the morning.'}
+                                        </p>
+
                                         <a href='#pablo' className='font-normal text-pink-500'>
                                             Show more
                                         </a>
