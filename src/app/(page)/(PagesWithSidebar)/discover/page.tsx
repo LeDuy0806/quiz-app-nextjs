@@ -27,7 +27,7 @@ function DiscoverPage() {
                     <SearchBar />
                 </div>
                 <section className=' flex flex-col justify-between space-y-3.5'>
-                    {result && Object.keys(result).map((key) => <RowQuizz key={key} CategoryName={key} ListQuiz={result[key]} />)}
+                    {result && Object.keys(result).map((key, index) => <RowQuizz key={key + index} CategoryName={key} ListQuiz={result[key]} />)}
                 </section>
             </div>
         </div>

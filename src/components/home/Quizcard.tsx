@@ -1,27 +1,36 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import QuizType, { CreatorType } from 'src/app/types/quizType';
+import { TbCategory } from 'react-icons/tb';
 
-function QuizCard() {
+function QuizCard({ quiz }: { quiz: QuizType }) {
     return (
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className='z-10 flex h-20 rounded-sm bg-gray-400 shadow-md md:min-h-[5rem]'>
+        <motion.div whileHover={{ scale: 1.025 }} whileTap={{ scale: 0.95 }} className='z-10 flex h-20 rounded-sm bg-gray-100 shadow-md md:min-h-[5rem]'>
             <div className='relative w-32 min-w-[7rem] xl:w-36'>
-                <Image src={'/assets/images/default_quiz_background.png'} alt='Error' width={100} height={100} className='h-full w-full' />
+                <Image
+                    src={quiz?.backgroundImage || '/assets/images/default_quiz_background.png'}
+                    alt='Error'
+                    width={100}
+                    height={100}
+                    className='h-full w-full'
+                />
                 <div className='absolute bottom-1 left-1 rounded-md bg-gray-800 px-1'>
-                    <span className='text-sm font-bold text-white'>2 questions</span>
+                    <span className='text-sm font-bold text-white'>{quiz?.numberOfQuestions} questions</span>
                 </div>
             </div>
             <div className='flex w-full flex-col bg-gray-300 p-2'>
                 <div className='h-12 md:min-h-[12]'>
                     <div className='overflow-hidden'>
-                        <span className='line-clamp-2 text-lg font-bold'>My quizzes</span>
+                        <span className='line-clamp-2 text-lg font-bold'>{quiz?.name}</span>
                     </div>
                 </div>
-                <div className='flex w-full justify-between'>
+                <div className='flex w-full justify-start'>
                     <div className='max-w-[6rem] overflow-hidden'>
-                        <span className='truncate'>Author</span>
+                        <span className='truncate'>{(quiz?.creator as CreatorType)?.firstName + ' ' + (quiz?.creator as CreatorType)?.lastName}</span>
                     </div>
-                    <div className='ml-2 max-w-[5rem] overflow-hidden'>
-                        <span className='truncate'>100 plays</span>
+                    <div className='ml-2 flex items-center overflow-hidden'>
+                        <TbCategory className='text-xs' />
+                        <span className=' ml-1 truncate'> {quiz?.category?.name}</span>
                     </div>
                 </div>
             </div>

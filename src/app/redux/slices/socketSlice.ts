@@ -18,7 +18,7 @@ const socketSlice = createSlice({
         createSocket: (state, action: PayloadAction<Socket>) => {
             state.socket = action.payload;
         },
-        deleteSocket: (state) => {
+        deleteSocket: (state, action) => {
             state.socket = null;
         }
     }
