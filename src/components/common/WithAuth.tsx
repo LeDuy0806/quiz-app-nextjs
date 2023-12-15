@@ -1,18 +1,17 @@
 'use client';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from 'src/app/redux/hooks';
+import LiquidLoading from '../LiquidLoading';
 
 interface IProps {
     children: React.ReactNode;
 }
 
 function WithAuth({ children }: IProps) {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [isAuthSide, setIsAuthSide] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const [canRenderChildren, setCanRenderChildren] = useState(false);
     const router = useRouter();
-    const pathName = usePathname();
-
     const user = useAppSelector((state) => state.auth.authData?.user);
 
     useEffect(() => {
@@ -21,30 +20,20 @@ function WithAuth({ children }: IProps) {
         } else {
             setIsAuthenticated(true);
         }
-        if (pathName.includes('/signIn') || pathName.includes('/signUp')) {
-            setIsAuthSide(true);
-        } else {
-            setIsAuthSide(false);
-        }
     }, []);
 
     useEffect(() => {
         if (!isAuthenticated) {
             router.push('/signIn');
-            setIsAuthSide(true);
+        } else {
+            setCanRenderChildren(true);
         }
-        if (isAuthSide && isAuthenticated) {
-            router.push('/home');
-            setIsAuthSide(false);
-        }
-    }, [isAuthenticated, isAuthSide]);
+    }, [isAuthenticated]);
 
-    if (isAuthenticated && !isAuthSide) {
-        return children;
-    }
+    // if (canRenderChildren) {
+    //     return <>{isAuthenticated && children}</>;
+    // }
 
-    if (!isAuthenticated && isAuthSide) {
-        return children;
-    }
+    return canRenderChildren ? <>{isAuthenticated && children}</> : <LiquidLoading />;
 }
 export default WithAuth;

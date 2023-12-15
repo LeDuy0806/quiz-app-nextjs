@@ -36,9 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className={` scrollbar-none`}>
                 <Provider store={store}>
                     <PersistGate loading={null} persistor={persistor}>
-                        <SessionProvider>
-                            <WithAuth>{children}</WithAuth>
-                        </SessionProvider>
+                        <SessionProvider>{children}</SessionProvider>
                     </PersistGate>
                 </Provider>
                 <ToastContainer />
