@@ -1,0 +1,115 @@
+[
+    {
+        "name": "Thuộc tính màu nền có cú pháp là gì trong CSS ?",
+        "field": "Technology",
+        "creator": {
+            "$oid": "657b09b8ad6fdaff8dc68aa8"
+        },
+        "backgroundImage": "https://res.cloudinary.com/dfl3qnj7z/image/upload/v1702574882/html-color-codes-color-tutorials-hero_rmltqb.jpg",
+        "questionIndex": 1,
+        "questionType": "Quiz",
+        "optionQuestion": "Single",
+        "pointType": "Standard",
+        "isPublic": true,
+        "answerTime": 10,
+        "maxCorrectAnswer": 1,
+        "answerList": [
+            {
+                "name": "A",
+                "body": "backgroundColor",
+                "isCorrect": true
+            },
+            {
+                "name": "B",
+                "body": "color",
+                "isCorrect": false
+            },
+            {
+                "name": "C",
+                "body": "textShadow",
+                "isCorrect": false
+            },
+            {
+                "name": "D",
+                "body": "fontWeight",
+                "isCorrect": false
+            }
+        ],
+        "correctAnswerCount": 1,
+        "answerCorrect": ["A"],
+        "createdAt": "2023-12-10T08:52:40.998Z",
+        "updatedAt": "2023-12-11T08:52:40.998Z"
+    },
+    {
+        "name": "Các cú pháp nào sau đây đúng?",
+        "field": "Technology",
+        "creator": {
+            "$oid": "657b09b8ad6fdaff8dc68aa8"
+        },
+        "backgroundImage": "https://res.cloudinary.com/dfl3qnj7z/image/upload/v1702575181/download_1_erzc4v.png",
+        "questionIndex": 2,
+        "questionType": "Quiz",
+        "optionQuestion": "Multiple",
+        "pointType": "Standard",
+        "isPublic": true,
+        "answerTime": 10,
+        "maxCorrectAnswer": 1,
+        "answerList": [
+            {
+                "name": "A",
+                "body": "<div>Hello Web</div>",
+                "isCorrect": true
+            },
+            {
+                "name": "B",
+                "body": "<div>Hello Web<div>",
+                "isCorrect": false
+            },
+            {
+                "name": "C",
+                "body": "<input//>",
+                "isCorrect": false
+            },
+            {
+                "name": "D",
+                "body": "<input/>",
+                "isCorrect": true
+            }
+        ],
+        "correctAnswerCount": 1,
+        "answerCorrect": ["A", "D"],
+        "createdAt": "2023-12-10T08:52:40.998Z",
+        "updatedAt": "2023-12-11T08:52:40.998Z"
+    },
+    {
+        "name": "Có 3 cách để thực hiện CSS trong HTML đúng hay sai",
+        "field": "Technology",
+        "creator": {
+            "$oid": "657b09b8ad6fdaff8dc68aa8"
+        },
+        "backgroundImage": "https://res.cloudinary.com/dfl3qnj7z/image/upload/v1702575269/th_k3uynb.jpg",
+        "questionIndex": 3,
+        "questionType": "True/False",
+        "optionQuestion": "Single",
+        "pointType": "Standard",
+        "isPublic": true,
+        "answerTime": 5,
+        "maxCorrectAnswer": 1,
+        "answerList": [
+            {
+                "name": "A",
+                "body": "True",
+                "isCorrect": true
+            },
+            {
+                "name": "B",
+                "body": "False",
+                "isCorrect": false
+            }
+        ],
+        "correctAnswerCount": 1,
+        "answerCorrect": ["A"],
+        "createdAt": "2023-12-10T08:52:40.998Z",
+        "updatedAt": "2023-12-11T08:52:40.998Z"
+    }
+]

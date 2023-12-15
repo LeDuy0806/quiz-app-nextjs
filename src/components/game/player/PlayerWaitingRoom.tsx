@@ -34,38 +34,36 @@ const PlayerWaitingRoom = (props: PlayerWaitingRoomProps) => {
 
     return (
         <>
-            <Image src={bgWaiting} alt='' className='z-[-1] w-full h-full absolute object-cover' />
-            <div className='w-4/5 h-[82%] flex flex-col items-center justify-center gap-[2em] p-3 border border-solid border-textBlack text-center bg-bgWaiting shadow-boxWaiting rounded-lg'>
-                <div className='mt-10px w-4/5 h-1/5 bg-bgSwitch rounded-2xl'>
-                    <h1 className='font-black text-textBrown m-1 text-[2.1rem]'>Waiting room</h1>
-                    <h2 className='font-black text-textBrown m-1 text-[1.6rem]'>Welcome you to game room: {props.pin}</h2>
+            <Image src={bgWaiting} alt='' className='absolute z-[-1] h-full w-full object-cover' />
+            <div className='flex h-[82%] w-4/5 flex-col items-center justify-center gap-[2em] rounded-lg border border-solid border-textBlack bg-bgWaiting p-3 text-center shadow-boxWaiting'>
+                <div className='mt-10px w-4/5 rounded-2xl bg-bgSwitch lgl:h-1/5'>
+                    <h1 className='m-1 text-[1.5em] font-black text-textBrown lgl:text-[2.1rem]'>Waiting room</h1>
+                    <h2 className='m-1 text-[1rem] font-black text-textBrown lgl:text-[1.6rem]'>Welcome you to game room: {props.pin}</h2>
                 </div>
-                <div className='w-[90%] h-4/5 p-3 flex flex-col items-center justify-around bg-bgListUser rounded-xl'>
-                    <div className='w-full h-4/5 flex justify-around items-center'>
-                        <div className='relative w-2/5 h-full flex flex-col items-center justify-center bg-bgTitle rounded-xl shadow-boxListUser'>
-                            <h1 className='text-[1.6rem] py-3 font-semibold text-textWhite'>
+                <div className='flex h-4/5 w-[90%] flex-col items-center justify-around rounded-xl bg-bgListUser p-3'>
+                    <div className='flex h-4/5 w-full flex-col items-center justify-around gap-3 lgl:flex-row'>
+                        <div className='relative flex h-full w-full flex-col items-center justify-center rounded-xl bg-bgTitle shadow-boxListUser lgl:w-2/5'>
+                            <h1 className='py-3 text-[1.6rem] font-semibold text-textWhite'>
                                 {/* Software Engineer */}
                                 {props.quiz?.name}
                             </h1>
                             <Image src={logoImg} alt='' className='w-2/5' />
-                            <p className='text-textWhite font-medium max-w-[80%]'>
+                            <p className='max-w-[80%] font-medium text-textWhite'>
                                 {/* What will you do when your girl friend go to hotel with another man */}
                                 {props.quiz?.description}
                             </p>
                         </div>
-                        <div className='relative w-2/5 h-full gap-4 flex flex-col items-center bg-bgTitle rounded-xl shadow-boxListUser'>
-                            <h1 className='text-[1.6rem] py-3 font-semibold text-textWhite'>Player List</h1>
-                            <div className='w-full h-4/5 overflow-y-auto px-6 scrollbar-none'>
-                                {props.playerList?.map((player: any, index: string) => (
-                                    <User key={index} player={player} />
-                                ))}
+                        <div className='relative flex h-full w-full flex-col items-center gap-4 rounded-xl bg-bgTitle shadow-boxListUser lgl:w-2/5'>
+                            <h1 className='py-3 text-[1.6rem] font-semibold text-textWhite'>Player List</h1>
+                            <div className='h-4/5 w-full overflow-y-auto px-6 scrollbar-none'>
+                                {props.playerList?.map((player: any, index: string) => <User key={index} player={player} />)}
                             </div>
                         </div>
                     </div>
 
-                    <div className='w-[90%] flex items-center justify-end gap-[3em]'>
+                    <div className='flex w-[90%] items-center justify-end gap-[3em]'>
                         <button
-                            className='text-center h-[48px] inline-flex appearance-none bg-bgButtonStartGame border-0 rounded-md shadow-boxButtonStartGame text-textWhite cursor-pointer justify-center items-center leading-1 text-md overflow-hidden px-4 font-semibold hover:shadow-boxButtonStartGameHover hover:translate-y-[2px]'
+                            className='leading-1 text-md inline-flex h-[48px] cursor-pointer appearance-none items-center justify-center overflow-hidden rounded-md border-0 bg-bgButtonStartGame px-4 text-center font-semibold text-textWhite shadow-boxButtonStartGame hover:translate-y-[2px] hover:shadow-boxButtonStartGameHover'
                             onClick={props.closeGame}
                         >
                             Exit Game
@@ -82,17 +80,17 @@ interface UserProps {
 }
 const User = (props: UserProps) => {
     return (
-        <div className='w-full relative h-1/4 flex flex-row items-center bg-bgUser rounded-xl shadow-boxUser mb-3 pl-4 gap-4'>
-            <span className='flex items-center justify-center w-[1.5em] h-[1.5em] rounded-full border-[2px] border-solid border-textBlack '>1</span>
+        <div className='relative mb-3 flex h-1/4 w-full flex-row items-center gap-4 rounded-xl bg-bgUser pl-4 shadow-boxUser'>
+            <span className='flex h-[1.5em] w-[1.5em] items-center justify-center rounded-full border-[2px] border-solid border-textBlack '>1</span>
             <Image
                 src={props.player.avatar ? props.player.avatar : logoImg}
                 alt=''
-                className='w-[50px] h-[50px] object-contain rounded-full'
+                className='h-[50px] w-[50px] rounded-full object-contain'
                 width={80}
                 height={60}
             />
             <p className='font-semibold'>{props.player.userName}</p>
-            <Image src={teacherImg} alt='' className='w-[2em] absolute object-contain right-[1em]' />
+            <Image src={teacherImg} alt='' className='absolute right-[1em] w-[2em] object-contain' />
         </div>
     );
 };
