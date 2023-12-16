@@ -2,7 +2,8 @@ const CreatorMessages = {
     SUCCESS: {
         ADD_QUESTION: 'Add question successfully!',
         DELETE_QUESTION: 'Delete question successfully!',
-        DUPLICATE_QUESTION: 'Duplicate question successfully!'
+        DUPLICATE_QUESTION: 'Duplicate question successfully!',
+        SAVE_QUIZ: 'Save quiz successfully!'
     },
     ERROR: {
         DELETE_LAST_QUESTION: 'You cannot delete the last question!',

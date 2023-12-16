@@ -93,7 +93,7 @@ export const apiQuiz = createApi({
             })
         }),
 
-        updateQuiz: builder.mutation<QuizType, { quizId: string; updateQuiz: QuizType }>({
+        updateQuiz: builder.mutation<CreatorQuizType, { quizId: string; updateQuiz: CreatorQuizType }>({
             query: ({ quizId, updateQuiz }) => ({
                 url: `api/quiz/${quizId}`,
                 method: 'PUT',

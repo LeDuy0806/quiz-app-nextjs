@@ -28,19 +28,22 @@ export default function ContentEditor() {
         <>
             <div
                 className={cn(
-                    'relative mt-15 transform overflow-y-auto pt-12 duration-300 scrollbar scrollbar-thumb-slate-300 scrollbar-thumb-rounded scrollbar-w-2 scrollbar-h-2 max-lg:mb-20 lg:ml-52  lg:h-[calc(100vh-60px)] ',
+                    'relative mt-15 transform pt-6 duration-300 scrollbar scrollbar-thumb-slate-300 scrollbar-thumb-rounded scrollbar-w-2 scrollbar-h-2 max-lg:mb-20 lg:ml-52 lg:h-[calc(100vh-60px)]',
                     {
                         'lg:mr-72': isOpenQuestionSettingSidebar
                     }
                 )}
+                style={{
+                    backgroundImage: `url(https://res.cloudinary.com/dfoiuc0jw/image/upload/v1702646907/quiz-app/background/backgroundQuizCreator_jbxgk1)`,
+                    backgroundSize: 'cover'
+                }}
             >
-                <Image src={newCreatorBg} className='absolute left-0 top-0 -z-40 h-full object-cover' alt='' />
                 {/* Main content */}
-                <div className=' px-4 '>
+                <div className='px-4'>
                     {/* Input */}
                     <div className='flex text-center'>
                         <InputBase
-                            className='w-full rounded-md bg-white px-4 pb-2 pt-2 shadow-[inset_0_-4px_rgba(0,0,0,0.1)] lg:text-3xl'
+                            className='w-full rounded-md bg-white px-4 py-2 shadow-[inset_0_-4px_rgba(0,0,0,0.1)] lg:text-3xl'
                             placeholder='Start typing your question ...'
                             multiline
                             minRows={1}
@@ -64,11 +67,15 @@ export default function ContentEditor() {
 
                     {/* Image */}
                     <div className='mt-8 flex items-center justify-center rounded'>
-                        <div className='relative flex h-60 w-full flex-col items-center justify-center rounded-lg  text-center max-lg:h-96 2xl:w-1/4'>
+                        <div
+                            className={cn('relative flex h-60 w-full flex-col items-center justify-center rounded-lg  text-center max-lg:h-96 2xl:w-1/4', {
+                                'lg:h-80': questionType === QuestionTypeEnum.TRUE_FALSE
+                            })}
+                        >
                             <CldUploadWidget
                                 uploadPreset='quiz_upload'
                                 options={{
-                                    folder: 'examples/avatar',
+                                    folder: 'quiz-app/questions',
                                     sources: ['local', 'url', 'google_drive'],
                                     multiple: false,
                                     styles: {}

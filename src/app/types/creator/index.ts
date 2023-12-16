@@ -1,15 +1,7 @@
 import { AnswerNameEnum, AnswerTimeEnum, OptionQuestionEnum, PointTypeEnum, QuestionTypeEnum } from 'src/constants/enum';
 import { CreatorType } from '../quizType';
-
-// type ObjectCategoryType = {
-//     _id: string;
-//     name: string | null;
-// };
-
-// type ObjectGradeType = {
-//     _id: string;
-//     name: string | null;
-// };
+import CategoryType from '../categoryType';
+import GradeType from '../gradeType';
 
 type AnswerType = {
     name: AnswerNameEnum;
@@ -42,19 +34,14 @@ type QuizType = {
     description: string;
     backgroundImage: string;
     isPublic: boolean;
-    category: {
-        _id: string;
-        name: string;
-    };
-    grade: {
-        _id: string;
-        name: string;
-    };
+    category: CategoryType;
+    grade: GradeType;
     tags: string[];
     numberOfQuestions: number;
     pointsPerQuestion: number;
     likesCount: string[];
     questionList: QuestionType[];
+    isDraft: boolean;
 };
 
 const initialQuestion: QuestionType = {
@@ -122,7 +109,8 @@ const initialQuiz: QuizType = {
     grade: {
         _id: '',
         name: ''
-    }
+    },
+    isDraft: false
 };
 
 export { initialQuestion, initialQuiz };

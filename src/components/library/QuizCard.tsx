@@ -24,7 +24,6 @@ import { useCreateLeaderBoardMutation } from 'src/app/redux/services/leaderBoard
 import { createGame } from 'src/app/redux/slices/gamesSlice';
 import { createLeaderBoard } from 'src/app/redux/slices/leaderBoardSlice';
 import { deleteQuiz, fetchQuiz, fetchTeacherQuizzes } from 'src/app/redux/slices/quizSlice';
-import { setQuiz } from 'src/app/redux/slices/quizCreatorSlice';
 import { useDeleteQuizMutation } from 'src/app/redux/services/quizApi';
 import { useEffect } from 'react';
 
@@ -85,7 +84,6 @@ const QuizCard = (props: QuizCardProps) => {
     }, [isSuccess, dispatch, props.quiz]);
 
     const handleEditQuiz = () => {
-        // dispatch(setQuiz({}));
         router.push(`creator/${props.quiz._id}`);
     };
 
