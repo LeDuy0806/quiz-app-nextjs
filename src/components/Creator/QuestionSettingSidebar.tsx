@@ -58,7 +58,7 @@ export default function QuestionSettingSidebar({ isOpen, setOpen }: IProps) {
     return (
         <div
             className={cn(
-                ' fixed right-0 top-0 z-[200] mt-15 flex h-[calc(100vh-60px)] w-72 transform flex-col justify-between bg-white p-4 text-left duration-300 ',
+                'fixed right-0 top-0 z-[200] mt-15 flex h-[calc(100vh-60px)] w-72 transform flex-col justify-between bg-white p-4 text-left duration-300 ',
                 {
                     'translate-x-0': isOpen,
                     'translate-x-full': !isOpen

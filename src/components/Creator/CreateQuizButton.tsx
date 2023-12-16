@@ -4,16 +4,13 @@ import Modal from 'react-modal';
 import { BsPlusLg } from 'react-icons/bs';
 
 import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
-import { setActiveQuestion, setQuiz } from 'src/app/redux/slices/quizCreatorSlice';
+import { setQuizFromParams } from 'src/app/redux/slices/quizCreatorSlice';
 import { useRouter } from 'next/navigation';
 
-import { QuizType, initialQuiz } from 'src/app/types/creator';
+import { QuizType, initialQuestion, initialQuiz } from 'src/app/types/creator';
 import { cn } from 'src/utils/tailwind.util';
 import { RootState } from 'src/app/redux/store';
 import { useCreateDraftQuizMutation } from 'src/app/redux/services/quizApi';
-import { useGetAllCategoriesQuery } from 'src/app/redux/services/categoryApi';
-import { useGetAllGradesQuery } from 'src/app/redux/services/gradeApi';
-import { setCategories, setGrades } from 'src/app/redux/slices/quizSlice';
 
 const customStylesModal: any = {
     overlay: {
@@ -57,8 +54,6 @@ export default function CreateQuizButton({ buttonElement }: IProps) {
     const { user } = useAppSelector((state: RootState) => state.auth.authData);
 
     const [createDraftQuiz, { data, isSuccess }] = useCreateDraftQuizMutation();
-    const { data: categoriesData, isSuccess: isGetCategoriesSuccess } = useGetAllCategoriesQuery();
-    const { data: gradesData, isSuccess: isGetGradesSuccess } = useGetAllGradesQuery();
 
     const router = useRouter();
 
@@ -73,15 +68,9 @@ export default function CreateQuizButton({ buttonElement }: IProps) {
     const [modalData, setModalData] = useState<ModalDataType>(initialModalData);
 
     useEffect(() => {
-        if (isGetCategoriesSuccess) {
-            dispatch(setCategories(categoriesData));
-        }
-        if (isGetGradesSuccess) {
-            dispatch(setGrades(gradesData));
-        }
         if (isSuccess) {
             dispatch(
-                setQuiz({
+                setQuizFromParams({
                     ...initialQuiz,
                     _id: data?._id as string,
                     name: modalData.name,
@@ -94,11 +83,16 @@ export default function CreateQuizButton({ buttonElement }: IProps) {
                         userType: user.userType,
                         firstName: user.firstName,
                         lastName: user.lastName
-                    }
+                    },
+                    questionList: [
+                        {
+                            ...initialQuestion,
+                            creator: user._id
+                        }
+                    ]
                 })
             );
 
-            dispatch(setActiveQuestion(quiz.questionList[0].questionIndex));
             router.push(`/creator/${data?._id}`);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

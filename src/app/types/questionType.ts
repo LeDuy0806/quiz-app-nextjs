@@ -1,6 +1,3 @@
-import QuizType, { InitQuiz } from './quizType';
-import UserType, { InitUser } from './userType';
-
 type answerType = {
     name: string;
     body: string;

@@ -27,7 +27,7 @@ const quizCreatorSlice = createSlice({
     name: QuizCreatorSliceKey,
     initialState,
     reducers: {
-        setQuiz: (state, action: PayloadAction<QuizType>) => {
+        updateQuizInfo: (state, action: PayloadAction<QuizType>) => {
             state.quiz = action.payload;
         },
 
@@ -151,6 +151,8 @@ const quizCreatorSlice = createSlice({
                 if (questionType === QuestionTypeEnum.TRUE_FALSE) {
                     // if question type is true/false, there can only be one correct answer
                     state.activeQuestion.answerList = answerList.map(toggleAnswerCorrectness);
+                    state.activeQuestion.answerList[2].isCorrect = false;
+                    state.activeQuestion.answerList[3].isCorrect = false;
                 } else {
                     // if question type is not true/false, there can be multiple correct answers
                     state.activeQuestion.optionQuestion = OptionQuestionEnum.MULTIPLE;
@@ -289,7 +291,7 @@ const quizCreatorSlice = createSlice({
 });
 
 export const {
-    setQuiz,
+    updateQuizInfo,
     setQuizFromParams,
     setQuestionBackgroundImage,
     setQuestionType,
