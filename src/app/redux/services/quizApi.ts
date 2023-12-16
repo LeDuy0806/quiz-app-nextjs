@@ -40,6 +40,12 @@ export const apiQuiz = createApi({
                 method: 'GET'
             })
         }),
+        getQuizzesBySearch: builder.query<QuizType[], { searchName: string; tags: string }>({
+            query: ({ searchName, tags }) => ({
+                url: `api/quiz/search?searchName=${searchName}&tags=${tags}`,
+                method: 'GET'
+            })
+        }),
 
         getQuizById: builder.query<QuizType | CreatorQuizType, { quizId: string }>({
             query: ({ quizId }) => ({
@@ -164,6 +170,7 @@ export const apiQuiz = createApi({
 
 export const {
     useGetPublicQuizesQuery,
+    useGetQuizzesBySearchQuery,
     useGetQuizByIdQuery,
     useGetDiscoverQuizzesQuery,
     useGetTeacherQuizzesQuery,

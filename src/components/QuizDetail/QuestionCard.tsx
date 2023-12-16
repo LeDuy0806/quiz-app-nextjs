@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import { FaCheckSquare, FaRegCheckCircle, FaRegClock } from 'react-icons/fa';
 import QuestionType from 'src/app/types/questionType';
+import { DefaultBackground } from 'src/constants/image';
 
-function QuestionCard({ questionData, onClick }: { questionData: QuestionType; onClick: () => void }) {
+function QuestionCard({ questionData, isShowAnswer, onClick }: { questionData: QuestionType; isShowAnswer: Boolean; onClick: () => void }) {
     return (
         <div onClick={onClick} className='mb-4 flex cursor-pointer flex-col rounded-lg border border-solid border-slate-200 bg-white hover:bg-gray-100'>
             <div className='rounded-t-lg p-4 shadow-sm'>
@@ -35,7 +36,7 @@ function QuestionCard({ questionData, onClick }: { questionData: QuestionType; o
                         {/* question image */}
                         <div className='mr-4 flex h-26 w-26 shrink-0 items-center justify-center overflow-hidden rounded bg-gray-200'>
                             <div className='relative flex h-full w-full cursor-zoom-in items-center'>
-                                <Image src={'/assets/images/default_quiz_background.png'} alt='Question Image' fill objectFit='contain' />
+                                <Image src={questionData.backgroundImage || DefaultBackground[1]} alt='Question Image' fill objectFit='contain' />
                             </div>
                         </div>
                         {/* question title */}
@@ -50,21 +51,33 @@ function QuestionCard({ questionData, onClick }: { questionData: QuestionType; o
                 {/* list answer */}
                 <div className='flex flex-wrap'>
                     {questionData.answerList?.map((answer, index) => {
-                        return answer.isCorrect ? (
-                            <div key={index} className='mb-2 flex w-full items-start mdl:w-1/2'>
-                                <span className='relative my-1 mr-2 h-4 w-4 shrink-0 rounded-full bg-bgAnswerCorrect'></span>
-                                <span className=' text-gray-800'>
-                                    <p>{answer.body}</p>
-                                </span>
-                            </div>
-                        ) : (
-                            <div key={index} className='mb-2 flex w-full items-start mdl:w-1/2'>
-                                <span className='relative my-1 mr-2 h-4 w-4 shrink-0 rounded-full bg-bgAnswerIncorrect'></span>
-                                <span className=' text-gray-800'>
-                                    <p>{answer.body}</p>
-                                </span>
-                            </div>
-                        );
+                        if (answer.body == '') return <></>;
+                        if (isShowAnswer) {
+                            return answer.isCorrect ? (
+                                <div key={index} className='mb-2 flex w-full items-start mdl:w-1/2'>
+                                    <span className='relative my-1 mr-2 h-4 w-4 shrink-0 rounded-full bg-bgAnswerCorrect'></span>
+                                    <span className=' text-gray-800'>
+                                        <p>{answer.body}</p>
+                                    </span>
+                                </div>
+                            ) : (
+                                <div key={index} className='mb-2 flex w-full items-start mdl:w-1/2'>
+                                    <span className='relative my-1 mr-2 h-4 w-4 shrink-0 rounded-full bg-bgAnswerIncorrect'></span>
+                                    <span className=' text-gray-800'>
+                                        <p>{answer.body}</p>
+                                    </span>
+                                </div>
+                            );
+                        } else {
+                            return (
+                                <div key={index} className='mb-2 flex w-full items-start mdl:w-1/2'>
+                                    <span className='relative my-1 mr-2 h-4 w-4 shrink-0 rounded-full bg-gray-400'></span>
+                                    <span className=' text-gray-800'>
+                                        <p>{answer.body}</p>
+                                    </span>
+                                </div>
+                            );
+                        }
                     })}
                     {/* <div className='flex items-start mb-2 mdl:w-1/2 w-full'>
                         <span className='w-4 h-4 rounded-full my-1 mr-2 shrink-0 relative bg-bgAnswerIncorrect'></span>

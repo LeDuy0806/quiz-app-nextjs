@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { use, useEffect } from 'react';
 
 //components
 import HomeCard from 'src/components/home/HomeCard';
@@ -40,6 +40,10 @@ function HomePage() {
             // };
         }
     }, [user, dispatch, socket]);
+
+    useEffect(() => {
+        document.title = 'Quizzes | Home';
+    }, []);
 
     return (
         <div className='min-h-[calc(100vh-4rem)] p-4 dark:bg-slate-600 max-md:flex-col'>

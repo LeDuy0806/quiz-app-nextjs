@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { FaChevronRight } from 'react-icons/fa';
 import QuizSectionCard from 'src/components/discover/SectionPage/QuizSectionCard';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useDebounce from 'src/hooks/useDebounce';
 import QuizPreviewContainer from 'src/components/discover/SectionPage/QuizPreviewContainer';
 import CreateQuizButton from 'src/components/Creator/CreateQuizButton';
@@ -24,6 +24,10 @@ function Page() {
     });
     const [quizDataPreview, setQuizDataPreview] = useState<QuizType | null>(null);
     const quizDataPreviewdebounceValue = useDebounce(quizDataPreview, 500);
+
+    useEffect(() => {
+        document.title = `Discover ${sectionName} - Quizzes`;
+    }, []);
 
     const { data, isSuccess, isLoading, isError } = useGetPublicQuizesQuery(paginationOption);
 

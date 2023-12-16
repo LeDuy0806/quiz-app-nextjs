@@ -4,6 +4,7 @@ const paths = {
     auth: '/auth',
     search: '/search',
     library: '/library',
+    details: '/details',
     discover: '/discover',
     creator: '/creator',
     leaderBoard: '/leaderboard'

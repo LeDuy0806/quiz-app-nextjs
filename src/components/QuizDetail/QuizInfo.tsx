@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { FaBook, FaBullseye, FaExclamationTriangle, FaGraduationCap, FaHeart, FaPlay, FaRegCopy, FaRegFolder, FaShare } from 'react-icons/fa';
 import QuizType, { CreatorType } from 'src/app/types/quizType';
+import { DefaultBackground } from 'src/constants/image';
 
 function QuizInfo({ quizData }: { quizData: QuizType }) {
     return (
@@ -12,12 +13,7 @@ function QuizInfo({ quizData }: { quizData: QuizType }) {
                         <div className='relative flex h-30 w-30 items-center justify-center overflow-hidden'>
                             <div className='flex h-full w-full shrink-0 items-center justify-center rounded-sm bg-slate-100'>
                                 <div className=' relative flex h-full w-full cursor-zoom-in items-center'>
-                                    <Image
-                                        src={quizData?.backgroundImage ? quizData.backgroundImage : '/assets/images/default_quiz_background.png'}
-                                        alt='Quiz Image'
-                                        fill
-                                        objectFit='contain'
-                                    />
+                                    <Image src={quizData.backgroundImage || DefaultBackground[0]} alt='Quiz Image' fill objectFit='contain' />
                                 </div>
                             </div>
                         </div>
