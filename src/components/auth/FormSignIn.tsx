@@ -69,7 +69,7 @@ const FormSignIn = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [formData, setFormData] = useState<LoginType>(InitLogin);
     const [formError, setFormError] = useState<ErrorLoginType>(InitErrorLogin);
-    const [click, setClick] = useState<boolean>(false);
+    const [canSubmit, setCanSubmit] = useState<boolean>(false);
     const [showPassWord, setShowPassWord] = useState<boolean>(false);
 
     useEffect(() => {
@@ -92,14 +92,21 @@ const FormSignIn = () => {
 
     useEffect(() => {
         if (!formData.mail || !formData.password || !EmailFormat(formData.mail)) {
-            setClick(false);
+            setCanSubmit(false);
         } else {
-            setClick(true);
+            setCanSubmit(true);
         }
     }, [formData.mail, formData.password]);
 
     const handleChangeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleClickEnterForm = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (!canSubmit) return;
+        if (e.key === 'Enter') {
+            handleLogin();
+        }
     };
 
     const handleLogin = async () => {
@@ -174,6 +181,7 @@ const FormSignIn = () => {
                                     )}
                                     placeholder={language === 'en' ? 'Enter email' : 'Nhập email'}
                                     onChange={handleChangeForm}
+                                    onKeyDown={handleClickEnterForm}
                                 />
                             </motion.div>
 
@@ -189,6 +197,7 @@ const FormSignIn = () => {
                                     className='min-h-[auto] w-full rounded-2xl border-[2px] bg-transparent px-3 py-[0.8rem] font-semibold placeholder-gray-400 outline-none placeholder:italic focus:border-[2px] focus:border-bgBlue'
                                     placeholder={language === 'en' ? 'Password' : 'Mật khẩu'}
                                     onChange={handleChangeForm}
+                                    onKeyDown={handleClickEnterForm}
                                 />
                                 <button
                                     className='absolute right-4 top-[50%] translate-y-[-50%] cursor-pointer'
@@ -212,10 +221,10 @@ const FormSignIn = () => {
                                 transition={{ duration: 0.4, delay: 0.5 }}
                                 className={clsx(
                                     `flex w-full items-center justify-center rounded-2xl py-[0.6rem] font-bold leading-7 text-textWhite`,
-                                    click ? 'cursor-pointer bg-bgBlue' : 'cursor-default bg-textGray'
+                                    canSubmit ? 'cursor-pointer bg-bgBlue' : 'cursor-default bg-textGray'
                                 )}
                                 onClick={handleLogin}
-                                disabled={!click}
+                                disabled={!canSubmit}
                             >
                                 {isLoading || loading ? (
                                     <>
