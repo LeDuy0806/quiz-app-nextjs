@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
-import { HiMagnifyingGlass } from 'react-icons/hi2';
 import { motion } from 'framer-motion';
 
 // component
@@ -16,9 +15,6 @@ import { fetchPrivateQuizzes, fetchPublicQuizzes, fetchTeacherQuizzes, filterTea
 // utils
 import { cn } from 'src/utils/tailwind.util';
 
-// data
-import Quiz, { ListQuiz } from 'src/data';
-
 enum FilterEnum {
     ALL = 'all',
     PUBLIC = 'public',
@@ -32,46 +28,45 @@ function LibraryPage() {
 
     const dispatch = useAppDispatch();
 
-    // const fakeData: QuizType[] = ListQuiz;
-
     const authData = useAppSelector((state) => state.auth.authData);
-    const quizzes = useAppSelector((state) => state.quiz.FilteredTeacherQuizzes);
+
+    const filterQuizzes = useAppSelector((state) => state.quiz.FilteredTeacherQuizzes);
+
+    const teachQuizzes = useAppSelector((state) => state.quiz.TeacherQuizzes);
 
     const teacherId = authData?.user?._id;
 
-    const { data, isLoading, isSuccess } = useGetTeacherQuizzesQuery({ teacherId });
+    const { data, isLoading, isSuccess, refetch } = useGetTeacherQuizzesQuery({ teacherId });
 
     const [filter, setFilter] = useState(FilterEnum.ALL);
 
-    // useEffect(() => {
-    //     dispatch(fetchTeacherQuizzes(fakeData));
-    // }, [dispatch, fakeData]);
-
     useEffect(() => {
-        console.log('Teacher ID', teacherId);
-    }, [teacherId]);
-
-    useEffect(() => {
-        if (isSuccess && data) {
+        refetch();
+        if (isSuccess && data && teachQuizzes.length === 0) {
             dispatch(fetchTeacherQuizzes(data));
         }
-    }, [dispatch, data, isSuccess]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data, isSuccess, teachQuizzes.length]);
 
     if (isLoading) return <div>Loading...</div>;
 
     const handleChangeFilter = (event: React.MouseEvent<HTMLElement, MouseEvent>, newFilter: FilterEnum) => {
         setFilter(newFilter);
 
+        if (newFilter === FilterEnum.ALL) {
+            dispatch(fetchTeacherQuizzes(data as QuizType[]));
+            return;
+        }
+
         if (newFilter === FilterEnum.PUBLIC) {
-            dispatch(fetchPublicQuizzes());
+            dispatch(fetchPublicQuizzes(data as QuizType[]));
             return;
         }
 
         if (newFilter === FilterEnum.PRIVATE) {
-            dispatch(fetchPrivateQuizzes());
+            dispatch(fetchPrivateQuizzes(data as QuizType[]));
             return;
         }
-        if (isSuccess && data) dispatch(fetchTeacherQuizzes(data));
     };
 
     return (
@@ -146,23 +141,7 @@ function LibraryPage() {
 
             {/* List Quiz Card */}
             <ul className='mt-4 flex flex-wrap items-center justify-between gap-6 max-xl:gap-4'>
-                {quizzes &&
-                    quizzes.map((quiz, i) => (
-                        <motion.div
-                            initial={{ x: 20, opacity: 0 }}
-                            animate={{ x: 0, opacity: 1 }}
-                            transition={{
-                                duration: 0.4,
-                                delay: 0.1 + i * 0.075
-                            }}
-                            key={`${i}`}
-                            className='w-full'
-                        >
-                            <QuizCard key={quiz._id} quiz={quiz} />
-                        </motion.div>
-                    ))}
-
-                {/* {fakeData?.map((quiz: QuizType, i) => (
+                {filterQuizzes.map((quiz, i) => (
                     <motion.div
                         initial={{ x: 20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
@@ -175,7 +154,7 @@ function LibraryPage() {
                     >
                         <QuizCard key={quiz._id} quiz={quiz} />
                     </motion.div>
-                ))} */}
+                ))}
             </ul>
         </div>
     );

@@ -32,8 +32,18 @@ export default function QuizCreator() {
 
     const { quiz, openDeleteQuestionDialog } = useAppSelector((state) => state.quizCreator);
 
-    const { data: draftQuizData, isSuccess: isGetDraftQuizSuccess, isLoading: isGetDraftQuizLoading } = useGetDraftQuizQuery({ quizId: id as string });
-    const { data: quizIdData, isSuccess: isGetQuizByIdSuccess, isLoading: isGetQuizByIdLoading } = useGetQuizByIdQuery({ quizId: id as string });
+    const {
+        data: draftQuizData,
+        isSuccess: isGetDraftQuizSuccess,
+        isLoading: isGetDraftQuizLoading,
+        refetch: refetchDraft
+    } = useGetDraftQuizQuery({ quizId: id as string });
+    const {
+        data: quizIdData,
+        isSuccess: isGetQuizByIdSuccess,
+        isLoading: isGetQuizByIdLoading,
+        refetch: refetchById
+    } = useGetQuizByIdQuery({ quizId: id as string });
 
     const { data: categoriesData, isSuccess: isGetCategoriesSuccess } = useGetAllCategoriesQuery();
     const { data: gradesData, isSuccess: isGetGradesSuccess } = useGetAllGradesQuery();
@@ -43,6 +53,10 @@ export default function QuizCreator() {
     useEffect(() => {
         document.title = 'Quizzes Creator';
     }, []);
+    useEffect(() => {
+        refetchById();
+        refetchDraft();
+    }, [refetchById, refetchDraft]);
     Modal.setAppElement('body');
 
     useEffect(() => {
@@ -68,11 +82,6 @@ export default function QuizCreator() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGetDraftQuizSuccess, isGetQuizByIdSuccess, isGetDraftQuizLoading, isGetQuizByIdLoading, draftQuizData, quizIdData]);
-
-    useEffect(() => {
-        console.log('id', id);
-        console.log(quiz);
-    }, [quiz, id]);
 
     useEffect(() => {
         if (isGetCategoriesSuccess) {

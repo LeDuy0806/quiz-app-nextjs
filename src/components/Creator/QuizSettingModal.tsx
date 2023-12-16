@@ -9,6 +9,9 @@ import { updateQuizInfo } from 'src/app/redux/slices/quizCreatorSlice';
 import CategoryType from 'src/app/types/categoryType';
 import GradeType from 'src/app/types/gradeType';
 import { convertStringToArray, flattenArray } from 'src/utils/array.utils';
+import { toast } from 'react-toastify';
+import { CreatorMessages } from 'src/constants/messages';
+import { ToastOptions } from 'src/constants/toast';
 
 const customStylesModal: any = {
     overlay: {
@@ -137,6 +140,22 @@ function QuizSettingModal({ isOpenModal, setIsOpenModal }: IProps) {
     };
 
     const handleUpdateQuiz = () => {
+        if (modalData.name === '') {
+            toast.error(CreatorMessages.ERROR.TITLE_REQUIRED, ToastOptions);
+            return;
+        }
+        if (modalData.description === '') {
+            toast.error(CreatorMessages.ERROR.DESCRIPTION_REQUIRED, ToastOptions);
+            return;
+        }
+        if (modalData.category.name === '') {
+            toast.error(CreatorMessages.ERROR.CATEGORY_REQUIRED, ToastOptions);
+            return;
+        }
+        if (modalData.grade.name === '') {
+            toast.error(CreatorMessages.ERROR.GRADE_REQUIRED, ToastOptions);
+            return;
+        }
         dispatch(
             updateQuizInfo({
                 ...quiz,
