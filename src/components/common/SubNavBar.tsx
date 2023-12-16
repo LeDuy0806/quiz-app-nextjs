@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, redirect } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import { useAnimate, stagger, motion } from 'framer-motion';
@@ -89,10 +89,12 @@ function SubNavBar({ toggleSidebar }: IProps) {
         await Logout({ userId: user._id })
             .unwrap()
             .then((res) => {
-                dispatch(logOut({}));
-                dispatch(deleteSocket({}));
+                // redirect('/');
+            })
+            .finally(() => {
                 socket?.disconnect();
-                router.push('/');
+                dispatch(logOut());
+                dispatch(deleteSocket());
             });
     };
 
@@ -101,7 +103,7 @@ function SubNavBar({ toggleSidebar }: IProps) {
             if (session) {
                 signOut({ callbackUrl: '/' });
             } else {
-                router.push('/');
+                redirect('/');
             }
         }
     }, [isSuccess, session]);

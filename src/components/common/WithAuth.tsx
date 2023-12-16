@@ -1,5 +1,5 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter, redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from 'src/app/redux/hooks';
 import LiquidLoading from '../LiquidLoading';
@@ -25,7 +25,7 @@ function WithAuth({ children }: IProps) {
 
     useEffect(() => {
         if (!isAuthenticated) {
-            router.push('/signIn');
+            redirect('/signIn');
         } else {
             setCanRenderChildren(true);
         }
