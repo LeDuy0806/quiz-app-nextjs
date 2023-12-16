@@ -50,6 +50,7 @@ function QuestionCard({ questionData, isShowAnswer }: { questionData: QuestionTy
                 {/* list answer */}
                 <div className='flex flex-wrap'>
                     {questionData.answerList?.map((answer, index) => {
+                        if (answer.body == '') return <></>;
                         if (isShowAnswer) {
                             return answer.isCorrect ? (
                                 <div key={index} className='mb-2 flex w-full items-start mdl:w-1/2'>

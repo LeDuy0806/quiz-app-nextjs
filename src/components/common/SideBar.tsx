@@ -162,15 +162,15 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                             href={link.to}
                                             className={cn({
                                                 'active group relative flex rounded-lg rounded-tl-lg p-2  font-bold text-bgPurple hover:scale-105 hover:bg-gray-100 dark:text-bgPurple dark:hover:bg-gray-700 mdl:max-xl:flex-col mdl:max-xl:items-center mdl:max-xl:justify-center':
-                                                    pathName === link.to,
+                                                    pathName.includes(link.to),
                                                 'group relative flex rounded-lg rounded-tr-lg p-2  text-gray-600 hover:scale-105 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 mdl:max-xl:flex-col mdl:max-xl:items-center mdl:max-xl:justify-center':
-                                                    pathName !== link.to,
+                                                    !pathName.includes(link.to),
                                                 'mdl:flex': pathName.includes(paths.search),
                                                 'mdl:flex-col': pathName.includes(paths.search),
                                                 'mdl:items-center': pathName.includes(paths.search)
                                             })}
                                         >
-                                            {pathName === link.to ? (
+                                            {pathName.includes(link.to) ? (
                                                 <link.icon.fill
                                                     className={cn(
                                                         ' ml-2 h-5 w-5 transform text-xl text-bgPurplePower opacity-70 transition duration-75 group-hover:scale-105 group-hover:opacity-90 dark:text-bgPurplePower dark:group-hover:text-purple-500 mdl:max-xl:ml-0',
@@ -197,7 +197,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
                                             >
                                                 {link.name}
                                             </span>
-                                            {pathName === link.to && (
+                                            {pathName.includes(link.to) && (
                                                 <div
                                                     className={cn(
                                                         'absolute -right-[3px] top-0 h-9 w-1 rounded-lg bg-bgPurple dark:bg-brand-400 mdl:max-xl:hidden',

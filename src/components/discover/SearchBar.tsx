@@ -1,9 +1,18 @@
-import { url } from 'inspector';
 import Image from 'next/image';
 import { FaChevronRight } from 'react-icons/fa';
 import SubjectsButton from './SubjectsButton';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 function SearchBar() {
+    const [searchValue, setSearchValue] = useState('');
+    const router = useRouter();
+
+    const handleRedirectToSearchPage = () => {
+        if (searchValue) {
+            router.push(`/search?name=${searchValue}&tags=`);
+        }
+    };
     return (
         <>
             <div className='w-[90%] md:w-[80%] xl:w-[60%]'>
@@ -21,9 +30,19 @@ function SearchBar() {
                                     placeholder='Search for quizzes on any topic'
                                     maxLength={-1}
                                     tabIndex={0}
+                                    value={searchValue}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') handleRedirectToSearchPage();
+                                    }}
+                                    onChange={(e) => setSearchValue(e.target.value.replace(/[`~.<>;':"\/\[\]\|{}()=_+-]/, ''))}
                                     aria-required='false'
                                 />
-                                <div className='absolute right-2 top-2 flex h-6 w-6 items-center justify-center pt-0.5 '>
+                                <div
+                                    onClick={() => {
+                                        handleRedirectToSearchPage();
+                                    }}
+                                    className='absolute right-2 top-2 flex h-6 w-6 cursor-pointer items-center justify-center pt-0.5 '
+                                >
                                     <i className='flex cursor-pointer items-center text-gray-800'>
                                         <FaChevronRight />
                                     </i>
@@ -37,12 +56,9 @@ function SearchBar() {
                 <div className='relative mx-auto mb-4 mt-8 overflow-hidden md:mt-16'>
                     <div className='mx-auto flex space-x-5 overflow-x-auto overflow-y-hidden scroll-smooth px-4 py-1 scrollbar-none md:space-x-8'>
                         <SubjectsButton />
-                        <SubjectsButton />
-                        <SubjectsButton />
-                        <SubjectsButton />
-                        <SubjectsButton />
-                        <SubjectsButton />
-                        <SubjectsButton />
+                        {['Math', 'Science', 'English', 'History', 'Geography', 'Computer', 'Music', 'Art', 'PE', 'Other'].map((name, i) => (
+                            <SubjectsButton name={name} key={i} />
+                        ))}
                     </div>
                 </div>
             </div>

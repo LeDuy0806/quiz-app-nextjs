@@ -1,13 +1,13 @@
 import Image from 'next/image';
 
-function SubjectsButton() {
+function SubjectsButton({ name }: { name?: string }) {
     return (
-        <div className='flex flex-col items-center transition duration-300 transform cursor-pointer hover:scale-110'>
-            <div className='bg-[#e1cdde] relative border rounded-full w-14 h-14 md:w-16 md:h-16 border-gray-800'>
+        <div className='flex transform cursor-pointer flex-col items-center transition duration-300 hover:scale-110'>
+            <div className='relative h-14 w-14 rounded-full border border-gray-800 bg-[#e1cdde] md:h-16 md:w-16'>
                 <Image src={'https://cf.quizizz.com/img/course-assets/title_imgs/bts_templates.png'} alt='' fill />
             </div>
-            <span className='text-xs font-semibold text-center md:text-sm text-dark-3 whitespace-nowrap'>
-                <span>Joyful kickoff</span>
+            <span className='text-dark-3 whitespace-nowrap text-center text-xs font-semibold md:text-sm'>
+                <span>{name || 'Joyful kickoff'}</span>
             </span>
         </div>
     );

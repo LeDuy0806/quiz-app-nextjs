@@ -1,7 +1,7 @@
 'use client';
 import Modal from 'react-modal';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import QuestionType from 'src/app/types/questionType';
 import QuizType from 'src/app/types/quizType';
 import ListQuestions from 'src/components/QuizDetail/ListQuestions';
@@ -22,6 +22,11 @@ function QuizDetail() {
     const [isOpenPreviewModal, setIsOpenPreviewModal] = useState<boolean>(false);
     const [currentQuestionModal, setCurrentQuestionModal] = useState<QuestionType | undefined>();
     const [currentIndexQuestionModal, setCurrentIndexQuestionModal] = useState<number>(0);
+    const { data, isSuccess, isLoading } = useGetQuizByIdQuery({ quizId: id });
+
+    useEffect(() => {
+        document.title = `Quizzes | ${data?.name || 'Quiz detail'}`;
+    }, [data]);
 
     const handleOpenModal = (questionIndex: number) => {
         setIsOpenPreviewModal(true);
@@ -40,8 +45,6 @@ function QuizDetail() {
     const handleCloseModal = () => {
         setIsOpenPreviewModal(false);
     };
-
-    const { data, isSuccess, isLoading } = useGetQuizByIdQuery({ quizId: id });
 
     useEffect(() => {
         if (isSuccess && data) setQuizData(data as QuizType);

@@ -3,6 +3,7 @@ import { TbCategory } from 'react-icons/tb';
 import QuizType, { CreatorType } from 'src/app/types/quizType';
 import QuestionCard from './QuestionCard';
 import { useState } from 'react';
+import { Switch } from '@mui/material';
 
 function QuizPreviewContainer({ quizData }: { quizData: QuizType }) {
     const [isShowAnswer, setIsShowAnswer] = useState(false);
@@ -52,6 +53,10 @@ function QuizPreviewContainer({ quizData }: { quizData: QuizType }) {
                     </div>
                     <div className=' flex items-center justify-between border-b border-slate-200 p-3'>
                         <span className='text-sm  text-slate-800'>{quizData.numberOfQuestions} Questions</span>
+                        <div>
+                            <span className='text-xs text-slate-500'>Show answer</span>
+                            <Switch checked={isShowAnswer} onChange={() => setIsShowAnswer(!isShowAnswer)} size='small' />
+                        </div>
                     </div>
                     <div className='flex flex-col'>
                         {quizData?.questionList?.map((question, index) => <QuestionCard key={index} isShowAnswer={isShowAnswer} questionData={question} />)}

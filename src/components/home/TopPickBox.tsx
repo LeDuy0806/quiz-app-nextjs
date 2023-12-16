@@ -25,7 +25,13 @@ function TopPickBox({ publicQuizzes }: { publicQuizzes: QuizType[] }) {
             </div>
             <div className='space-y-2 overflow-hidden px-4 pt-3 '>
                 {publicQuizzes.map((quiz, i) => (
-                    <QuizCard key={quiz._id} quiz={quiz} />
+                    <Link
+                        href={paths.details + '/' + quiz._id}
+                        key={quiz._id}
+                        className='z-10 flex h-20 w-full rounded-sm bg-gray-50 shadow-md md:min-h-[5rem]'
+                    >
+                        <QuizCard quiz={quiz} key={quiz._id} />
+                    </Link>
                 ))}
             </div>
             <div className='flex flex-col items-center justify-center px-6 py-4'>
