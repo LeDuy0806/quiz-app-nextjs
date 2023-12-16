@@ -11,6 +11,9 @@ import { QuizType, initialQuestion, initialQuiz } from 'src/app/types/creator';
 import { cn } from 'src/utils/tailwind.util';
 import { RootState } from 'src/app/redux/store';
 import { useCreateDraftQuizMutation } from 'src/app/redux/services/quizApi';
+import { toast } from 'react-toastify';
+import { LibraryMessages } from 'src/constants/messages';
+import { ToastOptions } from 'src/constants/toast';
 
 const customStylesModal: any = {
     overlay: {
@@ -94,6 +97,8 @@ export default function CreateQuizButton({ buttonElement }: IProps) {
             );
 
             router.push(`/creator/${data?._id}`);
+
+            toast.success(LibraryMessages.SUCCESS.ADD_QUIZ, ToastOptions);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSuccess]);

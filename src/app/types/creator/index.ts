@@ -33,6 +33,7 @@ type QuizType = {
     creator: CreatorType;
     description: string;
     backgroundImage: string;
+    importFrom: any;
     isPublic: boolean;
     category: CategoryType;
     grade: GradeType;
@@ -96,6 +97,7 @@ const initialQuiz: QuizType = {
     },
     description: '',
     backgroundImage: '',
+    importFrom: null,
     isPublic: true,
     pointsPerQuestion: 1,
     tags: [],

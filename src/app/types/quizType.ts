@@ -11,10 +11,11 @@ type QuizType = {
     backgroundImage: string;
     isPublic: boolean;
     tags: string[];
+    isDraft: boolean;
     pointsPerQuestion: number;
     numberOfQuestions: number;
     importFrom: UserType | string | null;
-    likesCount: UserType[];
+    likesCount: string[];
     questionList: QuestionType[];
     createdAt?: string;
     updatedAt?: string;
@@ -44,9 +45,10 @@ export const InitQuiz = {
     isPublic: true,
     pointsPerQuestion: 1,
     numberOfQuestions: 1,
-
+    tags: [],
+    isDraft: true,
     importFrom: InitUser,
-    likesCount: [InitUser],
+    likesCount: [],
     questionList: [InitQuestion],
     category: {
         _id: '',

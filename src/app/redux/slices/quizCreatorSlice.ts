@@ -285,7 +285,11 @@ const quizCreatorSlice = createSlice({
 
             state.quiz.questionList = [...questionList];
 
-            console.log(state.quiz);
+            state.isUpdate = false;
+        },
+
+        setIsUpdate: (state, action: PayloadAction<boolean>) => {
+            state.isUpdate = action.payload;
         }
     }
 });
@@ -307,7 +311,8 @@ export const {
     deleteQuestion,
     setOpenDeleteQuestionDialog,
     duplicateQuestion,
-    saveQuiz
+    saveQuiz,
+    setIsUpdate
 } = quizCreatorSlice.actions;
 
 const quizCreatorReducer = quizCreatorSlice.reducer;
