@@ -8,6 +8,7 @@ import ContentEditor from 'src/components/Creator/ContentEditor';
 import CreatorNavbar from 'src/components/Creator/CreatorNavbar';
 import CreatorSidebar from 'src/components/Creator/CreatorSidebar';
 import QuizSettingModal from 'src/components/Creator/QuizSettingModal';
+import ThemeModal from 'src/components/Creator/ThemeModal';
 
 // Types
 import { QuizType } from 'src/app/types/creator';
@@ -48,7 +49,8 @@ export default function QuizCreator() {
     const { data: categoriesData, isSuccess: isGetCategoriesSuccess } = useGetAllCategoriesQuery();
     const { data: gradesData, isSuccess: isGetGradesSuccess } = useGetAllGradesQuery();
 
-    const [isOpenModal, setIsOpenModal] = useState(false);
+    const [isOpenSettingModal, setIsOpenSettingModal] = useState(false);
+    const [isOpenThemeModal, setIsOpenThemeModal] = useState(false);
 
     useEffect(() => {
         document.title = 'Quizzes Creator';
@@ -102,14 +104,16 @@ export default function QuizCreator() {
     return (
         <>
             <main>
-                <CreatorNavbar setIsOpenModal={setIsOpenModal} />
+                <CreatorNavbar setIsOpenSettingModal={setIsOpenSettingModal} setIsOpenThemeModal={setIsOpenThemeModal} />
                 <CreatorSidebar />
                 <ContentEditor />
             </main>
 
             <DeleteQuestionDialog open={openDeleteQuestionDialog} />
 
-            <QuizSettingModal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
+            <QuizSettingModal isOpenModal={isOpenSettingModal} setIsOpenModal={setIsOpenSettingModal} />
+
+            <ThemeModal isOpenModal={isOpenThemeModal} setIsOpenModal={setIsOpenThemeModal} />
         </>
     );
 }

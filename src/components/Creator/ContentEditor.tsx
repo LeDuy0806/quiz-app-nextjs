@@ -1,28 +1,42 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { InputBase } from '@mui/material';
-import { HiDotsVertical, HiPlus } from 'react-icons/hi';
-import { newCreatorBg } from '../../../public/assets/images/creator';
-
-import { cn } from 'src/utils/tailwind.util';
-import AnswerItem from 'src/components/Creator/AnswerItem';
-import QuestionSettingSidebar from './QuestionSettingSidebar';
-import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
-import { setQuestionBackgroundImage, setQuestionContent } from 'src/app/redux/slices/quizCreatorSlice';
 import { CldUploadWidget } from 'next-cloudinary';
+import { HiDotsVertical, HiPlus } from 'react-icons/hi';
+
+// Utils
+import { cn } from 'src/utils/tailwind.util';
+
+// Constants
 import { QuestionTypeEnum } from 'src/constants/enum';
 
+// Components
+import QuestionSettingSidebar from './QuestionSettingSidebar';
+import AnswerItem from 'src/components/Creator/AnswerItem';
+
+// Redux
+import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
+import { setQuestionBackgroundImage, setQuestionContent } from 'src/app/redux/slices/quizCreatorSlice';
+
 export default function ContentEditor() {
-    const { activeQuestion } = useAppSelector((state) => state.quizCreator);
+    const { activeQuestion, theme } = useAppSelector((state) => state.quizCreator);
     const dispatch = useAppDispatch();
 
     const [isOpenQuestionSettingSidebar, setIsOpenQuestionSettingSidebar] = useState(true);
-
+    // const [randomBackgroundState, setRandomBackgroundState] = useState<string>(`${creatorBackground[Math.floor(Math.random() * creatorBackground.length)]}`);
     const { questionType, answerList, content, backgroundImage } = activeQuestion;
 
     const handleOpenSettingQuiz = () => {
         setIsOpenQuestionSettingSidebar(!isOpenQuestionSettingSidebar);
     };
+
+    // useEffect(() => {
+    //     const intervalId = setTimeout(() => {
+    //         setRandomBackgroundState(`${creatorBackground[Math.floor(Math.random() * creatorBackground.length)]}`);
+    //     }, 1000 * 1); // 1 minute
+
+    //     return () => clearTimeout(intervalId);
+    // }, [randomBackgroundState]);
 
     return (
         <>
@@ -34,8 +48,9 @@ export default function ContentEditor() {
                     }
                 )}
                 style={{
-                    backgroundImage: `url(https://res.cloudinary.com/dfoiuc0jw/image/upload/v1702646907/quiz-app/background/backgroundQuizCreator_jbxgk1)`,
-                    backgroundSize: 'cover'
+                    backgroundImage: `url(${theme})`,
+                    backgroundSize: 'cover',
+                    transition: 'all 0.8s ease'
                 }}
             >
                 {/* Main content */}
