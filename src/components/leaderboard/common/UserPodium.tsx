@@ -11,6 +11,7 @@ interface UserPodiumProps {
         firstName: string;
         lastName: string;
         point: number;
+        avatar: string;
     };
 }
 
@@ -49,7 +50,7 @@ export default function UserPodium({ user }: UserPodiumProps) {
         <div className='group flex-1 overscroll-x-none transition-all delay-100 duration-150 ease-linear lgl:hover:translate-y-1'>
             <div className='flex flex-col items-center'>
                 <div className='relative h-20 w-20 rounded-full sml:h-24 sml:w-24'>
-                    <Image src={'/assets/images/default_avatar.png'} alt='' fill className='rounded-full object-cover object-center' />
+                    <Image src={user.avatar} alt='' fill className='rounded-full object-cover object-center' />
 
                     <span className='absolute -bottom-1 -right-1 inline-flex items-center justify-center rounded-full  bg-white ring ring-white'>
                         <span className='relative h-8 w-8 sml:h-9 sml:w-9'>
