@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { QuizType, QuestionType, initialQuiz, initialQuestion, AnswerType } from 'src/app/types/creator';
 import { AnswerNameEnum, OptionQuestionEnum, PointTypeEnum, QuestionTypeEnum } from 'src/constants/enum';
+import { creatorBackground } from 'src/constants/image';
 import { CreatorMessages } from 'src/constants/messages';
 import { ToastOptions } from 'src/constants/toast';
 
@@ -12,6 +13,7 @@ type CreatorStateType = {
     activeQuestion: QuestionType;
     deleteQuestionIndex: number | null;
     openDeleteQuestionDialog: boolean;
+    theme: string;
     isUpdate: boolean;
 };
 
@@ -20,6 +22,7 @@ const initialState = {
     activeQuestion: initialQuestion,
     deleteQuestionIndex: null,
     openDeleteQuestionDialog: false,
+    theme: creatorBackground[Math.floor(Math.random() * creatorBackground.length)],
     isUpdate: false
 } as CreatorStateType;
 
@@ -290,6 +293,10 @@ const quizCreatorSlice = createSlice({
 
         setIsUpdate: (state, action: PayloadAction<boolean>) => {
             state.isUpdate = action.payload;
+        },
+
+        setTheme: (state, action: PayloadAction<string>) => {
+            state.theme = action.payload;
         }
     }
 });
@@ -312,7 +319,8 @@ export const {
     setOpenDeleteQuestionDialog,
     duplicateQuestion,
     saveQuiz,
-    setIsUpdate
+    setIsUpdate,
+    setTheme
 } = quizCreatorSlice.actions;
 
 const quizCreatorReducer = quizCreatorSlice.reducer;

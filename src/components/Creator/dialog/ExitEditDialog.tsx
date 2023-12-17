@@ -34,9 +34,9 @@ export default function ExitEditDialog({ open, setIsOpenExitEditDialog }: IProps
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSuccess]);
 
-    useEffect(() => {
-        console.log(error);
-    }, [error]);
+    // useEffect(() => {
+    //     console.log(error);
+    // }, [error]);
 
     const handleClose = () => {
         setIsOpenExitEditDialog(false);

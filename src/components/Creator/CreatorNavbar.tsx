@@ -13,6 +13,7 @@ import { RxExit } from 'react-icons/rx';
 import paths from 'src/constants/paths';
 import { CreatorMessages } from 'src/constants/messages';
 import { ToastOptions } from 'src/constants/toast';
+import { QuestionTypeEnum } from 'src/constants/enum';
 
 // Redux
 import { useAppDispatch, useAppSelector } from 'src/app/redux/hooks';
@@ -22,13 +23,13 @@ import { saveQuizFromCreator } from 'src/app/redux/slices/quizSlice';
 
 // Components
 import ExitEditDialog from './dialog/ExitEditDialog';
-import { QuestionTypeEnum } from 'src/constants/enum';
 
 interface IProps {
-    setIsOpenModal: Dispatch<SetStateAction<boolean>>;
+    setIsOpenSettingModal: Dispatch<SetStateAction<boolean>>;
+    setIsOpenThemeModal: Dispatch<SetStateAction<boolean>>;
 }
 
-function CreatorNavbar({ setIsOpenModal }: IProps) {
+function CreatorNavbar({ setIsOpenSettingModal, setIsOpenThemeModal }: IProps) {
     const dispatch = useAppDispatch();
     const { quiz } = useAppSelector((state) => state.quizCreator);
 
@@ -38,8 +39,12 @@ function CreatorNavbar({ setIsOpenModal }: IProps) {
 
     const [isOpenExitEditDialog, setIsOpenExitEditDialog] = useState(false);
 
-    const handleOpenModal = () => {
-        setIsOpenModal(true);
+    const handleOpenSettingModal = () => {
+        setIsOpenSettingModal(true);
+    };
+
+    const handleOpenThemeModal = () => {
+        setIsOpenThemeModal(true);
     };
 
     useEffect(() => {
@@ -131,7 +136,12 @@ function CreatorNavbar({ setIsOpenModal }: IProps) {
                         {/* Logo */}
                         <Link href={paths.home} className='flex items-center'>
                             <div className='relative mr-1 h-9 w-9 '>
-                                <Image src={'/assets/images/logoApp.png'} alt='Quizzes logo' fill />
+                                <Image
+                                    src='https://res.cloudinary.com/dfoiuc0jw/image/upload/v1702777748/quiz-app/logo/logo.png'
+                                    alt='Quizzes logo'
+                                    fill
+                                    sizes='100'
+                                />
                             </div>
 
                             <span className='self-center whitespace-nowrap text-xl font-semibold text-black dark:text-white md:max-lg:hidden'>Quizzes</span>
@@ -139,7 +149,7 @@ function CreatorNavbar({ setIsOpenModal }: IProps) {
 
                         {/* Quiz Settings */}
                         <button
-                            onClick={handleOpenModal}
+                            onClick={handleOpenSettingModal}
                             className='ml-4 flex items-center justify-between rounded-md md:p-1 md:outline md:outline-1 md:outline-gray-300 lg:min-w-[360px]'
                         >
                             <p className='ml-1 line-clamp-1 hidden w-2/3 overflow-hidden text-ellipsis text-left font-bold text-gray-400 md:inline md:pr-6 lgl:pr-12'>
@@ -149,6 +159,14 @@ function CreatorNavbar({ setIsOpenModal }: IProps) {
                                 <IoSettingsOutline className='h-5 w-5 md:mr-1' />
                                 <span className='hidden font-bold md:inline'>Settings</span>
                             </div>
+                        </button>
+
+                        {/* Set Themes */}
+                        <button
+                            onClick={handleOpenThemeModal}
+                            className='ml-4 flex items-center justify-center rounded bg-blue-500 px-2 py-2 text-sm font-medium text-white hover:bg-gray-400 focus:outline-none md:px-5'
+                        >
+                            <span className='inline font-bold'>Themes</span>
                         </button>
                     </div>
 
