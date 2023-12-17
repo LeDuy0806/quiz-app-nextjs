@@ -1,3 +1,4 @@
+'use client';
 import TopThreeUser from 'src/components/leaderboard/TopThreeUser';
 import UserList from 'src/components/leaderboard/UserList';
 
@@ -5,91 +6,91 @@ const leaderboardData = [
     {
         _id: '1',
         rank: 1,
-        userName: 'minhnhat123',
-        firstName: 'Minh Nhat',
-        lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        userName: 'vanduy123',
+        firstName: 'Van Duy',
+        lastName: 'Le',
+        avatar: '/assets/images/default_avatar.png',
         point: 3000
     },
     {
         _id: '2',
         rank: 2,
-        userName: 'minhnhat123',
-        firstName: 'Minh Nhat',
-        lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        userName: 'anhquoc123',
+        firstName: 'Anh Quoc',
+        lastName: 'Tran Phuoc',
+        avatar: '/assets/images/default_avatar.png',
         point: 2900
     },
     {
         _id: '3',
         rank: 3,
-        userName: 'minhnhat123',
-        firstName: 'Minh Nhat',
-        lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        userName: 'phuoclong123',
+        firstName: 'Phuoc Long',
+        lastName: 'Tran',
+        avatar: '/assets/images/default_avatar.png',
         point: 2800
     },
     {
         _id: '4',
         rank: 4,
-        userName: 'minhnhat123',
-        firstName: 'Minh Nhat',
+        userName: 'tuannguyen123',
+        firstName: 'Quoc Tuan',
         lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        avatar: '/assets/images/default_avatar.png',
         point: 2700
     },
     {
         _id: '5',
         rank: 5,
-        userName: 'minhnhat123',
-        firstName: 'Minh Nhat',
-        lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        userName: 'phuoctri123',
+        firstName: 'Phuoc Tri',
+        lastName: 'Tran',
+        avatar: '/assets/images/default_avatar.png',
         point: 2600
     },
     {
         _id: '6',
         rank: 6,
-        userName: 'minhnhat123',
-        firstName: 'Minh Nhat',
-        lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        userName: 'dinhkhoi123',
+        firstName: 'Dinh Khoi',
+        lastName: 'Mai',
+        avatar: '/assets/images/default_avatar.png',
         point: 2500
     },
     {
         _id: '7',
         rank: 7,
-        userName: 'minhnhat123',
-        firstName: 'Minh Nhat',
-        lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        userName: 'tuankiet123',
+        firstName: 'Tuan Kiet',
+        lastName: 'Tran',
+        avatar: '/assets/images/default_avatar.png',
         point: 2400
     },
     {
         _id: '8',
         rank: 8,
-        userName: 'minhnhat123',
-        firstName: 'Minh Nhat',
-        lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        userName: 'ducminh123',
+        firstName: 'Duc Minh',
+        lastName: 'Vu',
+        avatar: '/assets/images/default_avatar.png',
         point: 2300
     },
     {
         _id: '9',
         rank: 9,
-        userName: 'minhnhat123',
-        firstName: 'Minh Nhat',
+        userName: 'hoangminh123',
+        firstName: 'Hoang Minh',
         lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        avatar: '/assets/images/default_avatar.png',
         point: 2200
     },
     {
         _id: '10',
         rank: 10,
-        userName: 'minhnhat123',
-        firstName: 'Minh Nhat',
+        userName: 'nhatkhang123',
+        firstName: 'Nhat Khang',
         lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        avatar: '/assets/images/default_avatar.png',
         point: 2100
     },
     {
@@ -98,7 +99,7 @@ const leaderboardData = [
         userName: 'minhnhat123',
         firstName: 'Minh Nhat',
         lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        avatar: '/assets/images/default_avatar.png',
         point: 2000
     },
     {
@@ -107,7 +108,7 @@ const leaderboardData = [
         userName: 'minhnhat123',
         firstName: 'Minh Nhat',
         lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        avatar: '/assets/images/default_avatar.png',
         point: 1900
     },
     {
@@ -116,7 +117,7 @@ const leaderboardData = [
         userName: 'minhnhat123',
         firstName: 'Minh Nhat',
         lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        avatar: '/assets/images/default_avatar.png',
         point: 1800
     },
     {
@@ -125,7 +126,7 @@ const leaderboardData = [
         userName: 'minhnhat123',
         firstName: 'Minh Nhat',
         lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        avatar: '/assets/images/default_avatar.png',
         point: 1700
     },
     {
@@ -134,7 +135,7 @@ const leaderboardData = [
         userName: 'minhnhat123',
         firstName: 'Minh Nhat',
         lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        avatar: '/assets/images/default_avatar.png',
         point: 1600
     },
     {
@@ -143,7 +144,7 @@ const leaderboardData = [
         userName: 'minhnhat123',
         firstName: 'Minh Nhat',
         lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        avatar: '/assets/images/default_avatar.png',
         point: 1500
     },
     {
@@ -152,7 +153,7 @@ const leaderboardData = [
         userName: 'minhnhat123',
         firstName: 'Minh Nhat',
         lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        avatar: '/assets/images/default_avatar.png',
         point: 1400
     },
     {
@@ -161,7 +162,7 @@ const leaderboardData = [
         userName: 'minhnhat123',
         firstName: 'Minh Nhat',
         lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        avatar: '/assets/images/default_avatar.png',
         point: 1300
     },
     {
@@ -170,7 +171,7 @@ const leaderboardData = [
         userName: 'minhnhat123',
         firstName: 'Minh Nhat',
         lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        avatar: '/assets/images/default_avatar.png',
         point: 1200
     },
     {
@@ -179,7 +180,7 @@ const leaderboardData = [
         userName: 'minhnhat123',
         firstName: 'Minh Nhat',
         lastName: 'Nguyen',
-        avatar: 'default_avatar.png',
+        avatar: '/assets/images/default_avatar.png',
         point: 1100
     }
 ];
@@ -202,7 +203,8 @@ export default function LeaderboardPage() {
                 {/* List of users (except top three users) */}
                 <UserList userList={listOfUsers} />
             </div>
-            {/* <div className='absolute bottom-auto left-[28em] right-auto top-[8em] -z-50 h-[40em] w-[40em] rounded-[75em] bg-gradient-footerIntro opacity-[0.6] blur-[90px]'></div> */}
+            <div className='absolute left-[8rem] -z-50 h-[55rem] w-[55rem] rounded-full bg-gradient-primary blur-[7rem] xs:top-[32rem] xs:h-[15rem] xs:w-[15rem] sm:left-[10rem] sml:left-[15rem] md:left-[26rem] md:top-[26rem] lg:left-[30rem] lg:top-[22rem] xl:left-[45rem] xl:top-[17rem]'></div>
+            <div className='absolute left-[6rem] top-[5rem] -z-50 h-[55rem] w-[55rem] rounded-full bg-gradient-footerIntro blur-[7rem] xs:h-[15rem] xs:w-[15rem] xl:left-[14rem]'></div>
         </div>
     );
 }
