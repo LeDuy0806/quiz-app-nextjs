@@ -1,29 +1,18 @@
-import Image from 'next/image';
-import { FaStar } from 'react-icons/fa';
-import { bronzeMedal, goldTrophy, silverMedal } from '../../../public/assets/images/leaderboard';
-import ThirdUser from './common/ThirdUser';
-import FirstUser from './common/FirstUser';
-import SecondUser from './common/SecondUser';
+import UserPodium from './common/UserPodium';
 
-interface TopThreeUserProps {
-    topThreeUsers: any;
-}
-
-const TopThreeUser = ({ topThreeUsers }: TopThreeUserProps) => {
+export default function TopThreeUser({ topThreeUsers }: any) {
     const secondUser = topThreeUsers[1];
     const firstUser = topThreeUsers[0];
     const thirdUser = topThreeUsers[2];
 
     return (
-        <div className='mt-5 flex w-full items-end justify-center px-3'>
+        <div className='mx-3 mt-5 flex items-end justify-center '>
             {/* Second */}
-            <SecondUser user={secondUser} />
+            <UserPodium user={secondUser} />
             {/* First */}
-            <FirstUser user={firstUser} />
+            <UserPodium user={firstUser} />
             {/* Third */}
-            <ThirdUser user={thirdUser} />
+            <UserPodium user={thirdUser} />
         </div>
     );
-};
-
-export default TopThreeUser;
+}

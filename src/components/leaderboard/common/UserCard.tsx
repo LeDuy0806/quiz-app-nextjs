@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { FaStar } from 'react-icons/fa';
 import UserType from 'src/app/types/userType';
+import PointContainer from './PointContainer';
 
 interface UserCardProps {
     user: {
@@ -12,31 +13,24 @@ interface UserCardProps {
     };
 }
 
-const UserCard = ({ user }: UserCardProps) => (
-    <li className='flex w-full grow items-center rounded-md bg-bgPurpleLight/40 px-2 py-1 backdrop-blur-xl'>
-        <span className='flex w-[2rem] max-w-[2rem] font-semibold italic'>
-            <span className='m-auto'>{user.rank}</span>
-        </span>
+export default function UserCard({ user }: UserCardProps) {
+    return (
+        <li className='flex w-full grow items-center rounded-md bg-bgPurpleLight/40 px-4 py-2 backdrop-blur-xl'>
+            <span className='inline-flex min-w-[2rem] max-w-[2rem] items-center justify-center font-semibold italic sml:text-lg mdl:text-xl'>{user.rank}</span>
 
-        <div className='relative mx-3 h-10 w-10 rounded-full'>
-            <Image src={'/assets/images/default_avatar.png'} alt='' fill className='rounded-full object-cover object-center' />
-        </div>
+            <div className='relative mx-3 h-11 w-11 rounded-full lgl:h-14 lgl:w-14'>
+                <Image src={'/assets/images/default_avatar.png'} alt='' fill className='rounded-full object-cover object-center' />
+            </div>
 
-        <div className='ml-2 flex grow flex-col'>
-            <span className='inline-block flex-1 font-bold leading-relaxed'>{user.userName}</span>
+            <div className='ml-1 flex grow flex-col lgl:text-lg xl:text-xl'>
+                <span className='inline-block flex-1 font-black leading-relaxed '>{user.userName}</span>
 
-            <span className='line-clamp-1 flex-1 text-sm text-textGray '>
-                {user.firstName} {user.lastName}
-            </span>
-        </div>
+                <span className='line-clamp-1 text-[0.75em] text-textGray '>
+                    {user.firstName} {user.lastName}
+                </span>
+            </div>
 
-        <div className='ml-2 mr-3 flex items-center justify-center text-lg text-textPurple'>
-            <span className='font-bold'>{user.point}</span>
-            <span className='ml-1 text-[0.8em]'>
-                <FaStar />
-            </span>
-        </div>
-    </li>
-);
-
-export default UserCard;
+            <PointContainer point={user.point} className='ml-2 mr-3' />
+        </li>
+    );
+}
