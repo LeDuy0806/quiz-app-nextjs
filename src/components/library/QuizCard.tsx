@@ -102,7 +102,7 @@ const QuizCard = (props: QuizCardProps) => {
                 <div className='relative flex min-w-[320px] items-center justify-between max-md:hidden'>
                     <Image
                         className='h-full rounded-l-lg object-cover'
-                        src={'https://cf.quizizz.com/game/img/share/quizizz_share1.png'}
+                        src={props.quiz.backgroundImage || 'https://cf.quizizz.com/game/img/share/quizizz_share1.png'}
                         alt='quiz background'
                         fill
                         sizes={'100%'}
@@ -120,10 +120,10 @@ const QuizCard = (props: QuizCardProps) => {
                         </Link>
                         <p className='mb-3 line-clamp-2 font-normal text-gray-700 dark:text-gray-400 max-md:text-sm'>{props.quiz?.description}</p>
                     </div>
-                    <div className='flex w-6 justify-between gap-4'>
+                    <div className='flex w-full justify-between gap-4'>
                         <button
                             onClick={handleOpenGame}
-                            className='inline-flex items-center rounded-lg bg-teal-400 px-3 py-2 text-center text-sm font-medium text-white hover:bg-teal-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                            className='flex items-center justify-center rounded-lg bg-teal-400 px-3 py-2 text-center text-sm font-medium text-white hover:bg-teal-600 focus:outline-none focus:ring-4 focus:ring-teal-300 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800'
                         >
                             Play
                             {/* {isLoading ? (
@@ -141,7 +141,7 @@ const QuizCard = (props: QuizCardProps) => {
                         </Link> */}
                         <button
                             onClick={handleEditQuiz}
-                            className='inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                            className='flex items-center justify-center rounded-lg bg-blue-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
                         >
                             Edit
                             <HiPencilAlt className='ml-2 h-6 w-6 text-white' />
@@ -149,9 +149,9 @@ const QuizCard = (props: QuizCardProps) => {
 
                         <button
                             onClick={handleDelete}
-                            className='inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                            className='flex items-center justify-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800'
                         >
-                            Delete
+                            <span>Delete</span>
                             <HiTrash className='ml-1 h-6 w-6 text-white' />
                         </button>
                     </div>
