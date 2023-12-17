@@ -1,8 +1,5 @@
-import Image from 'next/image';
-import { FaStar } from 'react-icons/fa';
-import { bronzeMedal, goldTrophy, silverMedal } from '../../../../../public/assets/images/leaderboard';
-import UserCard from 'src/components/leaderboard/common/UserCard';
 import TopThreeUser from 'src/components/leaderboard/TopThreeUser';
+import UserList from 'src/components/leaderboard/UserList';
 
 const leaderboardData = [
     {
@@ -187,31 +184,25 @@ const leaderboardData = [
     }
 ];
 
-function LeaderboardPage() {
+export default function LeaderboardPage() {
     const topThreeUsers = leaderboardData.slice(0, 3);
+    const listOfUsers = leaderboardData.slice(3);
 
     return (
-        <div className='z-0 w-full'>
-            <div className='block'>
+        <div className='relative z-0 h-full w-full'>
+            <div className='block h-full w-full'>
                 {/* Header */}
                 <div className='py-6 text-center'>
-                    <span className='text-4xl font-black'>Leaderboard</span>
+                    <span className='text-3xl font-black lg:text-4xl xl:text-5xl'>Leaderboard</span>
                 </div>
 
                 {/* Top 3 */}
                 <TopThreeUser topThreeUsers={topThreeUsers} />
 
-                {/* List of users (except top three) */}
-                <ul className='grid w-full grid-flow-row space-y-2 p-3'>
-                    {Object.values(leaderboardData)
-                        .slice(3)
-                        .map((user, rank) => (
-                            <UserCard key={user._id} user={user} />
-                        ))}
-                </ul>
+                {/* List of users (except top three users) */}
+                <UserList userList={listOfUsers} />
             </div>
+            {/* <div className='absolute bottom-auto left-[28em] right-auto top-[8em] -z-50 h-[40em] w-[40em] rounded-[75em] bg-gradient-footerIntro opacity-[0.6] blur-[90px]'></div> */}
         </div>
     );
 }
-
-export default LeaderboardPage;
