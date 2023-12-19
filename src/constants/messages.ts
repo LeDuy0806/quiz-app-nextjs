@@ -26,4 +26,11 @@ const LibraryMessages = {
     ERROR: {}
 };
 
-export { CreatorMessages, LibraryMessages };
+const UpdateProfileMessage = {
+    SUCCESS: {
+        UPDATE_PROFILE: 'Update Profile successfully!'
+    },
+    ERROR: {}
+};
+
+export { CreatorMessages, LibraryMessages, UpdateProfileMessage };

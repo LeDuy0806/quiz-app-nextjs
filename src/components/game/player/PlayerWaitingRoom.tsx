@@ -61,7 +61,7 @@ const PlayerWaitingRoom = (props: PlayerWaitingRoomProps) => {
                         </div>
                     </div>
 
-                    <div className='flex w-[90%] items-center justify-end gap-[3em]'>
+                    <div className='z-[1] flex w-[90%] items-center justify-end gap-[3em]'>
                         <button
                             className='leading-1 text-md inline-flex h-[48px] cursor-pointer appearance-none items-center justify-center overflow-hidden rounded-md border-0 bg-bgButtonStartGame px-4 text-center font-semibold text-textWhite shadow-boxButtonStartGame hover:translate-y-[2px] hover:shadow-boxButtonStartGameHover'
                             onClick={props.closeGame}
@@ -80,13 +80,13 @@ interface UserProps {
 }
 const User = (props: UserProps) => {
     return (
-        <div className='relative mb-3 flex h-1/4 w-full flex-row items-center gap-4 rounded-xl bg-bgUser pl-4 shadow-boxUser'>
+        <div className='relative  flex h-[70px] w-full flex-row items-center gap-4 rounded-xl bg-bgUser px-5 pl-4 shadow-boxUser lgl:h-1/4'>
             <span className='flex h-[1.5em] w-[1.5em] items-center justify-center rounded-full border-[2px] border-solid border-textBlack '>1</span>
             <Image
                 src={props.player.avatar ? props.player.avatar : logoImg}
                 alt=''
-                className='h-[50px] w-[50px] rounded-full object-contain'
-                width={80}
+                className='h-[3em] w-[3em] rounded-full object-cover'
+                width={60}
                 height={60}
             />
             <p className='font-semibold'>{props.player.userName}</p>

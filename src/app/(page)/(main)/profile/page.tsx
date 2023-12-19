@@ -18,6 +18,11 @@ import { useAppSelector, useAppDispatch } from 'src/app/redux/hooks';
 //type
 import { EditUserType } from 'src/app/variable';
 
+//toast
+import { toast } from 'react-toastify';
+import { ToastOptions } from 'src/constants/toast';
+import { UpdateProfileMessage } from 'src/constants/messages';
+
 //RTK-query
 import { useUpdateUserMutation } from 'src/app/redux/services/userApi';
 import { updateAuth } from 'src/app/redux/slices/authSlice';
@@ -69,32 +74,42 @@ const Profile = () => {
         setUserEdit(user);
     };
 
-    const handleUpdate = () => {
-        const formData = new FormData();
-        formData.append('file', userEdit.avatar);
-        formData.append('upload_preset', 'imagequizapp');
-        formData.append('cloud_name', 'dfl3qnj7z');
-        fetch(`https://api.cloudinary.com/v1_1/dfl3qnj7z/image/upload`, {
-            method: 'post',
-            body: formData
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                const res = updateUser({ userId: user._id, formData: { ...userEdit, avatar: data.secure_url } }).unwrap();
-                res.then((data) => {
-                    dispatch(updateAuth(data));
-                    setModal(false);
-                });
+    const handleUpdate = async () => {
+        if (file) {
+            const formData = new FormData();
+            formData.append('file', userEdit.avatar);
+            formData.append('upload_preset', 'imagequizapp');
+            formData.append('cloud_name', 'dfl3qnj7z');
+            fetch(`https://api.cloudinary.com/v1_1/dfl3qnj7z/image/upload`, {
+                method: 'post',
+                body: formData
             })
-            .catch((error) => {
-                console.log(error);
-            });
+                .then((response) => response.json())
+                .then((data) => {
+                    const res = updateUser({ userId: user._id, formData: { ...userEdit, avatar: data.secure_url } }).unwrap();
+                    res.then((data) => {
+                        dispatch(updateAuth(data));
+                        setModal(false);
+                        toast.success(UpdateProfileMessage.SUCCESS.UPDATE_PROFILE, ToastOptions);
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
+            const data = await updateUser({ userId: user._id, formData: userEdit }).unwrap();
+            if (data) {
+                dispatch(updateAuth(data));
+                setModal(false);
+                toast.success(UpdateProfileMessage.SUCCESS.UPDATE_PROFILE, ToastOptions);
+            }
+        }
     };
 
     return (
         <div className='min-w-screen min-h-screen'>
             <Image src={bgProfile} alt='' className='absolute h-2/5 w-full object-cover' />
-            <div className='relative mt-16 min-h-full py-16'>
+            <div className='relative mt-16 min-h-full'>
                 <div className='container mx-auto px-4'>
                     <div className='relative mb-6 flex w-full min-w-0 flex-col break-words rounded-lg bg-white shadow-xl'>
                         <div className='px-6'>
@@ -107,14 +122,13 @@ const Profile = () => {
                                 </button>
                             </div>
                             <div className='z-[1] flex flex-wrap justify-center'>
-                                <div className='flex w-full justify-center px-4 lg:order-2 lg:w-3/12'>
+                                <div className='w-full justify-center px-4 md:flex lg:order-2 lg:w-3/12'>
                                     <Image
-                                        // fill
                                         width={200}
                                         height={200}
                                         alt=''
-                                        src={user.avatar}
-                                        className='-m-16 h-[200px] w-[200px] rounded-full border-none object-cover align-middle shadow-xl lg:-ml-16'
+                                        src={user.avatar ? user.avatar : '/assets/images/default_avatar.png'}
+                                        className='-m-16  h-[200px] w-[200px] rounded-full border-none object-cover align-middle shadow-xl lg:-ml-16'
                                     />
                                 </div>
                                 <div className='w-full px-4 lg:order-3 lg:w-4/12 lg:self-center lg:text-right'>

@@ -64,7 +64,7 @@ const HostWaitingRoom = (props: HostWaitingRoomProps) => {
                         </div>
                     </div>
 
-                    <div className='flex w-full items-center justify-end gap-[3em] lgl:w-[90%]'>
+                    <div className='z-[1] flex w-full items-center justify-end gap-[3em] lgl:w-[90%]'>
                         <button
                             className='leading-1 text-md inline-block h-[48px] cursor-pointer appearance-none items-center justify-center overflow-hidden rounded-md border-0 bg-bgButtonCloseGame px-4 text-center font-semibold text-textWhite shadow-boxButtonCloseGame hover:translate-y-[2px] hover:shadow-boxButtonCloseGameHover'
                             onClick={props.closeGame}
@@ -72,7 +72,7 @@ const HostWaitingRoom = (props: HostWaitingRoomProps) => {
                             Close game
                         </button>
                         <button
-                            className='leading-1 text-md inline-flex h-[48px]  cursor-pointer appearance-none items-center justify-center overflow-hidden rounded-md border-0 bg-bgButtonStartGame px-4 text-center font-semibold text-textWhite shadow-boxButtonStartGame hover:translate-y-[2px] hover:shadow-boxButtonStartGameHover'
+                            className='leading-1 text-md z-[1] inline-flex h-[48px]  cursor-pointer appearance-none items-center justify-center overflow-hidden rounded-md border-0 bg-bgButtonStartGame px-4 text-center font-semibold text-textWhite shadow-boxButtonStartGame hover:translate-y-[2px] hover:shadow-boxButtonStartGameHover'
                             onClick={props.startGame}
                         >
                             Start a game
@@ -89,13 +89,13 @@ interface UserProps {
 }
 const User = (props: UserProps) => {
     return (
-        <div className='relative mb-3 flex h-1/4 w-full flex-row items-center gap-4 rounded-xl bg-bgUser pl-4 shadow-boxUser'>
+        <div className='relative  flex h-[70px] w-full flex-row items-center gap-4 rounded-xl bg-bgUser px-5 pl-4 shadow-boxUser lgl:h-1/4'>
             <span className='flex h-[1.5em] w-[1.5em] items-center justify-center rounded-full border-[2px] border-solid border-textBlack '>1</span>
             <Image
                 src={props.player.avatar ? props.player.avatar : logoImg}
                 alt=''
-                className='h-[50px] w-[50px] rounded-full object-contain'
-                width={80}
+                className='h-[3em] w-[3em] rounded-full object-cover'
+                width={60}
                 height={60}
             />
             <p className='font-semibold'>{props.player.userName}</p>

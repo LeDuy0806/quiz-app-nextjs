@@ -37,7 +37,7 @@ const PlayerQuestion = (props: QuestionProps) => {
                     initial={{ x: 20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.2 }}
-                    className='relative flex h-1/5 w-3/4 items-center justify-center rounded-md border-[2px] border-solid border-bgBorderQuestion bg-textWhite text-center'
+                    className='relative flex h-1/5 items-center justify-center rounded-md border-[2px] border-solid border-bgBorderQuestion bg-textWhite text-center md:w-[90%] mdl:w-4/5'
                 >
                     <span className='absolute top-0 translate-y-[-50%] rounded-3xl bg-bgPurple px-6 py-3 font-bold'>
                         Question {props.questionData?.questionIndex + 1} of {props.lengthQuiz}
@@ -48,7 +48,7 @@ const PlayerQuestion = (props: QuestionProps) => {
                         {props.questionData?.content}
                     </div>
                 </motion.div>
-                <div className='flex w-3/4 items-center justify-between gap-[2em]'>
+                <div className='flex w-[300px] flex-col items-center justify-between gap-[2em] md:w-[90%] md:flex-row mdl:w-4/5'>
                     <Answer
                         delay={0.3}
                         body={props.questionData?.answerList[0]?.body}
@@ -69,7 +69,7 @@ const PlayerQuestion = (props: QuestionProps) => {
                     />
                 </div>
                 {props.questionData?.questionType !== 'True/False' && (
-                    <div className='flex w-3/4 items-center justify-between gap-[2em]'>
+                    <div className='flex w-[300px] flex-col items-center justify-between gap-[2em] md:w-[90%] md:flex-row mdl:w-4/5'>
                         <Answer
                             delay={0.5}
                             body={props.questionData?.answerList[2]?.body}
@@ -135,7 +135,7 @@ const Answer = (props: AnswerProps) => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.4, delay: props.delay }}
             className={clsx(
-                `relative flex flex-1 items-center justify-center rounded border-[2px] border-solid border-bgBorderQuestion py-4`,
+                `relative flex w-[200px] flex-1 items-center justify-center rounded border-[2px] border-solid border-bgBorderQuestion py-4`,
                 props.isAnswerSelect ? 'border-textPurpleBorder bg-bgPurpleLight' : 'border-bgBorderQuestion bg-textWhite'
             )}
         >
