@@ -22,19 +22,21 @@ interface LeaderBoardProps {
 
 const LeaderBoard = (props: LeaderBoardProps) => {
     return (
-        <div className='h-full w-full relative flex items-center justify-center bg-bgPurpleLight text-textWhite'>
-            <div className='z-[1] relative w-3/4 h-3/4 flex flex-col items-center justify-end rounded-[40px] bg-bgQuestion pb-6'>
-                <div className='w-3/5 h-[6em] absolute grid place-content-center top-0 translate-y-[-50%] bg-bgMainLeaderBoard border-[3px] border-solid shadow-boxTitleLeaderBoard border-textBlack'>
-                    <h1 className='z-[1] text-[60px] font-leaderBoardFont order-2 font-black text-textSweet text-shadow-textLeaderBoard italic'>LeaderBoard</h1>
+        <div className='relative flex h-full w-full items-center justify-center bg-bgPurpleLight text-textWhite'>
+            <div className='relative z-[1] flex h-3/4 w-3/4 flex-col items-center justify-end rounded-[40px] bg-bgQuestion pb-6'>
+                <div className='absolute top-0 grid h-[6em] w-3/5 translate-y-[-50%] place-content-center border-[3px] border-solid border-textBlack bg-bgMainLeaderBoard shadow-boxTitleLeaderBoard'>
+                    <h1 className='z-[1] order-2 font-leaderBoardFont text-[30px] font-black italic text-textSweet text-shadow-textLeaderBoard md:text-[40px] xl:text-[60px]'>
+                        LeaderBoard
+                    </h1>
                 </div>
-                <div className='w-4/5 h-4/5 bg-bgTitle rounded-3xl flex flex-col items-center justify-around'>
-                    <div className='w-4/5 h-[10%] flex items-center justify-between text-textBlack font-bold '>
+                <div className='flex h-4/5 w-4/5 flex-col items-center justify-around rounded-3xl bg-bgTitle'>
+                    <div className='flex h-[10%] w-4/5 items-center justify-between font-bold text-textBlack '>
                         <p className='flex-1 text-center'>Number</p>
                         <p className='flex-1 text-center'>UserName</p>
                         <p className='flex-1 text-center'>Question Point</p>
                         <p className='flex-1 text-center'>Score</p>
                     </div>
-                    <div className='w-4/5 h-4/5 overflow-y-scroll scrollbar-none'>
+                    <div className='h-4/5 w-4/5 overflow-y-scroll scrollbar-none'>
                         {props.leaderBoardResult
                             ?.slice()
                             ?.sort((a: AnswerLeaderBoardResultType, b: AnswerLeaderBoardResultType) => b?.playerCurrentScore - a?.playerCurrentScore)
@@ -50,14 +52,14 @@ const LeaderBoard = (props: LeaderBoardProps) => {
                     </div>
                 </div>
             </div>
-            <div className='absolute w-[20em] h-[20em] rounded-full top-[6em] left-0'>
-                <Image src={championOne} alt='' className='w-full h-full' />
+            <div className='absolute left-0 top-[6em] h-[20em] w-[20em] rounded-full'>
+                <Image src={championOne} alt='' className='h-full w-full' />
             </div>
-            <div className='absolute w-[20em] h-[20em] rounded-full  bottom-[0.6em] right-[0em]'>
-                <Image src={championTwo} alt='' className='w-full h-full' />
+            <div className='absolute bottom-[0.6em] right-[0em] h-[20em]  w-[20em] rounded-full'>
+                <Image src={championTwo} alt='' className='h-full w-full' />
             </div>
-            <div className='absolute w-[5em] h-[5em] rounded-full bg-textPurpleHover bottom-[0.4em] left-[20em]'></div>
-            <div className='absolute w-[3em] h-[3em] rounded-full bg-textPurpleHover top-[1em] right-[20em]'></div>
+            <div className='absolute bottom-[0.4em] left-[20em] h-[5em] w-[5em] rounded-full bg-textPurpleHover'></div>
+            <div className='absolute right-[20em] top-[1em] h-[3em] w-[3em] rounded-full bg-textPurpleHover'></div>
         </div>
     );
 };
@@ -76,17 +78,17 @@ const User = (props: UserProps) => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.4, delay: props.index / 10 }}
             className={clsx(
-                `w-full h-[60px] flex flex-row items-center justify-between rounded-2xl mb-10 text-textWhite font-semibold`,
+                `mb-10 flex h-[60px] w-full flex-row items-center justify-between rounded-2xl font-semibold text-textWhite`,
                 props.pointAnswerQuestion === 0 ? 'bg-bgUserItemLeaderBoardOne' : 'bg-bgUserItemLeaderBoardTwo'
             )}
         >
-            <p className='flex flex-1 text-center items-center justify-center'>
-                <span className='flex items-center justify-center w-[1.5em] h-[1.5em] rounded-full border-[2px] border-solid border-textYellow  text-textYellow'>
+            <p className='flex flex-1 items-center justify-center text-center'>
+                <span className='flex h-[1.5em] w-[1.5em] items-center justify-center rounded-full border-[2px] border-solid border-textYellow  text-textYellow'>
                     {props.index + 1}
                 </span>
             </p>
-            <div className='flex flex-2 flex-row items-center justify-center text-center gap-2'>
-                <Image src={props.userData.avatar} alt='' className='w-[2.6em] h-[2.6em] rounded-full object-cover' width={50} height={50} />
+            <div className='flex-2 flex flex-row items-center justify-center gap-2 text-center'>
+                <Image src={props.userData.avatar} alt='' className='h-[2.6em] w-[2.6em] rounded-full object-cover' width={50} height={50} />
                 <p>{props.userData.userName}</p>
             </div>
             <p className='flex-1 text-center'>{props.pointAnswerQuestion}</p>

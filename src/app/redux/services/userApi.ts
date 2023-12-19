@@ -32,7 +32,10 @@ export const apiUser = createApi({
             query: () => ({
                 url: 'api/user',
                 method: 'GET'
-            })
+            }),
+            transformResponse(response: UserType[]) {
+                return response.sort((a, b) => b.point - a.point);
+            }
         }),
 
         updateUser: builder.mutation<UserType, { userId: string; formData: EditUserType }>({

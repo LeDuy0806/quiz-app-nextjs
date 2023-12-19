@@ -3,19 +3,15 @@ import { FaStar } from 'react-icons/fa';
 import { silverMedal } from '../../../../public/assets/images/leaderboard';
 import { cn } from 'src/utils/tailwind.util';
 import PointContainer from './PointContainer';
+import UserType from 'src/app/types/userType';
 
 interface UserPodiumProps {
-    user: {
-        rank: number;
-        userName: string;
-        firstName: string;
-        lastName: string;
-        point: number;
-        avatar: string;
-    };
+    user: UserType;
+    rank: number;
 }
 
-export default function UserPodium({ user }: UserPodiumProps) {
+const UserPodium = (props: UserPodiumProps) => {
+    const { user, rank } = props;
     const podiumType = {
         textStyle: '',
         topPodiumStyle: '',
@@ -23,7 +19,7 @@ export default function UserPodium({ user }: UserPodiumProps) {
         imagePrizeUrl: ''
     };
 
-    switch (user.rank) {
+    switch (rank) {
         case 1:
             podiumType.textStyle = 'text-8xl';
             podiumType.topPodiumStyle =
@@ -50,7 +46,12 @@ export default function UserPodium({ user }: UserPodiumProps) {
         <div className='group flex-1 overscroll-x-none transition-all delay-100 duration-150 ease-linear lgl:hover:translate-y-1'>
             <div className='flex flex-col items-center'>
                 <div className='relative h-20 w-20 rounded-full sml:h-24 sml:w-24'>
-                    <Image src={user.avatar} alt='' fill className='rounded-full object-cover object-center' />
+                    <Image
+                        src={user.avatar ? user.avatar : '/assets/images/default_avatar.png'}
+                        alt=''
+                        fill
+                        className='rounded-full object-cover object-center'
+                    />
 
                     <span className='absolute -bottom-1 -right-1 inline-flex items-center justify-center rounded-full  bg-white ring ring-white'>
                         <span className='relative h-8 w-8 sml:h-9 sml:w-9'>
@@ -77,9 +78,11 @@ export default function UserPodium({ user }: UserPodiumProps) {
                         podiumType.containerPodiumStyle
                     )}
                 >
-                    <span className={cn('font-black italic text-textPurple', podiumType.textStyle)}>{user.rank}</span>
+                    <span className={cn('font-black italic text-textPurple', podiumType.textStyle)}>{rank}</span>
                 </div>
             </div>
         </div>
     );
-}
+};
+
+export default UserPodium;

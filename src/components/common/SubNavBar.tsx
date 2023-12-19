@@ -236,6 +236,9 @@ function SubNavBar({ toggleSidebar }: IProps) {
                                     </span>
 
                                     <button
+                                        onClick={() => {
+                                            router.push('/helpQ&A');
+                                        }}
                                         className='flex-1 px-4 py-3 text-left text-sm font-semibold text-textBlack dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white'
                                         role='menuitem'
                                     >
