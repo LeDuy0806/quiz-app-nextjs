@@ -55,7 +55,7 @@ function HomePage() {
                 <div className='flex w-full px-2'>
                     <UserInfoCard userData={user} />
                 </div>
-                <div className='flex w-full px-2'>{teacherQuizzes && <LibraryBox teacherQuizzes={teacherQuizzes} />}</div>
+                {user.userType === 'Teacher' && <div className='flex w-full px-2'>{teacherQuizzes && <LibraryBox teacherQuizzes={teacherQuizzes} />}</div>}
             </div>
             <div className='mt-4 px-2'>
                 <HomeCard />

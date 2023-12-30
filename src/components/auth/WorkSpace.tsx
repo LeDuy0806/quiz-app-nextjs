@@ -80,7 +80,7 @@ const FormWorkSpace = (props: WorkSpaceProps) => {
                     <button
                         className={clsx(
                             `mt-2 flex w-[160px] max-w-[200px] items-center justify-center rounded-[20px] bg-bgBlue py-[12px] text-center text-[16px] text-textWhite`,
-                            props.workspace.name
+                            props.workspace
                                 ? 'cursor-pointer bg-bgBlue font-semibold hover:py-[14px] hover:font-bold'
                                 : 'cursor-default bg-textGray font-semibold'
                         )}
@@ -94,7 +94,7 @@ const FormWorkSpace = (props: WorkSpaceProps) => {
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4, delay: 0.7 }}
-                    className='block w-full py-4 text-sm font-bold  text-textWhite hover:rounded-[18px] hover:text-[15px]'
+                    className='block w-full py-4 text-sm font-bold text-textWhite hover:rounded-[18px] hover:text-[15px]'
                     onClick={() => {
                         props.setShowFormWorkSpace(false);
                         props.setShowFormUserType(true);
@@ -127,11 +127,11 @@ const School = (props: SchoolProps) => {
             className={clsx(
                 `flex min-h-[50px] w-[400px] flex-1 cursor-pointer flex-row items-center justify-between rounded-[20px] bg-bgBlackType px-4 outline-none hover:bg-bgBlackHover mdl:w-[600px]`,
                 // select === index && 'border-[2px] border-bgBlue',
-                (workspace.name.en === school.name.en || workspace.name.vn === school.name.vn) && 'border-[2px] border-bgBlue'
+                (workspace === school.name.en || workspace === school.name.vn) && 'border-[2px] border-bgBlue'
             )}
             onClick={() => {
                 handleChangeForm({
-                    target: { name: 'workspace', value: school }
+                    target: { name: 'workspace', value: school.name.en }
                 });
                 setSelect();
             }}

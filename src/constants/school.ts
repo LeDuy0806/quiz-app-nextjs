@@ -17,11 +17,11 @@ const schools = [
     },
     {
         logo: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1702486899/download_xsklde.png',
-        name: { en: 'University of Information Technology ', vn: 'Trường Đại học Công nghệ Thông tin ' }
+        name: { en: 'University of Information Technology', vn: 'Trường Đại học Công nghệ Thông tin' }
     },
     {
         logo: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1702486899/UEL_Logo_cap_nhat-09_4_40_1_xz9tl8.jpg',
-        name: { en: 'University of Law and Economics ', vn: 'Trường Đại học Kinh tế - Luật ' }
+        name: { en: 'University of Law and Economics', vn: 'Trường Đại học Kinh tế - Luật' }
     },
     {
         logo: 'https://res.cloudinary.com/dfl3qnj7z/image/upload/v1702486899/images_kvh0yx.jpg',
