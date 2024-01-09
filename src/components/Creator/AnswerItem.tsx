@@ -80,26 +80,26 @@ function AnswerItem({ isTrueFalse = false, answer }: IProps) {
 }
 
 const Icon = ({ answer, className }: { answer: AnswerType; className: string }) => {
-    switch (answer.name) {
-        case AnswerNameEnum.A:
+    switch (answer.name.toLowerCase()) {
+        case AnswerNameEnum.A.toLowerCase():
             return (
                 <div className={cn('bg-bgAnswerTriangle', className)}>
                     <BsTriangleFill className='inline-block text-2xl text-white' />
                 </div>
             );
-        case AnswerNameEnum.B:
+        case AnswerNameEnum.B.toLowerCase():
             return (
                 <div className={cn('bg-bgAnswerDiamond', className)}>
                     <BsDiamondFill className='inline-block text-2xl text-white' />
                 </div>
             );
-        case AnswerNameEnum.C:
+        case AnswerNameEnum.C.toLowerCase():
             return (
                 <div className={cn('bg-bgAnswerSquare', className)}>
                     <BsSquareFill className='inline-block text-2xl text-white' />
                 </div>
             );
-        case AnswerNameEnum.D:
+        case AnswerNameEnum.D.toLowerCase():
             return (
                 <div className={cn('bg-bgAnswerCircle', className)}>
                     <BsCircleFill className='inline-block text-2xl text-white' />
@@ -109,14 +109,14 @@ const Icon = ({ answer, className }: { answer: AnswerType; className: string }) 
 };
 
 const getBgColor = (answer: AnswerNameEnum) => {
-    switch (answer) {
-        case AnswerNameEnum.A:
+    switch (answer.toLowerCase()) {
+        case AnswerNameEnum.A.toLowerCase():
             return 'bg-bgAnswerTriangle';
-        case AnswerNameEnum.B:
+        case AnswerNameEnum.B.toLowerCase():
             return 'bg-bgAnswerDiamond';
-        case AnswerNameEnum.C:
+        case AnswerNameEnum.C.toLowerCase():
             return 'bg-bgAnswerSquare';
-        case AnswerNameEnum.D:
+        case AnswerNameEnum.D.toLowerCase():
             return 'bg-bgAnswerCircle';
     }
 };

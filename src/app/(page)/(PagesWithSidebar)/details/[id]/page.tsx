@@ -68,6 +68,7 @@ function QuizDetail() {
                                     openModal={handleOpenModal}
                                     listQuestionsData={quizData?.questionList}
                                     numberOfQuestions={quizData?.numberOfQuestions}
+                                    Quizdata={quizData}
                                 />
                             </div>
                             <div className='flex flex-col max-xl:w-full'>

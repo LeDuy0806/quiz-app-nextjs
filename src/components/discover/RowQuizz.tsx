@@ -25,7 +25,9 @@ const RowQuizz = ({ CategoryName, ListQuiz }: { CategoryName: string; ListQuiz: 
         <>
             <div className='justify-start space-y-2.5'>
                 <div className='flex'>
-                    <h2 className='w-fit cursor-pointer text-xl font-semibold text-black transition duration-200 hover:text-gray-300'>{CategoryName}</h2>
+                    <h2 className='w-fit cursor-pointer text-xl font-semibold text-black transition duration-200 hover:text-gray-300'>
+                        {CategoryName != 'Other' ? CategoryName : 'Professional'}
+                    </h2>
                     <div className='ml-auto block'>
                         <Link href={'/discover/section/public'}>
                             <button className='base relative ml-auto flex h-8 min-w-max items-center justify-center rounded-full bg-purple-200 px-4 py-1 text-sm text-purple-700 transition-colors duration-200  ease-in-out hover:text-purple-500 active:text-purple-950'>
