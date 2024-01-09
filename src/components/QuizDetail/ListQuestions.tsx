@@ -2,17 +2,31 @@ import { FaPlay, FaRegEye, FaRegEyeSlash, FaTasks } from 'react-icons/fa';
 import QuestionCard from './QuestionCard';
 import QuestionType from 'src/app/types/questionType';
 import { useState } from 'react';
+import { useAppDispatch } from 'src/app/redux/hooks';
+import { setQuizPlay } from 'src/app/redux/slices/quizSlice';
+import QuizType from 'src/app/types/quizType';
+import { useRouter } from 'next/navigation';
 
 function ListQuestions({
     listQuestionsData,
     numberOfQuestions,
-    openModal
+    openModal,
+    Quizdata
 }: {
     listQuestionsData: QuestionType[] | undefined;
     numberOfQuestions: number | undefined;
     openModal: (index: number) => void;
+    Quizdata: QuizType;
 }) {
     const [isShowAnswer, setIsShowAnswer] = useState(false);
+
+    const dispatch = useAppDispatch();
+    const router = useRouter();
+
+    const handleClickPreview = () => {
+        dispatch(setQuizPlay(Quizdata));
+        router.push('/game/solo');
+    };
 
     return (
         <div>
@@ -30,7 +44,10 @@ function ListQuestions({
                         {isShowAnswer ? <FaRegEye className='mr-2 flex items-center text-xs' /> : <FaRegEyeSlash className='mr-2 flex items-center text-xs' />}
                         <span title='Show answers'>Show answers</span>
                     </button>
-                    <button className='relative flex h-6 w-6 min-w-max items-center justify-center rounded border border-solid border-slate-200 bg-slate-100 px-3 py-1 text-xs text-slate-800 transition-colors hover:bg-slate-100 active:bg-gray-100 sm:mx-1 '>
+                    <button
+                        onClick={handleClickPreview}
+                        className='relative flex h-6 w-6 min-w-max items-center justify-center rounded border border-solid border-slate-200 bg-slate-100 px-3 py-1 text-xs text-slate-800 transition-colors hover:bg-slate-100 active:bg-gray-100 sm:mx-1 '
+                    >
                         <FaPlay className='mr-2 flex items-center text-xs' />
                         <span title='Preview'>Preview</span>
                     </button>

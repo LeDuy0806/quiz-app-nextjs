@@ -107,11 +107,14 @@ const QuizCard = (props: QuizCardProps) => {
                         fill
                         sizes={'100%'}
                         quality={100}
+                        onError={(e) => {
+                            e.currentTarget.src = 'https://cf.quizizz.com/game/img/share/quizizz_share1.png';
+                        }}
                     />
                 </div>
 
                 {/* Content */}
-                <div className='flex flex-col justify-between p-5'>
+                <div className='flex w-full flex-col justify-between p-5'>
                     <div>
                         <Link href={paths.discover}>
                             <h5 className='mb-2 line-clamp-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white max-md:text-base'>
@@ -120,7 +123,7 @@ const QuizCard = (props: QuizCardProps) => {
                         </Link>
                         <p className='mb-3 line-clamp-2 font-normal text-gray-700 dark:text-gray-400 max-md:text-sm'>{props.quiz?.description}</p>
                     </div>
-                    <div className='flex w-full justify-between gap-4'>
+                    <div className='flex   gap-4'>
                         <button
                             onClick={handleOpenGame}
                             className='flex items-center justify-center rounded-lg bg-teal-400 px-3 py-2 text-center text-sm font-medium text-white hover:bg-teal-600 focus:outline-none focus:ring-4 focus:ring-teal-300 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800'

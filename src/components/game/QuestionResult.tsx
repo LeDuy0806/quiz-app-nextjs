@@ -18,7 +18,7 @@ const QuestionResult = (props: QuestionResultProps) => {
             <div className='relative z-[1] flex h-3/4 w-3/4 flex-col items-center justify-center  gap-[1em] rounded-[40px] bg-bgQuestion'>
                 <div className='relative flex h-1/5 w-3/4 items-center justify-center rounded-md border-[2px] border-solid border-bgBorderQuestion bg-textWhite text-center'>
                     <span className='absolute top-0 translate-y-[-50%] rounded-3xl bg-bgPurple px-6 py-3 font-bold'>
-                        Question {props.questionData?.questionIndex! + 1} of {props.lengthQuiz}
+                        Question {props.questionData?.questionIndex!} of {props.lengthQuiz}
                     </span>
                     <div className='max-w-[80%] font-semibold text-textBlack'>
                         {/* This is a picture taken in outdoor.There are 2 people in this picture.On the
