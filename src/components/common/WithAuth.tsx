@@ -16,7 +16,7 @@ function WithAuth({ children }: IProps) {
     const { user } = useAuth();
 
     useEffect(() => {
-        if (user._id === '' || user._id === undefined || user._id === null || typeof user._id !== 'string') {
+        if (user?._id === '' || user?._id === undefined || user?._id === null || typeof user?._id !== 'string') {
             setIsAuthenticated(false);
         } else {
             setIsAuthenticated(true);

@@ -41,7 +41,7 @@ export const apiUser = createApi({
         updateUser: builder.mutation<UserType, { userId: string; formData: EditUserType }>({
             query: ({ userId, formData }) => ({
                 url: `api/user/${userId}`,
-                method: 'PATCH',
+                method: 'PUT',
                 headers: {
                     Accept: '*application/json*',
                     'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'

@@ -70,7 +70,9 @@ const Host = () => {
             setPlayerList(newListPlayers);
         });
         return () => {
-            socket.off('student-leave');
+            if (socket) {
+                socket.off('student-leave');
+            }
         };
     }, [socket, playerList]);
 

@@ -85,7 +85,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
             }
         },
         {
-            name: 'LeaderBoard',
+            name: 'Leaderboard',
             to: paths.leaderBoard,
             icon: {
                 fill: MdLeaderboard,

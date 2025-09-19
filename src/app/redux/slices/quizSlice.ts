@@ -37,13 +37,20 @@ const quizSlice = createSlice({
         },
 
         saveQuizFromCreator: (state, action: PayloadAction<QuizType>) => {
-            let isQuizExist = state.TeacherQuizzes.find((quiz) => quiz?._id === action.payload?._id);
+            let isQuizExist = false;
+
+            if (Array.isArray(state.TeacherQuizzes)) {
+                isQuizExist = !!state.TeacherQuizzes.find((quiz) => quiz?._id === action.payload?._id);
+            }
 
             if (isQuizExist) {
                 state.TeacherQuizzes = state.TeacherQuizzes.map((quiz) => {
                     return quiz._id === action.payload._id ? action.payload : quiz;
                 });
             } else {
+                if (!Array.isArray(state.TeacherQuizzes)) {
+                    state.TeacherQuizzes = [];
+                }
                 state.TeacherQuizzes.push(action.payload);
             }
 
@@ -58,12 +65,16 @@ const quizSlice = createSlice({
 
         fetchPublicQuizzes: (state, action: PayloadAction<QuizType[]>) => {
             // state.FilteredTeacherQuizzes = state.TeacherQuizzes.filter((quiz) => quiz?.isPublic);
-            state.FilteredTeacherQuizzes = action.payload.filter((quiz) => quiz?.isPublic);
+            if (Array.isArray(action.payload)) {
+                state.FilteredTeacherQuizzes = action.payload.filter((quiz) => quiz?.isPublic);
+            }
         },
 
         fetchPrivateQuizzes: (state, action: PayloadAction<QuizType[]>) => {
             // state.FilteredTeacherQuizzes = state.TeacherQuizzes.filter((quiz) => !quiz?.isPublic);
-            state.FilteredTeacherQuizzes = action.payload.filter((quiz) => !quiz?.isPublic);
+            if (Array.isArray(action.payload)) {
+                state.FilteredTeacherQuizzes = action.payload.filter((quiz) => !quiz?.isPublic);
+            }
         },
 
         setQuizPlay: (state, action: PayloadAction<QuizType>) => {

@@ -26,7 +26,7 @@ const LeaderBoard = (props: LeaderBoardProps) => {
             <div className='relative z-[1] flex h-3/4 w-3/4 flex-col items-center justify-end rounded-[40px] bg-bgQuestion pb-6'>
                 <div className='absolute top-0 grid h-[6em] w-3/5 translate-y-[-50%] place-content-center border-[3px] border-solid border-textBlack bg-bgMainLeaderBoard shadow-boxTitleLeaderBoard'>
                     <h1 className='z-[1] order-2 font-leaderBoardFont text-[30px] font-black italic text-textSweet text-shadow-textLeaderBoard md:text-[40px] xl:text-[60px]'>
-                        LeaderBoard
+                        Leaderboard
                     </h1>
                 </div>
                 <div className='flex h-4/5 w-4/5 flex-col items-center justify-around rounded-3xl bg-bgTitle'>

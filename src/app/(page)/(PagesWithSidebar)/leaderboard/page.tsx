@@ -13,7 +13,7 @@ export default function LeaderBoardPage() {
             <div className='block h-full w-full'>
                 {/* Header */}
                 <div className='py-6 text-center'>
-                    <span className='text-3xl font-black lg:text-4xl xl:text-5xl'>LeaderBoard</span>
+                    <span className='text-3xl font-black lg:text-4xl xl:text-5xl'>Leaderboard</span>
                 </div>
 
                 {/* Top 3 */}

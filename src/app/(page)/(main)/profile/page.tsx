@@ -107,10 +107,10 @@ const Profile = () => {
     };
 
     return (
-        <div className='min-w-screen min-h-screen'>
-            <Image src={bgProfile} alt='' className='absolute h-2/5 w-full object-cover' />
+        <div className='h-screen w-screen'>
+            {false && <Image src={bgProfile} alt='' className='absolute h-2/5 w-full object-cover' />}
             <div className='relative mt-16 min-h-full'>
-                <div className='container mx-auto px-4'>
+                <div className='container mx-auto w-[80%] px-4 md:w-[90%]'>
                     <div className='relative mb-6 flex w-full min-w-0 flex-col break-words rounded-lg bg-white shadow-xl'>
                         <div className='px-6'>
                             <div className='mt-32 px-3 py-6 sm:mt-0'>
@@ -122,7 +122,7 @@ const Profile = () => {
                                 </button>
                             </div>
                             <div className='z-[1] flex flex-wrap justify-center'>
-                                <div className='w-full justify-center px-4 md:flex lg:order-2 lg:w-3/12'>
+                                <div className='flex w-full justify-center px-4 lg:order-2 lg:w-3/12'>
                                     <Image
                                         width={200}
                                         height={200}
@@ -175,9 +175,11 @@ const Profile = () => {
                                                 : 'By focusing on making sure Hendrick Motorsports ends up in the winner’s circle at every race, Jerry has been able to put the racing certifications he earned at driver’s school to good use. Over the years, his strengths at Hendrick Motorsports have garnered some recognition for winning several races each year. Jerry may spend his days at the racetrack, but it’s the thrill of the race and the glory of coming in first that gets him up in the morning.'}
                                         </p>
 
-                                        <a href='#pablo' className='font-normal text-pink-500'>
-                                            Show more
-                                        </a>
+                                        {false && (
+                                            <a href='#pablo' className='font-normal text-pink-500'>
+                                                Show more
+                                            </a>
+                                        )}
                                     </div>
                                 </div>
                             </div>

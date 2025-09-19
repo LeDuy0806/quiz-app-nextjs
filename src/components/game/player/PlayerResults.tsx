@@ -56,7 +56,7 @@ const PlayerResult = (props: ResultsProps) => {
                                     className='leading-1 text-md inline-flex h-[48px] cursor-pointer appearance-none items-center justify-center overflow-hidden rounded-md border-0 bg-bgButtonCloseGame px-4 text-center font-semibold text-textWhite shadow-boxButtonCloseGame hover:translate-y-[2px] hover:shadow-boxButtonCloseGameHover'
                                     onClick={props.handleShowLeaderBoardResult}
                                 >
-                                    LeaderBoard
+                                    Leaderboard
                                 </button>
                             )}
                         </div>

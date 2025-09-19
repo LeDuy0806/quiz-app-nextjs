@@ -37,7 +37,7 @@ const HostResult = (props: ResultsProps) => {
                                 className='leading-1 text-md inline-flex h-[48px] cursor-pointer appearance-none items-center justify-center overflow-hidden rounded-md border-0 bg-bgButtonCloseGame px-4 text-center font-semibold text-textWhite shadow-boxButtonCloseGame hover:translate-y-[2px] hover:shadow-boxButtonCloseGameHover'
                                 onClick={props.handleShowLeaderBoardResult}
                             >
-                                LeaderBoard
+                                Leaderboard
                             </button>
                             <button
                                 className='leading-1 text-md inline-flex h-[48px] cursor-pointer appearance-none items-center justify-center overflow-hidden rounded-md border-0 bg-bgButtonStartGame px-6 text-center font-semibold text-textWhite shadow-boxButtonStartGame hover:translate-y-[2px] hover:shadow-boxButtonStartGameHover'
@@ -49,7 +49,7 @@ const HostResult = (props: ResultsProps) => {
                     </div>
 
                     <div className='mt-20 flex h-4/5 w-3/5 flex-col items-center justify-center gap-3 rounded-3xl'>
-                        <div className='flex w-4/5 flex-1 flex-row items-center justify-evenly'>
+                        <div className='flex w-4/5 flex-1 flex-row items-center justify-evenly gap-4'>
                             <div className='flex h-3/5 w-[12em] flex-col justify-around rounded-xl bg-bgPurpleLight pl-4'>
                                 <p className='font-semibold text-textGray'>Total Player</p>
                                 <p className='font-bold text-textBlack'>{props.totalPlayer} Player</p>
@@ -59,7 +59,7 @@ const HostResult = (props: ResultsProps) => {
                                 <p className='font-bold text-textBlack'>100%</p>
                             </div>
                         </div>
-                        <div className='flex w-4/5 flex-1 flex-row items-center justify-evenly  '>
+                        <div className='flex w-4/5 flex-1 flex-row items-center justify-evenly gap-4'>
                             <div className='flex h-3/5 w-[12em] flex-col justify-around rounded-xl bg-bgPurpleLight pl-4 '>
                                 <p className='font-semibold text-textGray'>Player 0 Point</p>
                                 <p className='font-bold text-textBlack'>
@@ -73,15 +73,17 @@ const HostResult = (props: ResultsProps) => {
                                 </p>
                             </div>
                         </div>
-                        <div className='flex-1'>
-                            <LineChart
-                                title='Time'
-                                xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
-                                series={[{ curve: 'linear', data: [2, 5.5, 2, 8.5, 1.5, 5] }]}
-                                width={500}
-                                height={220}
-                            />
-                        </div>
+                        {false && (
+                            <div className='flex-1'>
+                                <LineChart
+                                    title='Time'
+                                    xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                                    series={[{ curve: 'linear', data: [2, 5.5, 2, 8.5, 1.5, 5] }]}
+                                    width={500}
+                                    height={220}
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

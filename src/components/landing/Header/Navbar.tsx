@@ -182,7 +182,7 @@ const Navbar = (props: NavbarProps) => {
                                     <option value='vn'>VietNam 🇻🇳</option>
                                 </select>
                             </motion.li>
-                            <Link href={'/signIn'}>
+                            <Link href={'/signIn'} className='mt-1'>
                                 <motion.li
                                     initial={{ y: -10, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}

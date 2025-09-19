@@ -9,7 +9,7 @@ const Bottom = (props: BottomProps) => {
     const { language } = props;
 
     return (
-        <div className='w-full py-[5rem]'>
+        <div className='w-full px-8 py-[5rem]'>
             <div className='flex w-full flex-col justify-between mdl:flex-row'>
                 <div className='flex max-w-[20rem] flex-col items-center self-center text-textGray mdl:items-start mdl:self-start'>
                     <Link href='' className='mb-6 flex h-[2.25rem] flex-row items-center gap-2'>

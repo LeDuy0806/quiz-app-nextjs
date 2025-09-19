@@ -187,7 +187,8 @@ const Player = ({ searchParams }: { searchParams: SearchParams }) => {
     useEffect(() => {
         if (expireTimeQuestion) {
             const answerPlayer = answer[currentQuestionIndex].answers;
-            const answerQuestion = questionData?.answerCorrect;
+            let answerQuestion = questionData?.answerCorrect;
+            answerQuestion = questionData?.answerList.filter((item) => item.isCorrect).map((item) => item.name.toUpperCase());
 
             if (answerPlayer.length === answerQuestion?.length) {
                 const containsAll = answerPlayer.every((answer: string) => {

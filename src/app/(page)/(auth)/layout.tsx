@@ -15,7 +15,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         setIsMounted(true);
     }, []);
     useEffect(() => {
-        if (user._id !== '' && user._id !== undefined && user._id !== null) {
+        if (user?._id !== '' && user?._id !== undefined && user?._id !== null) {
             router.push('/home');
         } else {
             setCanRenderChildren(true);

@@ -37,7 +37,7 @@ const HostQuestion = (props: HostQuestionProps) => {
                     className='relative flex h-1/5 items-center justify-center rounded-md border-[2px] border-solid border-bgBorderQuestion bg-textWhite text-center md:w-[90%] mdl:w-4/5'
                 >
                     <span className='absolute top-0 translate-y-[-50%] rounded-3xl bg-bgPurple px-6 py-3 font-bold'>
-                        Question {props.questionData?.questionIndex! + 1} of {props.lengthQuiz}
+                        Question {props.questionData?.questionIndex! + 1 - 1} of {props.lengthQuiz}
                     </span>
                     <div className='max-w-[80%] font-semibold text-textBlack'>
                         {/* This is a picture taken in outdoor.There are 2 people in this picture.On the

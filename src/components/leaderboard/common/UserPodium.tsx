@@ -47,7 +47,7 @@ const UserPodium = (props: UserPodiumProps) => {
             <div className='flex flex-col items-center'>
                 <div className='relative h-20 w-20 rounded-full sml:h-24 sml:w-24'>
                     <Image
-                        src={user.avatar ? user.avatar : '/assets/images/default_avatar.png'}
+                        src={user?.avatar ? user.avatar : '/assets/images/default_avatar.png'}
                         alt=''
                         fill
                         className='rounded-full object-cover object-center'
@@ -62,10 +62,10 @@ const UserPodium = (props: UserPodiumProps) => {
 
                 <div className='mt-3 flex flex-col items-center justify-center px-2'>
                     <span className='line-clamp-2 text-ellipsis whitespace-nowrap text-center font-black leading-relaxed mdl:text-lg xl:text-xl'>
-                        {user.userName}
+                        {user?.userName}
                     </span>
 
-                    <PointContainer point={user.point} className='mt-2' />
+                    <PointContainer point={user?.point} className='mt-2' />
                 </div>
             </div>
 

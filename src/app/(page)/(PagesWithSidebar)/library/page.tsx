@@ -141,20 +141,21 @@ function LibraryPage() {
 
             {/* List Quiz Card */}
             <ul className='mt-4 flex flex-wrap items-center justify-between gap-6 max-xl:gap-4'>
-                {filterQuizzes.map((quiz, i) => (
-                    <motion.div
-                        initial={{ x: 20, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{
-                            duration: 0.4,
-                            delay: 0.1 + i * 0.075
-                        }}
-                        key={`${i}`}
-                        className='w-full'
-                    >
-                        <QuizCard key={quiz._id} quiz={quiz} />
-                    </motion.div>
-                ))}
+                {Array.isArray(filterQuizzes) &&
+                    filterQuizzes.map((quiz, i) => (
+                        <motion.div
+                            initial={{ x: 20, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{
+                                duration: 0.4,
+                                delay: 0.1 + i * 0.075
+                            }}
+                            key={`${i}`}
+                            className='w-full'
+                        >
+                            <QuizCard key={quiz._id} quiz={quiz} />
+                        </motion.div>
+                    ))}
             </ul>
         </div>
     );

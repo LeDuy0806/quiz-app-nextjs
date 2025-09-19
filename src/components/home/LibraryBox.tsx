@@ -16,9 +16,7 @@ function LibraryBox({ teacherQuizzes }: { teacherQuizzes: QuizType[] }) {
                 <span className='border-b-2 border-blue-600 pb-2 text-xl font-bold'>My quizzes</span>
             </div>
             <div className=' z-10 max-h-[17rem] space-y-2 overflow-auto overflow-x-hidden px-4 pt-3 scrollbar-thin'>
-                {teacherQuizzes.map((quiz, i) => (
-                    <QuizCard key={quiz._id} quiz={quiz} />
-                ))}
+                {Array.isArray(teacherQuizzes) && teacherQuizzes.map((quiz, i) => <QuizCard key={quiz._id} quiz={quiz} />)}
             </div>
             <Link href={paths.library}>
                 <div className='mt-1 flex w-full cursor-pointer  items-center justify-center px-4 py-1 text-lilac hover:underline'>

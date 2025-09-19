@@ -20,7 +20,7 @@ function SearchResults({ quizzes }: { quizzes: QuizType[] }) {
     return (
         <div className='flex h-full w-full lgl:h-[92%]'>
             <div className='mr-2 flex w-full flex-col gap-2 lgl:w-1/2'>
-                <div className='w-full rounded-t border-x border-t border-slate-200 bg-white p-2 text-xl font-semibold shadow'>Resulst:</div>
+                <div className='w-full rounded-t border-x border-t border-slate-200 bg-white p-2 text-xl font-semibold shadow'>Results:</div>
                 <div className='flex h-full flex-col gap-2 overflow-auto px-0.5 transition-all'>
                     {quizzes && quizzes.length !== 0 ? (
                         quizzes.map((item, index) => (

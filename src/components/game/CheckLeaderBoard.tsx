@@ -62,25 +62,25 @@ const PaginatedItems = (props: PaginatedItemsProps) => {
 
     return (
         // leaderBoardResult={props.leaderBoardResultList[currentItems[0]]
-        <div className='relative w-screen h-screen flex flex-col '>
+        <div className='relative flex h-screen w-screen flex-col '>
             <LeaderBoard leaderBoardResult={props.leaderBoardResultList[currentItems[0]].leaderBoardList} questionIndex={0} />
-            <div className='z-[1] absolute left-[50%] translate-x-[-50%] bottom-[10em]'>
+            <div className='absolute bottom-[10em] left-[50%] z-[1] translate-x-[-50%]'>
                 <ReactPaginate
-                    previousLabel='< prev'
+                    previousLabel='< Prev'
                     nextLabel='Next >'
                     renderOnZeroPageCount={null}
                     pageRangeDisplayed={5}
                     pageCount={pageCount}
                     onPageChange={handlePageClick}
-                    containerClassName='w-full h-[40px] style-none flex justify-center item-center gap-3'
+                    containerClassName='w-full h-[40px] style-none flex justify-center items-center gap-3'
                     previousLinkClassName='p-2 rounded-[5px] border border-solid border-bgPurpleLight cursor-pointer text-textPurple hover:text-textWhite hover:bg-bgPurple font-bold'
                     nextLinkClassName='p-2 rounded-[5px] border border-solid border-bgPurpleLight cursor-pointer text-textPurple hover:text-textWhite hover:bg-bgPurple font-bold'
                     activeClassName='h-full text-textWhite bg-bgPurple font-bold'
-                    pageClassName='rounded-full px-4 font-bold'
+                    pageClassName='rounded-full px-4 font-bold flex items-center justify-center'
                 />
             </div>
             <button
-                className='absolute w-[60px] h-[60px] flex items-center justify-center rounded-full bg-bgPurple top-[1em] left-[1em] text-[40px] cursor-pointer'
+                className='absolute left-[1em] top-[1em] flex h-[60px] w-[60px] cursor-pointer items-center justify-center rounded-full bg-bgPurple text-[40px]'
                 onClick={props.handleBack}
             >
                 <BiArrowBack />
